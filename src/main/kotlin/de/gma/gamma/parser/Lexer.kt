@@ -42,38 +42,35 @@ class Lexer(
      * @see TokenType
      */
     fun nextToken(): Token {
-        var token = eof()
+        skipWhitespace()
 
-        if (char != nullChar) {
+        return when {
+            isStartOfNumber(char, peekChar) -> parseNumber()
 
-            skipWhitespace()
+            isStartOfIdentifier(char) -> parseIdentifier()
 
-            when {
-                isStartOfNumber(char, peekChar) -> token = parseNumber()
+            isTickedIdentifierChar(char, peekChar) -> parseTickedIdentifier()
 
-                isStartOfIdentifier(char) -> token = parseIdentifier()
+            isOperatorChar(char) -> parseOperator()
 
-                isTickedIdentifierChar(char, peekChar) -> token = parseTickedIdentifier()
+            isTickedOperatorChar(char, peekChar) -> parseTickedOperator()
 
-                isOperatorChar(char) -> token = parseOperator()
+            isUnit(char, peekChar) -> parseUnit()
 
-                isTickedOperatorChar(char, peekChar) -> token = parseTickedOperator()
+            isParens(char) -> parseParens()
 
-                isUnit(char, peekChar) -> token = parseUnit()
+            isStartOfString(char) -> parseDQuoteString()
 
-                isParens(char) -> token = parseParens()
+            isExpressionEndingChar(char) -> parseExpressionEnding()
 
-                isStartOfString(char) -> token = parseDQuoteString()
+            isEof(char) -> eof()
 
-                isExpressionEndingChar(char) -> token = parseExpressionEnding()
-
-                else -> {
-                    token = errorToken()
-                    next()
-                }
+            else -> {
+                val ret = errorToken()
+                next()
+                ret
             }
         }
-        return token
     }
 
     // ============= different parser methode ================
@@ -194,7 +191,7 @@ class Lexer(
         // consume the "
         next()
 
-        fun isStillInString() = char != DQUOTE && char != RETURN && char != nullChar
+        fun isStillInString() = char != QUOTE && char != NEWLINE && char != nullChar
 
         while (isStillInString()) {
             if (char == ESC) {
@@ -206,7 +203,7 @@ class Lexer(
                     't' -> {
                         content.append("\t")
                     }
-                    RETURN -> {
+                    NEWLINE -> {
                         // do nothing
                     }
                     else -> {
@@ -219,7 +216,7 @@ class Lexer(
             next()
         }
 
-        val type = if (char != DQUOTE) TokenType.ERROR else TokenType.STRING
+        val type = if (char != QUOTE) TokenType.ERROR else TokenType.STRING
         val end = position()
 
         next()
@@ -293,7 +290,7 @@ class Lexer(
      */
     private fun next() {
         pos++
-        if (char == RETURN) {
+        if (char == NEWLINE) {
             line++
             col = 0
         } else {
@@ -314,7 +311,17 @@ class Lexer(
     }
 
     private fun skipWhitespace() {
-        while (isWhitespace(char))
+        while (isWhitespace(char) || isStartOfComment(char)) {
+            if (isStartOfComment(char)) {
+                skiptComment()
+            } else {
+                next()
+            }
+        }
+    }
+
+    private fun skiptComment() {
+        while (char != NEWLINE && char != nullChar)
             next()
     }
 }

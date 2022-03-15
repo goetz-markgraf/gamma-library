@@ -43,6 +43,30 @@ class LexerSimpleTest {
     }
 
     @Test
+    fun `skip comment`() {
+        val source = "#comment"
+        val token = getTokenFromInput(source)
+        assertThat(token.type).isEqualTo(TokenType.EOF)
+    }
+
+    @Test
+    fun `skip comment with newline`() {
+        val source = "#comment\na"
+        val token = getTokenFromInput(source)
+
+        assertToken(
+            token,
+            type = TokenType.ID,
+            content = "a",
+            start = 9,
+            end = 9
+        )
+        assertThat(token.start).isEqualTo(Position(9, 0, 1))
+        assertThat(token.end).isEqualTo(Position(9, 0, 1))
+    }
+
+
+    @Test
     fun `skip leading newline`() {
         val source = "\na"
         val token = getTokenFromInput(source)
