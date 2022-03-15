@@ -19,7 +19,7 @@ class ParserSimpleTest {
         val source = "\"H\""
         val parser = Parser(Lexer(source, "Script"))
 
-        val value = parser.nextExpression()
+        val value = parser.nextExpression(0)
 
         assertThat(value).isInstanceOf(StringValue::class.java)
         assertThat((value as StringValue).content).isEqualTo("H")
@@ -35,7 +35,7 @@ class ParserSimpleTest {
         val source = "10"
         val parser = Parser(Lexer(source, "Script"))
 
-        val value = parser.nextExpression()
+        val value = parser.nextExpression(0)
 
         assertThat(value).isInstanceOf(IntegerValue::class.java)
         assertThat((value as IntegerValue).num).isEqualTo(10)
@@ -48,7 +48,7 @@ class ParserSimpleTest {
         val source = "1.5"
         val parser = Parser(Lexer(source, "Script"))
 
-        val value = parser.nextExpression()
+        val value = parser.nextExpression(0)
 
         assertThat(value).isInstanceOf(FloatValue::class.java)
         assertThat((value as FloatValue).num).isEqualTo(1.5)

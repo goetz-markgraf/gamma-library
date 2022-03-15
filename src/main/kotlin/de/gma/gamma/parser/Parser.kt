@@ -10,21 +10,19 @@ import de.gma.gamma.datatypes.Value
 class Parser(private val lexer: Lexer) {
     var token: Token = lexer.nextToken()
 
-    fun nextExpression(): Value? {
-        var value: Value? = null
+    fun nextExpression(col: Int): Value? {
 
-        if (token.type != EOF) {
-            skipWhitespace()
+        skipWhitespace()
 
-            when (token.type) {
-                NUMBER -> value = parseNumber()
+        return when (token.type) {
+            NUMBER -> parseNumber()
 
-                STRING -> value = parseString()
-            }
+            STRING -> parseString()
 
+            else -> throw RuntimeException("NOT YET IMPLEMENTED")
         }
 
-        return value
+
     }
 
     // ======= parse functions ==========
