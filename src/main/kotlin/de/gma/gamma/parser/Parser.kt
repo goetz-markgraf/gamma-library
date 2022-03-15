@@ -1,16 +1,12 @@
 package de.gma.gamma.parser
 
-import de.gma.gamma.Token
-import de.gma.gamma.TokenType.*
-import de.gma.gamma.datatypes.FloatValue
-import de.gma.gamma.datatypes.IntegerValue
-import de.gma.gamma.datatypes.StringValue
-import de.gma.gamma.datatypes.Value
+import de.gma.gamma.parser.TokenType.*
+import de.gma.gamma.datatypes.*
 
 class Parser(private val lexer: Lexer) {
     var token: Token = lexer.nextToken()
 
-    fun nextExpression(col: Int): Value? {
+    fun nextExpression(col: Int): Value {
 
         skipWhitespace()
 
@@ -19,6 +15,8 @@ class Parser(private val lexer: Lexer) {
 
             STRING -> parseString()
 
+            ID, TOP -> parseIdentifierOrFunctionCall(col)
+
             else -> throw RuntimeException("NOT YET IMPLEMENTED")
         }
 
@@ -26,6 +24,37 @@ class Parser(private val lexer: Lexer) {
     }
 
     // ======= parse functions ==========
+
+
+    private fun parseIdentifierOrFunctionCall(col: Int): Value {
+        val id = parseIdentifier()
+
+        var cont = true
+        val call = mutableListOf<Value>(id)
+
+
+        while (cont) {
+            when (token.type) {
+                UNIT -> return FunctionCall(listOf(id), id.sourceName, id.start, token.end)
+                NUMBER -> call.add(parseNumber())
+                STRING -> call.add(parseString())
+                ID, TOP -> call.add(parseIdentifier())
+                else -> cont = false
+            }
+        }
+
+        return if (call.size == 1)
+            id
+        else
+            FunctionCall(call, id.sourceName, id.start, call.last().end)
+    }
+
+    private fun parseIdentifier(): Value {
+        val content = token.content
+        val ret = Identifier(content, token.sourceName, token.start, token.end)
+        next()
+        return ret
+    }
 
 
     private fun parseString(): Value {

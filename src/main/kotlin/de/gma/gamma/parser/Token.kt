@@ -1,4 +1,4 @@
-package de.gma.gamma
+package de.gma.gamma.parser
 
 
 data class Position(
@@ -26,6 +26,8 @@ enum class TokenType {
     TOP,
     ID,
     TID,
+    LET,
+    SET,
     UNIT,
     EXEND
 }

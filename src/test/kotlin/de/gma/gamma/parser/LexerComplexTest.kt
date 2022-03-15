@@ -1,8 +1,6 @@
 package de.gma.gamma.parser
 
-import de.gma.gamma.Position
-import de.gma.gamma.TokenType
-import de.gma.gamma.TokenType.*
+import de.gma.gamma.parser.TokenType.*
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -20,7 +18,7 @@ class LexerComplexTest {
 
         lexer = Lexer(source, "Script")
 
-        assertNextToken(ID, "let", 0, 0, 0)
+        assertNextToken(LET, "let", 0, 0, 0)
         assertNextToken(ID, "a", 4, 4, 0)
         assertNextToken(OP, "=", 6, 6, 0)
         assertNextToken(NUMBER, "10", 8, 8, 0)
@@ -35,7 +33,7 @@ class LexerComplexTest {
         val source = "let add a b=a + b"
         lexer = Lexer(source, "Script")
 
-        assertNextToken(ID, "let", 0, 0, 0)
+        assertNextToken(LET, "let", 0, 0, 0)
         assertNextToken(ID, "add", 4, 4, 0)
         assertNextToken(ID, "a", 8, 8, 0)
         assertNextToken(ID, "b", 10, 10, 0)

@@ -1,6 +1,6 @@
 package de.gma.gamma.datatypes
 
-import de.gma.gamma.Position
+import de.gma.gamma.parser.Position
 
 open class Value(
     val sourceName: String,

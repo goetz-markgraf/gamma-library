@@ -1,13 +1,11 @@
 package de.gma.gamma.parser
 
-import de.gma.gamma.Position
-import de.gma.gamma.Token
-import de.gma.gamma.TokenType
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 import org.junit.jupiter.params.provider.ValueSource
+import de.gma.gamma.parser.TokenType.*
 
 
 class LexerSimpleTest {
@@ -18,7 +16,7 @@ class LexerSimpleTest {
     fun `parse the empty string`() {
         val token = getTokenFromInput("")
 
-        assertThat(token.type).isEqualTo(TokenType.EOF)
+        assertThat(token.type).isEqualTo(EOF)
     }
 
 
@@ -33,7 +31,7 @@ class LexerSimpleTest {
 
         assertToken(
             token,
-            type = TokenType.ID,
+            type = ID,
             content = "a",
             start = 1,
             end = 1
@@ -46,7 +44,7 @@ class LexerSimpleTest {
     fun `skip comment`() {
         val source = "#comment"
         val token = getTokenFromInput(source)
-        assertThat(token.type).isEqualTo(TokenType.EOF)
+        assertThat(token.type).isEqualTo(EOF)
     }
 
     @Test
@@ -56,7 +54,7 @@ class LexerSimpleTest {
 
         assertToken(
             token,
-            type = TokenType.ID,
+            type = ID,
             content = "a",
             start = 9,
             end = 9
@@ -73,7 +71,7 @@ class LexerSimpleTest {
 
         assertToken(
             token,
-            type = TokenType.ID,
+            type = ID,
             content = "a",
             start = 1,
             end = 1
@@ -94,7 +92,7 @@ class LexerSimpleTest {
 
         assertToken(
             token,
-            type = TokenType.EXEND,
+            type = EXEND,
             content = source,
             end = source.length - 1
         )
@@ -114,7 +112,7 @@ class LexerSimpleTest {
 
         assertToken(
             token,
-            type = TokenType.OP,
+            type = OP,
             content = input,
             end = 0
         )
@@ -131,7 +129,7 @@ class LexerSimpleTest {
 
         assertToken(
             token,
-            type = TokenType.OP,
+            type = OP,
             content = source,
             end = 1
         )
@@ -148,7 +146,7 @@ class LexerSimpleTest {
 
         assertToken(
             token,
-            type = TokenType.TOP,
+            type = TOP,
             content = source.drop(1).dropLast(1),
             start = 1,
             end = source.length - 2
@@ -162,7 +160,7 @@ class LexerSimpleTest {
 
         assertToken(
             token,
-            type = TokenType.UNIT,
+            type = UNIT,
             content = "()",
             end = 1
         )
@@ -170,6 +168,18 @@ class LexerSimpleTest {
 
 
     // ============== identifiers ==============
+
+    @Test
+    fun `parse let keyword`() {
+        val token = getTokenFromInput("let")
+        assertThat(token.type).isEqualTo(LET)
+    }
+
+    @Test
+    fun `parse set keyword`() {
+        val token = getTokenFromInput("set")
+        assertThat(token.type).isEqualTo(SET)
+    }
 
     @ParameterizedTest
     @ValueSource(
@@ -192,7 +202,7 @@ class LexerSimpleTest {
 
         assertToken(
             token,
-            type = TokenType.ID,
+            type = ID,
             content = source,
             end = source.length - 1
         )
@@ -212,13 +222,13 @@ class LexerSimpleTest {
 
         assertToken(
             token,
-            type = TokenType.ID,
+            type = ID,
             content = source.dropLast(1),
             end = 0
         )
 
         val nextToken = lexer.nextToken()
-        assertThat(nextToken.type).matches { it == TokenType.ERROR || it == TokenType.OP }
+        assertThat(nextToken.type).matches { it == ERROR || it == OP }
     }
 
     @ParameterizedTest
@@ -239,7 +249,7 @@ class LexerSimpleTest {
 
         assertToken(
             token,
-            type = TokenType.TID,
+            type = TID,
             content = source.drop(1).dropLast(1),
             start = 1,
             end = source.length - 2
@@ -258,7 +268,7 @@ class LexerSimpleTest {
     fun `parse wrong (back-)ticked identifier`(source: String) {
         val token = getTokenFromInput(source)
 
-        assertThat(token.type).isEqualTo(TokenType.ERROR)
+        assertThat(token.type).isEqualTo(ERROR)
         assertThat(token.content).startsWith(source.drop(1).first().toString())
     }
 
@@ -272,7 +282,7 @@ class LexerSimpleTest {
 
         assertToken(
             token,
-            type = TokenType.NUMBER,
+            type = NUMBER,
             content = input,
             end = input.length - 1
         )
@@ -285,13 +295,13 @@ class LexerSimpleTest {
 
         assertToken(
             token,
-            type = TokenType.NUMBER,
+            type = NUMBER,
             content = "10.5",
             end = 3
         )
         assertToken(
             lexer.nextToken(),
-            type = TokenType.ERROR,
+            type = ERROR,
             content = ".",
             start = 4,
             end = 4
@@ -307,7 +317,7 @@ class LexerSimpleTest {
 
         assertToken(
             token,
-            type = TokenType.PARENS,
+            type = PARENS,
             content = input,
             end = 0
         )
@@ -324,7 +334,7 @@ class LexerSimpleTest {
 
         assertToken(
             token,
-            type = TokenType.STRING,
+            type = STRING,
             content = input.drop(1).dropLast(1),
             end = input.length - 1
         )
@@ -343,7 +353,7 @@ class LexerSimpleTest {
 
         assertToken(
             token,
-            type = TokenType.STRING,
+            type = STRING,
             content = content,
             end = length + 1
         )
@@ -356,7 +366,7 @@ class LexerSimpleTest {
 
         assertToken(
             token,
-            type = TokenType.STRING,
+            type = STRING,
             content = "aa",
             end = 5
         )

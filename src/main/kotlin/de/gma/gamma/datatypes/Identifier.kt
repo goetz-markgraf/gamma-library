@@ -2,8 +2,8 @@ package de.gma.gamma.datatypes
 
 import de.gma.gamma.parser.Position
 
-class IntegerValue(
-    val num: Int,
+class Identifier(
+    val name: String,
     sourceName: String,
     start: Position,
     end: Position

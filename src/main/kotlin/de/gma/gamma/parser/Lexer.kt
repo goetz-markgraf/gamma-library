@@ -1,8 +1,5 @@
 package de.gma.gamma.parser
 
-import de.gma.gamma.Token
-import de.gma.gamma.TokenType
-import de.gma.gamma.Position
 import java.lang.Character.MIN_VALUE as nullChar
 
 class Lexer(
@@ -161,7 +158,7 @@ class Lexer(
 
     private fun parseIdentifier(): Token {
         val start = position()
-        val content = StringBuilder()
+        val contentBuffer = StringBuilder()
 
         var end = position()
 
@@ -169,14 +166,21 @@ class Lexer(
             isIdentifierChar(char) || (isValidSpecialIdentifierNonEndingChar(char) && isIdentifierChar(peekChar))
 
         while (isStillIdentifier()) {
-            content.append(char)
+            contentBuffer.append(char)
             end = position()
             next()
         }
 
+        val content = contentBuffer.toString()
+        val id = when (content) {
+            "let" -> TokenType.LET
+            "set" -> TokenType.SET
+            else -> TokenType.ID
+        }
+
         return Token(
-            type = TokenType.ID,
-            content = content.toString(),
+            type = id,
+            content = contentBuffer.toString(),
             sourceName = sourceName,
             start = start,
             end = end
