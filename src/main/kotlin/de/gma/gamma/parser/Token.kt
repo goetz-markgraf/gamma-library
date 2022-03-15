@@ -7,17 +7,25 @@ data class Position(
     val line: Int
 )
 
-data class GammaToken(
-    val type : GammaTokenType,
+data class Token(
+    val type: TokenType,
     val content: String,
+    val sourceName: String,
     val start: Position,
     val end: Position
 )
 
 
-enum class GammaTokenType {
-    NUMBER,
+enum class TokenType {
+    EOF,
     ERROR,
+    NUMBER,
     PARENS,
-    STRING
+    STRING,
+    OP,
+    TOP,
+    ID,
+    TID,
+    UNIT,
+    EXEND
 }
