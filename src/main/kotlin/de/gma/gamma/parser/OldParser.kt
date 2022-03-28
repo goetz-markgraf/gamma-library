@@ -1,10 +1,11 @@
 package de.gma.gamma.parser
 
 import de.gma.gamma.parser.TokenType.*
-import de.gma.gamma.datatypes.*
+import de.gma.gamma.olddatatypes.*
 
-class Parser(private val lexer: Lexer) {
+class OldParser(private val lexer: Lexer) {
     var token: Token = lexer.nextToken()
+    var peekToken: Token = lexer.nextToken()
 
     fun nextExpression(col: Int): Value {
 
@@ -15,7 +16,7 @@ class Parser(private val lexer: Lexer) {
 
             STRING -> parseString()
 
-            ID, TOP -> parseIdentifierOrFunctionCall(col)
+            ID, FUNC_OP -> parseIdentifierOrFunctionCall(col)
 
             else -> throw RuntimeException("NOT YET IMPLEMENTED")
         }
@@ -38,7 +39,7 @@ class Parser(private val lexer: Lexer) {
                 UNIT -> return FunctionCall(listOf(id), id.sourceName, id.start, token.end)
                 NUMBER -> call.add(parseNumber())
                 STRING -> call.add(parseString())
-                ID, TOP -> call.add(parseIdentifier())
+                ID, FUNC_OP -> call.add(parseIdentifier())
                 else -> cont = false
             }
         }
@@ -100,6 +101,7 @@ class Parser(private val lexer: Lexer) {
     }
 
     private fun next() {
-        token = lexer.nextToken()
+        token = peekToken
+        peekToken = lexer.nextToken()
     }
 }

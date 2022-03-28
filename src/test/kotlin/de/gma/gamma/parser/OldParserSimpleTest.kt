@@ -1,11 +1,11 @@
 package de.gma.gamma.parser
 
-import de.gma.gamma.datatypes.*
+import de.gma.gamma.olddatatypes.*
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 
-class ParserSimpleTest {
+class OldParserSimpleTest {
 
 
     // ============ function call tests ===============
@@ -13,7 +13,7 @@ class ParserSimpleTest {
     @Test
     fun `parse a function call`() {
         val source = "a a a"
-        val parser = Parser(Lexer(source, "Script"))
+        val parser = OldParser(Lexer(source, "Script"))
 
         val value = parser.nextExpression(0)
 
@@ -27,7 +27,7 @@ class ParserSimpleTest {
     @Test
     fun `parse a function call with a string parameter`() {
         val source = "a \"a\""
-        val parser = Parser(Lexer(source, "Script"))
+        val parser = OldParser(Lexer(source, "Script"))
 
         val value = parser.nextExpression(0)
 
@@ -41,7 +41,7 @@ class ParserSimpleTest {
     @Test
     fun `parse a function call with unit`() {
         val source = "a()"
-        val parser = Parser(Lexer(source, "Script"))
+        val parser = OldParser(Lexer(source, "Script"))
 
         val value = parser.nextExpression(0)
 
@@ -58,7 +58,7 @@ class ParserSimpleTest {
     @Test
     fun `parse an identifier`() {
         val source = "a"
-        val parser = Parser(Lexer(source, "Script"))
+        val parser = OldParser(Lexer(source, "Script"))
 
         val value = parser.nextExpression(0)
 
@@ -70,8 +70,8 @@ class ParserSimpleTest {
 
     @Test
     fun `parse a ticked operator`() {
-        val source = "´|>´"
-        val parser = Parser(Lexer(source, "Script"))
+        val source = "(|>)"
+        val parser = OldParser(Lexer(source, "Script"))
 
         val value = parser.nextExpression(0)
 
@@ -88,7 +88,7 @@ class ParserSimpleTest {
     @Test
     fun `parse a string`() {
         val source = "\"H\""
-        val parser = Parser(Lexer(source, "Script"))
+        val parser = OldParser(Lexer(source, "Script"))
 
         val value = parser.nextExpression(0)
 
@@ -104,7 +104,7 @@ class ParserSimpleTest {
     @Test
     fun `parse an integer number value`() {
         val source = "10"
-        val parser = Parser(Lexer(source, "Script"))
+        val parser = OldParser(Lexer(source, "Script"))
 
         val value = parser.nextExpression(0)
 
@@ -117,7 +117,7 @@ class ParserSimpleTest {
     @Test
     fun `parse a float number value`() {
         val source = "1.5"
-        val parser = Parser(Lexer(source, "Script"))
+        val parser = OldParser(Lexer(source, "Script"))
 
         val value = parser.nextExpression(0)
 

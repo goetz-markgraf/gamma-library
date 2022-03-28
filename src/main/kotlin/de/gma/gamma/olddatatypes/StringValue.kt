@@ -1,9 +1,9 @@
-package de.gma.gamma.datatypes
+package de.gma.gamma.olddatatypes
 
 import de.gma.gamma.parser.Position
 
-class FunctionCall(
-    val elements: List<Value>,
+class StringValue(
+    val content: String,
     sourceName: String,
     start: Position,
     end: Position
