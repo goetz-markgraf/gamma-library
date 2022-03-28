@@ -4,19 +4,29 @@ import java.lang.Character.MIN_VALUE as nullChar
 
 
 const val MINUS = '-'
+const val PLUS = '+'
+const val MUL = '*'
 const val DOT = '.'
 const val ESC = '\\'
 const val QUOTE = '\"'
 const val NEWLINE = '\n'
-const val TICK = '´'
-const val BACKTICK = '`'
 const val UNIT1 = '('
 const val UNIT2 = ')'
-const val COMMENT = '#'
+const val COMMENT = '/'
+const val LPARENS = '('
+const val RPARENS = ')'
+const val HASH = '#'
+const val COLON = ':'
+const val UNDERSCORE = '_'
+const val BANG = '!'
+const val QUESTIONMARK = '?'
 
 
-fun isStartOfComment(char: Char) =
-    char == COMMENT
+fun isStartOfProperty(char: Char) =
+    char == HASH
+
+fun isStartOfComment(char: Char, peekChar: Char) =
+    char == COMMENT && peekChar == COMMENT
 
 fun isEof(char: Char) =
     char == nullChar
@@ -40,31 +50,32 @@ fun isStartOfNumber(char: Char, peekChar: Char) =
             || (char == DOT && isNumberChar(peekChar))
 
 
-fun isStartOfIdentifier(char: Char) =
-    Character.isLetter(char)
+fun isStartOfIdentifier(char: Char, peekChar: Char) =
+    Character.isLetter(char) || char == UNDERSCORE && Character.isLetter(peekChar)
 
 fun isIdentifierChar(char: Char) =
     Character.isLetter(char) || Character.isDigit(char) || isValidSpecialIdentifierChar(char)
 
-fun isValidSpecialIdentifierNonEndingChar(char: Char) =
-    ".-_+".contains(char)
+fun isValidIdentifierSeparatorChar(char: Char) =
+    char == MINUS || char == PLUS || char == DOT || char == UNDERSCORE
 
 fun isValidSpecialIdentifierChar(char: Char) =
-    "*!?".contains(char)
+    char == MUL || char == BANG || char == QUESTIONMARK
 
 fun isStartOfString(char: Char) =
     char == QUOTE
 
+fun isSpread(char: Char, peekChar: Char, peekPeekChar: Char) =
+    char == DOT && peekChar == DOT && peekPeekChar == DOT
+
+fun isColon(char: Char) =
+    char == COLON
 
 fun isOperatorChar(char: Char) =
     "<>-+^/\\:%$|=!&".contains(char)
 
-
-fun isTickedIdentifierChar(char: Char, peekChar: Char) =
-    (char == TICK || char == BACKTICK) && isStartOfIdentifier(peekChar)
-
-fun isTickedOperatorChar(char: Char, peekChar: Char) =
-    (char == TICK || char == BACKTICK) && isOperatorChar(peekChar)
+fun isStartOfFunctionOperator(char: Char, peekChar: Char) =
+    char == LPARENS && isOperatorChar(peekChar)
 
 fun isExpressionEndingChar(char: Char) =
     ",;".contains(char)

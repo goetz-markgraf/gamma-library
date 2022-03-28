@@ -17,17 +17,21 @@ data class Token(
 
 
 enum class TokenType {
+    PROPERTY,
     EOF,
     ERROR,
     NUMBER,
     PARENS,
     STRING,
     OP,
-    TOP,
+    SPREAD,
+    FUNC_OP,
     ID,
-    TID,
+    OP_ID,
+    UNIT,
+    EXEND,
     LET,
     SET,
-    UNIT,
-    EXEND
+    TYPE,
+    MODULE
 }

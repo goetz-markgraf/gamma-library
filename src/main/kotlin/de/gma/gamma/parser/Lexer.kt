@@ -15,6 +15,7 @@ class Lexer(
 
     private var char = nullChar
     private var peekChar = nullChar
+    private var peekPeekChar = nullChar
 
     init {
         if (source.isNotBlank())
@@ -22,6 +23,9 @@ class Lexer(
 
         if (source.length > 1)
             peekChar = source[1]
+
+        if (source.length > 2)
+            peekPeekChar = source[2]
     }
 
     private fun eof() =
@@ -44,19 +48,21 @@ class Lexer(
         return when {
             isStartOfNumber(char, peekChar) -> parseNumber()
 
-            isStartOfIdentifier(char) -> parseIdentifier()
+            isStartOfProperty(char) -> parseProperty()
 
-            isTickedIdentifierChar(char, peekChar) -> parseTickedIdentifier()
+            isStartOfIdentifier(char, peekChar) -> parseIdentifier()
+
+            isSpread(char, peekChar, peekPeekChar) -> parseSpread()
 
             isOperatorChar(char) -> parseOperator()
 
-            isTickedOperatorChar(char, peekChar) -> parseTickedOperator()
+            isStartOfFunctionOperator(char, peekChar) -> parseFunctionOperator()
 
             isUnit(char, peekChar) -> parseUnit()
 
             isParens(char) -> parseParens()
 
-            isStartOfString(char) -> parseDQuoteString()
+            isStartOfString(char) -> parseString()
 
             isExpressionEndingChar(char) -> parseExpressionEnding()
 
@@ -112,26 +118,31 @@ class Lexer(
         )
     }
 
-    private fun parseTickedIdentifier(): Token {
+    private fun parseFunctionOperator(): Token {
         next() // Wir brauchen den Tick nicht
-        val ret = parseIdentifier()
-        return if (char == TICK || char == BACKTICK) {
+        val ret = parseOperator()
+        return if (char == RPARENS) {
             next()
-            ret.copy(type = TokenType.TID)
+            ret.copy(type = TokenType.FUNC_OP)
         } else {
             ret.copy(type = TokenType.ERROR)
         }
     }
 
-    private fun parseTickedOperator(): Token {
-        next() // Wir brauchen den Tick nicht
-        val ret = parseOperator()
-        return if (char == TICK || char == BACKTICK) {
-            next()
-            ret.copy(type = TokenType.TOP)
-        } else {
-            ret.copy(type = TokenType.ERROR)
-        }
+
+    private fun parseSpread(): Token {
+        val start = position()
+        next()
+        next()
+        val end = position()
+        next()
+        return Token(
+            type = TokenType.SPREAD,
+            content = "...",
+            sourceName = sourceName,
+            start = start,
+            end = end
+        )
     }
 
 
@@ -156,6 +167,29 @@ class Lexer(
     }
 
 
+    private fun parseProperty(): Token {
+        val start = position()
+        next()
+        if (!isStartOfIdentifier(char, peekChar))
+            return Token(
+                type = TokenType.ERROR,
+                content = "#",
+                start = start,
+                end = start,
+                sourceName = sourceName
+            )
+
+        val ret = parseIdentifier()
+        return Token(
+            type = TokenType.PROPERTY,
+            start = start,
+            end = ret.end,
+            content = '#' + ret.content,
+            sourceName = ret.sourceName
+        )
+    }
+
+
     private fun parseIdentifier(): Token {
         val start = position()
         val contentBuffer = StringBuilder()
@@ -163,7 +197,8 @@ class Lexer(
         var end = position()
 
         fun isStillIdentifier() =
-            isIdentifierChar(char) || (isValidSpecialIdentifierNonEndingChar(char) && isIdentifierChar(peekChar))
+            isIdentifierChar(char)
+                    || (isValidIdentifierSeparatorChar(char) && isStartOfIdentifier(peekChar, peekPeekChar))
 
         while (isStillIdentifier()) {
             contentBuffer.append(char)
@@ -171,11 +206,19 @@ class Lexer(
             next()
         }
 
-        val content = contentBuffer.toString()
-        val id = when (content) {
+        var id = when (contentBuffer.toString()) {
             "let" -> TokenType.LET
             "set" -> TokenType.SET
+            "type" -> TokenType.TYPE
+            "module" -> TokenType.MODULE
             else -> TokenType.ID
+        }
+
+        if (isColon(char)) {
+            end = position()
+            next()
+            id = TokenType.OP_ID
+            contentBuffer.append(COLON)
         }
 
         return Token(
@@ -188,7 +231,7 @@ class Lexer(
     }
 
 
-    private fun parseDQuoteString(): Token {
+    private fun parseString(): Token {
         val start = position()
         val content = StringBuilder()
 
@@ -294,16 +337,21 @@ class Lexer(
      */
     private fun next() {
         pos++
-        if (char == NEWLINE) {
-            line++
-            col = 0
-        } else {
-            col++
+
+        // /r (part of newline on windows machines) will not be counted but silenty ignored in col/line
+        if (char != '\r') {
+            if (char == NEWLINE) {
+                line++
+                col = 0
+            } else {
+                col++
+            }
         }
 
         if (pos >= length) {
             char = nullChar
             peekChar = nullChar
+            peekPeekChar = nullChar
         } else {
             char = peekChar
 
@@ -311,20 +359,25 @@ class Lexer(
                 peekChar = source[pos + 1]
             else
                 peekChar = nullChar
+
+            if (pos < length - 2)
+                peekPeekChar = source[pos + 2]
+            else
+                peekPeekChar = nullChar
         }
     }
 
     private fun skipWhitespace() {
-        while (isWhitespace(char) || isStartOfComment(char)) {
-            if (isStartOfComment(char)) {
-                skiptComment()
+        while (isWhitespace(char) || isStartOfComment(char, peekChar)) {
+            if (isStartOfComment(char, peekChar)) {
+                skipComment()
             } else {
                 next()
             }
         }
     }
 
-    private fun skiptComment() {
+    private fun skipComment() {
         while (char != NEWLINE && char != nullChar)
             next()
     }

@@ -42,30 +42,30 @@ class LexerSimpleTest {
 
     @Test
     fun `skip comment`() {
-        val source = "#comment"
+        val source = "//comment"
         val token = getTokenFromInput(source)
         assertThat(token.type).isEqualTo(EOF)
     }
 
     @Test
     fun `skip comment with newline`() {
-        val source = "#comment\na"
+        val source = "//comment\na"
         val token = getTokenFromInput(source)
 
         assertToken(
             token,
             type = ID,
             content = "a",
-            start = 9,
-            end = 9
+            start = 10,
+            end = 10
         )
-        assertThat(token.start).isEqualTo(Position(9, 0, 1))
-        assertThat(token.end).isEqualTo(Position(9, 0, 1))
+        assertThat(token.start).isEqualTo(Position(10, 0, 1))
+        assertThat(token.end).isEqualTo(Position(10, 0, 1))
     }
 
 
     @Test
-    fun `skip leading newline`() {
+    fun `skip newline`() {
         val source = "\na"
         val token = getTokenFromInput(source)
 
@@ -79,6 +79,23 @@ class LexerSimpleTest {
 
         assertThat(token.start).isEqualTo(Position(1, 0, 1))
         assertThat(token.end).isEqualTo(Position(1, 0, 1))
+    }
+
+    @Test
+    fun `skip windows newline`() {
+        val source = "\r\na"
+        val token = getTokenFromInput(source)
+
+        assertToken(
+            token,
+            type = ID,
+            content = "a",
+            start = 2,
+            end = 2
+        )
+
+        assertThat(token.start).isEqualTo(Position(2, 0, 1))
+        assertThat(token.end).isEqualTo(Position(2, 0, 1))
     }
 
     @ParameterizedTest
@@ -138,19 +155,35 @@ class LexerSimpleTest {
     @ParameterizedTest
     @ValueSource(
         strings = [
-            "´<=´", "`>>`", "´-`", "`+`"
+            "(<=)", "(>>)", "(-)", "(+)"
         ]
     )
-    fun `parse ticked operator`(source: String) {
+    fun `parse operator function`(source: String) {
         val token = getTokenFromInput(source)
 
         assertToken(
             token,
-            type = TOP,
+            type = FUNC_OP,
             content = source.drop(1).dropLast(1),
             start = 1,
             end = source.length - 2
         )
+    }
+
+
+    @ParameterizedTest
+    @ValueSource(
+        strings = [
+            "(+",
+            "(+ ",
+            "(-a"
+        ]
+    )
+    fun `parse wrong operator function`(source: String) {
+        val token = getTokenFromInput(source)
+
+        assertThat(token.type).isEqualTo(ERROR)
+        assertThat(token.content).startsWith(source.drop(1).first().toString())
     }
 
     @Test
@@ -163,6 +196,20 @@ class LexerSimpleTest {
             type = UNIT,
             content = "()",
             end = 1
+        )
+    }
+
+
+    @Test
+    fun `parse spread operator`() {
+        val source = "..."
+        val token = getTokenFromInput(source)
+
+        assertToken(
+            token,
+            type = SPREAD,
+            content = "...",
+            end = 2
         )
     }
 
@@ -181,6 +228,44 @@ class LexerSimpleTest {
         assertThat(token.type).isEqualTo(SET)
     }
 
+    @Test
+    fun `parse module keyword`() {
+        val token = getTokenFromInput("module")
+        assertThat(token.type).isEqualTo(MODULE)
+    }
+
+    @Test
+    fun `parse type keyword`() {
+        val token = getTokenFromInput("type")
+        assertThat(token.type).isEqualTo(TYPE)
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = ["#a", "#a1"])
+    fun `parse correct property`(source: String) {
+        val token = getTokenFromInput(source)
+
+        assertToken(
+            token,
+            type = PROPERTY,
+            content = source,
+            end = source.length - 1
+        )
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = ["#1", "##", "#"])
+    fun `parse incorrect property`(source: String) {
+        val token = getTokenFromInput(source)
+
+        assertToken(
+            token,
+            type = ERROR,
+            content = "#",
+            end = 0
+        )
+    }
+
     @ParameterizedTest
     @ValueSource(
         strings = [
@@ -194,7 +279,9 @@ class LexerSimpleTest {
             "a",
             "a_a",
             "a-a",
-            "a+a"
+            "a+a",
+            "_a",
+            "_a?"
         ]
     )
     fun `parse correct identifier names`(source: String) {
@@ -205,6 +292,19 @@ class LexerSimpleTest {
             type = ID,
             content = source,
             end = source.length - 1
+        )
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = ["a+.a", "a.+a"])
+    fun `parse invalid identifier`(source: String) {
+        val token = getTokenFromInput(source)
+
+        assertToken(
+            token,
+            type = ID,
+            content = source.first().toString(),
+            end = 0
         )
     }
 
@@ -234,44 +334,27 @@ class LexerSimpleTest {
     @ParameterizedTest
     @ValueSource(
         strings = [
-            "´a6a´",
-            "´a´",
-            "´a!´",
-            "´a6a`",
-            "`a´",
-            "`a6a`",
-            "`a`",
-            "`a!`"
+            "a6a:",
+            "a:",
+            "a!:",
+            "a6a:",
+            "a:",
+            "a6a:",
+            "a:",
+            "a!:"
         ]
     )
-    fun `parse (back-)ticked identifier`(source: String) {
+    fun `parse identifier in operator position`(source: String) {
         val token = getTokenFromInput(source)
 
         assertToken(
             token,
-            type = TID,
-            content = source.drop(1).dropLast(1),
-            start = 1,
-            end = source.length - 2
+            type = OP_ID,
+            content = source,
+            start = 0,
+            end = source.length - 1
         )
     }
-
-    @ParameterizedTest
-    @ValueSource(
-        strings = [
-            "´a6a",
-            "`a",
-            "´a!\"´",
-            "´a!<´",
-        ]
-    )
-    fun `parse wrong (back-)ticked identifier`(source: String) {
-        val token = getTokenFromInput(source)
-
-        assertThat(token.type).isEqualTo(ERROR)
-        assertThat(token.content).startsWith(source.drop(1).first().toString())
-    }
-
 
     // ============== Numbers ==============
 
@@ -395,6 +478,5 @@ class LexerSimpleTest {
         assertThat(token.sourceName).isEqualTo(sourceName)
         assertThat(token.start.pos).isEqualTo(start)
         assertThat(token.end.pos).isEqualTo(end)
-
     }
 }
