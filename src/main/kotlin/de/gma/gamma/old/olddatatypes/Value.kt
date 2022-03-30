@@ -1,4 +1,4 @@
-package de.gma.gamma.olddatatypes
+package de.gma.gamma.old.olddatatypes
 
 import de.gma.gamma.parser.Position
 

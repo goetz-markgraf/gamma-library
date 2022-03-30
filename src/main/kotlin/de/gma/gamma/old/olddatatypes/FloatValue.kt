@@ -1,9 +1,9 @@
-package de.gma.gamma.olddatatypes
+package de.gma.gamma.old.olddatatypes
 
 import de.gma.gamma.parser.Position
 
-class IntegerValue(
-    val num: Int,
+class FloatValue(
+    val num: Double,
     sourceName: String,
     start: Position,
     end: Position

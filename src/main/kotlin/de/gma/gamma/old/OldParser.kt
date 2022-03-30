@@ -1,7 +1,9 @@
-package de.gma.gamma.parser
+package de.gma.gamma.old
 
+import de.gma.gamma.old.olddatatypes.*
 import de.gma.gamma.parser.TokenType.*
-import de.gma.gamma.olddatatypes.*
+import de.gma.gamma.parser.Lexer
+import de.gma.gamma.parser.Token
 
 class OldParser(private val lexer: Lexer) {
     var token: Token = lexer.nextToken()
