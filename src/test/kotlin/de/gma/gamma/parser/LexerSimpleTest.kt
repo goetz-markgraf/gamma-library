@@ -22,6 +22,19 @@ class LexerSimpleTest {
 
     // ============== whitespace ==============
 
+    @Test
+    fun `detect illegal tab char`() {
+        val source = "\ta"
+
+        val token = getTokenFromInput(source)
+
+        assertToken(
+            token,
+            type = ERROR,
+            content = "\t",
+            end = 0
+        )
+    }
 
     @Test
     fun `skip leading spaces`() {

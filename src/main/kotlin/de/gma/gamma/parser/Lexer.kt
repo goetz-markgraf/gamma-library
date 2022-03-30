@@ -368,7 +368,8 @@ class Lexer(
     }
 
     private fun skipWhitespace() {
-        while (isWhitespace(char) || isStartOfComment(char, peekChar)) {
+        fun isGammaWhitespace() = char != '\t' && (isWhitespace(char) || isStartOfComment(char, peekChar))
+        while (isGammaWhitespace()) {
             if (isStartOfComment(char, peekChar)) {
                 skipComment()
             } else {
