@@ -1,7 +1,7 @@
 package de.gma.gamma
 
-import de.gma.gamma.parser.Lexer
 import de.gma.gamma.parser.EvaluationException
+import de.gma.gamma.parser.Lexer
 import de.gma.gamma.parser.TokenType
 
 fun main() {

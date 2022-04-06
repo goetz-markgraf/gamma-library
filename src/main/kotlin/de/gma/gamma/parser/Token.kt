@@ -33,5 +33,6 @@ enum class TokenType {
     LET,
     SET,
     TYPE,
-    MODULE
+    MODULE,
+    ELVIS
 }

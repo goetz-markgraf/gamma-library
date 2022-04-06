@@ -1,11 +1,11 @@
 package de.gma.gamma.parser
 
+import de.gma.gamma.parser.TokenType.*
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 import org.junit.jupiter.params.provider.ValueSource
-import de.gma.gamma.parser.TokenType.*
 
 
 class LexerSimpleTest {
@@ -131,10 +131,22 @@ class LexerSimpleTest {
     // ============== operators ==============
 
 
+    @Test
+    fun `single colon is elvis character`() {
+        val token = getTokenFromInput(":")
+
+        assertToken(
+            token,
+            type = ELVIS,
+            content = ":",
+            end = 0
+        )
+    }
+
     @ParameterizedTest
     @ValueSource(
         strings = [
-            "<", ">", "-", "+", "^", "/", ":", "%", "\\", "$", "|", "=", "!", "&"
+            "<", ">", "-", "+", "^", "/", "*", "%", "\\", "$", "|", "=", "!", "&"
         ]
     )
     fun `parse a valid operator character`(input: String) {
@@ -363,7 +375,7 @@ class LexerSimpleTest {
         assertToken(
             token,
             type = OP_ID,
-            content = source,
+            content = source.dropLast(1),
             start = 0,
             end = source.length - 1
         )

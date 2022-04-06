@@ -6,3 +6,4 @@ class EvaluationException(
     val line: Int,
     val col: Int
 ) : RuntimeException(message)
+// TODO Erweiterung Stacktrace einbauen

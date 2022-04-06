@@ -19,7 +19,7 @@ const val HASH = '#'
 const val COLON = ':'
 const val UNDERSCORE = '_'
 const val BANG = '!'
-const val QUESTIONMARK = '?'
+const val QUESTION_MARK = '?'
 
 
 fun isStartOfProperty(char: Char) =
@@ -60,7 +60,7 @@ fun isValidIdentifierSeparatorChar(char: Char) =
     char == MINUS || char == PLUS || char == DOT || char == UNDERSCORE
 
 fun isValidSpecialIdentifierChar(char: Char) =
-    char == MUL || char == BANG || char == QUESTIONMARK
+    char == MUL || char == BANG || char == QUESTION_MARK
 
 fun isStartOfString(char: Char) =
     char == QUOTE
@@ -72,10 +72,13 @@ fun isColon(char: Char) =
     char == COLON
 
 fun isOperatorChar(char: Char) =
-    "<>-+^/\\:%$|=!&".contains(char)
+    "<>-+*^/\\:%$|=!&".contains(char)
 
 fun isStartOfFunctionOperator(char: Char, peekChar: Char) =
     char == LPARENS && isOperatorChar(peekChar)
 
 fun isExpressionEndingChar(char: Char) =
     ",;".contains(char)
+
+fun isElvisCharacter(char: Char) =
+    char == QUESTION_MARK
