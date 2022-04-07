@@ -188,7 +188,7 @@ class LexerSimpleTest {
 
         assertToken(
             token,
-            type = FUNC_OP,
+            type = OP_AS_ID,
             content = source.drop(1).dropLast(1),
             start = 1,
             end = source.length - 2
@@ -263,6 +263,24 @@ class LexerSimpleTest {
     fun `parse type keyword`() {
         val token = getTokenFromInput("type")
         assertThat(token.type).isEqualTo(TYPE)
+    }
+
+    @Test
+    fun `parse true keyword`() {
+        val token = getTokenFromInput("true")
+        assertThat(token.type).isEqualTo(TRUE)
+    }
+
+    @Test
+    fun `parse false keyword`() {
+        val token = getTokenFromInput("false")
+        assertThat(token.type).isEqualTo(FALSE)
+    }
+
+    @Test
+    fun `parse null keyword`() {
+        val token = getTokenFromInput("null")
+        assertThat(token.type).isEqualTo(NULL)
     }
 
     @ParameterizedTest
@@ -374,7 +392,7 @@ class LexerSimpleTest {
 
         assertToken(
             token,
-            type = OP_ID,
+            type = ID_AS_OP,
             content = source.dropLast(1),
             start = 0,
             end = source.length - 1
@@ -419,13 +437,26 @@ class LexerSimpleTest {
     // ============== Parens ==============
 
     @ParameterizedTest
-    @ValueSource(strings = ["(", ")", "[", "]", "{", "}"])
-    fun `parse a parentheses`(input: String) {
+    @ValueSource(strings = ["(", "[", "{"])
+    fun `parse an opening parentheses`(input: String) {
         val token = getTokenFromInput(input)
 
         assertToken(
             token,
-            type = PARENS,
+            type = OPEN_PARENS,
+            content = input,
+            end = 0
+        )
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = [")", "]", "}"])
+    fun `parse a closing parentheses`(input: String) {
+        val token = getTokenFromInput(input)
+
+        assertToken(
+            token,
+            type = CLOSE_PARENS,
             content = input,
             end = 0
         )

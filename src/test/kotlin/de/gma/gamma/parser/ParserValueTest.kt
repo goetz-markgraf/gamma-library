@@ -138,6 +138,26 @@ class ParserValueTest : BaseParserTest() {
 
             assertThat(id.prettyPrint()).isEqualTo("(++)")
         }
+    }
 
+    @Nested
+    inner class Boolean {
+        @Test
+        fun `parse true`() {
+            val expression = getExpression("true")
+
+            assertThat(expression).isInstanceOf(GBoolean::class.java)
+            val bool = expression as GBoolean
+            assertThat(bool.boolValue).isTrue
+        }
+
+        @Test
+        fun `parse false`() {
+            val expression = getExpression("false")
+
+            assertThat(expression).isInstanceOf(GBoolean::class.java)
+            val bool = expression as GBoolean
+            assertThat(bool.boolValue).isFalse
+        }
     }
 }

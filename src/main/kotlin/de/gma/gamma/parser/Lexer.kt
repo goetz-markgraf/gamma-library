@@ -56,7 +56,7 @@ class Lexer(
 
             isOperatorChar(char) -> parseOperator()
 
-            isStartOfFunctionOperator(char, peekChar) -> parseFunctionOperator()
+            isStartOfFunctionOperator(char, peekChar) -> parseOperatorAsIdentifier()
 
             isUnit(char, peekChar) -> parseUnit()
 
@@ -124,19 +124,19 @@ class Lexer(
         next()
         return Token(
             type = TokenType.UNIT,
-            content = "$UNIT1$UNIT2",
+            content = "$CH_UNIT1$CH_UNIT2",
             sourceName = sourceName,
             start = start,
             end = end
         )
     }
 
-    private fun parseFunctionOperator(): Token {
+    private fun parseOperatorAsIdentifier(): Token {
         next() // Wir brauchen den Tick nicht
         val ret = parseOperator()
-        return if (char == RPARENS) {
+        return if (char == CH_RPARENS) {
             next()
-            ret.copy(type = TokenType.FUNC_OP)
+            ret.copy(type = TokenType.OP_AS_ID)
         } else {
             ret.copy(type = TokenType.ERROR)
         }
@@ -225,13 +225,16 @@ class Lexer(
             "set" -> TokenType.SET
             "type" -> TokenType.TYPE
             "module" -> TokenType.MODULE
+            "true" -> TokenType.TRUE
+            "false" -> TokenType.FALSE
+            "null" -> TokenType.NULL
             else -> TokenType.ID
         }
 
         if (isColon(char)) {
             end = position()
             next()
-            id = TokenType.OP_ID
+            id = TokenType.ID_AS_OP
         }
 
         return Token(
@@ -251,10 +254,10 @@ class Lexer(
         // consume the "
         next()
 
-        fun isStillInString() = char != QUOTE && char != NEWLINE && char != nullChar
+        fun isStillInString() = char != CH_QUOTE && char != CH_NEWLINE && char != nullChar
 
         while (isStillInString()) {
-            if (char == ESC) {
+            if (char == CH_ESC) {
                 next() // for ESC char
                 when (char) {
                     'n' -> {
@@ -263,7 +266,7 @@ class Lexer(
                     't' -> {
                         content.append("\t")
                     }
-                    NEWLINE -> {
+                    CH_NEWLINE -> {
                         // do nothing
                     }
                     else -> {
@@ -276,7 +279,7 @@ class Lexer(
             next()
         }
 
-        val type = if (char != QUOTE) TokenType.ERROR else TokenType.STRING
+        val type = if (char != CH_QUOTE) TokenType.ERROR else TokenType.STRING
         val end = position()
 
         next()
@@ -291,8 +294,9 @@ class Lexer(
 
 
     private fun parseParens(): Token {
+        val open = "({[".contains(char)
         val ret = Token(
-            type = TokenType.PARENS,
+            type = if (open) TokenType.OPEN_PARENS else TokenType.CLOSE_PARENS,
             content = char.toString(),
             sourceName = sourceName,
             start = position(),
@@ -309,11 +313,12 @@ class Lexer(
         var decimal = false
         var end = position()
 
-        fun isStillNumber() = isNumberChar(char) || (position() == start && char == MINUS) || (!decimal && char == DOT)
+        fun isStillNumber() =
+            isNumberChar(char) || (position() == start && char == CH_MINUS) || (!decimal && char == CH_DOT)
 
         while (isStillNumber()) {
             content.append(char)
-            if (char == DOT)
+            if (char == CH_DOT)
                 decimal = true
             end = position()
             next()
@@ -353,7 +358,7 @@ class Lexer(
 
         // /r (part of newline on windows machines) will not be counted but silenty ignored in col/line
         if (char != '\r') {
-            if (char == NEWLINE) {
+            if (char == CH_NEWLINE) {
                 line++
                 col = 0
             } else {
@@ -392,7 +397,7 @@ class Lexer(
     }
 
     private fun skipComment() {
-        while (char != NEWLINE && char != nullChar)
+        while (char != CH_NEWLINE && char != nullChar)
             next()
     }
 }

@@ -1,9 +1,9 @@
 package de.gma.gamma.parser
 
 import de.gma.gamma.datatypes.*
+import de.gma.gamma.datatypes.expressions.GFunctionCall
 import de.gma.gamma.datatypes.expressions.GIfExpression
 import de.gma.gamma.datatypes.expressions.GLetExpression
-import de.gma.gamma.datatypes.expressions.GOperation
 import de.gma.gamma.parser.TokenType.*
 
 
@@ -67,14 +67,14 @@ class Parser(
         val start = currStart
 
         val op1 = parseAddition(col)
-        if (op1 != null && checkType(col, OP, OP_ID)) {
+        if (op1 != null && checkType(col, OP, ID_AS_OP)) {
             val op = parseOperator(col)
 
             val op2 = parseProduct(col)
             assertNotNull(op2)
 
 
-            return GOperation(sourceName, start, currEnd, op, op1, op2!!)
+            return GFunctionCall.fromOperation(sourceName, start, currEnd, op, op1, op2!!)
         }
 
         return op1
@@ -93,7 +93,7 @@ class Parser(
                 val sum2 = parseProduct(col)
                 assertNotNull(sum2)
 
-                return GOperation(sourceName, start, currEnd, op, sum1, sum2!!)
+                return GFunctionCall.fromOperation(sourceName, start, currEnd, op, sum1, sum2!!)
             }
         }
 
@@ -113,7 +113,7 @@ class Parser(
                 val fac2 = parseFunctionCall(col)
                 assertNotNull(fac2)
 
-                return GOperation(sourceName, start, currEnd, op, fac1, fac2!!)
+                return GFunctionCall.fromOperation(sourceName, start, currEnd, op, fac1, fac2!!)
             }
         }
 
@@ -125,7 +125,25 @@ class Parser(
 
         val elem1 = parseElement(col)
 
-        // TODO parse rest of functioncall
+        if (elem1 != null) {
+            val params = mutableListOf<GValue>()
+            var nextElem = parseElement(col + 1)
+            while (nextElem != null) {
+                params.add(nextElem)
+
+                nextElem = parseElement(col + 1)
+            }
+
+            // no params
+            if (params.isEmpty())
+                return elem1
+
+            // check if params are OK
+            if (params.find { it.type == GValueType.UNIT } != null && params.size > 1)
+                throw createIllegalUnitParameterException(params.first().beginPos)
+
+            return GFunctionCall(sourceName, currStart, currEnd, elem1, params)
+        }
         return elem1
     }
 
@@ -133,8 +151,12 @@ class Parser(
         if (currStart.col < col)
             return null
 
+        val endTokens = listOf(EOF, EXEND, CLOSE_PARENS, OP, ID_AS_OP, ERROR, LET, SET, TYPE, MODULE, ELVIS)
+        if (endTokens.indexOf(currType) >= 0)
+            return null
+
         return when (currType) {
-            ID, FUNC_OP -> parseIdentifier(col)
+            ID, OP_AS_ID -> parseIdentifier(col)
 
             NUMBER -> parseNumber(col)
 
@@ -144,14 +166,25 @@ class Parser(
 
             PROPERTY -> parseProperty(col)
 
+            TRUE, FALSE -> parseBoolean(col)
+
             else -> throw createIllegalTokenException()
         }
     }
 
+    private fun parseBoolean(col: Int): GBoolean {
+        assertType(col, TRUE, FALSE)
+
+        val ret = GBoolean(sourceName, currStart, currEnd, currType == TRUE)
+        nextToken()
+        return ret
+    }
 
     private fun parseUnit(col: Int): GUnit {
         assertType(col, UNIT)
-        return GUnit(sourceName, currStart, currEnd)
+        val ret = GUnit(sourceName, currStart, currEnd)
+        nextToken()
+        return ret
     }
 
     private fun parseString(col: Int): GValue {
@@ -187,19 +220,21 @@ class Parser(
 
 
     private fun parseIdentifier(col: Int): GIdentifier {
-        assertType(col, ID, FUNC_OP)
+        assertType(col, ID, OP_AS_ID)
         val name = currToken.content
+        val type = if (currType == ID) GIdentifierType.ID else GIdentifierType.OP_AS_ID
 
-        val ret = GIdentifier(sourceName, currStart, currEnd, name, currType == FUNC_OP)
+        val ret = GIdentifier(sourceName, currStart, currEnd, name, type)
         nextToken()
         return ret
     }
 
-    private fun parseOperator(col: Int): GOperator {
-        assertType(col, OP, OP_ID)
+    private fun parseOperator(col: Int): GIdentifier {
+        assertType(col, OP, ID_AS_OP)
         val name = currToken.content
+        val type = if (currType == OP) GIdentifierType.OP else GIdentifierType.ID_AS_OP
 
-        val ret = GOperator(sourceName, currStart, currEnd, name, currType == OP)
+        val ret = GIdentifier(sourceName, currStart, currEnd, name, type)
         nextToken()
         return ret
     }
@@ -263,6 +298,14 @@ class Parser(
             sourceName,
             currStart.line,
             currStart.col
+        )
+
+    private fun createIllegalUnitParameterException(beginPos: Position) =
+        EvaluationException(
+            "Unit parameter () can only be used as a single parameter",
+            sourceName,
+            beginPos.line,
+            beginPos.col
         )
 
 

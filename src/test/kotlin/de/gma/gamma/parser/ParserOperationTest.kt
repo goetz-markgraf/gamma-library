@@ -1,8 +1,8 @@
 package de.gma.gamma.parser
 
 import de.gma.gamma.datatypes.GValueType
-import de.gma.gamma.datatypes.expressions.GOperation
-import org.assertj.core.api.Assertions
+import de.gma.gamma.datatypes.expressions.GFunctionCall
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 class ParserOperationTest : BaseParserTest() {
@@ -12,13 +12,14 @@ class ParserOperationTest : BaseParserTest() {
         val source = "a to: b"
         val expression = getExpression(source)
 
-        Assertions.assertThat(expression).isInstanceOf(GOperation::class.java)
-        val op = expression as GOperation
-        Assertions.assertThat(op.operator.identifier).isEqualTo("to")
-        Assertions.assertThat(op.param1.type).isEqualTo(GValueType.IDENTIFIER)
-        Assertions.assertThat(op.param2.type).isEqualTo(GValueType.IDENTIFIER)
+        assertThat(expression).isInstanceOf(GFunctionCall::class.java)
+        val op = expression as GFunctionCall
+        assertThat(op.function.type).isEqualTo(GValueType.IDENTIFIER)
+        assertThat(op.params).hasSize(2)
+        assertThat(op.params[0].type).isEqualTo(GValueType.IDENTIFIER)
+        assertThat(op.params[1].type).isEqualTo(GValueType.IDENTIFIER)
 
-        Assertions.assertThat(expression.prettyPrint()).isEqualTo("a to: b")
+        assertThat(expression.prettyPrint()).isEqualTo("a to: b")
     }
 
     @Test
@@ -26,13 +27,14 @@ class ParserOperationTest : BaseParserTest() {
         val source = "a > 1.5"
         val expression = getExpression(source)
 
-        Assertions.assertThat(expression).isInstanceOf(GOperation::class.java)
-        val op = expression as GOperation
-        Assertions.assertThat(op.operator.identifier).isEqualTo(">")
-        Assertions.assertThat(op.param1.type).isEqualTo(GValueType.IDENTIFIER)
-        Assertions.assertThat(op.param2.type).isEqualTo(GValueType.FLOAT)
+        assertThat(expression).isInstanceOf(GFunctionCall::class.java)
+        val op = expression as GFunctionCall
+        assertThat(op.function.prettyPrint()).isEqualTo(">")
+        assertThat(op.params).hasSize(2)
+        assertThat(op.params[0].type).isEqualTo(GValueType.IDENTIFIER)
+        assertThat(op.params[1].type).isEqualTo(GValueType.FLOAT)
 
-        Assertions.assertThat(expression.prettyPrint()).isEqualTo("a > 1.5")
+        assertThat(expression.prettyPrint()).isEqualTo("a > 1.5")
     }
 
     @Test
@@ -40,18 +42,18 @@ class ParserOperationTest : BaseParserTest() {
         val source = "1 + 2 * 3"
         val expression = getExpression(source)
 
-        Assertions.assertThat(expression).isInstanceOf(GOperation::class.java)
-        val op = expression as GOperation
-        Assertions.assertThat(op.operator.identifier).isEqualTo("+")
-        Assertions.assertThat(op.param1.type).isEqualTo(GValueType.INTEGER)
-        Assertions.assertThat(op.param2.type).isEqualTo(GValueType.EXPRESSION)
+        assertThat(expression).isInstanceOf(GFunctionCall::class.java)
+        val op = expression as GFunctionCall
+        assertThat(op.function.prettyPrint()).isEqualTo("+")
+        assertThat(op.params[0].type).isEqualTo(GValueType.INTEGER)
+        assertThat(op.params[1].type).isEqualTo(GValueType.EXPRESSION)
 
-        val op1 = op.param2 as GOperation
-        Assertions.assertThat(op1.operator.identifier).isEqualTo("*")
-        Assertions.assertThat(op1.param1.type).isEqualTo(GValueType.INTEGER)
-        Assertions.assertThat(op1.param2.type).isEqualTo(GValueType.INTEGER)
+        val op1 = op.params[1] as GFunctionCall
+        assertThat(op1.function.prettyPrint()).isEqualTo("*")
+        assertThat(op1.params[0].type).isEqualTo(GValueType.INTEGER)
+        assertThat(op1.params[1].type).isEqualTo(GValueType.INTEGER)
 
-        Assertions.assertThat(expression.prettyPrint()).isEqualTo("1 + 2 * 3")
+        assertThat(expression.prettyPrint()).isEqualTo("1 + 2 * 3")
     }
 
     @Test
@@ -59,18 +61,18 @@ class ParserOperationTest : BaseParserTest() {
         val source = "1 * 2 + 3"
         val expression = getExpression(source)
 
-        Assertions.assertThat(expression).isInstanceOf(GOperation::class.java)
-        val op = expression as GOperation
-        Assertions.assertThat(op.operator.identifier).isEqualTo("+")
-        Assertions.assertThat(op.param1.type).isEqualTo(GValueType.EXPRESSION)
-        Assertions.assertThat(op.param2.type).isEqualTo(GValueType.INTEGER)
+        assertThat(expression).isInstanceOf(GFunctionCall::class.java)
+        val op = expression as GFunctionCall
+        assertThat(op.function.prettyPrint()).isEqualTo("+")
+        assertThat(op.params[0].type).isEqualTo(GValueType.EXPRESSION)
+        assertThat(op.params[1].type).isEqualTo(GValueType.INTEGER)
 
-        val op1 = op.param1 as GOperation
-        Assertions.assertThat(op1.operator.identifier).isEqualTo("*")
-        Assertions.assertThat(op1.param1.type).isEqualTo(GValueType.INTEGER)
-        Assertions.assertThat(op1.param2.type).isEqualTo(GValueType.INTEGER)
+        val op1 = op.params[0] as GFunctionCall
+        assertThat(op1.function.prettyPrint()).isEqualTo("*")
+        assertThat(op1.params[0].type).isEqualTo(GValueType.INTEGER)
+        assertThat(op1.params[1].type).isEqualTo(GValueType.INTEGER)
 
-        Assertions.assertThat(expression.prettyPrint()).isEqualTo("1 * 2 + 3")
+        assertThat(expression.prettyPrint()).isEqualTo("1 * 2 + 3")
     }
 
     @Test
@@ -78,13 +80,13 @@ class ParserOperationTest : BaseParserTest() {
         val source = "10 + 20"
         val expression = getExpression(source)
 
-        Assertions.assertThat(expression).isInstanceOf(GOperation::class.java)
-        val op = expression as GOperation
-        Assertions.assertThat(op.operator.identifier).isEqualTo("+")
-        Assertions.assertThat(op.param1.type).isEqualTo(GValueType.INTEGER)
-        Assertions.assertThat(op.param2.type).isEqualTo(GValueType.INTEGER)
+        assertThat(expression).isInstanceOf(GFunctionCall::class.java)
+        val op = expression as GFunctionCall
+        assertThat(op.function.prettyPrint()).isEqualTo("+")
+        assertThat(op.params[0].type).isEqualTo(GValueType.INTEGER)
+        assertThat(op.params[1].type).isEqualTo(GValueType.INTEGER)
 
-        Assertions.assertThat(expression.prettyPrint()).isEqualTo("10 + 20")
+        assertThat(expression.prettyPrint()).isEqualTo("10 + 20")
     }
 
     @Test
@@ -92,12 +94,27 @@ class ParserOperationTest : BaseParserTest() {
         val source = "10 - 20"
         val expression = getExpression(source)
 
-        Assertions.assertThat(expression).isInstanceOf(GOperation::class.java)
-        val op = expression as GOperation
-        Assertions.assertThat(op.operator.identifier).isEqualTo("-")
-        Assertions.assertThat(op.param1.type).isEqualTo(GValueType.INTEGER)
-        Assertions.assertThat(op.param2.type).isEqualTo(GValueType.INTEGER)
+        assertThat(expression).isInstanceOf(GFunctionCall::class.java)
+        val op = expression as GFunctionCall
+        assertThat(op.function.prettyPrint()).isEqualTo("-")
+        assertThat(op.params[0].type).isEqualTo(GValueType.INTEGER)
+        assertThat(op.params[1].type).isEqualTo(GValueType.INTEGER)
 
-        Assertions.assertThat(expression.prettyPrint()).isEqualTo("10 - 20")
+        assertThat(expression.prettyPrint()).isEqualTo("10 - 20")
+    }
+
+    @Test
+    fun `parse an operation with newlines`() {
+        val expression = getExpression(
+            """
+            1
+            +
+            2
+        """.trimIndent()
+        )
+
+        assertThat(expression).isInstanceOf(GFunctionCall::class.java)
+
+        assertThat(expression!!.prettyPrint()).isEqualTo("1 + 2")
     }
 }

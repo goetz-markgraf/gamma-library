@@ -8,6 +8,6 @@ class GUnit(
     endPos: Position
 ) : GValue(GValueType.UNIT, sourceName, beginPos, endPos) {
 
-    override fun prettyPrint() = "())"
+    override fun prettyPrint() = "()"
 
 }

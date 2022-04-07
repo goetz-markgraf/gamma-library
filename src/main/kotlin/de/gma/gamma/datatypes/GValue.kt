@@ -20,4 +20,6 @@ abstract class GValue(
     val endPos: Position
 ) {
     abstract fun prettyPrint(): String
+
+    override fun toString() = prettyPrint()
 }

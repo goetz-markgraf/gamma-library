@@ -18,7 +18,7 @@ class OldParser(private val lexer: Lexer) {
 
             STRING -> parseString()
 
-            ID, FUNC_OP -> parseIdentifierOrFunctionCall(col)
+            ID, OP_AS_ID -> parseIdentifierOrFunctionCall(col)
 
             else -> throw RuntimeException("NOT YET IMPLEMENTED")
         }
@@ -41,7 +41,7 @@ class OldParser(private val lexer: Lexer) {
                 UNIT -> return FunctionCall(listOf(id), id.sourceName, id.start, token.end)
                 NUMBER -> call.add(parseNumber())
                 STRING -> call.add(parseString())
-                ID, FUNC_OP -> call.add(parseIdentifier())
+                ID, OP_AS_ID -> call.add(parseIdentifier())
                 else -> cont = false
             }
         }
