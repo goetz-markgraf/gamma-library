@@ -12,21 +12,24 @@ const val CH_QUOTE = '\"'
 const val CH_NEWLINE = '\n'
 const val CH_UNIT1 = '('
 const val CH_UNIT2 = ')'
-const val CH_COMMENT = '/'
+const val CH_APOSTR = '\''
+const val CH_HASH = '#'
 const val CH_LPARENS = '('
 const val CH_RPARENS = ')'
-const val CH_HASH = '#'
 const val CH_COLON = ':'
 const val CH_UNDERSCORE = '_'
 const val CH_BANG = '!'
 const val CH_QUESTION_MARK = '?'
 
 
-fun isStartOfProperty(char: Char) =
-    char == CH_HASH
+fun isStartOfProperty(char: Char, peekChar: Char, peekPeekChar: Char) =
+    char == CH_COLON && isStartOfIdentifier(peekChar, peekPeekChar)
 
-fun isStartOfComment(char: Char, peekChar: Char) =
-    char == CH_COMMENT && peekChar == CH_COMMENT
+fun isStartOfDocumentation(char: Char) =
+    char == CH_APOSTR
+
+fun isStartOfRemark(char: Char) =
+    char == CH_HASH
 
 fun isEof(char: Char) =
     char == nullChar

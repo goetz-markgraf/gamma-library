@@ -1,5 +1,8 @@
-package de.gma.gamma.parser
+package de.gma.gamma.parser.lexer
 
+import de.gma.gamma.parser.Lexer
+import de.gma.gamma.parser.Position
+import de.gma.gamma.parser.TokenType
 import de.gma.gamma.parser.TokenType.*
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test

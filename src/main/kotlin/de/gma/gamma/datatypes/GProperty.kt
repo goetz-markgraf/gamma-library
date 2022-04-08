@@ -9,5 +9,5 @@ class GProperty(
     val identifier: String
 ) : GValue(GValueType.PROPERTY, sourceName, beginPos, endPos) {
 
-    override fun prettyPrint() = identifier
+    override fun prettyPrint() = ":$identifier"
 }

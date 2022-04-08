@@ -3,12 +3,11 @@ package de.gma.gamma.parser
 import de.gma.gamma.datatypes.GValueType
 import de.gma.gamma.datatypes.expressions.GFunctionCall
 import org.assertj.core.api.Assertions.assertThat
-import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
 
-class ParserFunctionCallTest : BaseParserTest() {
+class FunctionCallTest : BaseParserTest() {
     @Test
     fun `parse a simple function call`() {
         val expression = getExpression("print a")
@@ -93,10 +92,11 @@ class ParserFunctionCallTest : BaseParserTest() {
             "print () ()"
         ]
     )
-    fun `unit with other params leads to error`(code: String) {
-        assertThatThrownBy {
-            getExpression(code)
-        }.isInstanceOf(EvaluationException::class.java)
-            .hasMessage("Unit parameter () can only be used as a single parameter")
+    fun `unit mixed with other params is ok`(code: String) {
+        val expression = getExpression(code)
+
+        assertThat(expression).isInstanceOf(GFunctionCall::class.java)
+
+        assertThat(expression!!.prettyPrint()).isEqualTo(code)
     }
 }

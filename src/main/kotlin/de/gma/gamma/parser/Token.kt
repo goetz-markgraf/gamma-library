@@ -36,7 +36,8 @@ enum class TokenType {
     TYPE,
     TRUE,
     FALSE,
-    NULL,
     MODULE,
-    ELVIS
+    ELVIS,
+    REMARK,
+    DOCUMENTATION
 }

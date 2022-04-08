@@ -1,8 +1,10 @@
 package de.gma.gamma.datatypes.expressions
 
 import de.gma.gamma.datatypes.GIdentifier
+import de.gma.gamma.datatypes.GRemark
 import de.gma.gamma.datatypes.GValue
 import de.gma.gamma.datatypes.GValueType
+import de.gma.gamma.parser.CH_NEWLINE
 import de.gma.gamma.parser.Position
 
 class GLetExpression(
@@ -10,14 +12,22 @@ class GLetExpression(
     beginPos: Position,
     endPos: Position,
     val identifier: GIdentifier,
-    val boundValue: GValue
+    val boundValue: GValue,
+    val documentation: GRemark? = null
 ) : GExpression(sourceName, beginPos, endPos) {
 
     override fun prettyPrint() =
-        if (boundValue.type != GValueType.EXPRESSION) {
-            "let ${identifier.prettyPrint()} = ${boundValue.prettyPrint()}"
-        } else {
-            "let ${identifier.prettyPrint()} = ${boundValue.prettyPrint()}"
+        buildString {
+            if (documentation != null)
+                append(documentation.prettyPrint()).append(CH_NEWLINE)
+
+            if (boundValue.type != GValueType.EXPRESSION) {
+                append("let ${identifier.prettyPrint()} = ${boundValue.prettyPrint()}")
+            } else {
+                append("let ${identifier.prettyPrint()} =").append(CH_NEWLINE)
+                append("    ${boundValue.prettyPrint()}")
+            }
+            append(CH_NEWLINE)
         }
 
 }

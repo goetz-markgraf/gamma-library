@@ -46,9 +46,13 @@ class Lexer(
         skipWhitespace()
 
         return when {
+            isStartOfDocumentation(char) -> parseDocumentation()
+
+            isStartOfRemark(char) -> parseRemark()
+
             isStartOfNumber(char, peekChar) -> parseNumber()
 
-            isStartOfProperty(char) -> parseProperty()
+            isStartOfProperty(char, peekChar, peekPeekChar) -> parseProperty()
 
             isStartOfIdentifier(char, peekChar) -> parseIdentifier()
 
@@ -83,6 +87,28 @@ class Lexer(
     // token is finished
     // char is than the next character behind the token
     // return the token
+
+    private fun parseRemark(): Token {
+        val start = position()
+        next()
+        // leading whitespace are ignored
+        skipWhitespace()
+
+        val content = StringBuffer()
+
+        while (char != CH_NEWLINE && char != nullChar) {
+            content.append(char)
+            next()
+        }
+
+        return Token(
+            type = TokenType.REMARK,
+            content = content.toString(),
+            sourceName = sourceName,
+            start = start,
+            end = position()
+        )
+    }
 
     private fun parseElvisCharacter(): Token {
         val ret = Token(
@@ -184,21 +210,13 @@ class Lexer(
     private fun parseProperty(): Token {
         val start = position()
         next()
-        if (!isStartOfIdentifier(char, peekChar))
-            return Token(
-                type = TokenType.ERROR,
-                content = "#",
-                start = start,
-                end = start,
-                sourceName = sourceName
-            )
 
         val ret = parseIdentifier()
         return Token(
             type = TokenType.PROPERTY,
             start = start,
             end = ret.end,
-            content = '#' + ret.content,
+            content = ret.content,
             sourceName = ret.sourceName
         )
     }
@@ -227,7 +245,6 @@ class Lexer(
             "module" -> TokenType.MODULE
             "true" -> TokenType.TRUE
             "false" -> TokenType.FALSE
-            "null" -> TokenType.NULL
             else -> TokenType.ID
         }
 
@@ -243,6 +260,38 @@ class Lexer(
             sourceName = sourceName,
             start = start,
             end = end
+        )
+    }
+
+
+    private fun parseDocumentation(): Token {
+        val start = position()
+        next()
+
+        val content = StringBuffer()
+        fun isStillInDocumentation() = char != CH_APOSTR && char != nullChar
+
+        while (isStillInDocumentation()) {
+            if (char == CH_ESC && peekChar == CH_APOSTR) {
+                next()
+                content.append(CH_APOSTR)
+            } else {
+                content.append(char)
+            }
+            next()
+        }
+
+        val type = if (char == CH_APOSTR) TokenType.DOCUMENTATION else TokenType.ERROR
+
+        //consume the trailing aspostrophy
+        next()
+
+        return Token(
+            type = type,
+            sourceName = sourceName,
+            content = content.toString(),
+            start = start,
+            end = position()
         )
     }
 
@@ -386,18 +435,9 @@ class Lexer(
     }
 
     private fun skipWhitespace() {
-        fun isGammaWhitespace() = char != '\t' && (isWhitespace(char) || isStartOfComment(char, peekChar))
+        fun isGammaWhitespace() = char != '\t' && isWhitespace(char)
         while (isGammaWhitespace()) {
-            if (isStartOfComment(char, peekChar)) {
-                skipComment()
-            } else {
-                next()
-            }
-        }
-    }
-
-    private fun skipComment() {
-        while (char != CH_NEWLINE && char != nullChar)
             next()
+        }
     }
 }

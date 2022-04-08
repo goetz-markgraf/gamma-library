@@ -1,6 +1,7 @@
 package de.gma.gamma.parser
 
 import de.gma.gamma.datatypes.*
+import de.gma.gamma.datatypes.expressions.GBlock
 import de.gma.gamma.datatypes.expressions.GFunctionCall
 import de.gma.gamma.datatypes.expressions.GIfExpression
 import de.gma.gamma.datatypes.expressions.GLetExpression
@@ -28,9 +29,16 @@ class Parser(
     fun nextExpression(col: Int): GValue? {
         val minCol = if (col < 0) currStart.col else col
 
+        if (currStart.col < minCol)
+            return null
+
         skipWhitespace()
 
         return when (currType) {
+            DOCUMENTATION -> parseDocumentation(minCol)
+
+            REMARK -> parseRemark(minCol)
+
             LET -> parseLetExpression(minCol)
 
             else -> parseElvis(minCol)
@@ -40,6 +48,31 @@ class Parser(
     // ==========================================================
     // parse-Methods that extract the next expression from the source
     // ==========================================================
+
+    private fun parseRemark(col: Int): GRemark {
+        assertType(col, REMARK)
+
+        val content = currToken.content
+
+        val ret = GRemark(sourceName, currStart, currEnd, content)
+        nextToken()
+
+        return ret
+    }
+
+    private fun parseDocumentation(col: Int): GValue {
+        assertType(col, DOCUMENTATION)
+
+        val content = currToken.content
+
+        val ret = GRemark(sourceName, currStart, currEnd, content, true)
+        nextToken()
+        return if (currType == LET) {
+            parseLetExpression(col, ret)
+        } else {
+            ret
+        }
+    }
 
     private fun parseElvis(col: Int): GValue? {
         val start = currStart
@@ -86,15 +119,15 @@ class Parser(
 
         val sum1 = parseProduct(col)
 
-        if (sum1 != null && checkType(col, OP)) {
-            if (currToken.content == "+" || currToken.content == "-") {
-                val op = parseOperator(col)
+        if (sum1 != null && checkType(col, OP) &&
+            (currToken.content == "+" || currToken.content == "-")
+        ) {
+            val op = parseOperator(col)
 
-                val sum2 = parseProduct(col)
-                assertNotNull(sum2)
+            val sum2 = parseProduct(col)
+            assertNotNull(sum2)
 
-                return GFunctionCall.fromOperation(sourceName, start, currEnd, op, sum1, sum2!!)
-            }
+            return GFunctionCall.fromOperation(sourceName, start, currEnd, op, sum1, sum2!!)
         }
 
         return sum1
@@ -106,15 +139,15 @@ class Parser(
 
         val fac1 = parseFunctionCall(col)
 
-        if (fac1 != null && checkType(col, OP)) {
-            if (currToken.content == "*" || currToken.content == "/") {
-                val op = parseOperator(col)
+        if (fac1 != null && checkType(col, OP) &&
+            (currToken.content == "*" || currToken.content == "/")
+        ) {
+            val op = parseOperator(col)
 
-                val fac2 = parseFunctionCall(col)
-                assertNotNull(fac2)
+            val fac2 = parseFunctionCall(col)
+            assertNotNull(fac2)
 
-                return GFunctionCall.fromOperation(sourceName, start, currEnd, op, fac1, fac2!!)
-            }
+            return GFunctionCall.fromOperation(sourceName, start, currEnd, op, fac1, fac2!!)
         }
 
         return fac1
@@ -125,26 +158,20 @@ class Parser(
 
         val elem1 = parseElement(col)
 
-        if (elem1 != null) {
-            val params = mutableListOf<GValue>()
-            var nextElem = parseElement(col + 1)
-            while (nextElem != null) {
-                params.add(nextElem)
+        // are there more params?
+        val params = mutableListOf<GValue>()
+        var nextElem = parseElement(col + 1)
+        while (nextElem != null) {
+            params.add(nextElem)
 
-                nextElem = parseElement(col + 1)
-            }
-
-            // no params
-            if (params.isEmpty())
-                return elem1
-
-            // check if params are OK
-            if (params.find { it.type == GValueType.UNIT } != null && params.size > 1)
-                throw createIllegalUnitParameterException(params.first().beginPos)
-
-            return GFunctionCall(sourceName, currStart, currEnd, elem1, params)
+            nextElem = parseElement(col + 1)
         }
-        return elem1
+
+        // there have been no params
+        if (params.isEmpty())
+            return elem1
+
+        return GFunctionCall(sourceName, start, currEnd, elem1!!, params)
     }
 
     private fun parseElement(col: Int): GValue? {
@@ -168,7 +195,45 @@ class Parser(
 
             TRUE, FALSE -> parseBoolean(col)
 
+            OPEN_PARENS -> parseOpenParens(col)
+
             else -> throw createIllegalTokenException()
+        }
+    }
+
+    private fun parseOpenParens(col: Int): GValue? {
+        return when (currToken.content) {
+            "(" -> parseBlock(col)
+
+            else -> null
+        }
+    }
+
+    private fun parseBlock(col: Int): GValue {
+        assertTypeWithContent(col, OPEN_PARENS, "(")
+        val start = currStart
+        nextToken()
+
+        val newCol = currStart.col
+        if (newCol <= col)
+            throw createIllegalColumnException(col + 1)
+
+        val expressions = buildList {
+            var expr = nextExpression(newCol)
+            while (expr != null) {
+                add(expr)
+                expr = nextExpression(newCol)
+            }
+        }
+        assertTypeWithContent(col, CLOSE_PARENS, ")")
+        nextToken()
+
+        return when {
+            expressions.isEmpty() -> GUnit(sourceName, start, currEnd)
+
+            expressions.size == 1 -> expressions.first()
+
+            else -> GBlock(sourceName, start, currEnd, expressions)
         }
     }
 
@@ -239,7 +304,7 @@ class Parser(
         return ret
     }
 
-    private fun parseLetExpression(col: Int): GLetExpression {
+    private fun parseLetExpression(col: Int, documentation: GRemark? = null): GLetExpression {
         val start = currStart
         nextToken()
 
@@ -253,7 +318,7 @@ class Parser(
             throw createIllegalColumnException(col + 1)
         val expression = nextExpression(nextCol) ?: throw createIllegalTokenException()
 
-        return GLetExpression(sourceName, start, currEnd, id, expression)
+        return GLetExpression(sourceName, start, currEnd, id, expression, documentation)
     }
 
     // ==========================================================
@@ -299,15 +364,6 @@ class Parser(
             currStart.line,
             currStart.col
         )
-
-    private fun createIllegalUnitParameterException(beginPos: Position) =
-        EvaluationException(
-            "Unit parameter () can only be used as a single parameter",
-            sourceName,
-            beginPos.line,
-            beginPos.col
-        )
-
 
     private fun createIllegalTokenException() =
         EvaluationException(

@@ -5,7 +5,7 @@ import de.gma.gamma.datatypes.expressions.GIfExpression
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class ParserElvisTest : BaseParserTest() {
+class ElvisTest : BaseParserTest() {
     @Test
     fun `parse a simple if expression`() {
         val expression = getExpression("a ? 1 : 2.3")

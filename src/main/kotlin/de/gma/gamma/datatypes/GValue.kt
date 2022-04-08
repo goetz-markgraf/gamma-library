@@ -8,9 +8,9 @@ enum class GValueType {
     EXPRESSION,
     IDENTIFIER,
     STRING,
-    OPERATOR,
     UNIT,
-    PROPERTY
+    PROPERTY,
+    REMARK
 }
 
 abstract class GValue(

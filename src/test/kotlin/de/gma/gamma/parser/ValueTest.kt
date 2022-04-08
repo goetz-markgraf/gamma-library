@@ -5,20 +5,20 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 
-class ParserValueTest : BaseParserTest() {
+class ValueTest : BaseParserTest() {
 
     @Nested
     inner class Properties {
 
         @Test
         fun `parse a property value`() {
-            val expression = getExpression("#hallo")
+            val expression = getExpression(":hallo")
 
             assertThat(expression).isInstanceOf(GProperty::class.java)
             val prop = expression as GProperty
-            assertThat(prop.identifier).isEqualTo("#hallo")
+            assertThat(prop.identifier).isEqualTo("hallo")
 
-            assertThat(prop.prettyPrint()).isEqualTo("#hallo")
+            assertThat(prop.prettyPrint()).isEqualTo(":hallo")
         }
     }
 

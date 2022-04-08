@@ -1,5 +1,9 @@
-package de.gma.gamma.parser
+package de.gma.gamma.parser.lexer
 
+import de.gma.gamma.parser.Lexer
+import de.gma.gamma.parser.Position
+import de.gma.gamma.parser.Token
+import de.gma.gamma.parser.TokenType
 import de.gma.gamma.parser.TokenType.*
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -51,29 +55,6 @@ class LexerSimpleTest {
         )
         assertThat(token.start).isEqualTo(Position(1, 1, 0))
         assertThat(token.end).isEqualTo(Position(1, 1, 0))
-    }
-
-    @Test
-    fun `skip comment`() {
-        val source = "//comment"
-        val token = getTokenFromInput(source)
-        assertThat(token.type).isEqualTo(EOF)
-    }
-
-    @Test
-    fun `skip comment with newline`() {
-        val source = "//comment\na"
-        val token = getTokenFromInput(source)
-
-        assertToken(
-            token,
-            type = ID,
-            content = "a",
-            start = 10,
-            end = 10
-        )
-        assertThat(token.start).isEqualTo(Position(10, 0, 1))
-        assertThat(token.end).isEqualTo(Position(10, 0, 1))
     }
 
 
@@ -277,35 +258,16 @@ class LexerSimpleTest {
         assertThat(token.type).isEqualTo(FALSE)
     }
 
-    @Test
-    fun `parse null keyword`() {
-        val token = getTokenFromInput("null")
-        assertThat(token.type).isEqualTo(NULL)
-    }
-
     @ParameterizedTest
-    @ValueSource(strings = ["#a", "#a1"])
+    @ValueSource(strings = [":a", ":a1"])
     fun `parse correct property`(source: String) {
         val token = getTokenFromInput(source)
 
         assertToken(
             token,
             type = PROPERTY,
-            content = source,
+            content = source.drop(1),
             end = source.length - 1
-        )
-    }
-
-    @ParameterizedTest
-    @ValueSource(strings = ["#1", "##", "#"])
-    fun `parse incorrect property`(source: String) {
-        val token = getTokenFromInput(source)
-
-        assertToken(
-            token,
-            type = ERROR,
-            content = "#",
-            end = 0
         )
     }
 
@@ -508,6 +470,75 @@ class LexerSimpleTest {
             type = STRING,
             content = "aa",
             end = 5
+        )
+    }
+
+
+    // ========== Comments =================
+
+
+    @Test
+    fun `parse a remark`() {
+        val input = "#remark"
+        val token = getTokenFromInput(input)
+
+        assertToken(
+            token,
+            type = REMARK,
+            content = "remark",
+            end = 7
+        )
+    }
+
+    @Test
+    fun `parse a remark with leading space`() {
+        val input = "# remark"
+        val token = getTokenFromInput(input)
+
+        assertToken(
+            token,
+            type = REMARK,
+            content = "remark",
+            end = 8
+        )
+    }
+
+    @Test
+    fun `parse a single line documentation`() {
+        val input = "'documentation'"
+        val token = getTokenFromInput(input)
+
+        assertToken(
+            token,
+            type = DOCUMENTATION,
+            content = "documentation",
+            end = 15
+        )
+    }
+
+    @Test
+    fun `parse a multi line documentation`() {
+        val input = "'documen\ntation'"
+        val token = getTokenFromInput(input)
+
+        assertToken(
+            token,
+            type = DOCUMENTATION,
+            content = "documen\ntation",
+            end = 16
+        )
+    }
+
+    @Test
+    fun `error if eof in a documentation`() {
+        val input = "'documentation"
+        val token = getTokenFromInput(input)
+
+        assertToken(
+            token,
+            type = ERROR,
+            content = "documentation",
+            end = 15
         )
     }
 
