@@ -30,7 +30,7 @@ class IndentationTest : BaseParserTest() {
             getExpression(source)
         }
             .isInstanceOf(EvaluationException::class.java)
-            .hasMessage("Illegal Token 20")
+            .hasMessage("Illegal Token 20 but was expecting )")
     }
 
     @Test

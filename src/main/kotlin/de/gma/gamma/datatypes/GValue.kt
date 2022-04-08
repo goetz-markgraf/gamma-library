@@ -3,14 +3,16 @@ package de.gma.gamma.datatypes
 import de.gma.gamma.parser.Position
 
 enum class GValueType {
+    EXPRESSION,
     INTEGER,
     FLOAT,
-    EXPRESSION,
-    IDENTIFIER,
     STRING,
+    IDENTIFIER,
     UNIT,
     PROPERTY,
-    REMARK
+    REMARK,
+    FUNCTION,
+    LIST
 }
 
 abstract class GValue(

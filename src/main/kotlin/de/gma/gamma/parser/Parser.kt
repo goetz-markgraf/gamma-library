@@ -1,10 +1,7 @@
 package de.gma.gamma.parser
 
 import de.gma.gamma.datatypes.*
-import de.gma.gamma.datatypes.expressions.GBlock
-import de.gma.gamma.datatypes.expressions.GFunctionCall
-import de.gma.gamma.datatypes.expressions.GIfExpression
-import de.gma.gamma.datatypes.expressions.GLetExpression
+import de.gma.gamma.datatypes.expressions.*
 import de.gma.gamma.parser.TokenType.*
 
 
@@ -207,8 +204,37 @@ class Parser(
 
             "{" -> parseList(col)
 
+            "[" -> parseFunction(col)
+
             else -> null
         }
+    }
+
+    private fun parseFunction(col: Int): GFunction {
+        assertTypeWithContent(col, OPEN_PARENS, "[")
+        val start = currStart
+        nextToken()
+
+        val params: List<GValue> = if (currType == UNIT) {
+            listOf(parseUnit(col))
+        } else buildList<GIdentifier> {
+            while (currType == ID) {
+                add(parseIdentifier(col))
+            }
+        }
+
+        if (params.isEmpty())
+            throw createEmptyParamsException()
+
+        assertTypeWithContent(col, OP, "->")
+        nextToken()
+
+        val expressions = findExpressions(col)
+
+        assertTypeWithContent(col, CLOSE_PARENS, "]")
+        nextToken()
+
+        return GFunction(sourceName, start, currEnd, params, expressions)
     }
 
     private fun parseList(col: Int): GList {
@@ -366,13 +392,21 @@ class Parser(
         if (currStart.col < col)
             throw createIllegalColumnException(col)
         if (currType != type && currToken.content != content)
-            throw createIllegalTokenException()
+            throw createIllegalTokenException(content)
 
     }
 
     private fun createIllegalEndOfExpression() =
         EvaluationException(
             "Illegal end of expression",
+            sourceName,
+            currStart.line,
+            currStart.col
+        )
+
+    private fun createEmptyParamsException() =
+        EvaluationException(
+            "Function must have at least one parameter or ()",
             sourceName,
             currStart.line,
             currStart.col
@@ -386,9 +420,12 @@ class Parser(
             currStart.col
         )
 
-    private fun createIllegalTokenException() =
+    private fun createIllegalTokenException(expected: String? = null) =
         EvaluationException(
-            "Illegal Token ${currToken.content}", sourceName, currStart.line, currStart.col
+            "Illegal Token ${currToken.content}${if (expected != null) " but was expecting $expected" else ""}",
+            sourceName,
+            currStart.line,
+            currStart.col
         )
 
     // ==========================================================

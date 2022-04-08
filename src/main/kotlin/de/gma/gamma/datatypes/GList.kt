@@ -8,7 +8,7 @@ class GList(
     beginPos: Position,
     endPos: Position,
     val items: List<GValue>
-) : GValue(GValueType.UNIT, sourceName, beginPos, endPos) {
+) : GValue(GValueType.LIST, sourceName, beginPos, endPos) {
 
     override fun prettyPrint() = buildString {
         val complex = items.indexOfFirst { it.type == GValueType.EXPRESSION } >= 0
