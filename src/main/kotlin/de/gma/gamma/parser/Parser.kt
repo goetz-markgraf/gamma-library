@@ -205,15 +205,26 @@ class Parser(
         return when (currToken.content) {
             "(" -> parseBlock(col)
 
+            "{" -> parseList(col)
+
             else -> null
         }
     }
 
-    private fun parseBlock(col: Int): GValue {
-        assertTypeWithContent(col, OPEN_PARENS, "(")
+    private fun parseList(col: Int): GList {
+        assertTypeWithContent(col, OPEN_PARENS, "{")
         val start = currStart
         nextToken()
 
+        val expressions = findExpressions(col)
+
+        assertTypeWithContent(col, CLOSE_PARENS, ")")
+        nextToken()
+
+        return GList(sourceName, start, currEnd, expressions)
+    }
+
+    private fun findExpressions(col: Int): List<GValue> {
         val newCol = currStart.col
         if (newCol <= col)
             throw createIllegalColumnException(col + 1)
@@ -225,6 +236,16 @@ class Parser(
                 expr = nextExpression(newCol)
             }
         }
+        return expressions
+    }
+
+    private fun parseBlock(col: Int): GValue {
+        assertTypeWithContent(col, OPEN_PARENS, "(")
+        val start = currStart
+        nextToken()
+
+        val expressions = findExpressions(col)
+
         assertTypeWithContent(col, CLOSE_PARENS, ")")
         nextToken()
 
