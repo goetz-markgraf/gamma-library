@@ -10,20 +10,15 @@ fun main() {
     val buffer = StringBuffer()
     var lastBuffer = ""
 
+    printHelp()
+
     while (true) {
 
         print("gamma> ")
         val inp = readLine() ?: break
 
         if (inp == "?" || inp == ".help" || inp == "help") {
-            println("Gamma Interpreter REPL")
-            println("Commands")
-            println("   .      -> executes and clears the code buffer")
-            println("   .clear -> clears the code buffer")
-            println("   .load  -> load code buffer with last executed code")
-            println("   .exit  -> exits the REPL")
-            println("   .quit  -> exits the REPL")
-            println("   .help  -> display this help")
+            printHelp()
         } else if (inp == "." && buffer.isNotEmpty()) {
             lastBuffer = buffer.toString()
             execute(lastBuffer)
@@ -31,10 +26,11 @@ fun main() {
         } else if (inp.startsWith(".")) {
             cmd = inp.drop(1)
             when (cmd) {
-                "exit" -> break
-                "quit" -> break
-                "clear" -> buffer.delete(0, buffer.length)
-                "load" -> {
+                "exit", "quit", "q" -> break
+
+                "clear", "c" -> buffer.delete(0, buffer.length)
+
+                "load", "l" -> {
                     buffer.delete(0, buffer.length)
                     buffer.append(lastBuffer)
                     println(lastBuffer)
@@ -47,6 +43,17 @@ fun main() {
     }
 
     println("Bye")
+}
+
+private fun printHelp() {
+    println("Gamma Interpreter REPL")
+    println("Commands")
+    println("   .      -> executes and clears the code buffer")
+    println("   .clear -> clears the code buffer")
+    println("   .load  -> load code buffer with last executed code")
+    println("   .exit  -> exits the REPL")
+    println("   .quit  -> exits the REPL")
+    println("   .help  -> display this help")
 }
 
 
