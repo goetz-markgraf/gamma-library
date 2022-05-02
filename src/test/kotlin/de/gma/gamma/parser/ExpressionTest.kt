@@ -1,8 +1,8 @@
 package de.gma.gamma.parser
 
-import de.gma.gamma.datatypes.GInteger
-import de.gma.gamma.datatypes.GString
 import de.gma.gamma.datatypes.GValueType
+import de.gma.gamma.datatypes.direct.GInteger
+import de.gma.gamma.datatypes.direct.GString
 import de.gma.gamma.datatypes.expressions.GLetExpression
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Nested
@@ -40,7 +40,7 @@ class ExpressionTest : BaseParserTest() {
 
             assertThat(expression).isInstanceOf(GLetExpression::class.java)
             val let = expression as GLetExpression
-            assertThat(let.identifier.identifier).isEqualTo("hello")
+            assertThat(let.identifier.name).isEqualTo("hello")
             assertThat(let.boundValue.type).isEqualTo(GValueType.STRING)
             assertThat((let.boundValue as GString).strValue).isEqualTo("Hello")
 
@@ -54,7 +54,7 @@ class ExpressionTest : BaseParserTest() {
 
             assertThat(expression).isInstanceOf(GLetExpression::class.java)
             val let = expression as GLetExpression
-            assertThat(let.identifier.identifier).isEqualTo("a")
+            assertThat(let.identifier.name).isEqualTo("a")
             assertThat(let.boundValue.type).isEqualTo(GValueType.INTEGER)
             assertThat((let.boundValue as GInteger).intValue).isEqualTo(10L)
 
@@ -67,7 +67,7 @@ class ExpressionTest : BaseParserTest() {
 
             assertThat(expression).isInstanceOf(GLetExpression::class.java)
             val let = expression as GLetExpression
-            assertThat(let.identifier.identifier).isEqualTo("++")
+            assertThat(let.identifier.name).isEqualTo("++")
             assertThat(let.boundValue.type).isEqualTo(GValueType.INTEGER)
             assertThat((let.boundValue as GInteger).intValue).isEqualTo(10L)
 

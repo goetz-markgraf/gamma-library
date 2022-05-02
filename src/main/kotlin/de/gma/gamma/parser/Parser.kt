@@ -1,7 +1,15 @@
 package de.gma.gamma.parser
 
-import de.gma.gamma.datatypes.*
-import de.gma.gamma.datatypes.expressions.*
+import de.gma.gamma.datatypes.GIdentifier
+import de.gma.gamma.datatypes.GIdentifierType
+import de.gma.gamma.datatypes.GList
+import de.gma.gamma.datatypes.GValue
+import de.gma.gamma.datatypes.direct.*
+import de.gma.gamma.datatypes.expressions.GBlock
+import de.gma.gamma.datatypes.expressions.GFunctionCall
+import de.gma.gamma.datatypes.expressions.GIfExpression
+import de.gma.gamma.datatypes.expressions.GLetExpression
+import de.gma.gamma.datatypes.functions.GFunction
 import de.gma.gamma.parser.TokenType.*
 
 
@@ -215,21 +223,22 @@ class Parser(
         val start = currStart
         nextToken()
 
-        val params: List<GValue> = if (currType == UNIT) {
-            listOf(parseUnit(col))
+        if (currType != UNIT && currType != ID)
+            throw createEmptyParamsException()
+
+        val params: List<GIdentifier> = if (currType == UNIT) {
+            nextToken()
+            emptyList()
         } else buildList<GIdentifier> {
             while (currType == ID) {
                 add(parseIdentifier(col))
             }
         }
 
-        if (params.isEmpty())
-            throw createEmptyParamsException()
-
         assertTypeWithContent(col, OP, "->")
         nextToken()
 
-        val expressions = findExpressions(col)
+        val expressions = findNextedExpressions(col)
 
         assertTypeWithContent(col, CLOSE_PARENS, "]")
         nextToken()
@@ -242,27 +251,12 @@ class Parser(
         val start = currStart
         nextToken()
 
-        val expressions = findExpressions(col)
+        val expressions = findNextedExpressions(col)
 
-        assertTypeWithContent(col, CLOSE_PARENS, ")")
+        assertTypeWithContent(col, CLOSE_PARENS, "}")
         nextToken()
 
         return GList(sourceName, start, currEnd, expressions)
-    }
-
-    private fun findExpressions(col: Int): List<GValue> {
-        val newCol = currStart.col
-        if (newCol <= col)
-            throw createIllegalColumnException(col + 1)
-
-        val expressions = buildList {
-            var expr = nextExpression(newCol)
-            while (expr != null) {
-                add(expr)
-                expr = nextExpression(newCol)
-            }
-        }
-        return expressions
     }
 
     private fun parseBlock(col: Int): GValue {
@@ -270,7 +264,7 @@ class Parser(
         val start = currStart
         nextToken()
 
-        val expressions = findExpressions(col)
+        val expressions = findNextedExpressions(col)
 
         assertTypeWithContent(col, CLOSE_PARENS, ")")
         nextToken()
@@ -360,9 +354,16 @@ class Parser(
         assertTypeWithContent(col, OP, "=")
         nextToken()
 
-        val nextCol = currToken.start.col
-        if (nextCol <= col)
-            throw createIllegalColumnException(col + 1)
+        val nextCol =
+            if (currType == OPEN_PARENS && currToken.content == "[")
+                col
+            else {
+                if (currToken.start.col <= col)
+                    throw createIllegalColumnException(col + 1)
+
+                currToken.start.col
+            }
+
         val expression = nextExpression(nextCol) ?: throw createIllegalTokenException()
 
         return GLetExpression(sourceName, start, currEnd, id, expression, documentation)
@@ -431,6 +432,22 @@ class Parser(
     // ==========================================================
     // helper functions
     // ==========================================================
+
+
+    private fun findNextedExpressions(col: Int): List<GValue> {
+        val newCol = currStart.col
+        if (newCol <= col)
+            throw createIllegalColumnException(col + 1)
+
+        val expressions = buildList {
+            var expr = nextExpression(newCol)
+            while (expr != null) {
+                add(expr)
+                expr = nextExpression(newCol)
+            }
+        }
+        return expressions
+    }
 
 
     private fun skipWhitespace() {

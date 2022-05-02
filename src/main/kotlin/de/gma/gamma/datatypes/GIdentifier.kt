@@ -1,22 +1,35 @@
 package de.gma.gamma.datatypes
 
+import de.gma.gamma.datatypes.scoped.ScopedIdenfitier
+import de.gma.gamma.interpreter.Scope
 import de.gma.gamma.parser.Position
 
 class GIdentifier(
     sourceName: String,
     beginPos: Position,
     endPos: Position,
-    val identifier: String,
+    val name: String,
     val identifierType: GIdentifierType
 ) : GValue(GValueType.IDENTIFIER, sourceName, beginPos, endPos) {
 
     override fun prettyPrint() =
         when (identifierType) {
-            GIdentifierType.ID -> identifier
-            GIdentifierType.OP -> identifier
-            GIdentifierType.OP_AS_ID -> "($identifier)"
-            GIdentifierType.ID_AS_OP -> "$identifier:"
+            GIdentifierType.ID -> name
+            GIdentifierType.OP -> name
+            GIdentifierType.OP_AS_ID -> "($name)"
+            GIdentifierType.ID_AS_OP -> "$name:"
         }
+
+    override fun evaluate(scope: Scope): GValue {
+        if (name.contains('.')) {
+            TODO("compound identifier not yet implemented")
+        } else {
+            return scope.getValue(name)
+        }
+    }
+
+    override fun prepare(scope: Scope) =
+        ScopedIdenfitier(sourceName, beginPos, endPos, this, scope)
 }
 
 enum class GIdentifierType {

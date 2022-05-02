@@ -12,7 +12,7 @@ class ListTest : BaseParserTest() {
         assertThat(expression).isInstanceOf(GList::class.java)
         val l = expression as GList
 
-        assertThat(l.items).hasSize(0)
+        assertThat(l.size()).isEqualTo(0)
         assertThat(l.prettyPrint()).isEqualTo("{  }")
     }
 
@@ -23,7 +23,7 @@ class ListTest : BaseParserTest() {
         assertThat(expression).isInstanceOf(GList::class.java)
         val l = expression as GList
 
-        assertThat(l.items).hasSize(1)
+        assertThat(l.size()).isEqualTo(1)
         assertThat(l.prettyPrint()).isEqualTo("{ 10 }")
     }
 
@@ -34,7 +34,7 @@ class ListTest : BaseParserTest() {
         assertThat(expression).isInstanceOf(GList::class.java)
         val l = expression as GList
 
-        assertThat(l.items).hasSize(2)
+        assertThat(l.size()).isEqualTo(2)
         assertThat(l.prettyPrint()).isEqualTo("{ 10, 20 }")
     }
 }

@@ -3,6 +3,7 @@ package de.gma.gamma.datatypes.expressions
 import de.gma.gamma.datatypes.GIdentifier
 import de.gma.gamma.datatypes.GIdentifierType
 import de.gma.gamma.datatypes.GValue
+import de.gma.gamma.interpreter.Scope
 import de.gma.gamma.parser.Position
 
 class GFunctionCall(
@@ -19,6 +20,12 @@ class GFunctionCall(
             "${function.prettyPrint()} ${params.joinToString(" ") { it.prettyPrint() }}"
         }
 
+    override fun evaluate(scope: Scope): GValue {
+        val functionToCall = function.evaluateToFunction(scope)
+
+        return functionToCall.call(scope, params)
+    }
+
     val op1: GValue?
         get() =
             if (isOperation() && params.size >= 2) params[0] else null
@@ -31,6 +38,7 @@ class GFunctionCall(
         function is GIdentifier &&
                 (function.identifierType == GIdentifierType.OP ||
                         function.identifierType == GIdentifierType.ID_AS_OP)
+
 
     companion object {
         fun fromOperation(

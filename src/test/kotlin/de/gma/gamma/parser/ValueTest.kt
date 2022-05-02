@@ -1,6 +1,7 @@
 package de.gma.gamma.parser
 
-import de.gma.gamma.datatypes.*
+import de.gma.gamma.datatypes.GIdentifier
+import de.gma.gamma.datatypes.direct.*
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
@@ -122,7 +123,7 @@ class ValueTest : BaseParserTest() {
             assertThat(expression).isInstanceOf(GIdentifier::class.java)
             val id = expression as GIdentifier
 
-            assertThat(id.identifier).isEqualTo("abc!")
+            assertThat(id.name).isEqualTo("abc!")
 
             assertThat(id.prettyPrint()).isEqualTo("abc!")
         }
@@ -134,7 +135,7 @@ class ValueTest : BaseParserTest() {
             assertThat(expression).isInstanceOf(GIdentifier::class.java)
             val id = expression as GIdentifier
 
-            assertThat(id.identifier).isEqualTo("++")
+            assertThat(id.name).isEqualTo("++")
 
             assertThat(id.prettyPrint()).isEqualTo("(++)")
         }

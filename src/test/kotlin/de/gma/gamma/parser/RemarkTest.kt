@@ -1,6 +1,6 @@
 package de.gma.gamma.parser
 
-import de.gma.gamma.datatypes.GRemark
+import de.gma.gamma.datatypes.direct.GRemark
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 

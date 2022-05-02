@@ -1,7 +1,7 @@
 package de.gma.gamma.parser
 
-import de.gma.gamma.datatypes.GInteger
-import de.gma.gamma.datatypes.GUnit
+import de.gma.gamma.datatypes.direct.GInteger
+import de.gma.gamma.datatypes.direct.GUnit
 import de.gma.gamma.datatypes.expressions.GBlock
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
