@@ -33,7 +33,6 @@ class FunctionTest : BaseParserTest() {
         val func = expression as GFunction
 
         assertThat(func.paramNames).hasSize(2)
-            .allMatch { it.type == GValueType.IDENTIFIER }
 
         assertThat(func.expressions).hasSize(1)
             .first().matches { it.type == GValueType.EXPRESSION }

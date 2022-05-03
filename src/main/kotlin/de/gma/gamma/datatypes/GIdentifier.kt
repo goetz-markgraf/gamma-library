@@ -24,7 +24,7 @@ class GIdentifier(
         if (name.contains('.')) {
             TODO("compound identifier not yet implemented")
         } else {
-            return scope.getValue(name)
+            return scope.getValue(name).evaluate(scope)
         }
     }
 

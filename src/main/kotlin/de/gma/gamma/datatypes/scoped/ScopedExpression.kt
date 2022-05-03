@@ -29,7 +29,7 @@ class ScopedExpression(
     }
 
     override fun evaluate(scope: Scope): GValue {
-        if (value != null) {
+        if (value == null) {
             value = expression.evaluate(lazyScope)
         }
 

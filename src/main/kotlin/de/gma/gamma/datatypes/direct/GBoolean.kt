@@ -1,5 +1,7 @@
 package de.gma.gamma.datatypes.direct
 
+import de.gma.gamma.builtins.builtInSource
+import de.gma.gamma.builtins.nullPos
 import de.gma.gamma.datatypes.GValue
 import de.gma.gamma.datatypes.GValueType
 import de.gma.gamma.interpreter.Scope
@@ -16,4 +18,7 @@ class GBoolean(
 
     override fun evaluate(scope: Scope) = this
 
+    companion object {
+        fun build(value: Boolean) = GBoolean(builtInSource, nullPos, nullPos, value)
+    }
 }

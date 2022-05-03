@@ -1,8 +1,8 @@
 package de.gma.gamma
 
+import de.gma.gamma.interpreter.MapScope
 import de.gma.gamma.parser.EvaluationException
-import de.gma.gamma.parser.Lexer
-import de.gma.gamma.parser.TokenType
+import de.gma.gamma.parser.Parser
 
 fun main() {
     var cmd: String
@@ -59,13 +59,16 @@ private fun printHelp() {
 
 private fun execute(code: String) {
     println(code)
+    val scope = MapScope()
+
     try {
-        val l = Lexer(code, "<buffer>")
-        var tok = l.nextToken()
-        while (tok.type != TokenType.EOF) {
-            print("[${tok.type},${tok.content},${tok.start.col}] ")
-            tok = l.nextToken()
+        val parser = Parser(code, "Script")
+        var expr = parser.nextExpression(-1)
+        while (expr != null) {
+            expr.evaluate(scope)
+            expr = parser.nextExpression(-1)
         }
+
         println()
     } catch (l: EvaluationException) {
         println()

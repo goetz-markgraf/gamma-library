@@ -226,12 +226,12 @@ class Parser(
         if (currType != UNIT && currType != ID)
             throw createEmptyParamsException()
 
-        val params: List<GIdentifier> = if (currType == UNIT) {
+        val params: List<String> = if (currType == UNIT) {
             nextToken()
             emptyList()
-        } else buildList<GIdentifier> {
+        } else buildList {
             while (currType == ID) {
-                add(parseIdentifier(col))
+                add(parseIdentifier(col).name)
             }
         }
 

@@ -1,6 +1,5 @@
 package de.gma.gamma.datatypes.functions
 
-import de.gma.gamma.datatypes.GIdentifier
 import de.gma.gamma.datatypes.GValue
 import de.gma.gamma.interpreter.Scope
 import de.gma.gamma.parser.EvaluationException
@@ -10,7 +9,7 @@ class CurriedFunction(
     sourceName: String,
     beginPos: Position,
     endPos: Position,
-    params: List<GIdentifier>,
+    params: List<String>,
     val bakedInParams: List<GValue>,
     val function: AbstractFunction
 ) : AbstractFunction(sourceName, beginPos, endPos, params) {

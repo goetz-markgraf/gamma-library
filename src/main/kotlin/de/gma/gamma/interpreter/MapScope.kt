@@ -1,9 +1,10 @@
 package de.gma.gamma.interpreter
 
+import de.gma.gamma.builtins.GammaBaseScope
 import de.gma.gamma.datatypes.GValue
 import de.gma.gamma.datatypes.direct.GRemark
 
-class MapScope(val parent: Scope?) : Scope {
+open class MapScope(val parent: Scope? = GammaBaseScope()) : Scope {
     private val content: MutableMap<String, GValue> = mutableMapOf()
     private val remarks: MutableMap<String, GRemark> = mutableMapOf()
 

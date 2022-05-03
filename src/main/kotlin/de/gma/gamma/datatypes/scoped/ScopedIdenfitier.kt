@@ -20,7 +20,7 @@ class ScopedIdenfitier(
         id.prettyPrint()
 
     override fun evaluate(scope: Scope): GValue {
-        if (value != null) {
+        if (value == null) {
             value = id.evaluate(lazyScope)
         }
 

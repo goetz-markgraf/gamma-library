@@ -1,6 +1,5 @@
 package de.gma.gamma.datatypes.functions
 
-import de.gma.gamma.datatypes.GIdentifier
 import de.gma.gamma.datatypes.GValue
 import de.gma.gamma.datatypes.scoped.ScopedFunction
 import de.gma.gamma.interpreter.Scope
@@ -11,7 +10,7 @@ class GFunction(
     sourceName: String,
     beginPos: Position,
     endPos: Position,
-    paramNames: List<GIdentifier>,
+    paramNames: List<String>,
     val expressions: List<GValue>
 ) : AbstractFunction(sourceName, beginPos, endPos, paramNames) {
     override fun prettyPrint() = buildString {
@@ -19,7 +18,7 @@ class GFunction(
         if (paramNames.size == 0) {
             append("()")
         } else {
-            append(paramNames.joinToString(" ") { it.prettyPrint() })
+            append(paramNames.joinToString(" "))
         }
         append(" ->")
         append(CH_NEWLINE)
@@ -33,6 +32,6 @@ class GFunction(
         ScopedFunction(sourceName, beginPos, endPos, this, scope)
 
     override fun callInternal(scope: Scope) =
-        expressions.reduce { _, func -> func.evaluate(scope) }
+        expressions.reduce { _, expr -> expr.evaluate(scope) }
 
 }
