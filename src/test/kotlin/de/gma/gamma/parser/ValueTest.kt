@@ -1,7 +1,7 @@
 package de.gma.gamma.parser
 
-import de.gma.gamma.datatypes.GIdentifier
-import de.gma.gamma.datatypes.direct.*
+import de.gma.gamma.datatypes.Identifier
+import de.gma.gamma.datatypes.values.*
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
@@ -9,14 +9,14 @@ import org.junit.jupiter.api.Test
 class ValueTest : BaseParserTest() {
 
     @Nested
-    inner class Properties {
+    inner class PropertiesTest {
 
         @Test
         fun `parse a property value`() {
             val expression = getExpression(":hallo")
 
-            assertThat(expression).isInstanceOf(GProperty::class.java)
-            val prop = expression as GProperty
+            assertThat(expression).isInstanceOf(PropertyValue::class.java)
+            val prop = expression as PropertyValue
             assertThat(prop.identifier).isEqualTo("hallo")
 
             assertThat(prop.prettyPrint()).isEqualTo(":hallo")
@@ -24,13 +24,13 @@ class ValueTest : BaseParserTest() {
     }
 
     @Nested
-    inner class Numbers {
+    inner class NumbersTest {
         @Test
         fun `parse an integer number`() {
             val expression = getExpression("10")
 
-            assertThat(expression).isInstanceOf(GInteger::class.java)
-            val i = expression as GInteger
+            assertThat(expression).isInstanceOf(IntegerValue::class.java)
+            val i = expression as IntegerValue
             assertThat(i.intValue).isEqualTo(10)
         }
 
@@ -38,8 +38,8 @@ class ValueTest : BaseParserTest() {
         fun `parse a negative integer number`() {
             val expression = getExpression("-10")
 
-            assertThat(expression).isInstanceOf(GInteger::class.java)
-            val i = expression as GInteger
+            assertThat(expression).isInstanceOf(IntegerValue::class.java)
+            val i = expression as IntegerValue
             assertThat(i.intValue).isEqualTo(-10)
         }
 
@@ -47,8 +47,8 @@ class ValueTest : BaseParserTest() {
         fun `parse a float number`() {
             val expression = getExpression("10.5")
 
-            assertThat(expression).isInstanceOf(GFloat::class.java)
-            val i = expression as GFloat
+            assertThat(expression).isInstanceOf(FloatValue::class.java)
+            val i = expression as FloatValue
             assertThat(i.floatValue).isEqualTo(10.5)
         }
 
@@ -56,8 +56,8 @@ class ValueTest : BaseParserTest() {
         fun `parse a negative float number`() {
             val expression = getExpression("-1.3")
 
-            assertThat(expression).isInstanceOf(GFloat::class.java)
-            val i = expression as GFloat
+            assertThat(expression).isInstanceOf(FloatValue::class.java)
+            val i = expression as FloatValue
             assertThat(i.floatValue).isEqualTo(-1.3)
         }
 
@@ -65,8 +65,8 @@ class ValueTest : BaseParserTest() {
         fun `parse a float number without leading zero`() {
             val expression = getExpression(".3")
 
-            assertThat(expression).isInstanceOf(GFloat::class.java)
-            val i = expression as GFloat
+            assertThat(expression).isInstanceOf(FloatValue::class.java)
+            val i = expression as FloatValue
             assertThat(i.floatValue).isEqualTo(0.3)
         }
 
@@ -74,21 +74,21 @@ class ValueTest : BaseParserTest() {
         fun `parse a negative float number without leading zero`() {
             val expression = getExpression("-.3")
 
-            assertThat(expression).isInstanceOf(GFloat::class.java)
-            val i = expression as GFloat
+            assertThat(expression).isInstanceOf(FloatValue::class.java)
+            val i = expression as FloatValue
             assertThat(i.floatValue).isEqualTo(-0.3)
         }
     }
 
     @Nested
-    inner class String {
+    inner class StringTest {
 
         @Test
         fun `parse a string`() {
             val expression = getExpression("\"a\"")
 
-            assertThat(expression).isInstanceOf(GString::class.java)
-            val s = expression as GString
+            assertThat(expression).isInstanceOf(StringValue::class.java)
+            val s = expression as StringValue
             assertThat(s.strValue).isEqualTo("a")
 
         }
@@ -97,8 +97,8 @@ class ValueTest : BaseParserTest() {
         fun `parse an empty string`() {
             val expression = getExpression("\"\"")
 
-            assertThat(expression).isInstanceOf(GString::class.java)
-            val s = expression as GString
+            assertThat(expression).isInstanceOf(StringValue::class.java)
+            val s = expression as StringValue
             assertThat(s.strValue).isEqualTo("")
 
         }
@@ -107,21 +107,21 @@ class ValueTest : BaseParserTest() {
         fun `parse a string with a newline`() {
             val expression = getExpression("\"a\\n\"")
 
-            assertThat(expression).isInstanceOf(GString::class.java)
-            val s = expression as GString
+            assertThat(expression).isInstanceOf(StringValue::class.java)
+            val s = expression as StringValue
             assertThat(s.strValue).isEqualTo("a\n")
 
         }
     }
 
     @Nested
-    inner class Identifier {
+    inner class IdentifierTest {
         @Test
         fun `parse a normal identifier`() {
             val expression = getExpression("abc!")
 
-            assertThat(expression).isInstanceOf(GIdentifier::class.java)
-            val id = expression as GIdentifier
+            assertThat(expression).isInstanceOf(Identifier::class.java)
+            val id = expression as Identifier
 
             assertThat(id.name).isEqualTo("abc!")
 
@@ -132,8 +132,8 @@ class ValueTest : BaseParserTest() {
         fun `parse an operator as identifier`() {
             val expression = getExpression("(++)")
 
-            assertThat(expression).isInstanceOf(GIdentifier::class.java)
-            val id = expression as GIdentifier
+            assertThat(expression).isInstanceOf(Identifier::class.java)
+            val id = expression as Identifier
 
             assertThat(id.name).isEqualTo("++")
 
@@ -142,13 +142,13 @@ class ValueTest : BaseParserTest() {
     }
 
     @Nested
-    inner class Boolean {
+    inner class BooleanTest {
         @Test
         fun `parse true`() {
             val expression = getExpression("true")
 
-            assertThat(expression).isInstanceOf(GBoolean::class.java)
-            val bool = expression as GBoolean
+            assertThat(expression).isInstanceOf(BooleanValue::class.java)
+            val bool = expression as BooleanValue
             assertThat(bool.boolValue).isTrue
         }
 
@@ -156,8 +156,8 @@ class ValueTest : BaseParserTest() {
         fun `parse false`() {
             val expression = getExpression("false")
 
-            assertThat(expression).isInstanceOf(GBoolean::class.java)
-            val bool = expression as GBoolean
+            assertThat(expression).isInstanceOf(BooleanValue::class.java)
+            val bool = expression as BooleanValue
             assertThat(bool.boolValue).isFalse
         }
     }

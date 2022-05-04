@@ -1,15 +1,15 @@
 package de.gma.gamma.parser
 
-import de.gma.gamma.datatypes.GIdentifier
 import de.gma.gamma.datatypes.GIdentifierType
-import de.gma.gamma.datatypes.GList
-import de.gma.gamma.datatypes.GValue
-import de.gma.gamma.datatypes.direct.*
-import de.gma.gamma.datatypes.expressions.GBlock
-import de.gma.gamma.datatypes.expressions.GFunctionCall
-import de.gma.gamma.datatypes.expressions.GIfExpression
-import de.gma.gamma.datatypes.expressions.GLetExpression
-import de.gma.gamma.datatypes.functions.GFunction
+import de.gma.gamma.datatypes.Identifier
+import de.gma.gamma.datatypes.Remark
+import de.gma.gamma.datatypes.Value
+import de.gma.gamma.datatypes.expressions.Block
+import de.gma.gamma.datatypes.expressions.FunctionCall
+import de.gma.gamma.datatypes.expressions.IfExpression
+import de.gma.gamma.datatypes.expressions.LetExpression
+import de.gma.gamma.datatypes.functions.LambdaFunction
+import de.gma.gamma.datatypes.values.*
 import de.gma.gamma.parser.TokenType.*
 
 
@@ -31,7 +31,7 @@ class Parser(
     /**
      * returns the next expression that is not yet read from the input source
      */
-    fun nextExpression(col: Int): GValue? {
+    fun nextExpression(col: Int): Value? {
         val minCol = if (col < 0) currStart.col else col
 
         if (currStart.col < minCol)
@@ -54,23 +54,23 @@ class Parser(
     // parse-Methods that extract the next expression from the source
     // ==========================================================
 
-    private fun parseRemark(col: Int): GRemark {
+    private fun parseRemark(col: Int): Remark {
         assertType(col, REMARK)
 
         val content = currToken.content
 
-        val ret = GRemark(sourceName, currStart, currEnd, content)
+        val ret = Remark(sourceName, currStart, currEnd, content)
         nextToken()
 
         return ret
     }
 
-    private fun parseDocumentation(col: Int): GValue {
+    private fun parseDocumentation(col: Int): Value {
         assertType(col, DOCUMENTATION)
 
         val content = currToken.content
 
-        val ret = GRemark(sourceName, currStart, currEnd, content, true)
+        val ret = Remark(sourceName, currStart, currEnd, content, true)
         nextToken()
         return if (currType == LET) {
             parseLetExpression(col, ret)
@@ -79,7 +79,7 @@ class Parser(
         }
     }
 
-    private fun parseElvis(col: Int): GValue? {
+    private fun parseElvis(col: Int): Value? {
         val start = currStart
 
         val predicate = parseOperation(col)
@@ -95,13 +95,13 @@ class Parser(
             val elseExpr = parseOperation(col)
             assertNotNull(elseExpr)
 
-            return GIfExpression(sourceName, start, currEnd, predicate, thenExpr!!, elseExpr!!)
+            return IfExpression(sourceName, start, currEnd, predicate, thenExpr!!, elseExpr!!)
         }
 
         return predicate
     }
 
-    private fun parseOperation(col: Int): GValue? {
+    private fun parseOperation(col: Int): Value? {
         val start = currStart
 
         val op1 = parseAddition(col)
@@ -112,14 +112,14 @@ class Parser(
             assertNotNull(op2)
 
 
-            return GFunctionCall.fromOperation(sourceName, start, currEnd, op, op1, op2!!)
+            return FunctionCall.fromOperation(sourceName, start, currEnd, op, op1, op2!!)
         }
 
         return op1
     }
 
 
-    private fun parseAddition(col: Int): GValue? {
+    private fun parseAddition(col: Int): Value? {
         val start = currStart
 
         val sum1 = parseProduct(col)
@@ -132,14 +132,14 @@ class Parser(
             val sum2 = parseProduct(col)
             assertNotNull(sum2)
 
-            return GFunctionCall.fromOperation(sourceName, start, currEnd, op, sum1, sum2!!)
+            return FunctionCall.fromOperation(sourceName, start, currEnd, op, sum1, sum2!!)
         }
 
         return sum1
     }
 
 
-    private fun parseProduct(col: Int): GValue? {
+    private fun parseProduct(col: Int): Value? {
         val start = currStart
 
         val fac1 = parseFunctionCall(col)
@@ -152,19 +152,19 @@ class Parser(
             val fac2 = parseFunctionCall(col)
             assertNotNull(fac2)
 
-            return GFunctionCall.fromOperation(sourceName, start, currEnd, op, fac1, fac2!!)
+            return FunctionCall.fromOperation(sourceName, start, currEnd, op, fac1, fac2!!)
         }
 
         return fac1
     }
 
-    private fun parseFunctionCall(col: Int): GValue? {
+    private fun parseFunctionCall(col: Int): Value? {
         val start = currStart
 
         val elem1 = parseElement(col)
 
         // are there more params?
-        val params = mutableListOf<GValue>()
+        val params = mutableListOf<Value>()
         var nextElem = parseElement(col + 1)
         while (nextElem != null) {
             params.add(nextElem)
@@ -176,10 +176,10 @@ class Parser(
         if (params.isEmpty())
             return elem1
 
-        return GFunctionCall(sourceName, start, currEnd, elem1!!, params)
+        return FunctionCall(sourceName, start, currEnd, elem1!!, params)
     }
 
-    private fun parseElement(col: Int): GValue? {
+    private fun parseElement(col: Int): Value? {
         if (currStart.col < col)
             return null
 
@@ -206,7 +206,7 @@ class Parser(
         }
     }
 
-    private fun parseOpenParens(col: Int): GValue? {
+    private fun parseOpenParens(col: Int): Value? {
         return when (currToken.content) {
             "(" -> parseBlock(col)
 
@@ -218,7 +218,7 @@ class Parser(
         }
     }
 
-    private fun parseFunction(col: Int): GFunction {
+    private fun parseFunction(col: Int): LambdaFunction {
         assertTypeWithContent(col, OPEN_PARENS, "[")
         val start = currStart
         nextToken()
@@ -243,10 +243,10 @@ class Parser(
         assertTypeWithContent(col, CLOSE_PARENS, "]")
         nextToken()
 
-        return GFunction(sourceName, start, currEnd, params, expressions)
+        return LambdaFunction(sourceName, start, currEnd, params, expressions)
     }
 
-    private fun parseList(col: Int): GList {
+    private fun parseList(col: Int): ListValue {
         assertTypeWithContent(col, OPEN_PARENS, "{")
         val start = currStart
         nextToken()
@@ -256,10 +256,10 @@ class Parser(
         assertTypeWithContent(col, CLOSE_PARENS, "}")
         nextToken()
 
-        return GList(sourceName, start, currEnd, expressions)
+        return ListValue(sourceName, start, currEnd, expressions)
     }
 
-    private fun parseBlock(col: Int): GValue {
+    private fun parseBlock(col: Int): Value {
         assertTypeWithContent(col, OPEN_PARENS, "(")
         val start = currStart
         nextToken()
@@ -270,82 +270,82 @@ class Parser(
         nextToken()
 
         return when {
-            expressions.isEmpty() -> GUnit(sourceName, start, currEnd)
+            expressions.isEmpty() -> UnitValue(sourceName, start, currEnd)
 
             expressions.size == 1 -> expressions.first()
 
-            else -> GBlock(sourceName, start, currEnd, expressions)
+            else -> Block(sourceName, start, currEnd, expressions)
         }
     }
 
-    private fun parseBoolean(col: Int): GBoolean {
+    private fun parseBoolean(col: Int): BooleanValue {
         assertType(col, TRUE, FALSE)
 
-        val ret = GBoolean(sourceName, currStart, currEnd, currType == TRUE)
+        val ret = BooleanValue(sourceName, currStart, currEnd, currType == TRUE)
         nextToken()
         return ret
     }
 
-    private fun parseUnit(col: Int): GUnit {
+    private fun parseUnit(col: Int): UnitValue {
         assertType(col, UNIT)
-        val ret = GUnit(sourceName, currStart, currEnd)
+        val ret = UnitValue(sourceName, currStart, currEnd)
         nextToken()
         return ret
     }
 
-    private fun parseString(col: Int): GValue {
+    private fun parseString(col: Int): Value {
         assertType(col, STRING)
         val content = currToken.content
 
-        val ret = GString(sourceName, currStart, currEnd, content)
+        val ret = StringValue(sourceName, currStart, currEnd, content)
         nextToken()
         return ret
     }
 
-    private fun parseNumber(col: Int): GValue {
+    private fun parseNumber(col: Int): Value {
         assertType(col, NUMBER)
         val content = currToken.content
 
         val ret = if (content.indexOf('.') >= 0) {
-            GFloat(sourceName, currStart, currEnd, content.toDouble())
+            FloatValue(sourceName, currStart, currEnd, content.toDouble())
         } else {
-            GInteger(sourceName, currStart, currEnd, content.toLong())
+            IntegerValue(sourceName, currStart, currEnd, content.toLong())
         }
         nextToken()
         return ret
     }
 
-    private fun parseProperty(col: Int): GProperty {
+    private fun parseProperty(col: Int): PropertyValue {
         assertType(col, PROPERTY)
         val name = currToken.content
 
-        val ret = GProperty(sourceName, currStart, currEnd, name)
+        val ret = PropertyValue(sourceName, currStart, currEnd, name)
         nextToken()
         return ret
     }
 
 
-    private fun parseIdentifier(col: Int): GIdentifier {
+    private fun parseIdentifier(col: Int): Identifier {
         assertType(col, ID, OP_AS_ID)
         val name = currToken.content
         val type = if (currType == ID) GIdentifierType.ID else GIdentifierType.OP_AS_ID
 
-        val ret = GIdentifier(sourceName, currStart, currEnd, name, type)
+        val ret = Identifier(sourceName, currStart, currEnd, name, type)
         nextToken()
         return ret
     }
 
-    private fun parseOperator(col: Int): GIdentifier {
+    private fun parseOperator(col: Int): Identifier {
         assertType(col, OP, ID_AS_OP)
         val name = currToken.content
         val type = if (currType == OP) GIdentifierType.OP else GIdentifierType.ID_AS_OP
 
-        val ret = GIdentifier(sourceName, currStart, currEnd, name, type)
+        val ret = Identifier(sourceName, currStart, currEnd, name, type)
         nextToken()
         return ret
     }
 
-    private fun parseLetExpression(col: Int, documentation: GRemark? = null): GLetExpression {
+    private fun parseLetExpression(col: Int, documentation: Remark? = null): LetExpression {
         val start = currStart
         nextToken()
 
@@ -366,7 +366,7 @@ class Parser(
 
         val expression = nextExpression(nextCol) ?: throw createIllegalTokenException()
 
-        return GLetExpression(sourceName, start, currEnd, id, expression, documentation)
+        return LetExpression(sourceName, start, currEnd, id, expression, documentation)
     }
 
     // ==========================================================
@@ -384,7 +384,7 @@ class Parser(
             throw createIllegalTokenException()
     }
 
-    private fun assertNotNull(expr: GValue?) {
+    private fun assertNotNull(expr: Value?) {
         if (expr == null)
             throw createIllegalEndOfExpression()
     }
@@ -434,7 +434,7 @@ class Parser(
     // ==========================================================
 
 
-    private fun findNextedExpressions(col: Int): List<GValue> {
+    private fun findNextedExpressions(col: Int): List<Value> {
         val newCol = currStart.col
         if (newCol <= col)
             throw createIllegalColumnException(col + 1)

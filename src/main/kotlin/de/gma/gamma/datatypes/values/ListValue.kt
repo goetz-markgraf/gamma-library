@@ -1,20 +1,22 @@
-package de.gma.gamma.datatypes
+package de.gma.gamma.datatypes.values
 
+import de.gma.gamma.datatypes.Value
+import de.gma.gamma.datatypes.expressions.Expression
 import de.gma.gamma.interpreter.Scope
 import de.gma.gamma.parser.CH_NEWLINE
 import de.gma.gamma.parser.Position
 
-class GList(
+class ListValue(
     sourceName: String,
     beginPos: Position,
     endPos: Position,
-    items: List<GValue>
-) : GValue(GValueType.LIST, sourceName, beginPos, endPos) {
+    items: List<Value>
+) : Value(sourceName, beginPos, endPos) {
 
-    private var internalItems: List<GValue> = items
+    private var internalItems: List<Value> = items
 
     override fun prettyPrint() = buildString {
-        val complex = internalItems.indexOfFirst { it.type == GValueType.EXPRESSION } >= 0
+        val complex = internalItems.indexOfFirst { it is Expression } >= 0
         val splitChars = if (complex) "$CH_NEWLINE" else ", "
 
         append('{').append(if (complex) CH_NEWLINE else ' ')
@@ -23,7 +25,7 @@ class GList(
         append('}')
     }
 
-    override fun prepare(scope: Scope): GValue {
+    override fun prepare(scope: Scope): Value {
         internalItems = internalItems.map { it.prepare(scope) }
 
         return this

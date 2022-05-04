@@ -1,8 +1,8 @@
 package de.gma.gamma.parser
 
-import de.gma.gamma.datatypes.direct.GInteger
-import de.gma.gamma.datatypes.direct.GUnit
-import de.gma.gamma.datatypes.expressions.GBlock
+import de.gma.gamma.datatypes.expressions.Block
+import de.gma.gamma.datatypes.values.IntegerValue
+import de.gma.gamma.datatypes.values.UnitValue
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -11,22 +11,22 @@ class BlockTest : BaseParserTest() {
     fun `parse an empty block`() {
         val expression = getExpression("( )")
 
-        assertThat(expression).isInstanceOf(GUnit::class.java)
+        assertThat(expression).isInstanceOf(UnitValue::class.java)
     }
 
     @Test
     fun `parse a block with a single expression`() {
         val expression = getExpression("(10)")
 
-        assertThat(expression).isInstanceOf(GInteger::class.java)
+        assertThat(expression).isInstanceOf(IntegerValue::class.java)
     }
 
     @Test
     fun `parse a block with a two expressions`() {
         val expression = getExpression("(10,20)")
 
-        assertThat(expression).isInstanceOf(GBlock::class.java)
-        val block = expression as GBlock
+        assertThat(expression).isInstanceOf(Block::class.java)
+        val block = expression as Block
 
         assertThat(block.expressions).hasSize(2)
 

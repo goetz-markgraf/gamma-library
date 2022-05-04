@@ -1,24 +1,23 @@
-package de.gma.gamma.datatypes.direct
+package de.gma.gamma.datatypes.values
 
 import de.gma.gamma.builtins.builtInSource
 import de.gma.gamma.builtins.nullPos
-import de.gma.gamma.datatypes.GValue
-import de.gma.gamma.datatypes.GValueType
+import de.gma.gamma.datatypes.Value
 import de.gma.gamma.interpreter.Scope
 import de.gma.gamma.parser.Position
 
-class GBoolean(
+class BooleanValue(
     sourceName: String,
     beginPos: Position,
     endPos: Position,
     val boolValue: Boolean
-) : GValue(GValueType.STRING, sourceName, beginPos, endPos) {
+) : Value(sourceName, beginPos, endPos) {
 
     override fun prettyPrint() = if (boolValue) "true" else "false"
 
     override fun evaluate(scope: Scope) = this
 
     companion object {
-        fun build(value: Boolean) = GBoolean(builtInSource, nullPos, nullPos, value)
+        fun build(value: Boolean) = BooleanValue(builtInSource, nullPos, nullPos, value)
     }
 }

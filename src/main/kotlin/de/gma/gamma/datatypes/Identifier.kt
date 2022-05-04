@@ -4,13 +4,13 @@ import de.gma.gamma.datatypes.scoped.ScopedIdenfitier
 import de.gma.gamma.interpreter.Scope
 import de.gma.gamma.parser.Position
 
-class GIdentifier(
+class Identifier(
     sourceName: String,
     beginPos: Position,
     endPos: Position,
     val name: String,
     val identifierType: GIdentifierType
-) : GValue(GValueType.IDENTIFIER, sourceName, beginPos, endPos) {
+) : Value(sourceName, beginPos, endPos) {
 
     override fun prettyPrint() =
         when (identifierType) {
@@ -20,7 +20,7 @@ class GIdentifier(
             GIdentifierType.ID_AS_OP -> "$name:"
         }
 
-    override fun evaluate(scope: Scope): GValue {
+    override fun evaluate(scope: Scope): Value {
         if (name.contains('.')) {
             TODO("compound identifier not yet implemented")
         } else {

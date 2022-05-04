@@ -1,7 +1,8 @@
 package de.gma.gamma.parser
 
-import de.gma.gamma.datatypes.GValueType
-import de.gma.gamma.datatypes.expressions.GFunctionCall
+import de.gma.gamma.datatypes.Identifier
+import de.gma.gamma.datatypes.expressions.FunctionCall
+import de.gma.gamma.datatypes.values.UnitValue
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
@@ -12,11 +13,11 @@ class FunctionCallTest : BaseParserTest() {
     fun `parse a simple function call`() {
         val expression = getExpression("print a")
 
-        assertThat(expression).isInstanceOf(GFunctionCall::class.java)
-        val call = expression as GFunctionCall
+        assertThat(expression).isInstanceOf(FunctionCall::class.java)
+        val call = expression as FunctionCall
         assertThat(call.function.prettyPrint()).isEqualTo("print")
         assertThat(call.params).hasSize(1)
-            .first().matches { it.type == GValueType.IDENTIFIER }
+            .first().isInstanceOf(Identifier::class.java)
 
         assertThat(call.prettyPrint()).isEqualTo("print a")
     }
@@ -25,11 +26,11 @@ class FunctionCallTest : BaseParserTest() {
     fun `parse a function call with unit parameters`() {
         val expression = getExpression("print ()")
 
-        assertThat(expression).isInstanceOf(GFunctionCall::class.java)
-        val call = expression as GFunctionCall
+        assertThat(expression).isInstanceOf(FunctionCall::class.java)
+        val call = expression as FunctionCall
         assertThat(call.function.prettyPrint()).isEqualTo("print")
         assertThat(call.params).hasSize(1)
-            .first().matches { it.type == GValueType.UNIT }
+            .first().isInstanceOf(UnitValue::class.java)
 
         assertThat(call.prettyPrint()).isEqualTo("print ()")
     }
@@ -43,11 +44,11 @@ class FunctionCallTest : BaseParserTest() {
         """.trimIndent()
         )
 
-        assertThat(expression1).isInstanceOf(GFunctionCall::class.java)
+        assertThat(expression1).isInstanceOf(FunctionCall::class.java)
 
         val expression2 = parser.nextExpression(-1)
 
-        assertThat(expression2).isInstanceOf(GFunctionCall::class.java)
+        assertThat(expression2).isInstanceOf(FunctionCall::class.java)
     }
 
     @Test
@@ -59,7 +60,7 @@ class FunctionCallTest : BaseParserTest() {
         """.trimIndent()
         )
 
-        assertThat(expression1).isInstanceOf(GFunctionCall::class.java)
+        assertThat(expression1).isInstanceOf(FunctionCall::class.java)
         assertThat(expression1!!.prettyPrint()).isEqualTo("print a b")
 
         val expression2 = parser.nextExpression(-1)
@@ -71,17 +72,17 @@ class FunctionCallTest : BaseParserTest() {
     fun `parse two expressions on one line`() {
         val expression1 = getExpression("print a, print b ")
 
-        assertThat(expression1).isInstanceOf(GFunctionCall::class.java)
+        assertThat(expression1).isInstanceOf(FunctionCall::class.java)
 
         val expression2 = parser.nextExpression(-1)
 
-        assertThat(expression2).isInstanceOf(GFunctionCall::class.java)
+        assertThat(expression2).isInstanceOf(FunctionCall::class.java)
     }
 
     @Test
     fun `parse a function call with a string as function`() {
         val expression = getExpression("\"hello\" a b")
-        assertThat(expression).isInstanceOf(GFunctionCall::class.java)
+        assertThat(expression).isInstanceOf(FunctionCall::class.java)
     }
 
     @ParameterizedTest
@@ -95,7 +96,7 @@ class FunctionCallTest : BaseParserTest() {
     fun `unit mixed with other params is ok`(code: String) {
         val expression = getExpression(code)
 
-        assertThat(expression).isInstanceOf(GFunctionCall::class.java)
+        assertThat(expression).isInstanceOf(FunctionCall::class.java)
 
         assertThat(expression!!.prettyPrint()).isEqualTo(code)
     }

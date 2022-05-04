@@ -1,8 +1,8 @@
 package de.gma.gamma
 
 import de.gma.gamma.builtins.GammaBaseScope
-import de.gma.gamma.datatypes.GValue
-import de.gma.gamma.datatypes.GValueType
+import de.gma.gamma.datatypes.Value
+import de.gma.gamma.datatypes.values.IntegerValue
 import de.gma.gamma.interpreter.MapScope
 import de.gma.gamma.parser.Parser
 import org.assertj.core.api.Assertions.assertThat
@@ -22,16 +22,16 @@ class EvaluationTest {
 
         val ret = execute(code)
 
-        assertThat(ret!!.type).isEqualTo(GValueType.INTEGER)
+        assertThat(ret!!).isInstanceOf(IntegerValue::class.java)
         assertThat(ret.prettyPrint()).isEqualTo("7")
     }
 
-    private fun execute(code: String): GValue? {
+    private fun execute(code: String): Value? {
         val parser = Parser(code, "Script")
         val scope = getScope()
 
         var expr = parser.nextExpression(-1)
-        var ret: GValue? = null
+        var ret: Value? = null
 
         while (expr != null) {
             ret = expr.evaluate(scope)

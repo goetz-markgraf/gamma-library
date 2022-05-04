@@ -1,18 +1,17 @@
-package de.gma.gamma.datatypes.direct
+package de.gma.gamma.datatypes.values
 
 import de.gma.gamma.builtins.builtInSource
 import de.gma.gamma.builtins.nullPos
-import de.gma.gamma.datatypes.GValue
-import de.gma.gamma.datatypes.GValueType
+import de.gma.gamma.datatypes.Value
 import de.gma.gamma.interpreter.Scope
 import de.gma.gamma.parser.Position
 
-class GInteger(
+class IntegerValue(
     sourceName: String,
     beginPos: Position,
     endPos: Position,
     val intValue: Long
-) : GValue(GValueType.INTEGER, sourceName, beginPos, endPos) {
+) : Value(sourceName, beginPos, endPos) {
 
     override fun prettyPrint() = "$intValue"
 
@@ -20,6 +19,6 @@ class GInteger(
 
     companion object {
         fun build(value: Long) =
-            GInteger(builtInSource, nullPos, nullPos, value)
+            IntegerValue(builtInSource, nullPos, nullPos, value)
     }
 }

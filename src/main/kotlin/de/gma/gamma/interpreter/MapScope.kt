@@ -1,14 +1,14 @@
 package de.gma.gamma.interpreter
 
 import de.gma.gamma.builtins.GammaBaseScope
-import de.gma.gamma.datatypes.GValue
-import de.gma.gamma.datatypes.direct.GRemark
+import de.gma.gamma.datatypes.Remark
+import de.gma.gamma.datatypes.Value
 
 open class MapScope(val parent: Scope? = GammaBaseScope()) : Scope {
-    private val content: MutableMap<String, GValue> = mutableMapOf()
-    private val remarks: MutableMap<String, GRemark> = mutableMapOf()
+    private val content: MutableMap<String, Value> = mutableMapOf()
+    private val remarks: MutableMap<String, Remark> = mutableMapOf()
 
-    override fun getValue(id: String): GValue {
+    override fun getValue(id: String): Value {
         val ret = content[id]
 
         if (ret == null) {
@@ -21,7 +21,7 @@ open class MapScope(val parent: Scope? = GammaBaseScope()) : Scope {
         }
     }
 
-    override fun bind(name: String, value: GValue, documentation: GRemark?) {
+    override fun bind(name: String, value: Value, documentation: Remark?) {
         if (content.contains(name))
             throw ScopeException("Id $name is already defined.")
 

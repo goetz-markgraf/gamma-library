@@ -1,16 +1,16 @@
 package de.gma.gamma.datatypes.expressions
 
-import de.gma.gamma.datatypes.GValue
+import de.gma.gamma.datatypes.Value
 import de.gma.gamma.interpreter.Scope
 import de.gma.gamma.parser.CH_NEWLINE
 import de.gma.gamma.parser.Position
 
-class GBlock(
+class Block(
     sourceName: String,
     beginPos: Position,
     endPos: Position,
-    val expressions: List<GValue>
-) : GExpression(sourceName, beginPos, endPos) {
+    val expressions: List<Value>
+) : Expression(sourceName, beginPos, endPos) {
 
     override fun prettyPrint() = buildString {
         append("(").append(CH_NEWLINE)
@@ -20,7 +20,7 @@ class GBlock(
         append(")")
     }
 
-    override fun evaluate(scope: Scope): GValue {
+    override fun evaluate(scope: Scope): Value {
         return expressions.reduce { _, v -> v.evaluate(scope) }
     }
 }

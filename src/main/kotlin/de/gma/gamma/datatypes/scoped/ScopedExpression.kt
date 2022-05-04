@@ -1,7 +1,7 @@
 package de.gma.gamma.datatypes.scoped
 
-import de.gma.gamma.datatypes.GValue
-import de.gma.gamma.datatypes.expressions.GExpression
+import de.gma.gamma.datatypes.Value
+import de.gma.gamma.datatypes.expressions.Expression
 import de.gma.gamma.interpreter.Scope
 import de.gma.gamma.parser.EvaluationException
 import de.gma.gamma.parser.Position
@@ -10,11 +10,11 @@ class ScopedExpression(
     sourceName: String,
     beginPos: Position,
     endPos: Position,
-    private val expression: GExpression,
+    private val expression: Expression,
     private val lazyScope: Scope
-) : GExpression(sourceName, beginPos, endPos) {
+) : Expression(sourceName, beginPos, endPos) {
 
-    private var value: GValue? = null
+    private var value: Value? = null
 
     override fun prettyPrint(): String {
         return if (value != null)
@@ -28,7 +28,7 @@ class ScopedExpression(
             "Lazy:${expression.prettyPrint()}"
     }
 
-    override fun evaluate(scope: Scope): GValue {
+    override fun evaluate(scope: Scope): Value {
         if (value == null) {
             value = expression.evaluate(lazyScope)
         }

@@ -1,15 +1,14 @@
-package de.gma.gamma.datatypes.direct
+package de.gma.gamma.datatypes.values
 
-import de.gma.gamma.datatypes.GValue
-import de.gma.gamma.datatypes.GValueType
+import de.gma.gamma.datatypes.Value
 import de.gma.gamma.interpreter.Scope
 import de.gma.gamma.parser.Position
 
-class GUnit(
+class UnitValue(
     sourceName: String,
     beginPos: Position,
     endPos: Position
-) : GValue(GValueType.UNIT, sourceName, beginPos, endPos) {
+) : Value(sourceName, beginPos, endPos) {
 
     override fun prettyPrint() = "()"
 

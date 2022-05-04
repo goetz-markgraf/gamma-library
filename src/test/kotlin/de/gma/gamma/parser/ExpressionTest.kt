@@ -1,9 +1,8 @@
 package de.gma.gamma.parser
 
-import de.gma.gamma.datatypes.GValueType
-import de.gma.gamma.datatypes.direct.GInteger
-import de.gma.gamma.datatypes.direct.GString
-import de.gma.gamma.datatypes.expressions.GLetExpression
+import de.gma.gamma.datatypes.expressions.LetExpression
+import de.gma.gamma.datatypes.values.IntegerValue
+import de.gma.gamma.datatypes.values.StringValue
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
@@ -18,8 +17,8 @@ class ExpressionTest : BaseParserTest() {
             val source = "'doc'let a = 10"
             val expression = getExpression(source)
 
-            assertThat(expression).isInstanceOf(GLetExpression::class.java)
-            val let = expression as GLetExpression
+            assertThat(expression).isInstanceOf(LetExpression::class.java)
+            val let = expression as LetExpression
 
             assertThat(let.documentation).isNotNull
             assertThat(let.documentation!!.strValue).isEqualTo("doc")
@@ -38,11 +37,11 @@ class ExpressionTest : BaseParserTest() {
             val source = "let hello = \"Hello\""
             val expression = getExpression(source)
 
-            assertThat(expression).isInstanceOf(GLetExpression::class.java)
-            val let = expression as GLetExpression
+            assertThat(expression).isInstanceOf(LetExpression::class.java)
+            val let = expression as LetExpression
             assertThat(let.identifier.name).isEqualTo("hello")
-            assertThat(let.boundValue.type).isEqualTo(GValueType.STRING)
-            assertThat((let.boundValue as GString).strValue).isEqualTo("Hello")
+            assertThat(let.boundValue).isInstanceOf(StringValue::class.java)
+            assertThat((let.boundValue as StringValue).strValue).isEqualTo("Hello")
 
             assertThat(expression.prettyPrint()).isEqualTo("let hello = \"Hello\"\n")
         }
@@ -52,11 +51,11 @@ class ExpressionTest : BaseParserTest() {
             val source = "let a = 10"
             val expression = getExpression(source)
 
-            assertThat(expression).isInstanceOf(GLetExpression::class.java)
-            val let = expression as GLetExpression
+            assertThat(expression).isInstanceOf(LetExpression::class.java)
+            val let = expression as LetExpression
             assertThat(let.identifier.name).isEqualTo("a")
-            assertThat(let.boundValue.type).isEqualTo(GValueType.INTEGER)
-            assertThat((let.boundValue as GInteger).intValue).isEqualTo(10L)
+            assertThat(let.boundValue).isInstanceOf(IntegerValue::class.java)
+            assertThat((let.boundValue as IntegerValue).intValue).isEqualTo(10L)
 
             assertThat(expression.prettyPrint()).isEqualTo("let a = 10\n")
         }
@@ -65,11 +64,11 @@ class ExpressionTest : BaseParserTest() {
         fun `parse a let expression for an operator`() {
             val expression = getExpression("let (++) = 10")
 
-            assertThat(expression).isInstanceOf(GLetExpression::class.java)
-            val let = expression as GLetExpression
+            assertThat(expression).isInstanceOf(LetExpression::class.java)
+            val let = expression as LetExpression
             assertThat(let.identifier.name).isEqualTo("++")
-            assertThat(let.boundValue.type).isEqualTo(GValueType.INTEGER)
-            assertThat((let.boundValue as GInteger).intValue).isEqualTo(10L)
+            assertThat(let.boundValue).isInstanceOf(IntegerValue::class.java)
+            assertThat((let.boundValue as IntegerValue).intValue).isEqualTo(10L)
 
             assertThat(expression.prettyPrint()).isEqualTo("let (++) = 10\n")
         }

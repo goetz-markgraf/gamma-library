@@ -1,7 +1,6 @@
 package de.gma.gamma.datatypes.functions
 
-import de.gma.gamma.datatypes.GValue
-import de.gma.gamma.datatypes.GValueType
+import de.gma.gamma.datatypes.Value
 import de.gma.gamma.interpreter.MapScope
 import de.gma.gamma.interpreter.Scope
 import de.gma.gamma.parser.EvaluationException
@@ -12,9 +11,9 @@ abstract class AbstractFunction(
     beginPos: Position,
     endPos: Position,
     val paramNames: List<String>
-) : GValue(GValueType.FUNCTION, sourceName, beginPos, endPos) {
+) : Value(sourceName, beginPos, endPos) {
 
-    open fun call(scope: Scope, callParams: List<GValue>): GValue {
+    open fun call(scope: Scope, callParams: List<Value>): Value {
         val expectedParams = paramNames.size
         val suppliedParams = callParams.size
 
@@ -37,5 +36,5 @@ abstract class AbstractFunction(
     protected fun getEvaluated(scope: Scope, id: String) =
         scope.getValue(id).evaluate(scope)
 
-    abstract fun callInternal(scope: Scope): GValue
+    abstract fun callInternal(scope: Scope): Value
 }
