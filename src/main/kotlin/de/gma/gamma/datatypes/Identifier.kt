@@ -1,6 +1,6 @@
 package de.gma.gamma.datatypes
 
-import de.gma.gamma.datatypes.scoped.ScopedIdenfitier
+import de.gma.gamma.datatypes.scoped.ScopedIdentifier
 import de.gma.gamma.interpreter.Scope
 import de.gma.gamma.parser.Position
 
@@ -29,7 +29,7 @@ class Identifier(
     }
 
     override fun prepare(scope: Scope) =
-        ScopedIdenfitier(sourceName, beginPos, endPos, this, scope)
+        ScopedIdentifier(sourceName, beginPos, endPos, this, scope)
 }
 
 enum class GIdentifierType {

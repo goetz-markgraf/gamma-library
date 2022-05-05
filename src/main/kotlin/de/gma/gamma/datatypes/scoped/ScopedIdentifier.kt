@@ -6,7 +6,7 @@ import de.gma.gamma.interpreter.Scope
 import de.gma.gamma.parser.EvaluationException
 import de.gma.gamma.parser.Position
 
-class ScopedIdenfitier(
+class ScopedIdentifier(
     sourceName: String,
     beginPos: Position,
     endPos: Position,

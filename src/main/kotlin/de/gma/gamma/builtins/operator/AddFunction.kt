@@ -7,10 +7,10 @@ import de.gma.gamma.datatypes.values.IntegerValue
 import de.gma.gamma.interpreter.Scope
 import de.gma.gamma.parser.EvaluationException
 
-class AddFunction : BuiltinFunction(listOf("*a", "*b")) {
+class AddFunction : BuiltinFunction(listOf("a", "b")) {
     override fun callInternal(scope: Scope): Value {
-        val a = getEvaluated(scope, "*a")
-        val b = getEvaluated(scope, "*b")
+        val a = getEvaluated(scope, "a")
+        val b = getEvaluated(scope, "b")
 
         if (a is IntegerValue && b is IntegerValue)
             return IntegerValue.build(a.intValue + b.intValue)

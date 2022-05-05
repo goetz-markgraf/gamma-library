@@ -10,12 +10,13 @@ class CurriedFunction(
     beginPos: Position,
     endPos: Position,
     params: List<String>,
+    val savedScope: Scope,
     val bakedInParams: List<Value>,
     val function: AbstractFunction
 ) : AbstractFunction(sourceName, beginPos, endPos, params) {
 
     override fun call(scope: Scope, callParams: List<Value>) =
-        function.call(scope, bakedInParams + callParams)
+        function.call(savedScope, bakedInParams + callParams)
 
     override fun callInternal(scope: Scope): Value {
         throw EvaluationException("must not happen", sourceName, beginPos.line, beginPos.col)

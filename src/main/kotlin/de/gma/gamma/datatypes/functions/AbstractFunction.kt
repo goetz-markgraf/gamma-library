@@ -17,9 +17,9 @@ abstract class AbstractFunction(
         val expectedParams = paramNames.size
         val suppliedParams = callParams.size
 
-        return if (expectedParams < suppliedParams) {
-            CurriedFunction(sourceName, beginPos, endPos, paramNames, callParams, this)
-        } else if (expectedParams > suppliedParams) {
+        return if (expectedParams > suppliedParams) {
+            CurriedFunction(sourceName, beginPos, endPos, paramNames.drop(suppliedParams), scope, callParams, this)
+        } else if (expectedParams < suppliedParams) {
             throw EvaluationException("too many params", sourceName, beginPos.line, beginPos.col)
         } else {
             val newScope: Scope = MapScope(scope)
@@ -29,7 +29,9 @@ abstract class AbstractFunction(
             val result = callInternal(newScope)
 
             // save the scope for lazy evaluation
-            return result.prepare(newScope)
+            return if (result is LambdaFunction) {
+                result.prepare(newScope)
+            } else result
         }
     }
 
