@@ -2,7 +2,7 @@ package de.gma.gamma.builtins
 
 import de.gma.gamma.datatypes.Remark
 import de.gma.gamma.datatypes.functions.AbstractFunction
-import de.gma.gamma.interpreter.Scope
+import de.gma.gamma.datatypes.scope.Scope
 import de.gma.gamma.parser.Position
 
 const val builtInSource = "<builtin>"

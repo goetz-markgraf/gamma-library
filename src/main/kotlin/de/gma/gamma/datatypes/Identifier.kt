@@ -1,7 +1,7 @@
 package de.gma.gamma.datatypes
 
+import de.gma.gamma.datatypes.scope.Scope
 import de.gma.gamma.datatypes.scoped.ScopedIdentifier
-import de.gma.gamma.interpreter.Scope
 import de.gma.gamma.parser.Position
 
 class Identifier(

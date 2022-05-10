@@ -5,9 +5,10 @@ import de.gma.gamma.datatypes.Remark
 import de.gma.gamma.datatypes.Value
 import de.gma.gamma.datatypes.scope.Scope
 import de.gma.gamma.parser.CH_NEWLINE
+import de.gma.gamma.parser.EvaluationException
 import de.gma.gamma.parser.Position
 
-class LetExpression(
+class SetExpression(
     sourceName: String,
     beginPos: Position,
     endPos: Position,
@@ -33,7 +34,17 @@ class LetExpression(
     override fun evaluate(scope: Scope): Value {
         val value = boundValue.evaluate(scope)
 
-        scope.bind(identifier.name, value, documentation)
-        return value
+        var startScope: Scope? = scope
+
+        while (startScope != null && !startScope.containsLocally(identifier.name))
+            startScope = scope.parent
+
+        if (startScope != null) {
+            startScope.set(identifier.name, value, documentation)
+
+            return value
+        } else {
+            throw EvaluationException("Cannot find id ${identifier.name}", sourceName, beginPos.line, beginPos.col)
+        }
     }
 }

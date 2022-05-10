@@ -2,9 +2,9 @@ package de.gma.gamma.builtins
 
 import de.gma.gamma.builtins.io.populateIO
 import de.gma.gamma.builtins.operator.populateOperator
-import de.gma.gamma.interpreter.MapScope
+import de.gma.gamma.datatypes.scope.ModuleScope
 
-class GammaBaseScope() : MapScope(null) {
+class GammaBaseScope() : ModuleScope(null) {
     init {
         populateIO(this)
         populateOperator(this)

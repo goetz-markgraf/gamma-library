@@ -1,6 +1,6 @@
 package de.gma.gamma
 
-import de.gma.gamma.interpreter.MapScope
+import de.gma.gamma.datatypes.scope.ModuleScope
 import de.gma.gamma.parser.EvaluationException
 import de.gma.gamma.parser.Parser
 
@@ -59,7 +59,7 @@ private fun printHelp() {
 
 private fun execute(code: String) {
     println(code)
-    val scope = MapScope()
+    val scope = ModuleScope()
 
     try {
         val parser = Parser(code, "Script")

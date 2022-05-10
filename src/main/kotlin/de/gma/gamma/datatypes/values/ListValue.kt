@@ -2,7 +2,7 @@ package de.gma.gamma.datatypes.values
 
 import de.gma.gamma.datatypes.Value
 import de.gma.gamma.datatypes.expressions.Expression
-import de.gma.gamma.interpreter.Scope
+import de.gma.gamma.datatypes.scope.Scope
 import de.gma.gamma.parser.CH_NEWLINE
 import de.gma.gamma.parser.Position
 

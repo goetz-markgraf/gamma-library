@@ -3,8 +3,8 @@ package de.gma.gamma.builtins.operator
 import de.gma.gamma.builtins.BuiltinFunction
 import de.gma.gamma.builtins.builtInSource
 import de.gma.gamma.datatypes.Value
+import de.gma.gamma.datatypes.scope.Scope
 import de.gma.gamma.datatypes.values.IntegerValue
-import de.gma.gamma.interpreter.Scope
 import de.gma.gamma.parser.EvaluationException
 
 class TimesFunction : BuiltinFunction(listOf("a", "b")) {

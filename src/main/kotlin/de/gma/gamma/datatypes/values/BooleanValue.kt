@@ -3,7 +3,7 @@ package de.gma.gamma.datatypes.values
 import de.gma.gamma.builtins.builtInSource
 import de.gma.gamma.builtins.nullPos
 import de.gma.gamma.datatypes.Value
-import de.gma.gamma.interpreter.Scope
+import de.gma.gamma.datatypes.scope.Scope
 import de.gma.gamma.parser.Position
 
 class BooleanValue(

@@ -2,8 +2,8 @@ package de.gma.gamma.datatypes
 
 import de.gma.gamma.builtins.builtInSource
 import de.gma.gamma.builtins.nullPos
+import de.gma.gamma.datatypes.scope.Scope
 import de.gma.gamma.datatypes.values.UnitValue
-import de.gma.gamma.interpreter.Scope
 import de.gma.gamma.parser.Position
 
 class Remark(

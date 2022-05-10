@@ -1,8 +1,8 @@
 package de.gma.gamma.datatypes
 
 import de.gma.gamma.datatypes.functions.AbstractFunction
+import de.gma.gamma.datatypes.scope.Scope
 import de.gma.gamma.datatypes.values.*
-import de.gma.gamma.interpreter.Scope
 import de.gma.gamma.parser.EvaluationException
 import de.gma.gamma.parser.Position
 

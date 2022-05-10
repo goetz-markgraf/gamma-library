@@ -2,7 +2,7 @@ package de.gma.gamma.datatypes.scoped
 
 import de.gma.gamma.datatypes.Identifier
 import de.gma.gamma.datatypes.Value
-import de.gma.gamma.interpreter.Scope
+import de.gma.gamma.datatypes.scope.Scope
 import de.gma.gamma.parser.EvaluationException
 import de.gma.gamma.parser.Position
 

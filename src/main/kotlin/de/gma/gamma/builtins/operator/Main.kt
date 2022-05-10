@@ -1,7 +1,7 @@
 package de.gma.gamma.builtins.operator
 
 import de.gma.gamma.builtins.bindWithDoc
-import de.gma.gamma.interpreter.Scope
+import de.gma.gamma.datatypes.scope.Scope
 
 fun populateOperator(scope: Scope) {
     bindWithDoc(scope, "+", AddFunction(), "<a> + <b> - adds two number values")

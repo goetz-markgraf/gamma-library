@@ -3,7 +3,7 @@ package de.gma.gamma.datatypes.expressions
 import de.gma.gamma.datatypes.GIdentifierType
 import de.gma.gamma.datatypes.Identifier
 import de.gma.gamma.datatypes.Value
-import de.gma.gamma.interpreter.Scope
+import de.gma.gamma.datatypes.scope.Scope
 import de.gma.gamma.parser.Position
 
 class FunctionCall(

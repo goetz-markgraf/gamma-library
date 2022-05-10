@@ -1,8 +1,8 @@
 package de.gma.gamma.datatypes.functions
 
 import de.gma.gamma.datatypes.Value
-import de.gma.gamma.interpreter.MapScope
-import de.gma.gamma.interpreter.Scope
+import de.gma.gamma.datatypes.scope.ModuleScope
+import de.gma.gamma.datatypes.scope.Scope
 import de.gma.gamma.parser.EvaluationException
 import de.gma.gamma.parser.Position
 
@@ -22,7 +22,7 @@ abstract class AbstractFunction(
         } else if (expectedParams < suppliedParams) {
             throw EvaluationException("too many params", sourceName, beginPos.line, beginPos.col)
         } else {
-            val newScope: Scope = MapScope(scope)
+            val newScope: Scope = ModuleScope(scope)
             paramNames.zip(callParams).map { pair ->
                 newScope.bind(pair.first, pair.second.prepare(scope))
             }

@@ -4,10 +4,7 @@ import de.gma.gamma.datatypes.GIdentifierType
 import de.gma.gamma.datatypes.Identifier
 import de.gma.gamma.datatypes.Remark
 import de.gma.gamma.datatypes.Value
-import de.gma.gamma.datatypes.expressions.Block
-import de.gma.gamma.datatypes.expressions.FunctionCall
-import de.gma.gamma.datatypes.expressions.IfExpression
-import de.gma.gamma.datatypes.expressions.LetExpression
+import de.gma.gamma.datatypes.expressions.*
 import de.gma.gamma.datatypes.functions.LambdaFunction
 import de.gma.gamma.datatypes.values.*
 import de.gma.gamma.parser.TokenType.*
@@ -45,6 +42,8 @@ class Parser(
             REMARK -> parseRemark(minCol)
 
             LET -> parseLetExpression(minCol)
+
+            SET -> parseSetExpression(minCol)
 
             else -> parseElvis(minCol)
         }
@@ -367,6 +366,37 @@ class Parser(
         val expression = nextExpression(nextCol) ?: throw createIllegalTokenException()
 
         return LetExpression(sourceName, start, currEnd, id, expression, documentation)
+    }
+
+    private fun parseSetExpression(col: Int, documentation: Remark? = null): SetExpression {
+        val start = currStart
+        nextToken()
+
+        val id = parseIdentifier(col)
+        if (id.name.last() != '!')
+            throw EvaluationException(
+                "Only ids with '!' at end of name can be mutated",
+                sourceName,
+                id.beginPos.line,
+                id.beginPos.col
+            )
+
+        assertTypeWithContent(col, OP, "=")
+        nextToken()
+
+        val nextCol =
+            if (currType == OPEN_PARENS && currToken.content == "[")
+                col
+            else {
+                if (currToken.start.col <= col)
+                    throw createIllegalColumnException(col + 1)
+
+                currToken.start.col
+            }
+
+        val expression = nextExpression(nextCol) ?: throw createIllegalTokenException()
+
+        return SetExpression(sourceName, start, currEnd, id, expression, documentation)
     }
 
     // ==========================================================
