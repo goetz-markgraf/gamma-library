@@ -5,7 +5,7 @@ import de.gma.gamma.datatypes.Identifier
 import de.gma.gamma.datatypes.Remark
 import de.gma.gamma.datatypes.Value
 import de.gma.gamma.datatypes.expressions.*
-import de.gma.gamma.datatypes.functions.LambdaFunction
+import de.gma.gamma.datatypes.functions.FunctionValue
 import de.gma.gamma.datatypes.values.*
 import de.gma.gamma.parser.TokenType.*
 
@@ -217,7 +217,7 @@ class Parser(
         }
     }
 
-    private fun parseFunction(col: Int): LambdaFunction {
+    private fun parseFunction(col: Int): FunctionValue {
         assertTypeWithContent(col, OPEN_PARENS, "[")
         val start = currStart
         nextToken()
@@ -242,7 +242,7 @@ class Parser(
         assertTypeWithContent(col, CLOSE_PARENS, "]")
         nextToken()
 
-        return LambdaFunction(sourceName, start, currEnd, params, expressions)
+        return FunctionValue(sourceName, start, currEnd, params, expressions)
     }
 
     private fun parseList(col: Int): ListValue {

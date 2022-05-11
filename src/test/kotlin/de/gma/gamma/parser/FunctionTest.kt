@@ -1,7 +1,7 @@
 package de.gma.gamma.parser
 
 import de.gma.gamma.datatypes.expressions.Expression
-import de.gma.gamma.datatypes.functions.LambdaFunction
+import de.gma.gamma.datatypes.functions.FunctionValue
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -10,8 +10,8 @@ class FunctionTest : BaseParserTest() {
     fun `parse an empty function`() {
         val expression = getExpression("[ () -> ]")
 
-        assertThat(expression).isInstanceOf(LambdaFunction::class.java)
-        val func = expression as LambdaFunction
+        assertThat(expression).isInstanceOf(FunctionValue::class.java)
+        val func = expression as FunctionValue
 
         assertThat(func.paramNames).isEmpty()
 
@@ -29,8 +29,8 @@ class FunctionTest : BaseParserTest() {
     fun `parse a function with two parameters`() {
         val expression = getExpression("[ a b -> a + b ]")
 
-        assertThat(expression).isInstanceOf(LambdaFunction::class.java)
-        val func = expression as LambdaFunction
+        assertThat(expression).isInstanceOf(FunctionValue::class.java)
+        val func = expression as FunctionValue
 
         assertThat(func.paramNames).hasSize(2)
 

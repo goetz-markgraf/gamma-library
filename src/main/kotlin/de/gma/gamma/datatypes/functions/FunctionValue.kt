@@ -7,7 +7,7 @@ import de.gma.gamma.datatypes.values.UnitValue
 import de.gma.gamma.parser.CH_NEWLINE
 import de.gma.gamma.parser.Position
 
-class LambdaFunction(
+class FunctionValue(
     sourceName: String,
     beginPos: Position,
     endPos: Position,
@@ -30,6 +30,9 @@ class LambdaFunction(
     }
 
     override fun prepare(scope: Scope) =
+        ScopedFunction(sourceName, beginPos, endPos, this, scope)
+
+    override fun evaluate(scope: Scope) =
         ScopedFunction(sourceName, beginPos, endPos, this, scope)
 
     override fun callInternal(scope: Scope) =

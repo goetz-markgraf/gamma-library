@@ -29,7 +29,7 @@ abstract class AbstractFunction(
             val result = callInternal(newScope)
 
             // save the scope for lazy evaluation
-            return if (result is LambdaFunction) {
+            return if (result is FunctionValue) {
                 result.prepare(newScope)
             } else result
         }

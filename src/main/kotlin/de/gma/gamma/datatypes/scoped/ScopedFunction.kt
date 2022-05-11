@@ -2,7 +2,7 @@ package de.gma.gamma.datatypes.scoped
 
 import de.gma.gamma.datatypes.Value
 import de.gma.gamma.datatypes.functions.AbstractFunction
-import de.gma.gamma.datatypes.functions.LambdaFunction
+import de.gma.gamma.datatypes.functions.FunctionValue
 import de.gma.gamma.datatypes.scope.Scope
 import de.gma.gamma.parser.EvaluationException
 import de.gma.gamma.parser.Position
@@ -11,7 +11,7 @@ class ScopedFunction(
     sourceName: String,
     beginPos: Position,
     endPos: Position,
-    private val function: LambdaFunction,
+    private val function: FunctionValue,
     private val closureScope: Scope
 ) : AbstractFunction(sourceName, beginPos, endPos, function.paramNames) {
 

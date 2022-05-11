@@ -1,6 +1,6 @@
 package de.gma.gamma.evaluation
 
-import de.gma.gamma.datatypes.functions.LambdaFunction
+import de.gma.gamma.datatypes.scoped.ScopedFunction
 import de.gma.gamma.datatypes.values.IntegerValue
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -83,7 +83,7 @@ class LetSetEvaluation : BaseEvaluationTest() {
 
 
     @Test
-    fun `prepare a function`() {
+    fun `bind a function`() {
         val code = """
             let add = [a b ->
                 a + b ]
@@ -91,7 +91,7 @@ class LetSetEvaluation : BaseEvaluationTest() {
 
         val result = execute(code)
 
-        assertThat(result).isInstanceOf(LambdaFunction::class.java)
-        assertThat(scope.getValue("add")).isInstanceOf(LambdaFunction::class.java)
+        assertThat(result).isInstanceOf(ScopedFunction::class.java)
+        assertThat(scope.getValue("add")).isInstanceOf(ScopedFunction::class.java)
     }
 }
