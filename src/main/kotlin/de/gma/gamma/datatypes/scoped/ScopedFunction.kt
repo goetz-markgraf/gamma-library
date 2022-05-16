@@ -23,7 +23,7 @@ class ScopedFunction(
         return function.call(closureScope, callParams)
     }
 
-    override fun callInternal(scope: Scope): Value {
+    override fun callInternal(scope: Scope, callParams: List<Value>): Value {
         throw EvaluationException("must not happen", sourceName, beginPos.line, beginPos.col)
     }
 }

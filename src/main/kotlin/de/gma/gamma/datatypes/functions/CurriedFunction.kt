@@ -18,7 +18,7 @@ class CurriedFunction(
     override fun call(scope: Scope, callParams: List<Value>) =
         function.call(savedScope, bakedInParams + callParams)
 
-    override fun callInternal(scope: Scope): Value {
+    override fun callInternal(scope: Scope, callParams: List<Value>): Value {
         throw EvaluationException("must not happen", sourceName, beginPos.line, beginPos.col)
     }
 

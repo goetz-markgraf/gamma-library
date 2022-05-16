@@ -1,6 +1,7 @@
 package de.gma.gamma.datatypes.functions
 
 import de.gma.gamma.datatypes.Value
+import de.gma.gamma.datatypes.scope.ModuleScope
 import de.gma.gamma.datatypes.scope.Scope
 import de.gma.gamma.datatypes.scoped.ScopedFunction
 import de.gma.gamma.datatypes.values.UnitValue
@@ -35,6 +36,13 @@ class FunctionValue(
     override fun evaluate(scope: Scope) =
         ScopedFunction(sourceName, beginPos, endPos, this, scope)
 
-    override fun callInternal(scope: Scope) =
-        expressions.fold(UnitValue.build() as Value) { _, expr -> expr.evaluate(scope) }
+    override fun callInternal(scope: Scope, callParams: List<Value>): Value {
+
+        val newScope: Scope = ModuleScope(scope)
+        paramNames.zip(callParams).map { pair ->
+            newScope.bind(pair.first, pair.second.prepare(scope))
+        }
+
+        return expressions.fold(UnitValue.build() as Value) { _, expr -> expr.evaluate(newScope) }
+    }
 }

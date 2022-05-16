@@ -8,22 +8,6 @@ import org.junit.jupiter.api.Test
 class LetSetEvaluation : BaseEvaluationTest() {
 
     @Test
-    fun `mutate an identifier`() {
-        val code = """
-            let a! = 10
-            print a!
-            
-            set a! = 20
-            print a!
-        """.trimIndent()
-
-        val result = execute(code)
-        assertThat(result!!.prettyPrint()).isEqualTo("20")
-        assertThat(scope.getValue("a!").prettyPrint()).isEqualTo("20")
-    }
-
-
-    @Test
     fun `prepare an expression`() {
         val code = """
             let expr = 10 + 20
@@ -93,5 +77,21 @@ class LetSetEvaluation : BaseEvaluationTest() {
 
         assertThat(result).isInstanceOf(ScopedFunction::class.java)
         assertThat(scope.getValue("add")).isInstanceOf(ScopedFunction::class.java)
+    }
+
+
+    @Test
+    fun `mutate an identifier`() {
+        val code = """
+            let a! = 10
+            print a!
+            
+            set a! = 20
+            print a!
+        """.trimIndent()
+
+        val result = execute(code)
+        assertThat(result!!.prettyPrint()).isEqualTo("20")
+        assertThat(scope.getValue("a!").prettyPrint()).isEqualTo("20")
     }
 }
