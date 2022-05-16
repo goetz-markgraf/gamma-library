@@ -15,4 +15,10 @@ class FloatValue(
 
     override fun evaluate(scope: Scope) = this
 
+    override fun equals(other: Any?) =
+        if (other !is FloatValue) false
+        else other.floatValue == floatValue
+
+    override fun hashCode() = floatValue.hashCode()
+
 }

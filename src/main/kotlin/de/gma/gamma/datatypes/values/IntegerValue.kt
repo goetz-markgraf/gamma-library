@@ -21,4 +21,10 @@ class IntegerValue(
         fun build(value: Long) =
             IntegerValue(builtInSource, nullPos, nullPos, value)
     }
+
+    override fun equals(other: Any?) =
+        if (other !is IntegerValue) false
+        else other.intValue == intValue
+
+    override fun hashCode() = intValue.hashCode()
 }

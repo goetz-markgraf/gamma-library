@@ -30,6 +30,13 @@ class Identifier(
 
     override fun prepare(scope: Scope) =
         ScopedIdentifier(sourceName, beginPos, endPos, this, scope)
+
+    override fun equals(other: Any?) =
+        if (other !is Identifier) false
+        else other.name == name
+
+    override fun hashCode() = name.hashCode()
+
 }
 
 enum class GIdentifierType {

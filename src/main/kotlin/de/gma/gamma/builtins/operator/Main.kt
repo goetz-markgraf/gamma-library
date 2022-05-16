@@ -16,7 +16,7 @@ fun populateOperator(scope: Scope) {
     bindWithDoc(scope, "<", LessThanFunction(), "<a> > <b> - checks if the first value is less than the second")
     bindWithDoc(
         scope,
-        ">=",
+        "<=",
         LessThanOrEqualFunction(),
         "<a> > <b> - checks if the first value is less than or equal to the second"
     )

@@ -20,4 +20,11 @@ class BooleanValue(
     companion object {
         fun build(value: Boolean) = BooleanValue(builtInSource, nullPos, nullPos, value)
     }
+
+    override fun equals(other: Any?) =
+        if (other !is BooleanValue) false
+        else other.boolValue == boolValue
+
+    override fun hashCode() = boolValue.hashCode()
+
 }

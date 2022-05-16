@@ -21,4 +21,11 @@ class Remark(
     companion object {
         fun buildDoc(doc: String) = Remark(builtInSource, nullPos, nullPos, doc, true)
     }
+
+    override fun equals(other: Any?) =
+        if (other !is Remark) false
+        else other.strValue == strValue
+
+    override fun hashCode() = strValue.hashCode()
+
 }

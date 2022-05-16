@@ -35,4 +35,11 @@ class ListValue(
 
     // Functions to access the list's content
     fun size() = internalItems.size
+
+    override fun equals(other: Any?) =
+        if (other !is ListValue) false
+        else other.internalItems == internalItems
+
+    override fun hashCode() = internalItems.hashCode()
+
 }

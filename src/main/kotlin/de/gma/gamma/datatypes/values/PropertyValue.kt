@@ -15,4 +15,10 @@ class PropertyValue(
 
     override fun evaluate(scope: Scope) = this
 
+    override fun equals(other: Any?) =
+        if (other !is PropertyValue) false
+        else other.identifier == identifier
+
+    override fun hashCode() = identifier.hashCode()
+
 }

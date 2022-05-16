@@ -19,4 +19,10 @@ class UnitValue(
     companion object {
         fun build() = UnitValue(builtInSource, nullPos, nullPos)
     }
+
+    override fun equals(other: Any?) =
+        other is UnitValue
+
+    override fun hashCode() = Unit.hashCode()
+
 }

@@ -15,4 +15,10 @@ class StringValue(
 
     override fun evaluate(scope: Scope) = this
 
+    override fun equals(other: Any?) =
+        if (other !is StringValue) false
+        else other.strValue == strValue
+
+    override fun hashCode() = strValue.hashCode()
+
 }
