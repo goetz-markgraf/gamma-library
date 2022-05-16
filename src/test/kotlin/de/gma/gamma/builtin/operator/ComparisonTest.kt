@@ -35,7 +35,6 @@ class ComparisonTest : BaseEvaluationTest() {
         Assertions.assertThat(result).isEqualTo(BooleanValue.build(true))
     }
 
-
     @Test
     fun `compare less that or equal `() {
         val code = "2 <= 2"
