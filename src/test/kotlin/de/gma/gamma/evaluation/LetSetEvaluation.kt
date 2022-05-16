@@ -79,6 +79,32 @@ class LetSetEvaluation : BaseEvaluationTest() {
         assertThat(scope.getValue("add")).isInstanceOf(ScopedFunction::class.java)
     }
 
+    @Test
+    fun `bind a function v2`() {
+        val code = """
+            let add a b =
+                a + b 
+        """.trimIndent()
+
+        val result = execute(code)
+
+        assertThat(result).isInstanceOf(ScopedFunction::class.java)
+        assertThat(scope.getValue("add")).isInstanceOf(ScopedFunction::class.java)
+    }
+
+    @Test
+    fun `bind a function with no params`() {
+        val code = """
+            let doIt () =
+                print "Hello, World." 
+        """.trimIndent()
+
+        val result = execute(code)
+
+        assertThat(result).isInstanceOf(ScopedFunction::class.java)
+        assertThat(scope.getValue("doIt")).isInstanceOf(ScopedFunction::class.java)
+    }
+
 
     @Test
     fun `mutate an identifier`() {

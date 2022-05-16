@@ -2,6 +2,7 @@ package de.gma.gamma.parser
 
 import de.gma.gamma.datatypes.expressions.LetExpression
 import de.gma.gamma.datatypes.expressions.SetExpression
+import de.gma.gamma.datatypes.functions.FunctionValue
 import de.gma.gamma.datatypes.values.IntegerValue
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
@@ -42,6 +43,62 @@ class LetAndSetTest : BaseParserTest() {
             getExpression(source)
         }.isInstanceOf(EvaluationException::class.java)
             .hasMessage("Only ids with '!' at end of name can be mutated")
+    }
+
+    @Test
+    fun `let with more that one expression`() {
+        val source = """
+            let a =
+                10 + 20
+                20
+        """.trimIndent()
+
+        val result = getExpressions(source)
+        assertThat(result).hasSize(2)
+        assertThat(result.first()).isInstanceOf(LetExpression::class.java)
+        assertThat(result.last()).isInstanceOf(IntegerValue::class.java)
+    }
+
+    @Test
+    fun `let with function`() {
+        val source = """
+            let add a b =
+                print a
+                print b
+                a + b
+        """.trimIndent()
+
+        val result = getExpressions(source)
+
+        assertThat(result).hasSize(1)
+        assertThat(result.first()).isInstanceOf(LetExpression::class.java)
+        val letExpression = result.first() as LetExpression
+        assertThat(letExpression.identifier.name).isEqualTo("add")
+        assertThat(letExpression.boundValue).isInstanceOf(FunctionValue::class.java)
+
+        val funVal = letExpression.boundValue as FunctionValue
+        assertThat(funVal.expressions).hasSize(3)
+        assertThat(funVal.paramNames).hasSize(2)
+    }
+
+    @Test
+    fun `let with function with no param`() {
+        val source = """
+            let doIt ()=
+                print "Hello World"
+        """.trimIndent()
+
+        val result = getExpressions(source)
+
+        assertThat(result).hasSize(1)
+        assertThat(result.first()).isInstanceOf(LetExpression::class.java)
+        val letExpression = result.first() as LetExpression
+        assertThat(letExpression.identifier.name).isEqualTo("doIt")
+        assertThat(letExpression.boundValue).isInstanceOf(FunctionValue::class.java)
+
+        val funVal = letExpression.boundValue as FunctionValue
+        assertThat(funVal.expressions).hasSize(1)
+        assertThat(funVal.paramNames).hasSize(0)
     }
 
 }

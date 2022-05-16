@@ -237,7 +237,7 @@ class Parser(
         assertTypeWithContent(col, OP, "->")
         nextToken()
 
-        val expressions = findNextedExpressions(col)
+        val expressions = parseIndentedExpressions(col)
 
         assertTypeWithContent(col, CLOSE_PARENS, "]")
         nextToken()
@@ -250,7 +250,7 @@ class Parser(
         val start = currStart
         nextToken()
 
-        val expressions = findNextedExpressions(col)
+        val expressions = parseIndentedExpressions(col)
 
         assertTypeWithContent(col, CLOSE_PARENS, "}")
         nextToken()
@@ -263,7 +263,7 @@ class Parser(
         val start = currStart
         nextToken()
 
-        val expressions = findNextedExpressions(col)
+        val expressions = parseIndentedExpressions(col)
 
         assertTypeWithContent(col, CLOSE_PARENS, ")")
         nextToken()
@@ -350,7 +350,48 @@ class Parser(
 
         val id = parseIdentifier(col)
 
-        assertTypeWithContent(col, OP, "=")
+        return if (currType == OP && currToken.content == "=") {
+            parseSimpleLetExpression(col, start, id, documentation)
+        } else if (currType == ID || currType == UNIT) {
+            parseFunctionLetExpression(col, start, id, documentation)
+        } else {
+            throw createIllegalTokenException("=")
+        }
+    }
+
+    private fun parseFunctionLetExpression(
+        col: Int,
+        start: Position,
+        id: Identifier,
+        documentation: Remark?
+    ): LetExpression {
+        val identifiers = if (currType == UNIT) {
+            nextToken()
+            emptyList()
+        } else
+            buildList {
+                while (currType == ID)
+                    add(parseIdentifier(col))
+            }.map { it.name }
+
+        assertTypeWithContent(col, ID, "=")
+        nextToken()
+
+        val funStart = currStart
+
+        val expressions = parseIndentedExpressions(col)
+
+        val function = FunctionValue(sourceName, funStart, currEnd, identifiers, expressions)
+
+        return LetExpression(sourceName, start, currEnd, id, function, documentation)
+    }
+
+    private fun parseSimpleLetExpression(
+        col: Int,
+        start: Position,
+        id: Identifier,
+        documentation: Remark?
+    ): LetExpression {
         nextToken()
 
         val nextCol =
@@ -464,7 +505,7 @@ class Parser(
     // ==========================================================
 
 
-    private fun findNextedExpressions(col: Int): List<Value> {
+    private fun parseIndentedExpressions(col: Int): List<Value> {
         val newCol = currStart.col
         if (newCol <= col)
             throw createIllegalColumnException(col + 1)

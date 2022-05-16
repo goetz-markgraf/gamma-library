@@ -1,6 +1,7 @@
 package de.gma.gamma.evaluation
 
 import de.gma.gamma.datatypes.values.IntegerValue
+import de.gma.gamma.datatypes.values.StringValue
 import de.gma.gamma.datatypes.values.UnitValue
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -66,5 +67,19 @@ class EvaluationTest : BaseEvaluationTest() {
         val result = execute(code)
 
         assertThat(result).isInstanceOf(UnitValue::class.java)
+    }
+
+    @Test
+    fun `define and call a function with no parameter`() {
+        val code = """
+            let greet () =
+                print "Hello, World"
+                
+            greet()
+        """.trimIndent()
+
+        val result = execute(code)
+
+        assertThat(result).isInstanceOf(StringValue::class.java)
     }
 }
