@@ -1,6 +1,7 @@
 package de.gma.gamma.evaluation
 
 import de.gma.gamma.datatypes.values.IntegerValue
+import de.gma.gamma.datatypes.values.UnitValue
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -43,4 +44,27 @@ class EvaluationTest : BaseEvaluationTest() {
         assertThat(result!!.prettyPrint()).isEqualTo("140")
     }
 
+    @Test
+    fun `empty call`() {
+        val code = """
+            let doIt = [ () ->
+                print "Hello"
+            ]
+            
+            doIt ()
+        """.trimIndent()
+
+        val result = execute(code)
+
+        assertThat(result!!.prettyPrint()).isEqualTo("\"Hello\"")
+    }
+
+    @Test
+    fun `call with Unit as parameter`() {
+        val code = "print ()"
+
+        val result = execute(code)
+
+        assertThat(result).isInstanceOf(UnitValue::class.java)
+    }
 }
