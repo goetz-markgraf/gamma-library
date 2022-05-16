@@ -9,4 +9,5 @@ abstract class BuiltinFunction(params: List<String>) : AbstractFunction(builtInS
 
     protected fun getParamEvaluated(callParams: List<Value>, nr: Int, scope: Scope) =
         callParams[nr].evaluate(scope)
+
 }

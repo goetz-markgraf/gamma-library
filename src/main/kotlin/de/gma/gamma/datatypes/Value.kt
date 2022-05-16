@@ -29,6 +29,18 @@ abstract class Value(
             else -> BooleanValue.build(true)
         }
 
+    fun evaluateToFloat(scope: Scope): FloatValue =
+        when (val value = evaluate(scope)) {
+            is FloatValue -> value
+            is IntegerValue -> FloatValue.build(value.intValue.toDouble())
+            else -> throw EvaluationException(
+                "$value cannot be converted to float",
+                value.sourceName,
+                value.beginPos.line,
+                value.beginPos.col
+            )
+        }
+
     fun evaluateToFunction(scope: Scope): AbstractFunction {
         val value = evaluate(scope)
         if (value is AbstractFunction) {
