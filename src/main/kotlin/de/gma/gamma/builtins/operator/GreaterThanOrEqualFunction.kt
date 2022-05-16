@@ -5,6 +5,7 @@ import de.gma.gamma.builtins.builtInSource
 import de.gma.gamma.datatypes.Value
 import de.gma.gamma.datatypes.scope.Scope
 import de.gma.gamma.datatypes.values.BooleanValue
+import de.gma.gamma.datatypes.values.FloatValue
 import de.gma.gamma.datatypes.values.IntegerValue
 import de.gma.gamma.parser.EvaluationException
 
@@ -15,6 +16,13 @@ class GreaterThanOrEqualFunction : BuiltinFunction(listOf("a", "b")) {
 
         if (a is IntegerValue && b is IntegerValue)
             return BooleanValue.build(a.intValue >= b.intValue)
+
+        if ((a is FloatValue || a is IntegerValue) && (b is FloatValue || b is IntegerValue)) {
+            val af = a.evaluateToFloat(scope)
+            val bf = b.evaluateToFloat(scope)
+
+            return BooleanValue.build(af.floatValue >= bf.floatValue)
+        }
 
         throw EvaluationException(">= can only be called with two number values", builtInSource, 0, 0)
     }
