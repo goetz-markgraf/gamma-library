@@ -14,7 +14,7 @@ open class ModuleScope(override val parent: Scope? = GammaBaseScope()) : Scope {
             ?: if (parent != null)
                 parent!!.getValue(id)
             else
-                throw ScopeException("Id $id not found in scope.")
+                throw ScopeException("Id $id is undefined.")
     }
 
     override fun containsLocally(id: String) =
