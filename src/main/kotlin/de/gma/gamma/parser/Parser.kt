@@ -103,15 +103,15 @@ class Parser(
     private fun parseOperation(col: Int): Value? {
         val start = currStart
 
-        val op1 = parseAddition(col)
-        if (op1 != null && checkType(col, OP, ID_AS_OP)) {
+        var op1 = parseAddition(col)
+        while (op1 != null && checkType(col, OP, ID_AS_OP)) {
             val op = parseOperator(col)
 
-            val op2 = parseProduct(col)
+            val op2 = parseAddition(col)
             assertNotNull(op2)
 
 
-            return FunctionCall.fromOperation(sourceName, start, currEnd, op, op1, op2!!)
+            op1 = FunctionCall.fromOperation(sourceName, start, currEnd, op, op1, op2!!)
         }
 
         return op1
@@ -121,9 +121,9 @@ class Parser(
     private fun parseAddition(col: Int): Value? {
         val start = currStart
 
-        val sum1 = parseProduct(col)
+        var sum1 = parseProduct(col)
 
-        if (sum1 != null && checkType(col, OP) &&
+        while (sum1 != null && checkType(col, OP) &&
             (currToken.content == "+" || currToken.content == "-")
         ) {
             val op = parseOperator(col)
@@ -131,7 +131,7 @@ class Parser(
             val sum2 = parseProduct(col)
             assertNotNull(sum2)
 
-            return FunctionCall.fromOperation(sourceName, start, currEnd, op, sum1, sum2!!)
+            sum1 = FunctionCall.fromOperation(sourceName, start, currEnd, op, sum1, sum2!!)
         }
 
         return sum1
@@ -141,9 +141,9 @@ class Parser(
     private fun parseProduct(col: Int): Value? {
         val start = currStart
 
-        val fac1 = parseFunctionCall(col)
+        var fac1 = parseFunctionCall(col)
 
-        if (fac1 != null && checkType(col, OP) &&
+        while (fac1 != null && checkType(col, OP) &&
             (currToken.content == "*" || currToken.content == "/")
         ) {
             val op = parseOperator(col)
@@ -151,7 +151,7 @@ class Parser(
             val fac2 = parseFunctionCall(col)
             assertNotNull(fac2)
 
-            return FunctionCall.fromOperation(sourceName, start, currEnd, op, fac1, fac2!!)
+            fac1 = FunctionCall.fromOperation(sourceName, start, currEnd, op, fac1, fac2!!)
         }
 
         return fac1

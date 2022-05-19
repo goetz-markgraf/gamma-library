@@ -120,4 +120,37 @@ class OperationTest : BaseParserTest() {
 
         assertThat(expression!!.prettyPrint()).isEqualTo("1 + 2")
     }
+
+    @Test
+    fun `check order sum and op`() {
+        val expression = getExpression("10 + 20 -> 30 + 40")
+
+        assertThat(expression).isInstanceOf(FunctionCall::class.java)
+
+        val op = expression as FunctionCall
+        assertThat(op.op1).isInstanceOf(FunctionCall::class.java)
+        assertThat(op.op2).isInstanceOf(FunctionCall::class.java)
+    }
+
+    @Test
+    fun `parse multiple additions after another`() {
+        val expression = getExpression("1 + 2 + 3")
+
+        assertThat(expression).isInstanceOf(FunctionCall::class.java)
+
+        val f = expression as FunctionCall
+        assertThat(f.op1).isInstanceOf(FunctionCall::class.java)
+        assertThat(f.op2).isInstanceOf(IntegerValue::class.java)
+    }
+
+    @Test
+    fun `parse multiple equal operations after another`() {
+        val expression = getExpression("1 > 2 > 3")
+
+        assertThat(expression).isInstanceOf(FunctionCall::class.java)
+
+        val f = expression as FunctionCall
+        assertThat(f.op1).isInstanceOf(FunctionCall::class.java)
+        assertThat(f.op2).isInstanceOf(IntegerValue::class.java)
+    }
 }
