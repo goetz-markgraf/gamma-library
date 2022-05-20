@@ -81,17 +81,17 @@ class Parser(
     private fun parseElvis(col: Int): Value? {
         val start = currStart
 
-        val predicate = parseOperation(col)
+        val predicate = parseOperationNew(col, MAX_OPERATOR_LEVEL)
         if (predicate != null && checkType(col, ELVIS) && currToken.content == "?") {
             nextToken()
 
-            val thenExpr = parseOperation(col)
+            val thenExpr = parseOperationNew(col, MAX_OPERATOR_LEVEL)
             assertNotNull(thenExpr)
 
             assertTypeWithContent(col, ELVIS, ":")
             nextToken()
 
-            val elseExpr = parseOperation(col)
+            val elseExpr = parseOperationNew(col, MAX_OPERATOR_LEVEL)
             assertNotNull(elseExpr)
 
             return IfExpression(sourceName, start, currEnd, predicate, thenExpr!!, elseExpr!!)
@@ -100,16 +100,25 @@ class Parser(
         return predicate
     }
 
-    private fun parseOperation(col: Int): Value? {
+    private fun parseOperationNew(col: Int, level: Int) : Value? {
         val start = currStart
 
-        var op1 = parseAddition(col)
-        while (op1 != null && checkType(col, OP, ID_AS_OP)) {
+        var op1 =
+            if (level == 0)
+                parseFunctionCall(col)
+            else
+                parseOperationNew(col, level-1)
+
+        while (op1 != null && checkType(col, OP, ID_AS_OP) && isOperatorInLevel(currToken.content, level)) {
             val op = parseOperator(col)
 
-            val op2 = parseAddition(col)
-            assertNotNull(op2)
+            val op2 =
+                if (level == 0)
+                    parseFunctionCall(col)
+                else
+                    parseOperationNew(col, level-1)
 
+            assertNotNull(op2)
 
             op1 = FunctionCall.fromOperation(sourceName, start, currEnd, op, op1, op2!!)
         }
@@ -117,45 +126,6 @@ class Parser(
         return op1
     }
 
-
-    private fun parseAddition(col: Int): Value? {
-        val start = currStart
-
-        var sum1 = parseProduct(col)
-
-        while (sum1 != null && checkType(col, OP) &&
-            (currToken.content == "+" || currToken.content == "-")
-        ) {
-            val op = parseOperator(col)
-
-            val sum2 = parseProduct(col)
-            assertNotNull(sum2)
-
-            sum1 = FunctionCall.fromOperation(sourceName, start, currEnd, op, sum1, sum2!!)
-        }
-
-        return sum1
-    }
-
-
-    private fun parseProduct(col: Int): Value? {
-        val start = currStart
-
-        var fac1 = parseFunctionCall(col)
-
-        while (fac1 != null && checkType(col, OP) &&
-            (currToken.content == "*" || currToken.content == "/")
-        ) {
-            val op = parseOperator(col)
-
-            val fac2 = parseFunctionCall(col)
-            assertNotNull(fac2)
-
-            fac1 = FunctionCall.fromOperation(sourceName, start, currEnd, op, fac1, fac2!!)
-        }
-
-        return fac1
-    }
 
     private fun parseFunctionCall(col: Int): Value? {
         val start = currStart

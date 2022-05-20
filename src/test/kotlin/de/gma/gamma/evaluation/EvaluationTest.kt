@@ -1,6 +1,7 @@
 package de.gma.gamma.evaluation
 
 import de.gma.gamma.datatypes.values.IntegerValue
+import de.gma.gamma.datatypes.values.ListValue
 import de.gma.gamma.datatypes.values.StringValue
 import de.gma.gamma.datatypes.values.UnitValue
 import org.assertj.core.api.Assertions.assertThat
@@ -81,5 +82,24 @@ class EvaluationTest : BaseEvaluationTest() {
         val result = execute(code)
 
         assertThat(result).isInstanceOf(StringValue::class.java)
+    }
+
+    @Test
+    fun `create a complex list of lists` () {
+        val code = """
+            {
+                a > 2 -> "groesser"
+                a < 2 -> "kleiner"
+                else -> "gleich"
+            }
+        """.trimIndent()
+
+        val result = execute(code)
+
+        assertThat(result).isInstanceOf(ListValue::class.java)
+
+        val l = result as ListValue
+        assertThat(l.size()).isEqualTo(3)
+
     }
 }
