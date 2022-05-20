@@ -1,6 +1,7 @@
 package de.gma.gamma.parser
 
-import de.gma.gamma.datatypes.values.ListValue
+import de.gma.gamma.datatypes.list.AbstractListValue
+import de.gma.gamma.datatypes.list.ListValue
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -9,7 +10,7 @@ class ListTest : BaseParserTest() {
     fun `parse an empty list`() {
         val expression = getExpression("{ }")
 
-        assertThat(expression).isInstanceOf(ListValue::class.java)
+        assertThat(expression).isInstanceOf(AbstractListValue::class.java)
         val l = expression as ListValue
 
         assertThat(l.size()).isEqualTo(0)
@@ -20,7 +21,7 @@ class ListTest : BaseParserTest() {
     fun `parse a list with a single value`() {
         val expression = getExpression("{10}")
 
-        assertThat(expression).isInstanceOf(ListValue::class.java)
+        assertThat(expression).isInstanceOf(AbstractListValue::class.java)
         val l = expression as ListValue
 
         assertThat(l.size()).isEqualTo(1)
@@ -31,7 +32,7 @@ class ListTest : BaseParserTest() {
     fun `parse a block with a two expressions`() {
         val expression = getExpression("{10,20}")
 
-        assertThat(expression).isInstanceOf(ListValue::class.java)
+        assertThat(expression).isInstanceOf(AbstractListValue::class.java)
         val l = expression as ListValue
 
         assertThat(l.size()).isEqualTo(2)
@@ -48,7 +49,7 @@ class ListTest : BaseParserTest() {
             }
         """.trimIndent())
 
-        assertThat(expression).isInstanceOf(ListValue::class.java)
+        assertThat(expression).isInstanceOf(AbstractListValue::class.java)
 
         val list = expression as ListValue
         assertThat(list.size()).isEqualTo(3)

@@ -6,6 +6,7 @@ import de.gma.gamma.datatypes.Remark
 import de.gma.gamma.datatypes.Value
 import de.gma.gamma.datatypes.expressions.*
 import de.gma.gamma.datatypes.functions.FunctionValue
+import de.gma.gamma.datatypes.list.ListValue
 import de.gma.gamma.datatypes.values.*
 import de.gma.gamma.parser.TokenType.*
 

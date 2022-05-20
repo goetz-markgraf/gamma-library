@@ -95,7 +95,7 @@ val operaterLevels = listOf(
     listOf(">", ">=", "<", "<=", "=", "==", "!=", "===", "!=="),
     listOf("|", "||"),
     listOf("&", "&&"),
-    listOf("->", "<-", "|>", "<|", ">=>", "<=<", ">>=", "<<=", "=>")
+    listOf("->", "<-", "->>", "<<-", "|>", "<|", ">=>", "<=<", ">>=", "<<=", "=>", "to")
 )
 
 val MAX_OPERATOR_LEVEL = operaterLevels.size

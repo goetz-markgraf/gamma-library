@@ -1,8 +1,11 @@
-package de.gma.gamma.datatypes.values
+package de.gma.gamma.datatypes.list
 
+import de.gma.gamma.builtins.builtInSource
+import de.gma.gamma.builtins.nullPos
 import de.gma.gamma.datatypes.Value
 import de.gma.gamma.datatypes.expressions.Expression
 import de.gma.gamma.datatypes.scope.Scope
+import de.gma.gamma.datatypes.values.UnitValue
 import de.gma.gamma.parser.CH_NEWLINE
 import de.gma.gamma.parser.Position
 
@@ -11,7 +14,7 @@ class ListValue(
     beginPos: Position,
     endPos: Position,
     items: List<Value>
-) : Value(sourceName, beginPos, endPos) {
+) : AbstractListValue(sourceName, beginPos, endPos) {
 
     private var internalItems: List<Value> = items
 
@@ -32,9 +35,19 @@ class ListValue(
     }
 
     override fun evaluate(scope: Scope) = this
+    override fun first(): Value =
+        if (internalItems.isNotEmpty())
+            internalItems.first()
+        else
+            UnitValue.build()
 
-    // Functions to access the list's content
-    fun size() = internalItems.size
+    override fun last(): Value =
+        if (internalItems.isNotEmpty())
+            internalItems.last()
+        else
+            UnitValue.build()
+
+    override fun size() = internalItems.size
 
     override fun equals(other: Any?) =
         if (other !is ListValue) false
@@ -42,4 +55,7 @@ class ListValue(
 
     override fun hashCode() = internalItems.hashCode()
 
+    companion object {
+        fun build(items: List<Value>) = ListValue(builtInSource, nullPos, nullPos, items)
+    }
 }
