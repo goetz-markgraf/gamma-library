@@ -19,7 +19,7 @@ class LexerComplexTest {
                 + " Hallo"
         """.trimIndent()
 
-        lexer = Lexer(source, "Script")
+        lexer = Lexer(source)
 
         assertNextToken(LET, "let", 0, 0, 0)
         assertNextToken(ID, "a", 4, 4, 0)
@@ -34,7 +34,7 @@ class LexerComplexTest {
     @Test
     fun `parse code with minimum whitespace`() {
         val source = "let add a b=a + b"
-        lexer = Lexer(source, "Script")
+        lexer = Lexer(source)
 
         assertNextToken(LET, "let", 0, 0, 0)
         assertNextToken(ID, "add", 4, 4, 0)

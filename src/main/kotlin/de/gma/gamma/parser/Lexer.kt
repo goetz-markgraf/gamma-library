@@ -4,7 +4,7 @@ import java.lang.Character.MIN_VALUE as nullChar
 
 class Lexer(
     private val source: String,
-    private val sourceName: String
+    private val sourceName: String = "Script"
 ) {
 
     private val length = source.length

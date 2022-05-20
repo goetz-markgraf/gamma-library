@@ -547,7 +547,7 @@ class LexerSimpleTest {
 
 
     private fun getTokenFromInput(input: String): Token {
-        lexer = Lexer(input, "Script")
+        lexer = Lexer(input)
         return lexer.nextToken()
     }
 

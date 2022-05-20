@@ -13,7 +13,7 @@ import de.gma.gamma.parser.TokenType.*
 
 class Parser(
     source: String,
-    private val sourceName: String
+    private val sourceName: String = "Script"
 ) {
 
     private val lexer = Lexer(source, sourceName)
@@ -29,7 +29,7 @@ class Parser(
     /**
      * returns the next expression that is not yet read from the input source
      */
-    fun nextExpression(col: Int): Value? {
+    fun nextExpression(col: Int = -1): Value? {
         val minCol = if (col < 0) currStart.col else col
 
         if (currStart.col < minCol)

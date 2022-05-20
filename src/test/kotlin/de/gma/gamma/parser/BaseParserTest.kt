@@ -7,12 +7,12 @@ open class BaseParserTest {
 
 
     protected fun getExpression(source: String): Value? {
-        parser = Parser(source, "Script")
+        parser = Parser(source)
         return parser.nextExpression(-1)
     }
 
     protected fun getExpressions(source: String): List<Value> {
-        parser = Parser(source, "Script")
+        parser = Parser(source)
         return buildList {
             var expr = parser.nextExpression(-1)
             while (expr != null) {

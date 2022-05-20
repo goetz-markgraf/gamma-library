@@ -17,7 +17,7 @@ open class BaseEvaluationTest {
 
 
     protected fun execute(code: String): Value? {
-        val parser = Parser(code, "Script")
+        val parser = Parser(code)
 
         var expr = parser.nextExpression(-1)
         var ret: Value? = null
