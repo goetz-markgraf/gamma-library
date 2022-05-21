@@ -1,7 +1,7 @@
 package de.gma.gamma.parser
 
-import de.gma.gamma.datatypes.list.AbstractListValue
 import de.gma.gamma.datatypes.list.ListValue
+import de.gma.gamma.datatypes.list.SimpleListValue
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -10,8 +10,8 @@ class ListTest : BaseParserTest() {
     fun `parse an empty list`() {
         val expression = getExpression("{ }")
 
-        assertThat(expression).isInstanceOf(AbstractListValue::class.java)
-        val l = expression as ListValue
+        assertThat(expression).isInstanceOf(ListValue::class.java)
+        val l = expression as SimpleListValue
 
         assertThat(l.size()).isEqualTo(0)
         assertThat(l.prettyPrint()).isEqualTo("{  }")
@@ -21,8 +21,8 @@ class ListTest : BaseParserTest() {
     fun `parse a list with a single value`() {
         val expression = getExpression("{10}")
 
-        assertThat(expression).isInstanceOf(AbstractListValue::class.java)
-        val l = expression as ListValue
+        assertThat(expression).isInstanceOf(ListValue::class.java)
+        val l = expression as SimpleListValue
 
         assertThat(l.size()).isEqualTo(1)
         assertThat(l.prettyPrint()).isEqualTo("{ 10 }")
@@ -32,8 +32,8 @@ class ListTest : BaseParserTest() {
     fun `parse a block with a two expressions`() {
         val expression = getExpression("{10,20}")
 
-        assertThat(expression).isInstanceOf(AbstractListValue::class.java)
-        val l = expression as ListValue
+        assertThat(expression).isInstanceOf(ListValue::class.java)
+        val l = expression as SimpleListValue
 
         assertThat(l.size()).isEqualTo(2)
         assertThat(l.prettyPrint()).isEqualTo("{ 10, 20 }")
@@ -49,9 +49,9 @@ class ListTest : BaseParserTest() {
             }
         """.trimIndent())
 
-        assertThat(expression).isInstanceOf(AbstractListValue::class.java)
+        assertThat(expression).isInstanceOf(ListValue::class.java)
 
-        val list = expression as ListValue
+        val list = expression as SimpleListValue
         assertThat(list.size()).isEqualTo(3)
 
     }

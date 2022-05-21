@@ -3,59 +3,36 @@ package de.gma.gamma.datatypes.list
 import de.gma.gamma.builtins.builtInSource
 import de.gma.gamma.builtins.nullPos
 import de.gma.gamma.datatypes.Value
-import de.gma.gamma.datatypes.expressions.Expression
-import de.gma.gamma.datatypes.scope.Scope
-import de.gma.gamma.datatypes.values.UnitValue
-import de.gma.gamma.parser.CH_NEWLINE
 import de.gma.gamma.parser.Position
 
-class ListValue(
+abstract class ListValue(
     sourceName: String,
     beginPos: Position,
     endPos: Position,
-    items: List<Value>
-) : AbstractListValue(sourceName, beginPos, endPos) {
+) : Value(sourceName, beginPos, endPos) {
 
-    private var internalItems: List<Value> = items
+    abstract fun allItems() : List<Value>
 
-    override fun prettyPrint() = buildString {
-        val complex = internalItems.indexOfFirst { it is Expression } >= 0
-        val splitChars = if (complex) "$CH_NEWLINE" else ", "
+    abstract fun first() : Value
 
-        append('{').append(if (complex) CH_NEWLINE else ' ')
-        append(internalItems.joinToString(splitChars) { "${if (complex) "    " else ""}${it.prettyPrint()}" })
-        append(if (complex) CH_NEWLINE else ' ')
-        append('}')
-    }
+    abstract fun last() : Value
 
-    override fun prepare(scope: Scope): Value {
-        internalItems = internalItems.map { it.prepare(scope) }
+    abstract fun getAt(pos: Int): Value
 
-        return this
-    }
+    abstract fun size() : Int
 
-    override fun evaluate(scope: Scope) = this
-    override fun first(): Value =
-        if (internalItems.isNotEmpty())
-            internalItems.first()
-        else
-            UnitValue.build()
+    abstract fun tail() : ListValue
 
-    override fun last(): Value =
-        if (internalItems.isNotEmpty())
-            internalItems.last()
-        else
-            UnitValue.build()
+    abstract fun dropLast(): ListValue
 
-    override fun size() = internalItems.size
+    abstract fun append(v: Value) : ListValue
 
-    override fun equals(other: Any?) =
-        if (other !is ListValue) false
-        else other.internalItems == internalItems
+    abstract fun insert(v: Value): ListValue
 
-    override fun hashCode() = internalItems.hashCode()
+    abstract fun concat(v: ListValue): ListValue
 
     companion object {
-        fun build(items: List<Value>) = ListValue(builtInSource, nullPos, nullPos, items)
+        fun build(items: List<Value>) = SimpleListValue(builtInSource, nullPos, nullPos, items)
     }
+
 }

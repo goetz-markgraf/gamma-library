@@ -6,7 +6,7 @@ import de.gma.gamma.datatypes.Remark
 import de.gma.gamma.datatypes.Value
 import de.gma.gamma.datatypes.expressions.*
 import de.gma.gamma.datatypes.functions.FunctionValue
-import de.gma.gamma.datatypes.list.ListValue
+import de.gma.gamma.datatypes.list.SimpleListValue
 import de.gma.gamma.datatypes.values.*
 import de.gma.gamma.parser.TokenType.*
 
@@ -216,7 +216,7 @@ class Parser(
         return FunctionValue(sourceName, start, currEnd, params, expressions)
     }
 
-    private fun parseList(col: Int): ListValue {
+    private fun parseList(col: Int): SimpleListValue {
         assertTypeWithContent(col, OPEN_PARENS, "{")
         val start = currStart
         nextToken()
@@ -226,7 +226,7 @@ class Parser(
         assertTypeWithContent(col, CLOSE_PARENS, "}")
         nextToken()
 
-        return ListValue(sourceName, start, currEnd, expressions)
+        return SimpleListValue(sourceName, start, currEnd, expressions)
     }
 
     private fun parseBlock(col: Int): Value {
