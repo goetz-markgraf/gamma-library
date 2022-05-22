@@ -3,8 +3,8 @@ package de.gma.gamma.evaluation
 import de.gma.gamma.datatypes.expressions.FunctionCall
 import de.gma.gamma.datatypes.list.ListValue
 import de.gma.gamma.datatypes.list.SimpleListValue
+import de.gma.gamma.datatypes.list.StringValue
 import de.gma.gamma.datatypes.values.IntegerValue
-import de.gma.gamma.datatypes.values.StringValue
 import de.gma.gamma.datatypes.values.UnitValue
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -87,7 +87,7 @@ class EvaluationTest : BaseEvaluationTest() {
     }
 
     @Test
-    fun `create a complex list of lists` () {
+    fun `create a complex list of lists`() {
         val code = """
             {
                 a > 2 -> "groesser"

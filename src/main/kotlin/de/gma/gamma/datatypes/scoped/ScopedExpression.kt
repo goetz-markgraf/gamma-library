@@ -3,7 +3,6 @@ package de.gma.gamma.datatypes.scoped
 import de.gma.gamma.datatypes.Value
 import de.gma.gamma.datatypes.expressions.Expression
 import de.gma.gamma.datatypes.scope.Scope
-import de.gma.gamma.parser.EvaluationException
 import de.gma.gamma.parser.Position
 
 class ScopedExpression(
@@ -18,12 +17,7 @@ class ScopedExpression(
 
     override fun prettyPrint(): String {
         return if (value != null)
-            value?.prettyPrint() ?: throw EvaluationException(
-                "must not happen",
-                sourceName,
-                beginPos.line,
-                beginPos.col
-            )
+            value?.prettyPrint() ?: throw createException("must not happen")
         else
             "Lazy:${expression.prettyPrint()}"
     }
@@ -33,6 +27,6 @@ class ScopedExpression(
             value = expression.evaluate(lazyScope)
         }
 
-        return value ?: throw EvaluationException("must not happen", sourceName, beginPos.line, beginPos.col)
+        return value ?: throw createException("must not happen")
     }
 }

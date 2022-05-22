@@ -100,7 +100,7 @@ val operaterLevels = listOf(
 
 val MAX_OPERATOR_LEVEL = operaterLevels.size
 
-fun isOperatorInLevel(op: String, level: Int) : Boolean {
+fun isOperatorInLevel(op: String, level: Int): Boolean {
     if (level < 0 || level > MAX_OPERATOR_LEVEL)
         return false
 

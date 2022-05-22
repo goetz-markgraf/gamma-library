@@ -4,7 +4,6 @@ import de.gma.gamma.datatypes.Value
 import de.gma.gamma.datatypes.functions.AbstractFunction
 import de.gma.gamma.datatypes.functions.FunctionValue
 import de.gma.gamma.datatypes.scope.Scope
-import de.gma.gamma.parser.EvaluationException
 import de.gma.gamma.parser.Position
 
 class ScopedFunction(
@@ -24,6 +23,6 @@ class ScopedFunction(
     }
 
     override fun callInternal(scope: Scope, callParams: List<Value>): Value {
-        throw EvaluationException("must not happen", sourceName, beginPos.line, beginPos.col)
+        throw createException("must not happen")
     }
 }

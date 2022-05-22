@@ -3,7 +3,6 @@ package de.gma.gamma.datatypes.functions
 import de.gma.gamma.datatypes.Value
 import de.gma.gamma.datatypes.scope.Scope
 import de.gma.gamma.datatypes.values.UnitValue
-import de.gma.gamma.parser.EvaluationException
 import de.gma.gamma.parser.Position
 
 abstract class AbstractFunction(
@@ -43,7 +42,7 @@ abstract class AbstractFunction(
         val suppliedParams = callParams.size
 
         if (expectedParams < suppliedParams && !isUnitCall(callParams))
-            throw EvaluationException("too many params", sourceName, beginPos.line, beginPos.col)
+            throw createException("too many params")
 
         if (expectedParams == suppliedParams || isUnitCall(callParams))
             return 0

@@ -1,8 +1,12 @@
 package de.gma.gamma.datatypes
 
 import de.gma.gamma.datatypes.functions.AbstractFunction
+import de.gma.gamma.datatypes.list.StringValue
 import de.gma.gamma.datatypes.scope.Scope
-import de.gma.gamma.datatypes.values.*
+import de.gma.gamma.datatypes.values.BooleanValue
+import de.gma.gamma.datatypes.values.FloatValue
+import de.gma.gamma.datatypes.values.IntegerValue
+import de.gma.gamma.datatypes.values.UnitValue
 import de.gma.gamma.parser.EvaluationException
 import de.gma.gamma.parser.Position
 
@@ -33,12 +37,7 @@ abstract class Value(
         when (val value = evaluate(scope)) {
             is FloatValue -> value
             is IntegerValue -> FloatValue.build(value.intValue.toDouble())
-            else -> throw EvaluationException(
-                "$value cannot be converted to float",
-                value.sourceName,
-                value.beginPos.line,
-                value.beginPos.col
-            )
+            else -> throw createException("$value cannot be converted to float")
         }
 
     fun evaluateToFunction(scope: Scope): AbstractFunction {
@@ -46,12 +45,10 @@ abstract class Value(
         if (value is AbstractFunction) {
             return value
         } else {
-            throw EvaluationException(
-                "$value is not a function",
-                value.sourceName,
-                value.beginPos.line,
-                value.beginPos.col
-            )
+            throw createException("$value is not a function")
         }
     }
+
+    protected fun createException(message: String) =
+        EvaluationException(message, sourceName, beginPos.line, beginPos.col)
 }

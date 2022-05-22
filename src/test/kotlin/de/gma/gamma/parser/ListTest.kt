@@ -41,13 +41,15 @@ class ListTest : BaseParserTest() {
 
     @Test
     fun `parse complex list with function calls`() {
-        val expression = getExpression("""
+        val expression = getExpression(
+            """
             {
                 a > b -> print "groesser"
                 a < b -> print "kleiner"
                 else -> print "gleich"
             }
-        """.trimIndent())
+        """.trimIndent()
+        )
 
         assertThat(expression).isInstanceOf(ListValue::class.java)
 

@@ -11,25 +11,25 @@ abstract class ListValue(
     endPos: Position,
 ) : Value(sourceName, beginPos, endPos) {
 
-    abstract fun allItems() : List<Value>
+    abstract fun allItems(): List<Value>
 
-    abstract fun first() : Value
+    abstract fun first(): Value
 
-    abstract fun last() : Value
+    abstract fun last(): Value
 
     abstract fun getAt(pos: Int): Value
 
-    abstract fun size() : Int
+    abstract fun size(): Int
 
-    abstract fun tail() : ListValue
+    abstract fun tail(): ListValue
 
     abstract fun dropLast(): ListValue
 
-    abstract fun append(v: Value) : ListValue
+    abstract fun append(v: Value): ListValue
 
     abstract fun insert(v: Value): ListValue
 
-    abstract fun concat(v: ListValue): ListValue
+    abstract fun join(v: ListValue): ListValue
 
     companion object {
         fun build(items: List<Value>) = SimpleListValue(builtInSource, nullPos, nullPos, items)

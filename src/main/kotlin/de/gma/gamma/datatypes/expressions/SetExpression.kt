@@ -5,7 +5,6 @@ import de.gma.gamma.datatypes.Remark
 import de.gma.gamma.datatypes.Value
 import de.gma.gamma.datatypes.scope.Scope
 import de.gma.gamma.parser.CH_NEWLINE
-import de.gma.gamma.parser.EvaluationException
 import de.gma.gamma.parser.Position
 
 class SetExpression(
@@ -44,7 +43,7 @@ class SetExpression(
 
             return value
         } else {
-            throw EvaluationException("Cannot find id ${identifier.name}", sourceName, beginPos.line, beginPos.col)
+            throw createException("Cannot find id ${identifier.name}")
         }
     }
 }

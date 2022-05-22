@@ -2,7 +2,6 @@ package de.gma.gamma.datatypes.functions
 
 import de.gma.gamma.datatypes.Value
 import de.gma.gamma.datatypes.scope.Scope
-import de.gma.gamma.parser.EvaluationException
 import de.gma.gamma.parser.Position
 
 class CurriedFunction(
@@ -19,7 +18,7 @@ class CurriedFunction(
         function.call(savedScope, bakedInParams + callParams)
 
     override fun callInternal(scope: Scope, callParams: List<Value>): Value {
-        throw EvaluationException("must not happen", sourceName, beginPos.line, beginPos.col)
+        throw createException("must not happen")
     }
 
     override fun prettyPrint() = function.prettyPrint()

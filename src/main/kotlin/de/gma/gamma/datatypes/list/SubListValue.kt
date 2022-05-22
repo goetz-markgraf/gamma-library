@@ -47,7 +47,7 @@ class SubListValue(
             addAll(origin.allItems())
         })
 
-    override fun concat(v: ListValue): ListValue =
+    override fun join(v: ListValue): ListValue =
         build(buildList {
             addAll(v.allItems())
             addAll(origin.allItems())

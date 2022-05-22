@@ -4,9 +4,8 @@ import de.gma.gamma.datatypes.list.SubListValue
 import de.gma.gamma.evaluation.BaseEvaluationTest
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import kotlin.math.exp
 
-class SublistTest:BaseEvaluationTest() {
+class SublistTest : BaseEvaluationTest() {
     @Test
     fun `create a simple sublist`() {
         val expr = execute("tail {1, 2, 3}")

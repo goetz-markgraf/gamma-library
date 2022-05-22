@@ -7,6 +7,7 @@ import de.gma.gamma.datatypes.Value
 import de.gma.gamma.datatypes.expressions.*
 import de.gma.gamma.datatypes.functions.FunctionValue
 import de.gma.gamma.datatypes.list.SimpleListValue
+import de.gma.gamma.datatypes.list.StringValue
 import de.gma.gamma.datatypes.values.*
 import de.gma.gamma.parser.TokenType.*
 
@@ -101,14 +102,14 @@ class Parser(
         return predicate
     }
 
-    private fun parseOperationNew(col: Int, level: Int) : Value? {
+    private fun parseOperationNew(col: Int, level: Int): Value? {
         val start = currStart
 
         var op1 =
             if (level == 0)
                 parseFunctionCall(col)
             else
-                parseOperationNew(col, level-1)
+                parseOperationNew(col, level - 1)
 
         while (op1 != null && checkType(col, OP, ID_AS_OP) && isOperatorInLevel(currToken.content, level)) {
             val op = parseOperator(col)
@@ -117,7 +118,7 @@ class Parser(
                 if (level == 0)
                     parseFunctionCall(col)
                 else
-                    parseOperationNew(col, level-1)
+                    parseOperationNew(col, level - 1)
 
             assertNotNull(op2)
 
@@ -388,9 +389,7 @@ class Parser(
         if (id.name.last() != '!')
             throw EvaluationException(
                 "Only ids with '!' at end of name can be mutated",
-                sourceName,
-                id.beginPos.line,
-                id.beginPos.col
+                sourceName, start.line, start.col
             )
 
         assertTypeWithContent(col, OP, "=")

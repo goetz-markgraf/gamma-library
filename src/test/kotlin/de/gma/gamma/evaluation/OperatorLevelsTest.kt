@@ -4,7 +4,7 @@ import de.gma.gamma.datatypes.values.IntegerValue
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class OperatorLevelsTest :BaseEvaluationTest() {
+class OperatorLevelsTest : BaseEvaluationTest() {
     @Test
     fun `multiplication before addition`() {
         val expression = execute("1 + 2 * 3")
