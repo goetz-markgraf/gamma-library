@@ -44,7 +44,7 @@ class BasicListTest : BaseEvaluationTest() {
 
     @Test
     fun `access nth element of list`() {
-        val expr = execute("get-at 1 {1, 2, 3}")
+        val expr = execute("at 1 {1, 2, 3}")
         assertThat(expr).isInstanceOf(IntegerValue::class.java)
 
         val i = expr as IntegerValue
@@ -54,7 +54,7 @@ class BasicListTest : BaseEvaluationTest() {
     @Test
     fun `throw exception while accessing nth element of empty list`() {
         assertThatThrownBy {
-            execute("get-at 1 {}")
+            execute("at 1 {}")
         }.isInstanceOf(EvaluationException::class.java)
             .hasMessage("Index out of bounds: 1 outside empty list")
     }
@@ -62,7 +62,7 @@ class BasicListTest : BaseEvaluationTest() {
     @Test
     fun `throw exception while accessing size+1 element of list`() {
         assertThatThrownBy {
-            execute("get-at 2 {1, 2}")
+            execute("at 2 {1, 2}")
         }.isInstanceOf(EvaluationException::class.java)
             .hasMessage("Index out of bounds: 2 outside [0..1]")
     }

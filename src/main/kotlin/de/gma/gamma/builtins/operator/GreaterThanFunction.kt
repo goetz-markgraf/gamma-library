@@ -11,8 +11,8 @@ import de.gma.gamma.parser.EvaluationException
 
 class GreaterThanFunction : BuiltinFunction(listOf("a", "b")) {
     override fun callInternal(scope: Scope, callParams: List<Value>): Value {
-        val a = getParamEvaluated(callParams, 0, scope)
-        val b = getParamEvaluated(callParams, 1, scope)
+        val a = callParams[0].evaluate(scope)
+        val b = callParams[1].evaluate(scope)
 
         if (a is IntegerValue && b is IntegerValue)
             return BooleanValue.build(a.intValue > b.intValue)

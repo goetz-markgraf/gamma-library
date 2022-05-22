@@ -83,17 +83,17 @@ class Parser(
     private fun parseElvis(col: Int): Value? {
         val start = currStart
 
-        val predicate = parseOperationNew(col, MAX_OPERATOR_LEVEL)
+        val predicate = parseOperationNew(col, MAX_OPERATOR_LEVEL - 1)
         if (predicate != null && checkType(col, ELVIS) && currToken.content == "?") {
             nextToken()
 
-            val thenExpr = parseOperationNew(col, MAX_OPERATOR_LEVEL)
+            val thenExpr = parseOperationNew(col, MAX_OPERATOR_LEVEL - 1)
             assertNotNull(thenExpr)
 
             assertTypeWithContent(col, ELVIS, ":")
             nextToken()
 
-            val elseExpr = parseOperationNew(col, MAX_OPERATOR_LEVEL)
+            val elseExpr = parseOperationNew(col, MAX_OPERATOR_LEVEL - 1)
             assertNotNull(elseExpr)
 
             return IfExpression(sourceName, start, currEnd, predicate, thenExpr!!, elseExpr!!)

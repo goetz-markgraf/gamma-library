@@ -1,6 +1,7 @@
 package de.gma.gamma.datatypes
 
 import de.gma.gamma.datatypes.functions.AbstractFunction
+import de.gma.gamma.datatypes.list.ListValue
 import de.gma.gamma.datatypes.list.StringValue
 import de.gma.gamma.datatypes.scope.Scope
 import de.gma.gamma.datatypes.values.BooleanValue
@@ -33,11 +34,30 @@ abstract class Value(
             else -> BooleanValue.build(true)
         }
 
+    fun evaluateToList(scope: Scope): ListValue =
+        when (val value = evaluate(scope)) {
+            is ListValue -> value
+            else -> ListValue.build(listOf(value))
+        }
+
     fun evaluateToFloat(scope: Scope): FloatValue =
         when (val value = evaluate(scope)) {
             is FloatValue -> value
             is IntegerValue -> FloatValue.build(value.intValue.toDouble())
             else -> throw createException("$value cannot be converted to float")
+        }
+
+    fun evaluateToString(scope: Scope): StringValue =
+        when (val value = evaluate(scope)) {
+            is StringValue -> value
+            else -> StringValue.build(value.prettyPrint())
+        }
+
+    fun evaluateToInteger(scope: Scope): IntegerValue =
+        when (val value = evaluate(scope)) {
+            is IntegerValue -> value
+            is FloatValue -> IntegerValue.build(value.floatValue.toLong())
+            else -> throw createException("$value is not an integer value")
         }
 
     fun evaluateToFunction(scope: Scope): AbstractFunction {

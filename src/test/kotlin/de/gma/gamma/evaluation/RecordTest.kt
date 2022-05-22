@@ -10,7 +10,7 @@ class RecordTest : BaseEvaluationTest() {
 
     @Test
     fun `property followed by a function call`() {
-        val exp = execute(":name to: \"vorname\"")
+        val exp = execute(":name -> \"vorname\"")
 
         assertThat(exp).isInstanceOf(ListValue::class.java)
 
