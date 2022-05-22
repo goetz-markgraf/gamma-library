@@ -37,6 +37,7 @@ abstract class Value(
     fun evaluateToList(scope: Scope): ListValue =
         when (val value = evaluate(scope)) {
             is ListValue -> value
+            is UnitValue -> ListValue.build(emptyList())
             else -> ListValue.build(listOf(value))
         }
 
