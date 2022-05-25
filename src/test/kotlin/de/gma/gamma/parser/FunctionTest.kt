@@ -3,6 +3,7 @@ package de.gma.gamma.parser
 import de.gma.gamma.datatypes.expressions.Expression
 import de.gma.gamma.datatypes.functions.FunctionValue
 import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.Test
 
 class FunctionTest : BaseParserTest() {
@@ -44,5 +45,13 @@ class FunctionTest : BaseParserTest() {
             ]
         """.trimIndent()
         )
+    }
+
+    @Test
+    fun `a function without parameters is illegal`() {
+        assertThatThrownBy {
+            getExpression("[ 10 ]")
+        }.isInstanceOf(EvaluationException::class.java)
+            .hasMessage("Function must have at least one parameter or ()")
     }
 }

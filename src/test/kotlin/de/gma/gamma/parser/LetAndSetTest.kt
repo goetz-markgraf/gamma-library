@@ -2,6 +2,7 @@ package de.gma.gamma.parser
 
 import de.gma.gamma.datatypes.expressions.LetExpression
 import de.gma.gamma.datatypes.expressions.SetExpression
+import de.gma.gamma.datatypes.functions.AbstractFunction
 import de.gma.gamma.datatypes.functions.FunctionValue
 import de.gma.gamma.datatypes.values.IntegerValue
 import org.assertj.core.api.Assertions.assertThat
@@ -101,4 +102,19 @@ class LetAndSetTest : BaseParserTest() {
         assertThat(funVal.paramNames).hasSize(0)
     }
 
+    @Test
+    fun `illegal let expression`() {
+        assertThatThrownBy {
+            getExpression("let a 10")
+        }.isInstanceOf(EvaluationException::class.java)
+            .hasMessage("Illegal Token 10 but was expecting =")
+    }
+
+    @Test
+    fun `set expression with function`() {
+        val result = getExpression("set a! = [ () -> print 10 ]") as SetExpression
+
+        assertThat(result.identifier.name).isEqualTo("a!")
+        assertThat(result.boundValue).isInstanceOf(AbstractFunction::class.java)
+    }
 }

@@ -88,29 +88,3 @@ fun isExpressionEndingChar(char: Char) =
 
 fun isElvisCharacter(char: Char) =
     char == CH_QUESTION_MARK
-
-
-val operatorLevels = listOf(
-    mutableListOf("^", "**"),
-    mutableListOf("*", "/"),
-    mutableListOf("+", "-"),
-    mutableListOf(),
-    mutableListOf(">", ">=", "<", "<=", "=", "=", "!=", "<>"),
-    mutableListOf("|"),
-    mutableListOf("&"),
-    mutableListOf("->")
-)
-
-val MAX_OPERATOR_LEVEL = operatorLevels.size
-
-fun isOperatorInLevel(op: String, level: Int): Boolean {
-    if (level < 0 || level > MAX_OPERATOR_LEVEL)
-        return false
-
-    val operatorSet = operatorLevels[level]
-    if (operatorSet.isNotEmpty())
-        return operatorSet.contains(op)
-
-    // return true if operator is not in any of the sets
-    return operatorLevels.find { it.contains(op) } == null
-}

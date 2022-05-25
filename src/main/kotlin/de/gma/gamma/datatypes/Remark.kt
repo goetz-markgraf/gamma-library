@@ -14,7 +14,7 @@ class Remark(
     private val documentation: Boolean = false
 ) : Value(sourceName, beginPos, endPos) {
 
-    override fun prettyPrint() = if (!documentation) "# $strValue" else "'$strValue'"
+    override fun prettyPrint() = if (!documentation) "# $strValue" else "'${strValue.replace("'", "\\'")}'"
 
     override fun evaluate(scope: Scope) = UnitValue(sourceName, beginPos, endPos)
 

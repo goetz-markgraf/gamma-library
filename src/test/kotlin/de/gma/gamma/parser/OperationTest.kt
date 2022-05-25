@@ -42,11 +42,9 @@ class OperationTest : BaseParserTest() {
 
     @Test
     fun `parse a sum and a product`() {
-        val source = "1 + 2 * 3"
-        val expression = getExpression(source)
+        val source = "1 + 2 * 3 ^ 4"
+        val op = getExpression(source) as FunctionCall
 
-        assertThat(expression).isInstanceOf(FunctionCall::class.java)
-        val op = expression as FunctionCall
         assertThat(op.function.prettyPrint()).isEqualTo("+")
         assertThat(op.op1!!).isInstanceOf(IntegerValue::class.java)
         assertThat(op.op2!!).isInstanceOf(Expression::class.java)
@@ -54,9 +52,9 @@ class OperationTest : BaseParserTest() {
         val op1 = op.op2!! as FunctionCall
         assertThat(op1.function.prettyPrint()).isEqualTo("*")
         assertThat(op1.op1!!).isInstanceOf(IntegerValue::class.java)
-        assertThat(op1.op2!!).isInstanceOf(IntegerValue::class.java)
+        assertThat(op1.op2!!).isInstanceOf(FunctionCall::class.java)
 
-        assertThat(expression.prettyPrint()).isEqualTo("1 + 2 * 3")
+        assertThat(op.prettyPrint()).isEqualTo("1 + 2 * 3 ^ 4")
     }
 
     @Test
@@ -123,11 +121,8 @@ class OperationTest : BaseParserTest() {
 
     @Test
     fun `check order sum and op`() {
-        val expression = getExpression("10 + 20 -> 30 + 40")
+        val op = getExpression("10 + 20 -> 30 + 40") as FunctionCall
 
-        assertThat(expression).isInstanceOf(FunctionCall::class.java)
-
-        val op = expression as FunctionCall
         assertThat(op.op1).isInstanceOf(FunctionCall::class.java)
         assertThat(op.op2).isInstanceOf(FunctionCall::class.java)
     }
