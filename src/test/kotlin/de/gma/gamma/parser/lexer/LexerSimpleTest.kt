@@ -241,6 +241,18 @@ class LexerSimpleTest {
     }
 
     @Test
+    fun `parse match keyword`() {
+        val token = getTokenFromInput("match")
+        assertThat(token.type).isEqualTo(MATCH)
+    }
+
+    @Test
+    fun `parse with keyword`() {
+        val token = getTokenFromInput("with")
+        assertThat(token.type).isEqualTo(WITH)
+    }
+
+    @Test
     fun `parse type keyword`() {
         val token = getTokenFromInput("type")
         assertThat(token.type).isEqualTo(TYPE)
@@ -276,8 +288,6 @@ class LexerSimpleTest {
         strings = [
             "a",
             "a1",
-            "a.a",
-            "a1.a1",
             "a?",
             "a!",
             "a*",
@@ -286,7 +296,11 @@ class LexerSimpleTest {
             "a-a",
             "a+a",
             "_a",
-            "_a?"
+            "_a?",
+            "a-",
+            "a+",
+            "a++",
+            "a_-+"
         ]
     )
     fun `parse correct identifier names`(source: String) {
@@ -301,40 +315,45 @@ class LexerSimpleTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = ["a+.a", "a.+a"])
-    fun `parse invalid identifier`(source: String) {
+    @ValueSource(
+        strings = [
+            "a+.a",
+            "a.+a",
+            "a.a",
+            "a1.a1"
+        ]
+    )
+    fun `identifier stops before the dot`(source: String) {
         val token = getTokenFromInput(source)
 
+        val pos = source.indexOf('.')
         assertToken(
             token,
             type = ID,
-            content = source.first().toString(),
-            end = 0
+            content = source.substring(0, pos),
+            end = pos - 1
         )
     }
 
     @ParameterizedTest
     @ValueSource(
         strings = [
-            "a.",
-            "a-",
-            "a+",
-            "a_"
+            "correct?or",
+            "valid!and"
         ]
     )
-    fun `parse identifier names with invalid ending characters`(source: String) {
+    fun `identifier stops with the questionmark or bang`(source: String) {
         val token = getTokenFromInput(source)
 
+        val pos = source.indexOfAny(charArrayOf('!', '?'))
         assertToken(
             token,
             type = ID,
-            content = source.dropLast(1),
-            end = 0
+            content = source.substring(0, pos + 1),
+            end = pos
         )
-
-        val nextToken = lexer.nextToken()
-        assertThat(nextToken.type).matches { it == ERROR || it == OP }
     }
+
 
     @ParameterizedTest
     @ValueSource(

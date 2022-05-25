@@ -228,14 +228,14 @@ class Lexer(
 
         var end = position()
 
-        fun isStillIdentifier() =
-            isIdentifierChar(char)
-                    || (isValidIdentifierSeparatorChar(char) && isStartOfIdentifier(peekChar, peekPeekChar))
-
-        while (isStillIdentifier()) {
+        while (isIdentifierChar(char)) {
+            val ending = isEndOfIdentifier(char)
             contentBuffer.append(char)
             end = position()
             next()
+
+            if (ending)
+                break
         }
 
         var id = when (contentBuffer.toString()) {
@@ -245,6 +245,8 @@ class Lexer(
             "module" -> TokenType.MODULE
             "true" -> TokenType.TRUE
             "false" -> TokenType.FALSE
+            "match" -> TokenType.MATCH
+            "with" -> TokenType.WITH
             else -> TokenType.ID
         }
 

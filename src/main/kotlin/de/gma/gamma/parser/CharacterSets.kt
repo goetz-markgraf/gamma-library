@@ -57,13 +57,16 @@ fun isStartOfIdentifier(char: Char, peekChar: Char) =
     Character.isLetter(char) || char == CH_UNDERSCORE && Character.isLetter(peekChar)
 
 fun isIdentifierChar(char: Char) =
-    Character.isLetter(char) || Character.isDigit(char) || isValidSpecialIdentifierChar(char)
-
-fun isValidIdentifierSeparatorChar(char: Char) =
-    char == CH_MINUS || char == CH_PLUS || char == CH_DOT || char == CH_UNDERSCORE
+    Character.isLetter(char) || Character.isDigit(char) || isValidSpecialIdentifierChar(char) || isEndOfIdentifier(char)
 
 fun isValidSpecialIdentifierChar(char: Char) =
-    char == CH_MUL || char == CH_BANG || char == CH_QUESTION_MARK
+    char == CH_MUL
+            || char == CH_MINUS
+            || char == CH_PLUS
+            || char == CH_UNDERSCORE
+
+fun isEndOfIdentifier(char: Char) =
+    char == CH_BANG || char == CH_QUESTION_MARK
 
 fun isStartOfString(char: Char) =
     char == CH_QUOTE
