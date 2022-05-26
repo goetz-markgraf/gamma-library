@@ -33,13 +33,13 @@ class SetExpression(
     override fun evaluate(scope: Scope): Value {
         val value = boundValue.evaluate(scope)
 
-        var startScope: Scope? = scope
+        var currentScope: Scope? = scope
 
-        while (startScope != null && !startScope.containsLocally(identifier.name))
-            startScope = scope.parent
+        while (currentScope != null && !currentScope.containsLocally(identifier.name))
+            currentScope = currentScope.parent
 
-        if (startScope != null) {
-            startScope.set(identifier.name, value, documentation)
+        if (currentScope != null) {
+            currentScope.set(identifier.name, value, documentation)
 
             return value
         } else {

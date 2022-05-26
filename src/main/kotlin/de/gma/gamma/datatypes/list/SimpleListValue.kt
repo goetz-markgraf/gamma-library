@@ -19,6 +19,8 @@ class SimpleListValue(
     protected var internalItems: Array<Value> = items.toTypedArray()
 
     override fun prettyPrint() = buildString {
+        if (internalItems.size == 0) return "{ }"
+
         val complex = internalItems.indexOfFirst { it is Expression } >= 0
         val splitChars = if (complex) "$CH_NEWLINE" else ", "
 

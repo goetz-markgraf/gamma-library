@@ -73,6 +73,6 @@ class IndentationTest : BaseParserTest() {
             getExpression(source)
         }
             .isInstanceOf(EvaluationException::class.java)
-            .hasMessage("Illegal indentation of Token 10 must be indented to column 1")
+            .hasMessage("Illegal indentation of Token 10 must be indented to column 2")
     }
 }

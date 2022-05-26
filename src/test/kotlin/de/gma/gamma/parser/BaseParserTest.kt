@@ -1,6 +1,7 @@
 package de.gma.gamma.parser
 
 import de.gma.gamma.datatypes.Value
+import de.gma.gamma.datatypes.scope.ModuleScope
 
 open class BaseParserTest {
     lateinit var parser: Parser
@@ -20,5 +21,19 @@ open class BaseParserTest {
                 expr = parser.nextExpression(-1)
             }
         }
+    }
+
+    protected fun execute(source: String): Value? {
+        parser = Parser(source)
+        val scope = ModuleScope()
+
+        var expr = parser.nextExpression()
+        var result: Value? = null
+        while (expr != null) {
+            result = expr.evaluate(scope)
+
+            expr = parser.nextExpression()
+        }
+        return result
     }
 }

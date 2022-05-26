@@ -1,14 +1,17 @@
 package de.gma.gamma.evaluation
 
+import de.gma.gamma.datatypes.scope.ScopeException
 import de.gma.gamma.datatypes.scoped.ScopedFunction
 import de.gma.gamma.datatypes.values.IntegerValue
+import de.gma.gamma.parser.EvaluationException
 import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.Test
 
 class LetSetEvaluation : BaseEvaluationTest() {
 
     @Test
-    fun `prepare an expression`() {
+    fun `bind an expression`() {
         val code = """
             let expr = 10 + 20
         """.trimIndent()
@@ -21,7 +24,7 @@ class LetSetEvaluation : BaseEvaluationTest() {
     }
 
     @Test
-    fun `prepare an identifier`() {
+    fun `bind an identifier`() {
         val code = """
             let a = 10
             let id = a
@@ -119,5 +122,29 @@ class LetSetEvaluation : BaseEvaluationTest() {
         val result = execute(code)
         assertThat(result!!.prettyPrint()).isEqualTo("20")
         assertThat(scope.getValue("a!").prettyPrint()).isEqualTo("20")
+    }
+
+    @Test
+    fun `error if an identifier is not bound`() {
+        assertThatThrownBy {
+            execute("a")
+        }.isInstanceOf(ScopeException::class.java)
+            .hasMessage("Id a is undefined.")
+    }
+
+    @Test
+    fun `error if an identifier is bound twice`() {
+        assertThatThrownBy {
+            execute("let a = 10; let a = 20")
+        }.isInstanceOf(ScopeException::class.java)
+            .hasMessage("Id a is already defined.")
+    }
+
+    @Test
+    fun `error if an non-existing identifier is mutated`() {
+        assertThatThrownBy {
+            execute("set a! = 20")
+        }.isInstanceOf(EvaluationException::class.java)
+            .hasMessage("Cannot find id a!")
     }
 }
