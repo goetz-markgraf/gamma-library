@@ -1,5 +1,6 @@
 package de.gma.gamma.evaluation.list
 
+import de.gma.gamma.datatypes.list.ListValue
 import de.gma.gamma.datatypes.values.IntegerValue
 import de.gma.gamma.datatypes.values.UnitValue
 import de.gma.gamma.evaluation.BaseEvaluationTest
@@ -49,6 +50,22 @@ class BasicListTest : BaseEvaluationTest() {
 
         val i = expr as IntegerValue
         assertThat(i.intValue).isEqualTo(2L)
+    }
+
+    @Test
+    fun `get the tail of a list`() {
+        val expr = execute("tail { 1, 2, 3}") as ListValue
+
+        assertThat(expr.size()).isEqualTo(2)
+        assertThat((expr.first() as IntegerValue).intValue).isEqualTo(2L)
+    }
+
+    @Test
+    fun `drop last element of a list`() {
+        val expr = execute("drop-last { 1, 2, 3}") as ListValue
+
+        assertThat(expr.size()).isEqualTo(2)
+        assertThat((expr.first() as IntegerValue).intValue).isEqualTo(1L)
     }
 
     @Test

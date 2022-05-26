@@ -11,11 +11,11 @@ class StringPredicateTest : BaseEvaluationTest() {
     @ParameterizedTest
     @ValueSource(
         strings = [
-            "isString? \"str\"",
-            "isString? \"\"",
-            "isEmpty? \"\"",
-            "isNotEmpty? \"a\"",
-            "isEmpty? ()"
+            "is-string? \"str\"",
+            "is-string? \"\"",
+            "is-empty? \"\"",
+            "is-not-empty? \"a\"",
+            "is-empty? ()"
         ]
     )
     fun `check that result is true`(code: String) {
@@ -28,10 +28,10 @@ class StringPredicateTest : BaseEvaluationTest() {
     @ParameterizedTest
     @ValueSource(
         strings = [
-            "isString? :id",
-            "isString? ()",
-            "isEmpty? \"a\"",
-            "isNotEmpty? \"\""
+            "is-string? :id",
+            "is-string? ()",
+            "is-empty? \"a\"",
+            "is-not-empty? \"\""
         ]
     )
     fun `check that result is false`(code: String) {
