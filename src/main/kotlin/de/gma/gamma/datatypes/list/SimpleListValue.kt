@@ -19,14 +19,14 @@ class SimpleListValue(
     protected var internalItems: Array<Value> = items.toTypedArray()
 
     override fun prettyPrint() = buildString {
-        if (internalItems.size == 0) return "{ }"
+        if (internalItems.isEmpty()) return "{ }"
 
-        val complex = internalItems.indexOfFirst { it is Expression } >= 0
-        val splitChars = if (complex) "$CH_NEWLINE" else ", "
+        val multiline = internalItems.indexOfFirst { it is Expression } >= 0
+        val splitChars = if (multiline) "$CH_NEWLINE" else ", "
 
-        append('{').append(if (complex) CH_NEWLINE else ' ')
-        append(internalItems.joinToString(splitChars) { "${if (complex) "    " else ""}${it.prettyPrint()}" })
-        append(if (complex) CH_NEWLINE else ' ')
+        append('{').append(if (multiline) CH_NEWLINE else "")
+        append(internalItems.joinToString(splitChars) { "${if (multiline) "    " else ""}${it.prettyPrint()}" })
+        append(if (multiline) CH_NEWLINE else "")
         append('}')
     }
 

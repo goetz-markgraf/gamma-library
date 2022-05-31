@@ -75,7 +75,9 @@ class PrettyPrintTest : BaseParserTest() {
                 "do (1 + 2)",
                 "do (1 ? 2 : 3) \"Hallo\"",
                 "do (one, two)",
-                "do [a -> a]"
+                "do [a -> a]",
+                "(+) 1 2",
+                "map {1, 2, 3} (+)"
             ]
         )
         fun `wraps expression as parameters in parentheses if needed`(source: String) {

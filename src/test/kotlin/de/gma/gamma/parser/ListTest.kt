@@ -25,7 +25,7 @@ class ListTest : BaseParserTest() {
         val l = expression as SimpleListValue
 
         assertThat(l.size()).isEqualTo(1)
-        assertThat(l.prettyPrint()).isEqualTo("{ 10 }")
+        assertThat(l.prettyPrint()).isEqualTo("{10}")
     }
 
     @Test
@@ -36,7 +36,7 @@ class ListTest : BaseParserTest() {
         val l = expression as SimpleListValue
 
         assertThat(l.size()).isEqualTo(2)
-        assertThat(l.prettyPrint()).isEqualTo("{ 10, 20 }")
+        assertThat(l.prettyPrint()).isEqualTo("{10, 20}")
     }
 
     @Test
