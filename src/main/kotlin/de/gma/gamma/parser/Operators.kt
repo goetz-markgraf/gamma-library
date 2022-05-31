@@ -34,3 +34,13 @@ fun isOperatorInLevel(op: String, level: Int): Boolean {
     // return true if operator is not in any of the sets
     return operatorLevels.find { it.contains(op) } == null
 }
+
+fun operatorLevel(s: String): Int {
+    var level = -1
+    operatorLevels.forEachIndexed { index, strings -> if (strings.contains(s)) level = index }
+
+    return if (level >= 0)
+        level
+    else
+        OP_LEVEL_DEFAULT
+}

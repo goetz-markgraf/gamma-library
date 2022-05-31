@@ -122,7 +122,7 @@ class Parser(
 
             assertNotNull(op2)
 
-            op1 = FunctionCall.fromOperation(sourceName, start, currEnd, op, op1, op2!!)
+            op1 = OperaterCall(sourceName, start, currEnd, op, op1, op2!!, level)
         }
 
         return op1
