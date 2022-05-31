@@ -61,6 +61,13 @@ class BasicListTest : BaseEvaluationTest() {
     }
 
     @Test
+    fun `get the tail of an empty list`() {
+        val expr = execute("tail { }") as ListValue
+
+        assertThat(expr.size()).isEqualTo(0)
+    }
+
+    @Test
     fun `drop last element of a list`() {
         val expr = execute("drop-last { 1, 2, 3}") as ListValue
 

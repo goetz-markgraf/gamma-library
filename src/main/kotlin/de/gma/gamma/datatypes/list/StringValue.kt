@@ -30,11 +30,13 @@ class StringValue(
             build(strValue.last().toString())
 
     override fun getAt(pos: Int): Value =
-        if (strValue.isEmpty())
-            this
-        else
+        if (pos >= 0 && pos < size())
             build(strValue[pos].toString())
-
+        else
+            if (size() > 0)
+                throw createException("Index out of bounds: $pos outside [0..${size() - 1}]")
+            else
+                throw createException("Index out of bounds: $pos outside empty string")
 
     override fun size(): Int =
         strValue.length
