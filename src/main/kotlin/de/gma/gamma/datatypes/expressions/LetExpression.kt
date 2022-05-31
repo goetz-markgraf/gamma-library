@@ -27,7 +27,6 @@ class LetExpression(
                 append("let ${identifier.prettyPrint()} =").append(CH_NEWLINE)
                 append("    ${boundValue.prettyPrint()}")
             }
-            append(CH_NEWLINE)
         }
 
     override fun evaluate(scope: Scope): Value {

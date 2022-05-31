@@ -3,7 +3,6 @@ package de.gma.gamma.datatypes.expressions
 import de.gma.gamma.datatypes.Value
 import de.gma.gamma.datatypes.scope.Scope
 import de.gma.gamma.datatypes.values.UnitValue
-import de.gma.gamma.parser.CH_NEWLINE
 import de.gma.gamma.parser.Position
 
 class Block(
@@ -14,10 +13,8 @@ class Block(
 ) : Expression(sourceName, beginPos, endPos) {
 
     override fun prettyPrint() = buildString {
-        append("(").append(CH_NEWLINE)
-        expressions.forEach {
-            append("    ${it.prettyPrint()}").append(CH_NEWLINE)
-        }
+        append("(")
+        append(expressions.joinToString(", ") { it.prettyPrint() })
         append(")")
     }
 

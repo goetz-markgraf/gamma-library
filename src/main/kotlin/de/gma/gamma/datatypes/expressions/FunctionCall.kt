@@ -11,8 +11,11 @@ open class FunctionCall(
     val function: Value,
     val params: List<Value>,
 ) : Expression(sourceName, beginPos, endPos) {
-    override fun prettyPrint() =
-        "${function.prettyPrint()} ${params.joinToString(" ") { it.prettyPrint() }}"
+    override fun prettyPrint(): String {
+        val expressions = params.map { Pair(it is Expression && it !is Block, it.prettyPrint()) }
+
+        return "${function.prettyPrint()} ${expressions.joinToString(" ") { if (it.first) "(${it.second})" else it.second }}"
+    }
 
     override fun evaluate(scope: Scope): Value {
         val functionToCall = function.evaluateToFunction(scope)

@@ -30,13 +30,6 @@ class BlockTest : BaseParserTest() {
 
         assertThat(block.expressions).hasSize(2)
 
-        assertThat(block.prettyPrint()).isEqualTo(
-            """
-            (
-                10
-                20
-            )
-        """.trimIndent()
-        )
+        assertThat(block.prettyPrint()).isEqualTo("(10, 20)")
     }
 }

@@ -19,14 +19,7 @@ class FunctionsTest : BaseParserTest() {
 
         assertThat(expressions).hasSize(2)
 
-        assertThat(expressions.first().prettyPrint()).isEqualTo(
-            """
-            let add = [ a b ->
-                a + b
-            ]
-            
-        """.trimIndent()
-        )
+        assertThat(expressions.first().prettyPrint()).isEqualTo("let add = [a b -> a + b]")
 
         assertThat(expressions[1].prettyPrint()).isEqualTo("add 10 20")
     }

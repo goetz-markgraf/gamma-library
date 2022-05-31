@@ -3,6 +3,7 @@ package de.gma.gamma.parser
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.CsvSource
 import org.junit.jupiter.params.provider.ValueSource
 
 class PrettyPrintTest : BaseParserTest() {
@@ -36,25 +37,48 @@ class PrettyPrintTest : BaseParserTest() {
             strings = [
                 "1 + 2 * 3",
                 "1 + do it",
-                "a & b | c & d"
-            ]
-        )
-        fun `no parentheses when level is correct`(source: String) {
-            val expression = getExpression(source)
-
-            assertThat(expression!!.prettyPrint()).isEqualTo(source)
-        }
-
-        @ParameterizedTest
-        @ValueSource(
-            strings = [
+                "a & b | c & d",
                 "(1 + 2) * 3",
                 "3 * (1 + 2)",
                 "(a |> b) + 2",
                 "(a | b) & (c | d)"
             ]
         )
-        fun `parentheses needed if operator level is wrong`(source: String) {
+        fun `keeps parentheses where needed`(source: String) {
+            val expression = getExpression(source)
+
+            assertThat(expression!!.prettyPrint()).isEqualTo(source)
+        }
+
+        @ParameterizedTest
+        @CsvSource(
+            value = [
+                "(1 * 2) + 3,1 * 2 + 3",
+                "3 + (1 * 2),3 + 1 * 2",
+            ]
+        )
+        fun `removes unnecessary parentheses`(source: String, expected: String) {
+            val expression = getExpression(source)
+
+            assertThat(expression!!.prettyPrint()).isEqualTo(expected)
+        }
+    }
+
+    @Nested
+    inner class FunctionCallPrettyPrint {
+
+        @ParameterizedTest
+        @ValueSource(
+            strings = [
+                "do it",
+                "do 1 2",
+                "do (1 + 2)",
+                "do (1 ? 2 : 3) \"Hallo\"",
+                "do (one, two)",
+                "do [a -> a]"
+            ]
+        )
+        fun `wraps expression as parameters in parentheses if needed`(source: String) {
             val expression = getExpression(source)
 
             assertThat(expression!!.prettyPrint()).isEqualTo(source)

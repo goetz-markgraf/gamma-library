@@ -27,7 +27,6 @@ class ExpressionTest : BaseParserTest() {
                 """
                 'doc'
                 let a = 10
-                
             """.trimIndent()
             )
         }
@@ -43,7 +42,7 @@ class ExpressionTest : BaseParserTest() {
             assertThat(let.boundValue).isInstanceOf(StringValue::class.java)
             assertThat((let.boundValue as StringValue).strValue).isEqualTo("Hello")
 
-            assertThat(expression.prettyPrint()).isEqualTo("let hello = \"Hello\"\n")
+            assertThat(expression.prettyPrint()).isEqualTo("let hello = \"Hello\"")
         }
 
         @Test
@@ -57,7 +56,7 @@ class ExpressionTest : BaseParserTest() {
             assertThat(let.boundValue).isInstanceOf(IntegerValue::class.java)
             assertThat((let.boundValue as IntegerValue).intValue).isEqualTo(10L)
 
-            assertThat(expression.prettyPrint()).isEqualTo("let a = 10\n")
+            assertThat(expression.prettyPrint()).isEqualTo("let a = 10")
         }
 
         @Test
@@ -70,7 +69,7 @@ class ExpressionTest : BaseParserTest() {
             assertThat(let.boundValue).isInstanceOf(IntegerValue::class.java)
             assertThat((let.boundValue as IntegerValue).intValue).isEqualTo(10L)
 
-            assertThat(expression.prettyPrint()).isEqualTo("let (++) = 10\n")
+            assertThat(expression.prettyPrint()).isEqualTo("let (++) = 10")
         }
     }
 }

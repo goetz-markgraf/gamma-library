@@ -18,12 +18,7 @@ class FunctionTest : BaseParserTest() {
 
         assertThat(func.expressions).isEmpty()
 
-        assertThat(expression.prettyPrint()).isEqualTo(
-            """
-            [ () ->
-            ]
-        """.trimIndent()
-        )
+        assertThat(expression.prettyPrint()).isEqualTo("[() -> ]")
     }
 
     @Test
@@ -38,13 +33,7 @@ class FunctionTest : BaseParserTest() {
         assertThat(func.expressions).hasSize(1)
             .first().isInstanceOf(Expression::class.java)
 
-        assertThat(expression.prettyPrint()).isEqualTo(
-            """
-            [ a b ->
-                a + b
-            ]
-        """.trimIndent()
-        )
+        assertThat(expression.prettyPrint()).isEqualTo("[a b -> a + b]")
     }
 
     @Test

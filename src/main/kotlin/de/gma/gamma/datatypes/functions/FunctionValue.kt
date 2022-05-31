@@ -16,16 +16,23 @@ class FunctionValue(
     val expressions: List<Value>
 ) : AbstractFunction(sourceName, beginPos, endPos, paramNames) {
     override fun prettyPrint() = buildString {
-        append("[ ")
-        if (paramNames.size == 0) {
+        append("[")
+        if (paramNames.isEmpty()) {
             append("()")
         } else {
             append(paramNames.joinToString(" "))
         }
-        append(" ->")
-        append(CH_NEWLINE)
-        expressions.forEach {
-            append("    ${it.prettyPrint()}").append(CH_NEWLINE)
+
+        if (expressions.size == 0) {
+            append(" -> ")
+        } else if (expressions.size == 1) {
+            append(" -> ")
+            append(expressions.first().prettyPrint())
+        } else {
+            append(" ->").append(CH_NEWLINE)
+            expressions.forEach {
+                append("    ${it.prettyPrint()}").append(CH_NEWLINE)
+            }
         }
         append("]")
     }
