@@ -16,8 +16,8 @@ val operatorLevels = listOf(
     mutableListOf("+", "-"),
     mutableListOf(),
     mutableListOf(">", ">=", "<", "<=", "=", "=", "!=", "<>"),
-    mutableListOf("|"),
     mutableListOf("&"),
+    mutableListOf("|"),
     mutableListOf("->")
 )
 

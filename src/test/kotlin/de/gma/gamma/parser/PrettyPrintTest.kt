@@ -1,6 +1,7 @@
 package de.gma.gamma.parser
 
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.Nested
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
 
@@ -25,5 +26,38 @@ class PrettyPrintTest : BaseParserTest() {
         val exp = getExpression(source)
 
         assertThat(exp!!.prettyPrint()).isEqualTo(source)
+    }
+
+    @Nested
+    inner class OperatorPrettyPrint {
+
+        @ParameterizedTest
+        @ValueSource(
+            strings = [
+                "1 + 2 * 3",
+                "1 + do it",
+                "a & b | c & d"
+            ]
+        )
+        fun `no parentheses when level is correct`(source: String) {
+            val expression = getExpression(source)
+
+            assertThat(expression!!.prettyPrint()).isEqualTo(source)
+        }
+
+        @ParameterizedTest
+        @ValueSource(
+            strings = [
+                "(1 + 2) * 3",
+                "3 * (1 + 2)",
+                "(a |> b) + 2",
+                "(a | b) & (c | d)"
+            ]
+        )
+        fun `parentheses needed if operator level is wrong`(source: String) {
+            val expression = getExpression(source)
+
+            assertThat(expression!!.prettyPrint()).isEqualTo(source)
+        }
     }
 }

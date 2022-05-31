@@ -17,8 +17,15 @@ class OperaterCall(
     val level: Int = operatorLevel(operator.name)
 ) : FunctionCall(source, begin, end, operator, listOf(op1, op2)) {
 
-    override fun prettyPrint() =
-        "${op1.prettyPrint()} ${operator.prettyPrint()} ${op2.prettyPrint()}"
+    override fun prettyPrint(): String {
+        val levelOp1 = op1 is OperaterCall && op1.level > level
+        val levelOp2 = op2 is OperaterCall && op2.level > level
+
+        val op1PP = if (levelOp1) "(${op1.prettyPrint()})" else op1.prettyPrint()
+        val op2PP = if (levelOp2) "(${op2.prettyPrint()})" else op2.prettyPrint()
+
+        return "$op1PP ${operator.prettyPrint()} $op2PP"
+    }
 
     companion object {
         fun build(operator: Identifier, op1: Value, op2: Value) =
