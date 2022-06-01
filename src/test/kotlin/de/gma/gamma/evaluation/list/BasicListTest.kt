@@ -8,6 +8,8 @@ import de.gma.gamma.parser.EvaluationException
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.ValueSource
 
 class BasicListTest : BaseEvaluationTest() {
 
@@ -73,6 +75,37 @@ class BasicListTest : BaseEvaluationTest() {
 
         assertThat(expr.size()).isEqualTo(2)
         assertThat((expr.first() as IntegerValue).intValue).isEqualTo(1L)
+    }
+
+    @Test
+    fun `get a slice from a list`() {
+        val expr = execute("slice 1 1 {1, 2, 3}") as ListValue
+
+        assertThat(expr.size()).isEqualTo(1)
+        assertThat((expr.first() as IntegerValue).intValue).isEqualTo(2L)
+    }
+
+    @Test
+    fun `returns only up to last element of list`() {
+        val expr = execute("slice 1 3 {1, 2, 3}") as ListValue
+
+        assertThat(expr.size()).isEqualTo(2)
+        assertThat((expr.first() as IntegerValue).intValue).isEqualTo(2L)
+        assertThat((expr.last() as IntegerValue).intValue).isEqualTo(3L)
+    }
+
+    @ParameterizedTest
+    @ValueSource(
+        strings = [
+            "slice 3 1 {1, 2, 3}",
+            "slice 10 1 {1, 2, 3}",
+            "slice -1 1 {1, 2, 3}"
+        ]
+    )
+    fun `return empty list if from it too high or negative`(source: String) {
+        val expr = execute(source) as ListValue
+
+        assertThat(expr.size()).isEqualTo(0)
     }
 
     @Test

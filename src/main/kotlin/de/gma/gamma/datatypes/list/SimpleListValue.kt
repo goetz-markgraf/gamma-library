@@ -76,6 +76,17 @@ class SimpleListValue(
         else
             this
 
+    override fun slice(from: Int, length: Int): ListValue {
+        if (from > internalItems.size || from < 0)
+            return buildEmpty()
+
+        val correctLength = if (from + length > internalItems.size)
+            internalItems.size - from
+        else length
+
+        return newSublist(from, internalItems.size - from - correctLength)
+    }
+
     override fun append(v: Value): ListValue =
         build(buildList {
             addAll(internalItems)

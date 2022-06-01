@@ -35,6 +35,19 @@ class SubListValue(
     override fun dropLast(): ListValue =
         newSublist(additionalDropLast = 1)
 
+    override fun slice(from: Int, length: Int): ListValue {
+        val size = size()
+        if (from > size || from < 0)
+            return buildEmpty()
+
+        val correctLength = if (from + length > size)
+            size - from
+        else length
+
+        return newSublist(additionalDropFirst = from, additionalDropLast = size - from - correctLength)
+
+    }
+
     override fun append(v: Value): ListValue =
         build(buildList {
             addAll(origin.allItems())

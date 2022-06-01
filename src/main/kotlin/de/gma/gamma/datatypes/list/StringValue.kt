@@ -54,6 +54,19 @@ class StringValue(
         else
             build(strValue.dropLast(1))
 
+    override fun slice(from: Int, length: Int): ListValue {
+        val size = strValue.length
+        if (from > size || from < 0)
+            return build("")
+
+        val correctLength = if (from + length > size)
+            size - from
+        else length
+
+        return build(strValue.substring(from, from + correctLength))
+
+    }
+
 
     override fun append(v: Value): ListValue =
         if (v is StringValue)

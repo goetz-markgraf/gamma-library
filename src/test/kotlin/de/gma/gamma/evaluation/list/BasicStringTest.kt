@@ -6,6 +6,8 @@ import de.gma.gamma.parser.EvaluationException
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.ValueSource
 
 class BasicStringTest : BaseEvaluationTest() {
 
@@ -63,6 +65,37 @@ class BasicStringTest : BaseEvaluationTest() {
         val expr = execute("drop-last \"123\"") as StringValue
 
         assertThat(expr.strValue).isEqualTo("12")
+    }
+
+    @Test
+    fun `get a slice from a string`() {
+        val expr = execute("slice 1 1 \"123\"") as StringValue
+
+        assertThat(expr.size()).isEqualTo(1)
+        assertThat((expr.first() as StringValue).strValue).isEqualTo("2")
+    }
+
+    @Test
+    fun `returns only up to last element of list`() {
+        val expr = execute("slice 1 3 \"123\"") as StringValue
+
+        assertThat(expr.size()).isEqualTo(2)
+        assertThat((expr.first() as StringValue).strValue).isEqualTo("2")
+        assertThat((expr.last() as StringValue).strValue).isEqualTo("3")
+    }
+
+    @ParameterizedTest
+    @ValueSource(
+        strings = [
+            "slice 3 1 \"123\"",
+            "slice 10 1 \"123\"",
+            "slice -1 1 \"123\""
+        ]
+    )
+    fun `return empty list if from it too high or negative`(source: String) {
+        val expr = execute(source) as StringValue
+
+        assertThat(expr.size()).isEqualTo(0)
     }
 
     @Test

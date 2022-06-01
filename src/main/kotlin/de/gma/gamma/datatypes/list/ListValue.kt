@@ -25,6 +25,8 @@ abstract class ListValue(
 
     abstract fun dropLast(): ListValue
 
+    abstract fun slice(from: Int, length: Int): ListValue
+
     abstract fun append(v: Value): ListValue
 
     abstract fun insert(v: Value): ListValue
@@ -33,6 +35,7 @@ abstract class ListValue(
 
     companion object {
         fun build(items: List<Value>) = SimpleListValue(builtInSource, nullPos, nullPos, items)
+        fun buildEmpty() = build(emptyList())
     }
 
 }
