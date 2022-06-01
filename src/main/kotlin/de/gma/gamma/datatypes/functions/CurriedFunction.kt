@@ -11,8 +11,8 @@ class CurriedFunction(
     params: List<String>,
     val savedScope: Scope,
     val bakedInParams: List<Value>,
-    val function: AbstractFunction
-) : AbstractFunction(sourceName, beginPos, endPos, params) {
+    val function: FunctionValue
+) : FunctionValue(sourceName, beginPos, endPos, params) {
 
     override fun call(scope: Scope, callParams: List<Value>) =
         function.call(savedScope, bakedInParams + callParams)

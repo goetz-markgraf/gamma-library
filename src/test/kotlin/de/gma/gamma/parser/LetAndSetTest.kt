@@ -2,8 +2,8 @@ package de.gma.gamma.parser
 
 import de.gma.gamma.datatypes.expressions.LetExpression
 import de.gma.gamma.datatypes.expressions.SetExpression
-import de.gma.gamma.datatypes.functions.AbstractFunction
 import de.gma.gamma.datatypes.functions.FunctionValue
+import de.gma.gamma.datatypes.functions.LambdaFunction
 import de.gma.gamma.datatypes.values.IntegerValue
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
@@ -75,9 +75,9 @@ class LetAndSetTest : BaseParserTest() {
         assertThat(result.first()).isInstanceOf(LetExpression::class.java)
         val letExpression = result.first() as LetExpression
         assertThat(letExpression.identifier.name).isEqualTo("add")
-        assertThat(letExpression.boundValue).isInstanceOf(FunctionValue::class.java)
+        assertThat(letExpression.boundValue).isInstanceOf(LambdaFunction::class.java)
 
-        val funVal = letExpression.boundValue as FunctionValue
+        val funVal = letExpression.boundValue as LambdaFunction
         assertThat(funVal.expressions).hasSize(3)
         assertThat(funVal.paramNames).hasSize(2)
     }
@@ -95,9 +95,9 @@ class LetAndSetTest : BaseParserTest() {
         assertThat(result.first()).isInstanceOf(LetExpression::class.java)
         val letExpression = result.first() as LetExpression
         assertThat(letExpression.identifier.name).isEqualTo("doIt")
-        assertThat(letExpression.boundValue).isInstanceOf(FunctionValue::class.java)
+        assertThat(letExpression.boundValue).isInstanceOf(LambdaFunction::class.java)
 
-        val funVal = letExpression.boundValue as FunctionValue
+        val funVal = letExpression.boundValue as LambdaFunction
         assertThat(funVal.expressions).hasSize(1)
         assertThat(funVal.paramNames).hasSize(0)
     }
@@ -115,6 +115,6 @@ class LetAndSetTest : BaseParserTest() {
         val result = getExpression("set a! = [ () -> print 10 ]") as SetExpression
 
         assertThat(result.identifier.name).isEqualTo("a!")
-        assertThat(result.boundValue).isInstanceOf(AbstractFunction::class.java)
+        assertThat(result.boundValue).isInstanceOf(FunctionValue::class.java)
     }
 }

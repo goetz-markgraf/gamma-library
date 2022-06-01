@@ -1,6 +1,6 @@
 package de.gma.gamma.datatypes
 
-import de.gma.gamma.datatypes.functions.AbstractFunction
+import de.gma.gamma.datatypes.functions.FunctionValue
 import de.gma.gamma.datatypes.list.ListValue
 import de.gma.gamma.datatypes.list.StringValue
 import de.gma.gamma.datatypes.scope.Scope
@@ -61,9 +61,9 @@ abstract class Value(
             else -> throw createException("$value is not an integer value")
         }
 
-    fun evaluateToFunction(scope: Scope): AbstractFunction {
+    fun evaluateToFunction(scope: Scope): FunctionValue {
         val value = evaluate(scope)
-        if (value is AbstractFunction) {
+        if (value is FunctionValue) {
             return value
         } else {
             throw createException("$value is not a function")

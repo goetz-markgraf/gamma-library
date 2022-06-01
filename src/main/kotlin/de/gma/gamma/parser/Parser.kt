@@ -5,7 +5,7 @@ import de.gma.gamma.datatypes.Identifier
 import de.gma.gamma.datatypes.Remark
 import de.gma.gamma.datatypes.Value
 import de.gma.gamma.datatypes.expressions.*
-import de.gma.gamma.datatypes.functions.FunctionValue
+import de.gma.gamma.datatypes.functions.LambdaFunction
 import de.gma.gamma.datatypes.list.SimpleListValue
 import de.gma.gamma.datatypes.list.StringValue
 import de.gma.gamma.datatypes.values.*
@@ -189,7 +189,7 @@ class Parser(
         }
     }
 
-    private fun parseFunction(col: Int): FunctionValue {
+    private fun parseFunction(col: Int): LambdaFunction {
         assertTypeWithContent(col, OPEN_PARENS, "[")
         val start = currStart
         nextToken()
@@ -214,7 +214,7 @@ class Parser(
         assertTypeWithContent(col, CLOSE_PARENS, "]")
         nextToken()
 
-        return FunctionValue(sourceName, start, currEnd, params, expressions)
+        return LambdaFunction(sourceName, start, currEnd, params, expressions)
     }
 
     private fun parseList(col: Int): SimpleListValue {
@@ -353,7 +353,7 @@ class Parser(
 
         val expressions = parseIndentedExpressions(col)
 
-        val function = FunctionValue(sourceName, funStart, currEnd, identifiers, expressions)
+        val function = LambdaFunction(sourceName, funStart, currEnd, identifiers, expressions)
 
         return LetExpression(sourceName, start, currEnd, id, function, documentation)
     }

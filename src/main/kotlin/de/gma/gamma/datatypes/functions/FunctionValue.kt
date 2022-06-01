@@ -1,55 +1,58 @@
 package de.gma.gamma.datatypes.functions
 
 import de.gma.gamma.datatypes.Value
-import de.gma.gamma.datatypes.scope.ModuleScope
 import de.gma.gamma.datatypes.scope.Scope
-import de.gma.gamma.datatypes.scoped.ScopedFunction
 import de.gma.gamma.datatypes.values.UnitValue
-import de.gma.gamma.parser.CH_NEWLINE
 import de.gma.gamma.parser.Position
 
-class FunctionValue(
+abstract class FunctionValue(
     sourceName: String,
     beginPos: Position,
     endPos: Position,
-    paramNames: List<String>,
-    val expressions: List<Value>
-) : AbstractFunction(sourceName, beginPos, endPos, paramNames) {
-    override fun prettyPrint() = buildString {
-        append("[")
-        if (paramNames.isEmpty()) {
-            append("()")
-        } else {
-            append(paramNames.joinToString(" "))
-        }
+    val paramNames: List<String>
+) : Value(sourceName, beginPos, endPos) {
 
-        if (expressions.size == 0) {
-            append(" -> ")
-        } else if (expressions.size == 1) {
-            append(" -> ")
-            append(expressions.first().prettyPrint())
-        } else {
-            append(" ->").append(CH_NEWLINE)
-            expressions.forEach {
-                append("    ${it.prettyPrint()}").append(CH_NEWLINE)
+    open fun call(scope: Scope, callParams: List<Value>): Value {
+        val missing = checkMissingParameters(callParams)
+
+        return when {
+            missing > 0 -> CurriedFunction(
+                sourceName,
+                beginPos,
+                endPos,
+                paramNames.drop(paramNames.size - missing),
+                scope,
+                callParams,
+                this
+            )
+            else -> {
+                val result = callInternal(scope, callParams)
+
+                // save the scope for lazy evaluation
+                if (result is LambdaFunction)
+                    result.prepare(scope)
+                else
+                    result
             }
         }
-        append("]")
     }
 
-    override fun prepare(scope: Scope) =
-        ScopedFunction(sourceName, beginPos, endPos, this, scope)
+    private fun checkMissingParameters(callParams: List<Value>): Int {
+        val expectedParams = paramNames.size
+        val suppliedParams = callParams.size
 
-    override fun evaluate(scope: Scope) =
-        ScopedFunction(sourceName, beginPos, endPos, this, scope)
+        if (expectedParams < suppliedParams && !isUnitCall(callParams))
+            throw createException("too many params")
 
-    override fun callInternal(scope: Scope, callParams: List<Value>): Value {
+        if (expectedParams == suppliedParams || isUnitCall(callParams))
+            return 0
 
-        val newScope: Scope = ModuleScope(scope)
-        paramNames.zip(callParams).map { pair ->
-            newScope.bind(pair.first, pair.second.prepare(scope))
-        }
-
-        return expressions.fold(UnitValue.build() as Value) { _, expr -> expr.evaluate(newScope) }
+        return expectedParams - suppliedParams
     }
+
+    private fun isUnitCall(callParams: List<Value>) =
+        paramNames.isEmpty() && callParams.size == 1 && callParams.first() is UnitValue
+
+
+    abstract fun callInternal(scope: Scope, callParams: List<Value>): Value
 }

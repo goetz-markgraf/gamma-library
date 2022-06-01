@@ -1,7 +1,7 @@
 package de.gma.gamma.parser.complex
 
 import de.gma.gamma.datatypes.expressions.LetExpression
-import de.gma.gamma.datatypes.functions.FunctionValue
+import de.gma.gamma.datatypes.functions.LambdaFunction
 import de.gma.gamma.parser.BaseParserTest
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -36,6 +36,6 @@ class FunctionsTest : BaseParserTest() {
         """.trimIndent()
 
         val expression = getExpression(source) as LetExpression
-        assertThat(expression.boundValue).isInstanceOf(FunctionValue::class.java)
+        assertThat(expression.boundValue).isInstanceOf(LambdaFunction::class.java)
     }
 }
