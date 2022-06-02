@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test
 class EvaluationTest : BaseEvaluationTest() {
 
     @Test
-    fun `first try`() {
+    fun `simple test with assignments and elvis operator`() {
         val code = """
             let a = 1 + 2 * 3
             let b = -1
@@ -27,15 +27,13 @@ class EvaluationTest : BaseEvaluationTest() {
     }
 
     @Test
-    fun `banking object`() {
+    fun `functions returns a working closure`() {
         val code = """
-            let createAccount =
-                [ start ->
-                  let balance! = start
-                  [ withdraw ->
-                    set balance! = (balance! + withdraw)
+            let createAccount start =
+                let balance! = start
+                [ deposit ->
+                    set balance! = (balance! + deposit)
                     balance! ]
-                ]
                 
             let account = createAccount 10
             print (account 10)
@@ -49,21 +47,6 @@ class EvaluationTest : BaseEvaluationTest() {
     }
 
     @Test
-    fun `empty call`() {
-        val code = """
-            let doIt = [ () ->
-                print "Hello"
-            ]
-            
-            doIt ()
-        """.trimIndent()
-
-        val result = execute(code)
-
-        assertThat(result!!.prettyPrint()).isEqualTo("\"Hello\"")
-    }
-
-    @Test
     fun `call with Unit as parameter`() {
         val code = "print ()"
 
@@ -74,6 +57,21 @@ class EvaluationTest : BaseEvaluationTest() {
 
     @Test
     fun `define and call a function with no parameter`() {
+        val code = """
+            let greet = [ () ->
+                print "Hello"
+            ]
+            
+            greet ()
+        """.trimIndent()
+
+        val result = execute(code)
+
+        assertThat(result!!.prettyPrint()).isEqualTo("\"Hello\"")
+    }
+
+    @Test
+    fun `define and call a function with no parameter using shorthand notation`() {
         val code = """
             let greet () =
                 print "Hello, World"
@@ -107,7 +105,7 @@ class EvaluationTest : BaseEvaluationTest() {
     }
 
     @Test
-    fun `simple list generator`() {
+    fun `create a simple list generator`() {
         val code = """
             let f i = i
             
@@ -125,13 +123,23 @@ class EvaluationTest : BaseEvaluationTest() {
     }
 
     @Test
-    fun `simple map function`() {
+    fun `use a simple map lambda`() {
+        val code = """
+            {1, 2, 3} |> map [i -> i * 2]
+        """.trimIndent()
+
+        val result = execute(code) as ListValue
+
+        assertThat(result.size()).isEqualTo(3)
+        assertThat(result.allItems().map { it.prettyPrint() }).containsExactly("2", "4", "6")
+    }
+
+    @Test
+    fun `use a simple map function`() {
         val code = """
             let f i = i * 2
             
-            let l = {1, 2, 3}
-            
-            map f l
+            {1, 2, 3} |> map f
         """.trimIndent()
 
         val result = execute(code) as ListValue

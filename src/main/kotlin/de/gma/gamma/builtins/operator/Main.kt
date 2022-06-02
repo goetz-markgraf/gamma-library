@@ -11,7 +11,7 @@ fun populateOperator(scope: Scope) {
     bindWithDoc(scope, ">=", GreaterThanOrEqualFunction(), "<a> >= <b> - checks if the first value is greater than or equal to the second")
     bindWithDoc(scope, "<", LessThanFunction(), "<a> > <b> - checks if the first value is less than the second")
     bindWithDoc(scope, "<=", LessThanOrEqualFunction(), "<a> > <b> - checks if the first value is less than or equal to the second")
-    bindWithDoc(scope, "->", ToFunction(), "<a> > <b> - creates a list from the two values")
-    bindWithDoc(scope, "to", ToFunction(), "<a> > <b> - creates a list from the two values")
+    bindWithDoc(scope, "->", ToFunction(), "<a> -> <b> - creates a list from the two values")
+    bindWithDoc(scope, "|>", PipeFunction(), "<value> |> <function> - calls <function> with <value> as parameter")
     // @Formatter:on
 }
