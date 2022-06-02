@@ -1,6 +1,6 @@
 package de.gma.gamma.evaluation.list
 
-import de.gma.gamma.datatypes.list.SubListValue
+import de.gma.gamma.datatypes.list.SubList
 import de.gma.gamma.evaluation.BaseEvaluationTest
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -10,9 +10,9 @@ class SublistTest : BaseEvaluationTest() {
     fun `create a simple sublist`() {
         val expr = execute("tail {1, 2, 3}")
 
-        assertThat(expr).isInstanceOf(SubListValue::class.java)
+        assertThat(expr).isInstanceOf(SubList::class.java)
 
-        val s = expr as SubListValue
+        val s = expr as SubList
         assertThat(s.origin.allItems()).hasSize(3)
         assertThat(s.origin.first().prettyPrint()).isEqualTo("1")
 
@@ -24,9 +24,9 @@ class SublistTest : BaseEvaluationTest() {
     fun `create a sublist from a sublist`() {
         val expr = execute("tail (tail {1, 2, 3})")
 
-        assertThat(expr).isInstanceOf(SubListValue::class.java)
+        assertThat(expr).isInstanceOf(SubList::class.java)
 
-        val s = expr as SubListValue
+        val s = expr as SubList
         assertThat(s.origin.allItems()).hasSize(3)
         assertThat(s.origin.first().prettyPrint()).isEqualTo("1")
 

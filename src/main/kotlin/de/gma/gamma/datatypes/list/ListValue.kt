@@ -48,7 +48,7 @@ abstract class ListValue(
     abstract fun join(v: ListValue): ListValue
 
     companion object {
-        fun build(items: List<Value>) = SimpleListValue(builtInSource, nullPos, nullPos, items)
+        fun build(items: List<Value>) = SimpleList(builtInSource, nullPos, nullPos, items)
         fun buildEmpty() = build(emptyList())
     }
 

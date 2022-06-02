@@ -17,6 +17,9 @@ fun populateList(scope: Scope) {
     bindWithDoc(scope, "append", AppendFunction(), "append <item> <list> – appends an item to the end of the list")
     bindWithDoc(scope, "::", InsertFunction(), "<item> :: <list> – prepends a list with an as the new first element")
 
+    bindWithDoc(scope, "list-generator", ListGeneratorFunction(), "list-generator <size> <function> – creates a list of size <size> that uses <function> to generate the values")
+    bindWithDoc(scope, "map", MapFunction(), "map <function> <list> – creates a new list with every item of <list> run through <function>")
+
     bindWithDoc(scope, "is-list?", ListPredicate(), "is-list? <value> – tests if <value> is a list. This also includes strings")
     bindWithDoc(scope, "is-string?", StringPredicate(), "is-string? <value> – tests if <value> is a string")
     bindWithDoc(scope, "is-pair?", PairPredicate(), "is-pair? <value> – tests if <value> is a pair, i. e. a list with two elements")

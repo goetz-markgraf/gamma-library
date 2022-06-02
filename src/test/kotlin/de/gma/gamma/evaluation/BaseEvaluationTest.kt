@@ -7,7 +7,7 @@ import de.gma.gamma.parser.Parser
 import org.junit.jupiter.api.BeforeEach
 
 open class BaseEvaluationTest {
-    private val baseScope = GammaBaseScope()
+    private val baseScope = GammaBaseScope
     protected var scope = ModuleScope(baseScope)
 
     @BeforeEach

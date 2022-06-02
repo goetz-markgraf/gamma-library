@@ -1,14 +1,12 @@
 package de.gma.gamma.datatypes.list
 
-import de.gma.gamma.builtins.builtInSource
-import de.gma.gamma.builtins.nullPos
 import de.gma.gamma.datatypes.Value
 import de.gma.gamma.datatypes.expressions.Expression
 import de.gma.gamma.datatypes.scope.Scope
 import de.gma.gamma.parser.CH_NEWLINE
 import de.gma.gamma.parser.Position
 
-class SimpleListValue(
+class SimpleList(
     sourceName: String,
     beginPos: Position,
     endPos: Position,
@@ -56,7 +54,7 @@ class SimpleListValue(
             internalItems.size - from
         else length
 
-        return newSublist(from, internalItems.size - from - correctLength)
+        return SubList.buildSublist(this, dropFirst = from, internalItems.size - from - correctLength)
     }
 
     override fun allItems(): List<Value> =
@@ -88,15 +86,4 @@ class SimpleListValue(
         else other.allItems() == allItems()
 
     override fun hashCode() = internalItems.hashCode()
-
-    private fun newSublist(dropFirst: Int = 0, dropLast: Int = 0) =
-        SubListValue(
-            builtInSource,
-            nullPos,
-            nullPos,
-            this,
-            dropFirst,
-            dropLast
-        )
-
 }

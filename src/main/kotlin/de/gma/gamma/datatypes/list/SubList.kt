@@ -5,7 +5,7 @@ import de.gma.gamma.builtins.nullPos
 import de.gma.gamma.datatypes.Value
 import de.gma.gamma.parser.Position
 
-class SubListValue(
+class SubList(
     sourceName: String,
     beginPos: Position,
     endPos: Position,
@@ -32,7 +32,11 @@ class SubListValue(
             size - from
         else length
 
-        return newSublist(additionalDropFirst = from, additionalDropLast = size - from - correctLength)
+        return buildSublist(
+            origin,
+            dropFirst = dropFirst + from,
+            dropLast = dropLast + size - from - correctLength
+        )
 
     }
 
@@ -58,13 +62,15 @@ class SubListValue(
     override fun prettyPrint(): String =
         "<SubList>"
 
-    private fun newSublist(additionalDropFirst: Int = 0, additionalDropLast: Int = 0) =
-        SubListValue(
-            builtInSource,
-            nullPos,
-            nullPos,
-            origin,
-            dropFirst + additionalDropFirst,
-            dropLast + additionalDropLast
-        )
+    companion object {
+        fun buildSublist(origin: ListValue, dropFirst: Int, dropLast: Int) =
+            SubList(
+                builtInSource,
+                nullPos,
+                nullPos,
+                origin,
+                dropFirst,
+                dropLast
+            )
+    }
 }

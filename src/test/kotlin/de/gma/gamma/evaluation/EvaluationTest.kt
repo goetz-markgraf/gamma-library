@@ -2,7 +2,7 @@ package de.gma.gamma.evaluation
 
 import de.gma.gamma.datatypes.expressions.FunctionCall
 import de.gma.gamma.datatypes.list.ListValue
-import de.gma.gamma.datatypes.list.SimpleListValue
+import de.gma.gamma.datatypes.list.SimpleList
 import de.gma.gamma.datatypes.list.StringValue
 import de.gma.gamma.datatypes.values.IntegerValue
 import de.gma.gamma.datatypes.values.UnitValue
@@ -100,9 +100,43 @@ class EvaluationTest : BaseEvaluationTest() {
 
         assertThat(result).isInstanceOf(ListValue::class.java)
 
-        val l = result as SimpleListValue
+        val l = result as SimpleList
         assertThat(l.size()).isEqualTo(3)
         assertThat(l.first()).isInstanceOf(FunctionCall::class.java)
         assertThat(l.last()).isInstanceOf(FunctionCall::class.java)
+    }
+
+    @Test
+    fun `simple list generator`() {
+        val code = """
+            let f i = i
+            
+            let gen = list-generator 5 f
+            
+            print (at 1 gen)
+            print (at 2 gen)
+            
+            size gen
+        """.trimIndent()
+
+        val result = execute(code) as IntegerValue
+
+        assertThat(result.intValue).isEqualTo(5L)
+    }
+
+    @Test
+    fun `simple map function`() {
+        val code = """
+            let f i = i * 2
+            
+            let l = {1, 2, 3}
+            
+            map f l
+        """.trimIndent()
+
+        val result = execute(code) as ListValue
+
+        assertThat(result.size()).isEqualTo(3)
+        assertThat(result.allItems().map { it.prettyPrint() }).containsExactly("2", "4", "6")
     }
 }

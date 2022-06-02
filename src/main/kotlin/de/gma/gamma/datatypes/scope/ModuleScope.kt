@@ -4,7 +4,7 @@ import de.gma.gamma.builtins.GammaBaseScope
 import de.gma.gamma.datatypes.Remark
 import de.gma.gamma.datatypes.Value
 
-open class ModuleScope(override val parent: Scope? = GammaBaseScope()) : Scope {
+open class ModuleScope(override val parent: Scope? = GammaBaseScope) : Scope {
     private val content: MutableMap<String, Value> = mutableMapOf()
     private val remarks: MutableMap<String, Remark> = mutableMapOf()
 
