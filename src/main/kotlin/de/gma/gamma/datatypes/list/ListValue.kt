@@ -3,6 +3,7 @@ package de.gma.gamma.datatypes.list
 import de.gma.gamma.builtins.builtInSource
 import de.gma.gamma.builtins.nullPos
 import de.gma.gamma.datatypes.Value
+import de.gma.gamma.datatypes.values.UnitValue
 import de.gma.gamma.parser.Position
 
 abstract class ListValue(
@@ -13,17 +14,30 @@ abstract class ListValue(
 
     abstract fun allItems(): List<Value>
 
-    abstract fun first(): Value
-
-    abstract fun last(): Value
-
     abstract fun getAt(pos: Int): Value
 
     abstract fun size(): Int
 
-    abstract fun tail(): ListValue
+    open fun first(): Value {
+        return if (size() == 0)
+            UnitValue.build()
+        else
+            getAt(0)
+    }
 
-    abstract fun dropLast(): ListValue
+    open fun last(): Value {
+        val size = size()
+        return if (size == 0)
+            UnitValue.build()
+        else
+            getAt(size - 1)
+    }
+
+    open fun tail(): ListValue =
+        slice(1, size() - 1)
+
+    open fun dropLast(): ListValue =
+        slice(0, size() - 1)
 
     abstract fun slice(from: Int, length: Int): ListValue
 

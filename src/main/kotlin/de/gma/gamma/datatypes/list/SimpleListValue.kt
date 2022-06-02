@@ -5,7 +5,6 @@ import de.gma.gamma.builtins.nullPos
 import de.gma.gamma.datatypes.Value
 import de.gma.gamma.datatypes.expressions.Expression
 import de.gma.gamma.datatypes.scope.Scope
-import de.gma.gamma.datatypes.values.UnitValue
 import de.gma.gamma.parser.CH_NEWLINE
 import de.gma.gamma.parser.Position
 
@@ -38,17 +37,7 @@ class SimpleListValue(
 
     override fun evaluate(scope: Scope) = this
 
-    override fun first(): Value =
-        if (internalItems.isNotEmpty())
-            internalItems.first()
-        else
-            UnitValue.build()
-
-    override fun last(): Value =
-        if (internalItems.isNotEmpty())
-            internalItems.last()
-        else
-            UnitValue.build()
+    override fun size() = internalItems.size
 
     override fun getAt(pos: Int): Value =
         if (pos >= 0 && pos < size())
@@ -58,23 +47,6 @@ class SimpleListValue(
                 throw createException("Index out of bounds: $pos outside [0..${size() - 1}]")
             else
                 throw createException("Index out of bounds: $pos outside empty list")
-
-    override fun allItems(): List<Value> =
-        internalItems.asList()
-
-    override fun size() = internalItems.size
-
-    override fun tail(): ListValue =
-        if (size() > 0)
-            newSublist(dropFirst = 1)
-        else
-            this
-
-    override fun dropLast(): ListValue =
-        if (size() > 0)
-            newSublist(dropLast = 1)
-        else
-            this
 
     override fun slice(from: Int, length: Int): ListValue {
         if (from > internalItems.size || from < 0)
@@ -86,6 +58,9 @@ class SimpleListValue(
 
         return newSublist(from, internalItems.size - from - correctLength)
     }
+
+    override fun allItems(): List<Value> =
+        internalItems.asList()
 
     override fun append(v: Value): ListValue =
         build(buildList {

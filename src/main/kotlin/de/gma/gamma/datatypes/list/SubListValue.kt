@@ -17,23 +17,11 @@ class SubListValue(
     override fun allItems(): List<Value> =
         origin.allItems().dropLast(dropLast).drop(dropFirst)
 
-    override fun first(): Value =
-        origin.getAt(dropFirst)
-
-    override fun last(): Value =
-        origin.getAt(origin.size() - dropLast - 1)
-
     override fun getAt(pos: Int): Value =
         origin.getAt(pos + dropFirst)
 
     override fun size(): Int =
         origin.size() - dropLast - dropFirst
-
-    override fun tail(): ListValue =
-        newSublist(additionalDropFirst = 1)
-
-    override fun dropLast(): ListValue =
-        newSublist(additionalDropLast = 1)
 
     override fun slice(from: Int, length: Int): ListValue {
         val size = size()
