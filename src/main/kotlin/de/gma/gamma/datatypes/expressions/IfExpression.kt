@@ -16,7 +16,7 @@ class IfExpression(
     override fun prettyPrint() = "${predicate.prettyPrint()} ? ${thenExpr.prettyPrint()} : ${elseExpr.prettyPrint()}"
 
     override fun evaluate(scope: Scope): Value {
-        val bool = predicate.evaluateToBoolean(scope).boolValue
+        val bool = predicate.evaluate(scope).toBoolean().boolValue
         return if (bool)
             thenExpr.evaluate(scope)
         else

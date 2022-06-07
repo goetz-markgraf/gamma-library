@@ -8,7 +8,7 @@ class PipeFunction : BuiltinFunction(listOf("v", "f")) {
 
     override fun callInternal(scope: Scope, callParams: List<Value>): Value {
         val a = callParams[0].evaluate(scope)
-        val b = callParams[1].evaluateToFunction(scope)
+        val b = callParams[1].evaluate(scope).toFunction()
 
         return b.call(scope, listOf(a))
     }

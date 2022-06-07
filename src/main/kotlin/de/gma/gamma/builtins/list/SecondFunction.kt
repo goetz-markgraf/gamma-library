@@ -7,7 +7,7 @@ import de.gma.gamma.datatypes.values.UnitValue
 
 class SecondFunction : BuiltinFunction(listOf("list")) {
     override fun callInternal(scope: Scope, callParams: List<Value>): Value {
-        val l = callParams[0].evaluateToList(scope)
+        val l = callParams[0].evaluate(scope).toList()
 
         return if (l.size() < 2)
             UnitValue.build()

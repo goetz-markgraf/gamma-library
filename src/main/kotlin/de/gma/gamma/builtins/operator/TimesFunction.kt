@@ -17,8 +17,8 @@ class TimesFunction : BuiltinFunction(listOf("a", "b")) {
             return IntegerValue.build(a.intValue * b.intValue)
 
         if ((a is FloatValue || a is IntegerValue) && (b is FloatValue || b is IntegerValue)) {
-            val af = a.evaluateToFloat(scope)
-            val bf = b.evaluateToFloat(scope)
+            val af = a.evaluate(scope).toFloat()
+            val bf = b.evaluate(scope).toFloat()
 
             return FloatValue.build(af.floatValue * bf.floatValue)
         }

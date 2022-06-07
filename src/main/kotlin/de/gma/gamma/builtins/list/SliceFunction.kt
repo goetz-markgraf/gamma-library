@@ -6,9 +6,9 @@ import de.gma.gamma.datatypes.scope.Scope
 
 class SliceFunction : BuiltinFunction(listOf("from", "length", "list")) {
     override fun callInternal(scope: Scope, callParams: List<Value>): Value {
-        val from = callParams[0].evaluateToInteger(scope).intValue.toInt()
-        val length = callParams[1].evaluateToInteger(scope).intValue.toInt()
-        val l = callParams[2].evaluateToList(scope)
+        val from = callParams[0].evaluate(scope).toInteger().intValue.toInt()
+        val length = callParams[1].evaluate(scope).toInteger().intValue.toInt()
+        val l = callParams[2].evaluate(scope).toList()
 
         return l.slice(from, length)
     }

@@ -18,7 +18,7 @@ open class FunctionCall(
     }
 
     override fun evaluate(scope: Scope): Value {
-        val functionToCall = function.evaluateToFunction(scope)
+        val functionToCall = function.evaluate(scope).toFunction()
 
         return functionToCall.call(scope, params)
     }

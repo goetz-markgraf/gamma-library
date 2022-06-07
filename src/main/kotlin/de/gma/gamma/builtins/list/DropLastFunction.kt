@@ -6,7 +6,7 @@ import de.gma.gamma.datatypes.scope.Scope
 
 class DropLastFunction : BuiltinFunction(listOf("list")) {
     override fun callInternal(scope: Scope, callParams: List<Value>): Value {
-        val l = callParams[0].evaluateToList(scope)
+        val l = callParams[0].evaluate(scope).toList()
 
         return l.dropLast()
     }

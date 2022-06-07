@@ -7,7 +7,7 @@ import de.gma.gamma.datatypes.values.IntegerValue
 
 class SizeFunction : BuiltinFunction(listOf("list")) {
     override fun callInternal(scope: Scope, callParams: List<Value>): Value {
-        val l = callParams[0].evaluateToList(scope)
+        val l = callParams[0].evaluate(scope).toList()
 
         return IntegerValue.build(l.size().toLong())
     }

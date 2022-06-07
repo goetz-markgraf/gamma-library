@@ -10,8 +10,8 @@ import de.gma.gamma.datatypes.values.UnitValue
 
 class MapFunction : BuiltinFunction(listOf("function", "list")) {
     override fun callInternal(scope: Scope, callParams: List<Value>): Value {
-        val function = callParams[0].evaluateToFunction(scope)
-        val list = callParams[1].evaluateToList(scope)
+        val function = callParams[0].evaluate(scope).toFunction()
+        val list = callParams[1].evaluate(scope).toList()
 
         return ListGenerator.build(list.size(), InternalMapFunction(list, function))
     }
@@ -23,7 +23,7 @@ class MapFunction : BuiltinFunction(listOf("function", "list")) {
         listOf("pos")
     ) {
         override fun callInternal(scope: Scope, callParams: List<Value>): Value {
-            val pos = callParams[0].evaluateToInteger(scope).intValue.toInt()
+            val pos = callParams[0].evaluate(scope).toInteger().intValue.toInt()
 
             val item = list.getAt(pos)
             if (item is UnitValue)

@@ -6,8 +6,8 @@ import de.gma.gamma.datatypes.scope.Scope
 
 class AtFunction : BuiltinFunction(listOf("pos", "list")) {
     override fun callInternal(scope: Scope, callParams: List<Value>): Value {
-        val pos = callParams[0].evaluateToInteger(scope)
-        val l = callParams[1].evaluateToList(scope)
+        val pos = callParams[0].evaluate(scope).toInteger()
+        val l = callParams[1].evaluate(scope).toList()
 
         return l.getAt(pos.intValue.toInt())
     }

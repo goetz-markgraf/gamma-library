@@ -24,49 +24,48 @@ abstract class Value(
 
     open fun prepare(scope: Scope) = this
 
-    fun evaluateToBoolean(scope: Scope): BooleanValue =
-        when (val value = evaluate(scope)) {
-            is BooleanValue -> value
-            is IntegerValue -> BooleanValue.build(value.intValue != 0L)
-            is FloatValue -> BooleanValue.build(value.floatValue != 0.0)
-            is StringValue -> BooleanValue.build(value.strValue.isNotEmpty())
+    fun toBoolean(): BooleanValue =
+        when (this) {
+            is BooleanValue -> this
+            is IntegerValue -> BooleanValue.build(this.intValue != 0L)
+            is FloatValue -> BooleanValue.build(this.floatValue != 0.0)
+            is StringValue -> BooleanValue.build(this.strValue.isNotEmpty())
             is UnitValue -> BooleanValue.build(false)
             else -> BooleanValue.build(true)
         }
 
-    fun evaluateToList(scope: Scope): ListValue =
-        when (val value = evaluate(scope)) {
-            is ListValue -> value
+    fun toList(): ListValue =
+        when (this) {
+            is ListValue -> this
             is UnitValue -> ListValue.build(emptyList())
-            else -> ListValue.build(listOf(value))
+            else -> ListValue.build(listOf(this))
         }
 
-    fun evaluateToFloat(scope: Scope): FloatValue =
-        when (val value = evaluate(scope)) {
-            is FloatValue -> value
-            is IntegerValue -> FloatValue.build(value.intValue.toDouble())
-            else -> throw createException("$value cannot be converted to float")
+    fun toFloat(): FloatValue =
+        when (this) {
+            is FloatValue -> this
+            is IntegerValue -> FloatValue.build(this.intValue.toDouble())
+            else -> throw createException("$this cannot be converted to float")
         }
 
-    fun evaluateToString(scope: Scope): StringValue =
-        when (val value = evaluate(scope)) {
-            is StringValue -> value
-            else -> StringValue.build(value.prettyPrint())
+    fun toStringValue(): StringValue =
+        when (this) {
+            is StringValue -> this
+            else -> StringValue.build(this.prettyPrint())
         }
 
-    fun evaluateToInteger(scope: Scope): IntegerValue =
-        when (val value = evaluate(scope)) {
-            is IntegerValue -> value
-            is FloatValue -> IntegerValue.build(value.floatValue.toLong())
-            else -> throw createException("$value is not an integer value")
+    fun toInteger(): IntegerValue =
+        when (this) {
+            is IntegerValue -> this
+            is FloatValue -> IntegerValue.build(this.floatValue.toLong())
+            else -> throw createException("$this is not an integer value")
         }
 
-    fun evaluateToFunction(scope: Scope): FunctionValue {
-        val value = evaluate(scope)
-        if (value is FunctionValue) {
-            return value
+    fun toFunction(): FunctionValue {
+        if (this is FunctionValue) {
+            return this
         } else {
-            throw createException("$value is not a function")
+            throw createException("$this is not a function")
         }
     }
 
