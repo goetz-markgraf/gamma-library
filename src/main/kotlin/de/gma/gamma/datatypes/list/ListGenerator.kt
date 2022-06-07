@@ -68,9 +68,6 @@ class ListGenerator(
             addAll(allItems())
         })
 
-    override fun prettyPrint(): String =
-        "<ListGenerator>"
-
 
     private fun fillStorage(pos: Int) {
         if (storage[pos] != null)

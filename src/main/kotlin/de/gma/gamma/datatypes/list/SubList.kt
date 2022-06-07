@@ -59,9 +59,6 @@ class SubList(
         })
 
 
-    override fun prettyPrint(): String =
-        "<SubList>"
-
     companion object {
         fun buildSublist(origin: ListValue, dropFirst: Int, dropLast: Int) =
             SubList(

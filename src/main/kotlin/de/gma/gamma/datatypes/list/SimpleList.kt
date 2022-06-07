@@ -1,9 +1,7 @@
 package de.gma.gamma.datatypes.list
 
 import de.gma.gamma.datatypes.Value
-import de.gma.gamma.datatypes.expressions.Expression
 import de.gma.gamma.datatypes.scope.Scope
-import de.gma.gamma.parser.CH_NEWLINE
 import de.gma.gamma.parser.Position
 
 class SimpleList(
@@ -13,22 +11,10 @@ class SimpleList(
     items: List<Value>
 ) : ListValue(sourceName, beginPos, endPos) {
 
-    protected var internalItems: Array<Value> = items.toTypedArray()
-
-    override fun prettyPrint() = buildString {
-        if (internalItems.isEmpty()) return "{ }"
-
-        val multiline = internalItems.indexOfFirst { it is Expression } >= 0
-        val splitChars = if (multiline) "$CH_NEWLINE" else ", "
-
-        append('{').append(if (multiline) CH_NEWLINE else "")
-        append(internalItems.joinToString(splitChars) { "${if (multiline) "    " else ""}${it.prettyPrint()}" })
-        append(if (multiline) CH_NEWLINE else "")
-        append('}')
-    }
+    protected var internalItems = items
 
     override fun prepare(scope: Scope): Value {
-        internalItems = internalItems.toList().map { it.prepare(scope) }.toTypedArray()
+        internalItems = internalItems.map { it.prepare(scope) }
 
         return this
     }
@@ -58,7 +44,7 @@ class SimpleList(
     }
 
     override fun allItems(): List<Value> =
-        internalItems.asList()
+        internalItems
 
     override fun append(v: Value): ListValue =
         build(buildList {

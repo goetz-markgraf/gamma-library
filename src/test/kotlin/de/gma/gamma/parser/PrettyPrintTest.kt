@@ -86,4 +86,50 @@ class PrettyPrintTest : BaseParserTest() {
             assertThat(expression!!.prettyPrint()).isEqualTo(source)
         }
     }
+
+    @Nested
+    inner class ListPrettyPrint {
+        @ParameterizedTest
+        @ValueSource(
+            strings = [
+                "{1}",
+                "{1, 2, 3}",
+                "{ }"
+            ]
+        )
+        fun `a simple list is printed`(code: String) {
+            val pretty = execute(code)!!.prettyPrint()
+
+            assertThat(pretty).isEqualTo(code)
+        }
+
+        @ParameterizedTest
+        @CsvSource(
+            value = [
+                "'tail {1, 2, 3}','{2, 3}'",
+                "'tail {1, 2}','{2}'",
+                "'tail {1}','{ }'",
+                "'tail { }','{ }'"
+            ]
+        )
+        fun `sublists are printed like full lists`(code: String, expected: String) {
+            val pretty = execute(code)!!.prettyPrint()
+
+            assertThat(pretty).isEqualTo(expected)
+        }
+
+        @ParameterizedTest
+        @CsvSource(
+            value = [
+                "'map [i -> i * 2] {1, 2, 3}','{2, 4, 6}'",
+                "'map [i -> i * 2] {1}','{2}'",
+                "'map [i -> i * 2] { }','{ }'"
+            ]
+        )
+        fun `maps can also be printed`(code: String, expected: String) {
+            val pretty = execute(code)!!.prettyPrint()
+
+            assertThat(pretty).isEqualTo(expected)
+        }
+    }
 }
