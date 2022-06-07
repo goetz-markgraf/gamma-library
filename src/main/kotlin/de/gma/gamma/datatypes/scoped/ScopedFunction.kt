@@ -19,7 +19,8 @@ class ScopedFunction(
     override fun evaluate(scope: Scope) = this
 
     override fun call(scope: Scope, callParams: List<Value>): Value {
-        return function.call(closureScope, callParams)
+        val preparedParams = callParams.map { it.prepare(scope) }
+        return function.call(closureScope, preparedParams)
     }
 
     override fun callInternal(scope: Scope, callParams: List<Value>): Value {

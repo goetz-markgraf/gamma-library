@@ -147,4 +147,20 @@ class EvaluationTest : BaseEvaluationTest() {
         assertThat(result.size()).isEqualTo(3)
         assertThat(result.allItems().map { it.prettyPrint() }).containsExactly("2", "4", "6")
     }
+
+    @Test
+    fun `recursive sum`() {
+        val code = """
+            let sum lst =
+                size lst = 0
+                    ? 0
+                    : first lst + sum (tail lst)
+                
+            sum {1, 2, 3}
+        """.trimIndent()
+
+        val result = execute(code) as IntegerValue
+
+        assertThat(result.intValue).isEqualTo(6L)
+    }
 }
