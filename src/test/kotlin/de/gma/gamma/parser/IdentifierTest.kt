@@ -10,10 +10,15 @@ class IdentifierTest : BaseParserTest() {
     @ValueSource(
         strings = [
             "a",
+            "A",
             "a?",
+            "A?",
             "a!",
             "a-a",
+            "a-A",
+            "A-a",
             "a+a",
+            "a*a",
             "_a",
             "a1",
             "a123!",
