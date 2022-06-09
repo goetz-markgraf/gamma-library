@@ -1,4 +1,4 @@
-package de.gma.gamma.builtins.operator
+package de.gma.gamma.builtins.predicate
 
 import de.gma.gamma.builtins.BuiltinFunction
 import de.gma.gamma.datatypes.Value

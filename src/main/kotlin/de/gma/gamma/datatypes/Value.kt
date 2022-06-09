@@ -45,6 +45,12 @@ abstract class Value(
         when (this) {
             is FloatValue -> this
             is IntegerValue -> FloatValue.build(this.intValue.toDouble())
+            is StringValue -> {
+                val v = this.strValue.toDoubleOrNull()
+                if (v == null) throw createException("$this is not an float value")
+                else FloatValue.build(v)
+            }
+
             else -> throw createException("$this cannot be converted to float")
         }
 
@@ -58,6 +64,11 @@ abstract class Value(
         when (this) {
             is IntegerValue -> this
             is FloatValue -> IntegerValue.build(this.floatValue.toLong())
+            is StringValue -> {
+                val v = this.strValue.toLongOrNull()
+                if (v == null) throw createException("$this is not an integer value")
+                else IntegerValue.build(v)
+            }
             else -> throw createException("$this is not an integer value")
         }
 

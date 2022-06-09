@@ -1,5 +1,6 @@
 package de.gma.gamma.builtins
 
+import de.gma.gamma.builtins.predicate.populateComparison
 import de.gma.gamma.builtins.io.populateIO
 import de.gma.gamma.builtins.list.populateList
 import de.gma.gamma.builtins.operator.populateOperator
@@ -10,5 +11,6 @@ object GammaBaseScope : ModuleScope(null) {
         populateIO(this)
         populateOperator(this)
         populateList(this)
+        populateComparison(this)
     }
 }
