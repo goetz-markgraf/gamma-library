@@ -23,4 +23,24 @@ class NamespaceTest : BaseEvaluationTest() {
 
         assertThat(result.intValue).isEqualTo(expected)
     }
+
+    @ParameterizedTest
+    @CsvSource(
+        value = [
+            ":first,1",
+            ":last,3",
+            ":size,3"
+        ]
+    )
+    fun `access list via properties`(prop: String, expected: Long) {
+        val code = """
+            let list = {1, 2, 3}
+            
+            $prop list
+        """.trimIndent()
+
+        val result = execute(code) as IntegerValue
+
+        assertThat(result.intValue).isEqualTo(expected)
+    }
 }

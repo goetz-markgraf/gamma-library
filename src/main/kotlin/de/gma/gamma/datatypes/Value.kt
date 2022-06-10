@@ -1,13 +1,11 @@
 package de.gma.gamma.datatypes
 
+import de.gma.gamma.builtins.namespaces.PropertyFunction
 import de.gma.gamma.datatypes.functions.FunctionValue
 import de.gma.gamma.datatypes.list.ListValue
 import de.gma.gamma.datatypes.list.StringValue
 import de.gma.gamma.datatypes.scope.Scope
-import de.gma.gamma.datatypes.values.BooleanValue
-import de.gma.gamma.datatypes.values.FloatValue
-import de.gma.gamma.datatypes.values.IntegerValue
-import de.gma.gamma.datatypes.values.UnitValue
+import de.gma.gamma.datatypes.values.*
 import de.gma.gamma.parser.EvaluationException
 import de.gma.gamma.parser.Position
 
@@ -75,6 +73,7 @@ abstract class Value(
     fun toFunction(): FunctionValue =
         when (this) {
             is FunctionValue -> this
+            is PropertyValue -> PropertyFunction(this)
             else -> throw createException("$this is not a function")
         }
 
