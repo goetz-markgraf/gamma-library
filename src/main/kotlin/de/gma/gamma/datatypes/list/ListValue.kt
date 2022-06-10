@@ -74,7 +74,12 @@ abstract class ListValue(
 
 
     companion object {
-        fun build(items: List<Value>) = SimpleList(builtInSource, nullPos, nullPos, items)
+        fun build(items: List<Value>) =
+            if (items.size == 2)
+                PairValue(builtInSource, nullPos, nullPos, items[0], items[1])
+            else
+                SimpleList(builtInSource, nullPos, nullPos, items)
+
         fun buildEmpty() = build(emptyList())
     }
 

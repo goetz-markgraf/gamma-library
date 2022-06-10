@@ -23,8 +23,11 @@ class IntegerValue(
     }
 
     override fun equals(other: Any?) =
-        if (other !is IntegerValue) false
-        else other.longValue == longValue
+        when (other) {
+            is IntegerValue -> other.longValue == longValue
+            is FloatValue -> other.toInteger().longValue == longValue
+            else -> false
+        }
 
     override fun hashCode() = longValue.hashCode()
 }

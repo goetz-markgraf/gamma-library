@@ -23,8 +23,11 @@ class FloatValue(
     }
 
     override fun equals(other: Any?) =
-        if (other !is FloatValue) false
-        else other.doubleValue == doubleValue
+        when (other) {
+            is IntegerValue -> other.toFloat().doubleValue == doubleValue
+            is FloatValue -> other.doubleValue == doubleValue
+            else -> false
+        }
 
     override fun hashCode() = doubleValue.hashCode()
 

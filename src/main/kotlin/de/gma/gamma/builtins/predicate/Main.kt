@@ -2,9 +2,10 @@ package de.gma.gamma.builtins.predicate
 
 import de.gma.gamma.builtins.bindWithDoc
 import de.gma.gamma.datatypes.scope.Scope
+import de.gma.gamma.datatypes.values.BooleanValue
 
-// @Formatter:off
 fun populateComparison(scope: Scope) {
+    // @Formatter:off
     bindWithDoc(scope, "when", WhenFunction(), "when <list of predicate/expression lists> - " +
             "checks each predicate to evaluate to first expression with a true predicate")
     bindWithDoc(scope, "=", EqualFunction(), "<a> = <b> - checks if <a> is equal to <b>")
@@ -15,5 +16,7 @@ fun populateComparison(scope: Scope) {
     bindWithDoc(scope, "&", AndFunction(), "<a> & <b> - returns true if <a> and <b> are both true")
     bindWithDoc(scope, "|", OrFunction(), "<a> | <b> - returns true if either <a> or <b> or both are true")
     bindWithDoc(scope, "not", NotFunction(), "not <a> - returns true if <a> is false and false if <a> is true")
+    // @Formatter:on
+
+    scope.bind("else", BooleanValue.build(true))
 }
-// @Formatter:on
