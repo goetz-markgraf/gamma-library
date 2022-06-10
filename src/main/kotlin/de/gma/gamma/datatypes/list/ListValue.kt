@@ -4,6 +4,8 @@ import de.gma.gamma.builtins.builtInSource
 import de.gma.gamma.builtins.nullPos
 import de.gma.gamma.datatypes.Value
 import de.gma.gamma.datatypes.prettyPrintList
+import de.gma.gamma.datatypes.scope.Namespace
+import de.gma.gamma.datatypes.values.IntegerValue
 import de.gma.gamma.datatypes.values.UnitValue
 import de.gma.gamma.parser.Position
 
@@ -11,7 +13,7 @@ abstract class ListValue(
     sourceName: String,
     beginPos: Position,
     endPos: Position,
-) : Value(sourceName, beginPos, endPos) {
+) : Value(sourceName, beginPos, endPos), Namespace {
 
     override fun prettyPrint() =
         prettyPrintList(allItems())
@@ -50,6 +52,15 @@ abstract class ListValue(
     abstract fun insert(v: Value): ListValue
 
     abstract fun join(v: ListValue): ListValue
+
+    override fun getValue(id: String): Value =
+        when (id) {
+            "first" -> first()
+            "last" -> last()
+            "size" -> IntegerValue.build(size().toLong())
+            else -> UnitValue.build()
+        }
+
 
     companion object {
         fun build(items: List<Value>) = SimpleList(builtInSource, nullPos, nullPos, items)

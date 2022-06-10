@@ -14,7 +14,6 @@ fun populateList(scope: Scope) {
     bindWithDoc(scope, "drop-last", DropLastFunction(), "drop-last <list> – returns all but the last element or empty list if empty list")
     bindWithDoc(scope, "slice", SliceFunction(), "slice <from> <length> <list> – returns a sublist")
     bindWithDoc(scope, "size", SizeFunction(), "size <list> – returns the number of elements in this list")
-    bindWithDoc(scope, "at", AtFunction(), "at <pos> <list> – returns the <pos>th element of this list")
     bindWithDoc(scope, "append", AppendFunction(), "append <item> <list> – appends an item to the end of the list")
     bindWithDoc(scope, "::", InsertFunction(), "<item> :: <list> – prepends a list with an as the new first element")
 

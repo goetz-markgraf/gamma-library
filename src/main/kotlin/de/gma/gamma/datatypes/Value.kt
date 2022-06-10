@@ -72,13 +72,11 @@ abstract class Value(
             else -> throw createException("$this is not an integer value")
         }
 
-    fun toFunction(): FunctionValue {
-        if (this is FunctionValue) {
-            return this
-        } else {
-            throw createException("$this is not a function")
+    fun toFunction(): FunctionValue =
+        when (this) {
+            is FunctionValue -> this
+            else -> throw createException("$this is not a function")
         }
-    }
 
     protected fun createException(message: String) =
         EvaluationException(message, sourceName, beginPos.line, beginPos.col)
