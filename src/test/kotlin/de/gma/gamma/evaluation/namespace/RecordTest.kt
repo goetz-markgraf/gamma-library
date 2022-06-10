@@ -16,8 +16,8 @@ class RecordTest : BaseEvaluationTest() {
     fun `create a record`() {
         val result = execute("record {:a -> 1, :b -> 2}") as RecordValue
 
-        assertThat(result.getValue("a").toInteger().intValue).isEqualTo(1L)
-        assertThat(result.getValue("b").toInteger().intValue).isEqualTo(2L)
+        assertThat(result.getValue("a").toInteger().longValue).isEqualTo(1L)
+        assertThat(result.getValue("b").toInteger().longValue).isEqualTo(2L)
     }
 
     @ParameterizedTest
@@ -35,7 +35,7 @@ class RecordTest : BaseEvaluationTest() {
 
         val result = execute(code) as IntegerValue
 
-        assertThat(result.intValue).isEqualTo(expected)
+        assertThat(result.longValue).isEqualTo(expected)
     }
 
     @ParameterizedTest
@@ -53,7 +53,7 @@ class RecordTest : BaseEvaluationTest() {
 
         val result = execute(code) as IntegerValue
 
-        assertThat(result.intValue).isEqualTo(expected)
+        assertThat(result.longValue).isEqualTo(expected)
     }
 
     @Test
@@ -73,9 +73,9 @@ class RecordTest : BaseEvaluationTest() {
         assertThat(orig.size()).isEqualTo(2)
         assertThat(changed.size()).isEqualTo(3)
 
-        assertThat(orig.getValue("b").toInteger().intValue).isEqualTo(2L)
-        assertThat(changed.getValue("b").toInteger().intValue).isEqualTo(3L)
+        assertThat(orig.getValue("b").toInteger().longValue).isEqualTo(2L)
+        assertThat(changed.getValue("b").toInteger().longValue).isEqualTo(3L)
         assertThat(orig.getValue("c")).isInstanceOf(UnitValue::class.java)
-        assertThat(changed.getValue("c").toInteger().intValue).isEqualTo(4L)
+        assertThat(changed.getValue("c").toInteger().longValue).isEqualTo(4L)
     }
 }

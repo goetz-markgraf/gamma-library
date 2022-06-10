@@ -21,7 +21,7 @@ class ListAsNamespaceTest : BaseEvaluationTest() {
 
         val result = execute(code) as IntegerValue
 
-        assertThat(result.intValue).isEqualTo(expected)
+        assertThat(result.longValue).isEqualTo(expected)
     }
 
     @ParameterizedTest
@@ -41,6 +41,6 @@ class ListAsNamespaceTest : BaseEvaluationTest() {
 
         val result = execute(code) as IntegerValue
 
-        assertThat(result.intValue).isEqualTo(expected)
+        assertThat(result.longValue).isEqualTo(expected)
     }
 }

@@ -10,10 +10,10 @@ class FloatValue(
     sourceName: String,
     beginPos: Position,
     endPos: Position,
-    val floatValue: Double
+    val doubleValue: Double
 ) : Value(sourceName, beginPos, endPos) {
 
-    override fun prettyPrint() = "$floatValue"
+    override fun prettyPrint() = "$doubleValue"
 
     override fun evaluate(scope: Scope) = this
 
@@ -24,8 +24,8 @@ class FloatValue(
 
     override fun equals(other: Any?) =
         if (other !is FloatValue) false
-        else other.floatValue == floatValue
+        else other.doubleValue == doubleValue
 
-    override fun hashCode() = floatValue.hashCode()
+    override fun hashCode() = doubleValue.hashCode()
 
 }

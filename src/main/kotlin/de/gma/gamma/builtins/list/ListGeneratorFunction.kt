@@ -10,6 +10,6 @@ class ListGeneratorFunction : BuiltinFunction(listOf("size", "function")) {
         val size = callParams[0].evaluate(scope).toInteger()
         val function = callParams[1].evaluate(scope).toFunction()
 
-        return ListGenerator.build(size.intValue.toInt(), function)
+        return ListGenerator.build(size.longValue.toInt(), function)
     }
 }

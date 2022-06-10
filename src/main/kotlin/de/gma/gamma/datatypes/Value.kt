@@ -26,8 +26,8 @@ abstract class Value(
     fun toBoolean(): BooleanValue =
         when (this) {
             is BooleanValue -> this
-            is IntegerValue -> BooleanValue.build(this.intValue != 0L)
-            is FloatValue -> BooleanValue.build(this.floatValue != 0.0)
+            is IntegerValue -> BooleanValue.build(this.longValue != 0L)
+            is FloatValue -> BooleanValue.build(this.doubleValue != 0.0)
             is StringValue -> BooleanValue.build(this.strValue.isNotEmpty())
             is UnitValue -> BooleanValue.build(false)
             else -> BooleanValue.build(true)
@@ -43,7 +43,7 @@ abstract class Value(
     fun toFloat(): FloatValue =
         when (this) {
             is FloatValue -> this
-            is IntegerValue -> FloatValue.build(this.intValue.toDouble())
+            is IntegerValue -> FloatValue.build(this.longValue.toDouble())
             is StringValue -> {
                 val v = this.strValue.toDoubleOrNull()
                 if (v == null) throw createException("$this is not an float value")
@@ -62,7 +62,7 @@ abstract class Value(
     fun toInteger(): IntegerValue =
         when (this) {
             is IntegerValue -> this
-            is FloatValue -> IntegerValue.build(this.floatValue.toLong())
+            is FloatValue -> IntegerValue.build(this.doubleValue.toLong())
             is StringValue -> {
                 val v = this.strValue.toLongOrNull()
                 if (v == null) throw createException("$this is not an integer value")

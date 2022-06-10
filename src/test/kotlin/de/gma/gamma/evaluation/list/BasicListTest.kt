@@ -19,7 +19,7 @@ class BasicListTest : BaseEvaluationTest() {
         assertThat(expr).isInstanceOf(IntegerValue::class.java)
 
         val i = expr as IntegerValue
-        assertThat(i.intValue).isEqualTo(1L)
+        assertThat(i.longValue).isEqualTo(1L)
     }
 
     @Test
@@ -28,7 +28,7 @@ class BasicListTest : BaseEvaluationTest() {
         assertThat(expr).isInstanceOf(IntegerValue::class.java)
 
         val i = expr as IntegerValue
-        assertThat(i.intValue).isEqualTo(3L)
+        assertThat(i.longValue).isEqualTo(3L)
     }
 
     @Test
@@ -51,7 +51,7 @@ class BasicListTest : BaseEvaluationTest() {
         assertThat(expr).isInstanceOf(IntegerValue::class.java)
 
         val i = expr as IntegerValue
-        assertThat(i.intValue).isEqualTo(2L)
+        assertThat(i.longValue).isEqualTo(2L)
     }
 
     @Test
@@ -59,7 +59,7 @@ class BasicListTest : BaseEvaluationTest() {
         val expr = execute("tail { 1, 2, 3}") as ListValue
 
         assertThat(expr.size()).isEqualTo(2)
-        assertThat((expr.first() as IntegerValue).intValue).isEqualTo(2L)
+        assertThat((expr.first() as IntegerValue).longValue).isEqualTo(2L)
     }
 
     @Test
@@ -74,7 +74,7 @@ class BasicListTest : BaseEvaluationTest() {
         val expr = execute("drop-last { 1, 2, 3}") as ListValue
 
         assertThat(expr.size()).isEqualTo(2)
-        assertThat((expr.first() as IntegerValue).intValue).isEqualTo(1L)
+        assertThat((expr.first() as IntegerValue).longValue).isEqualTo(1L)
     }
 
     @Test
@@ -82,7 +82,7 @@ class BasicListTest : BaseEvaluationTest() {
         val expr = execute("slice 1 1 {1, 2, 3}") as ListValue
 
         assertThat(expr.size()).isEqualTo(1)
-        assertThat((expr.first() as IntegerValue).intValue).isEqualTo(2L)
+        assertThat((expr.first() as IntegerValue).longValue).isEqualTo(2L)
     }
 
     @Test
@@ -90,8 +90,8 @@ class BasicListTest : BaseEvaluationTest() {
         val expr = execute("slice 1 3 {1, 2, 3}") as ListValue
 
         assertThat(expr.size()).isEqualTo(2)
-        assertThat((expr.first() as IntegerValue).intValue).isEqualTo(2L)
-        assertThat((expr.last() as IntegerValue).intValue).isEqualTo(3L)
+        assertThat((expr.first() as IntegerValue).longValue).isEqualTo(2L)
+        assertThat((expr.last() as IntegerValue).longValue).isEqualTo(3L)
     }
 
     @ParameterizedTest

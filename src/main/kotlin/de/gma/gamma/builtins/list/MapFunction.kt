@@ -23,7 +23,7 @@ class MapFunction : BuiltinFunction(listOf("function", "list")) {
         listOf("pos")
     ) {
         override fun callInternal(scope: Scope, callParams: List<Value>): Value {
-            val pos = callParams[0].evaluate(scope).toInteger().intValue.toInt()
+            val pos = callParams[0].evaluate(scope).toInteger().longValue.toInt()
 
             val item = list.getAt(pos)
             if (item is UnitValue)

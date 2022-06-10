@@ -17,13 +17,13 @@ abstract class FunctionTwoNumbersToNumber() : BuiltinFunction(listOf("a", "b")) 
         val b = extractNumber(callParams[1].evaluate(scope))
 
         if (a is IntegerValue && b is IntegerValue)
-            return IntegerValue.build(operationInteger(a.intValue, b.intValue))
+            return IntegerValue.build(operationInteger(a.longValue, b.longValue))
 
         if ((a is FloatValue || a is IntegerValue) && (b is FloatValue || b is IntegerValue)) {
             val af = a.toFloat()
             val bf = b.toFloat()
 
-            return FloatValue.build(operationFloat(af.floatValue, bf.floatValue))
+            return FloatValue.build(operationFloat(af.doubleValue, bf.doubleValue))
         }
 
         return null

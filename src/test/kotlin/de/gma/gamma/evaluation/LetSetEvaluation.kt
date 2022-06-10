@@ -20,7 +20,7 @@ class LetSetEvaluation : BaseEvaluationTest() {
 
         assertThat(result).isInstanceOf(IntegerValue::class.java)
         assertThat(scope.getValue("expr")).isInstanceOf(IntegerValue::class.java)
-        assertThat((result as IntegerValue).intValue).isEqualTo(30)
+        assertThat((result as IntegerValue).longValue).isEqualTo(30)
     }
 
     @Test
@@ -48,7 +48,7 @@ class LetSetEvaluation : BaseEvaluationTest() {
 
         assertThat(result).isInstanceOf(IntegerValue::class.java)
         val i = result as IntegerValue
-        assertThat(i.intValue).isEqualTo(30)
+        assertThat(i.longValue).isEqualTo(30)
     }
 
     @Test
@@ -65,7 +65,7 @@ class LetSetEvaluation : BaseEvaluationTest() {
 
         assertThat(result).isInstanceOf(IntegerValue::class.java)
         val i = result as IntegerValue
-        assertThat(i.intValue).isEqualTo(30)
+        assertThat(i.longValue).isEqualTo(30)
     }
 
 

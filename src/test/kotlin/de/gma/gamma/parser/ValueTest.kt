@@ -35,7 +35,7 @@ class ValueTest : BaseParserTest() {
 
             assertThat(expression).isInstanceOf(IntegerValue::class.java)
             val i = expression as IntegerValue
-            assertThat(i.intValue).isEqualTo(10)
+            assertThat(i.longValue).isEqualTo(10)
         }
 
         @Test
@@ -44,7 +44,7 @@ class ValueTest : BaseParserTest() {
 
             assertThat(expression).isInstanceOf(IntegerValue::class.java)
             val i = expression as IntegerValue
-            assertThat(i.intValue).isEqualTo(-10)
+            assertThat(i.longValue).isEqualTo(-10)
         }
 
         @Test
@@ -53,7 +53,7 @@ class ValueTest : BaseParserTest() {
 
             assertThat(expression).isInstanceOf(FloatValue::class.java)
             val i = expression as FloatValue
-            assertThat(i.floatValue).isEqualTo(10.5)
+            assertThat(i.doubleValue).isEqualTo(10.5)
         }
 
         @Test
@@ -62,7 +62,7 @@ class ValueTest : BaseParserTest() {
 
             assertThat(expression).isInstanceOf(FloatValue::class.java)
             val i = expression as FloatValue
-            assertThat(i.floatValue).isEqualTo(-1.3)
+            assertThat(i.doubleValue).isEqualTo(-1.3)
         }
 
         @Test
@@ -71,7 +71,7 @@ class ValueTest : BaseParserTest() {
 
             assertThat(expression).isInstanceOf(FloatValue::class.java)
             val i = expression as FloatValue
-            assertThat(i.floatValue).isEqualTo(0.3)
+            assertThat(i.doubleValue).isEqualTo(0.3)
         }
 
         @Test
@@ -80,7 +80,7 @@ class ValueTest : BaseParserTest() {
 
             assertThat(expression).isInstanceOf(FloatValue::class.java)
             val i = expression as FloatValue
-            assertThat(i.floatValue).isEqualTo(-0.3)
+            assertThat(i.doubleValue).isEqualTo(-0.3)
         }
     }
 

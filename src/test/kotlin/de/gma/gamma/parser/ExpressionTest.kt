@@ -54,7 +54,7 @@ class ExpressionTest : BaseParserTest() {
             val let = expression as LetExpression
             assertThat(let.identifier.name).isEqualTo("a")
             assertThat(let.boundValue).isInstanceOf(IntegerValue::class.java)
-            assertThat((let.boundValue as IntegerValue).intValue).isEqualTo(10L)
+            assertThat((let.boundValue as IntegerValue).longValue).isEqualTo(10L)
 
             assertThat(expression.prettyPrint()).isEqualTo("let a = 10")
         }
@@ -67,7 +67,7 @@ class ExpressionTest : BaseParserTest() {
             val let = expression as LetExpression
             assertThat(let.identifier.name).isEqualTo("++")
             assertThat(let.boundValue).isInstanceOf(IntegerValue::class.java)
-            assertThat((let.boundValue as IntegerValue).intValue).isEqualTo(10L)
+            assertThat((let.boundValue as IntegerValue).longValue).isEqualTo(10L)
 
             assertThat(expression.prettyPrint()).isEqualTo("let (++) = 10")
         }

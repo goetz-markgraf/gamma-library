@@ -21,7 +21,7 @@ class GetAtFunction : BuiltinFunction(listOf("pos", "list")) {
         val posInt = pos.toInteger()
         val list = obj.toList()
 
-        return list.getAt(posInt.intValue.toInt())
+        return list.getAt(posInt.longValue.toInt())
 
     }
 }

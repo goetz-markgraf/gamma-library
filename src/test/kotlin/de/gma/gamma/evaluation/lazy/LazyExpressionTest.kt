@@ -2,7 +2,6 @@ package de.gma.gamma.evaluation.lazy
 
 import de.gma.gamma.datatypes.values.IntegerValue
 import de.gma.gamma.evaluation.BaseEvaluationTest
-import de.gma.gamma.parser.BaseParserTest
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -21,7 +20,7 @@ class LazyExpressionTest : BaseEvaluationTest() {
 
         val result = execute(source) as IntegerValue
 
-        assertThat(result.intValue).isEqualTo(10L)
+        assertThat(result.longValue).isEqualTo(10L)
     }
 
     @Test
@@ -35,6 +34,6 @@ class LazyExpressionTest : BaseEvaluationTest() {
 
         val result = execute(source) as IntegerValue
 
-        assertThat(result.intValue).isEqualTo(70L)
+        assertThat(result.longValue).isEqualTo(70L)
     }
 }

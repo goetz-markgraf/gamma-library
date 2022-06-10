@@ -10,10 +10,10 @@ class IntegerValue(
     sourceName: String,
     beginPos: Position,
     endPos: Position,
-    val intValue: Long
+    val longValue: Long
 ) : Value(sourceName, beginPos, endPos) {
 
-    override fun prettyPrint() = "$intValue"
+    override fun prettyPrint() = "$longValue"
 
     override fun evaluate(scope: Scope) = this
 
@@ -24,7 +24,7 @@ class IntegerValue(
 
     override fun equals(other: Any?) =
         if (other !is IntegerValue) false
-        else other.intValue == intValue
+        else other.longValue == longValue
 
-    override fun hashCode() = intValue.hashCode()
+    override fun hashCode() = longValue.hashCode()
 }

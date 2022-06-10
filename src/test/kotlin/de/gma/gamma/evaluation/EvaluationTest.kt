@@ -119,7 +119,7 @@ class EvaluationTest : BaseEvaluationTest() {
 
         val result = execute(code) as IntegerValue
 
-        assertThat(result.intValue).isEqualTo(5L)
+        assertThat(result.longValue).isEqualTo(5L)
     }
 
     @Test
@@ -161,6 +161,6 @@ class EvaluationTest : BaseEvaluationTest() {
 
         val result = execute(code) as IntegerValue
 
-        assertThat(result.intValue).isEqualTo(6L)
+        assertThat(result.longValue).isEqualTo(6L)
     }
 }
