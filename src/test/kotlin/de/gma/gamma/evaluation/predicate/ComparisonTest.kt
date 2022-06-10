@@ -1,4 +1,4 @@
-package de.gma.gamma.builtin.operator
+package de.gma.gamma.evaluation.predicate
 
 import de.gma.gamma.datatypes.values.BooleanValue
 import de.gma.gamma.evaluation.BaseEvaluationTest

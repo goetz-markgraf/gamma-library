@@ -10,7 +10,10 @@ fun populateComparison(scope: Scope) {
     bindWithDoc(scope, "=", EqualFunction(), "<a> = <b> - checks if <a> is equal to <b>")
     bindWithDoc(scope, ">", GreaterThanFunction(), "<a> > <b> - checks if the first value is greater than the second")
     bindWithDoc(scope, ">=", GreaterThanOrEqualFunction(), "<a> >= <b> - checks if the first value is greater than or equal to the second")
-    bindWithDoc(scope, "<", LessThanFunction(), "<a> > <b> - checks if the first value is less than the second")
-    bindWithDoc(scope, "<=", LessThanOrEqualFunction(), "<a> > <b> - checks if the first value is less than or equal to the second")
+    bindWithDoc(scope, "<", LessThanFunction(), "<a> < <b> - checks if the first value is less than the second")
+    bindWithDoc(scope, "<=", LessThanOrEqualFunction(), "<a> <= <b> - checks if the first value is less than or equal to the second")
+    bindWithDoc(scope, "&", AndFunction(), "<a> & <b> - returns true if <a> and <b> are both true")
+    bindWithDoc(scope, "|", OrFunction(), "<a> | <b> - returns true if either <a> or <b> or both are true")
+    bindWithDoc(scope, "not", NotFunction(), "not <a> - returns true if <a> is false and false if <a> is true")
 }
 // @Formatter:on
