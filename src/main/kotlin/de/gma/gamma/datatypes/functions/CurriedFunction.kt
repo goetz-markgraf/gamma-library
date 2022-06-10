@@ -21,7 +21,8 @@ class CurriedFunction(
         throw createException("must not happen")
     }
 
-    override fun prettyPrint() = function.prettyPrint()
+    override fun prettyPrint() =
+        function.prettyPrint() + " " + bakedInParams.joinToString(" ") { it.prettyPrint() }
 
     override fun evaluate(scope: Scope) = this
 }
