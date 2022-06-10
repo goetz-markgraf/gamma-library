@@ -36,4 +36,18 @@ class TimesTest : BaseEvaluationTest() {
         assertThat(result).isEqualTo(FloatValue.build(200.0))
     }
 
+
+    @Test
+    fun `multiply an integer and a string`() {
+        val code = "10 * \"20\""
+        val result = execute(code)
+        assertThat(result).isEqualTo(IntegerValue.build(200))
+    }
+
+    @Test
+    fun `multiply a string and a float`() {
+        val code = "\"10\" * 20.5"
+        val result = execute(code)
+        assertThat(result).isEqualTo(FloatValue.build(205.0))
+    }
 }

@@ -36,4 +36,18 @@ class AddTest : BaseEvaluationTest() {
         assertThat(result).isEqualTo(FloatValue.build(30.5))
     }
 
+    @Test
+    fun `add an integer and a string`() {
+        val code = "10 + \"20\""
+        val result = execute(code)
+        assertThat(result).isEqualTo(IntegerValue.build(30))
+    }
+
+    @Test
+    fun `add a string and a float`() {
+        val code = "\"10\" + 20.5"
+        val result = execute(code)
+        assertThat(result).isEqualTo(FloatValue.build(30.5))
+    }
+
 }
