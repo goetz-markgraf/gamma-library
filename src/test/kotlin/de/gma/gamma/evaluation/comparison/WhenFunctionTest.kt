@@ -24,7 +24,7 @@ class WhenFunctionTest : BaseEvaluationTest() {
                 a > 2, "groesser"
                 a < 2, "kleiner"
                 true, "gleich"
-             }
+            }
         """.trimIndent()
 
         val result = execute(code) as StringValue
@@ -47,7 +47,7 @@ class WhenFunctionTest : BaseEvaluationTest() {
                 a > 2 -> "groesser"
                 a < 2 -> "kleiner"
                 true -> "gleich"
-             }
+            }
         """.trimIndent()
 
         val result = execute(code) as StringValue
@@ -70,7 +70,7 @@ class WhenFunctionTest : BaseEvaluationTest() {
                 {a > 2, "groesser"}
                 {a < 2, "kleiner"}
                 {true, "gleich"}
-             }
+            }
         """.trimIndent()
 
         val result = execute(code) as StringValue
@@ -84,7 +84,7 @@ class WhenFunctionTest : BaseEvaluationTest() {
             when {
                 1 > 2, "groesser"
                 "kleiner oder gleich"
-             }
+            }
         """.trimIndent()
 
         val result = execute(code) as StringValue

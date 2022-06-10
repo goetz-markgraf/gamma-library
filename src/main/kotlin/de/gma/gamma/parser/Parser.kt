@@ -134,13 +134,19 @@ class Parser(
 
         val elem1 = parseElement(col)
 
-        // are there more params?
         val params = mutableListOf<Value>()
-        var nextElem = parseElement(col + 1)
+
+        // are there more params?
+        var nextElem: Value? = null
+        if (currStart.col > col)
+            nextElem = parseElement(col)
         while (nextElem != null) {
             params.add(nextElem)
 
-            nextElem = parseElement(col + 1)
+            if (currStart.col > col)
+                nextElem = parseElement(col)
+            else
+                nextElem = null
         }
 
         // there have been no params
