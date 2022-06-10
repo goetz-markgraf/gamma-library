@@ -6,6 +6,8 @@ import de.gma.gamma.datatypes.Remark
 import de.gma.gamma.datatypes.Value
 import de.gma.gamma.datatypes.expressions.*
 import de.gma.gamma.datatypes.functions.LambdaFunction
+import de.gma.gamma.datatypes.list.ListValue
+import de.gma.gamma.datatypes.list.PairValue
 import de.gma.gamma.datatypes.list.SimpleList
 import de.gma.gamma.datatypes.list.StringValue
 import de.gma.gamma.datatypes.values.*
@@ -223,7 +225,7 @@ class Parser(
         return LambdaFunction(sourceName, start, currEnd, params, expressions)
     }
 
-    private fun parseList(col: Int): SimpleList {
+    private fun parseList(col: Int): ListValue {
         assertTypeWithContent(col, OPEN_PARENS, "{")
         val start = currStart
         nextToken()
@@ -233,7 +235,10 @@ class Parser(
         assertTypeWithContent(col, CLOSE_PARENS, "}")
         nextToken()
 
-        return SimpleList(sourceName, start, currEnd, expressions)
+        return if (expressions.size == 2)
+            PairValue(sourceName, start, currEnd, expressions[0], expressions[1])
+        else
+            SimpleList(sourceName, start, currEnd, expressions)
     }
 
     private fun parseBlock(col: Int): Value {

@@ -4,6 +4,7 @@ import de.gma.gamma.builtins.namespaces.PropertyFunction
 import de.gma.gamma.datatypes.functions.FunctionValue
 import de.gma.gamma.datatypes.list.ListValue
 import de.gma.gamma.datatypes.list.StringValue
+import de.gma.gamma.datatypes.record.RecordValue
 import de.gma.gamma.datatypes.scope.Scope
 import de.gma.gamma.datatypes.values.*
 import de.gma.gamma.parser.EvaluationException
@@ -75,6 +76,12 @@ abstract class Value(
             is FunctionValue -> this
             is PropertyValue -> PropertyFunction(this)
             else -> throw createException("$this is not a function")
+        }
+
+    fun toRecord(): RecordValue =
+        when (this) {
+            is RecordValue -> this
+            else -> throw createException("$this is not a record")
         }
 
     protected fun createException(message: String) =

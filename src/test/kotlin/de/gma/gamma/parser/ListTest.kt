@@ -1,6 +1,7 @@
 package de.gma.gamma.parser
 
 import de.gma.gamma.datatypes.list.ListValue
+import de.gma.gamma.datatypes.list.PairValue
 import de.gma.gamma.datatypes.list.SimpleList
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -30,10 +31,10 @@ class ListTest : BaseParserTest() {
 
     @Test
     fun `parse a block with a two expressions`() {
-        val expression = getExpression("{10,20}")
+        val expression = getExpression("{10,20}") as ListValue
 
-        assertThat(expression).isInstanceOf(ListValue::class.java)
-        val l = expression as SimpleList
+        assertThat(expression).isInstanceOf(PairValue::class.java)
+        val l = expression as PairValue
 
         assertThat(l.size()).isEqualTo(2)
         assertThat(l.prettyPrint()).isEqualTo("{10, 20}")
