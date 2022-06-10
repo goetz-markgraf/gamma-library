@@ -17,7 +17,8 @@ class UnitValue(
     override fun evaluate(scope: Scope) = this
 
     companion object {
-        fun build() = UnitValue(builtInSource, nullPos, nullPos)
+        private val singleton = UnitValue(builtInSource, nullPos, nullPos)
+        fun build() = singleton
     }
 
     override fun equals(other: Any?) =
