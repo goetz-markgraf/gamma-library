@@ -15,7 +15,7 @@ class SubList(
 ) : ListValue(sourceName, beginPos, endPos) {
 
     override fun allItems(): List<Value> =
-        origin.allItems().dropLast(dropLast).drop(dropFirst)
+        origin.allItems().subList(dropFirst, size() - dropLast + 1)
 
     override fun getAt(pos: Int): Value =
         origin.getAt(pos + dropFirst)

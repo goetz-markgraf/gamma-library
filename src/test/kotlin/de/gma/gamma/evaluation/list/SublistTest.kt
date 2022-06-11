@@ -18,6 +18,9 @@ class SublistTest : BaseEvaluationTest() {
 
         assertThat(s.size()).isEqualTo(2)
         assertThat(s.first().prettyPrint()).isEqualTo("2")
+        assertThat(s.last().prettyPrint()).isEqualTo("3")
+
+        assertThat(s.allItems()).hasSize(2)
     }
 
     @Test
