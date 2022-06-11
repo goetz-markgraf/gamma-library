@@ -84,6 +84,6 @@ abstract class Value(
             else -> throw createException("$this is not a record")
         }
 
-    protected fun createException(message: String) =
+    fun createException(message: String) =
         EvaluationException(message, sourceName, beginPos.line, beginPos.col)
 }

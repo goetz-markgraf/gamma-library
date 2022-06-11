@@ -7,7 +7,6 @@ import de.gma.gamma.datatypes.prettyPrintList
 import de.gma.gamma.datatypes.scope.Namespace
 import de.gma.gamma.datatypes.values.IntegerValue
 import de.gma.gamma.datatypes.values.UnitValue
-import de.gma.gamma.parser.EvaluationException
 import de.gma.gamma.parser.Position
 
 abstract class ListValue(
@@ -23,7 +22,7 @@ abstract class ListValue(
         if (this.size() == 2)
             return PairValue(sourceName, beginPos, endPos, first(), last())
 
-        throw EvaluationException("$this is not a pair")
+        throw createException("$this is not a pair")
     }
 
     override fun prettyPrint() =
