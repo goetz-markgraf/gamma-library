@@ -20,6 +20,8 @@ fun populateList(scope: Scope) {
     bindWithDoc(scope, "list-generator", ListGeneratorFunction(), "list-generator <size> <function> – creates a list of size <size> that uses <function> to generate the values")
     bindWithDoc(scope, "map", MapFunction(), "map <function> <list> – creates a new list with every item of <list> run through <function>")
     bindWithDoc(scope, "for-each", ForEachFunction(), "for-each <function> <list> – calls <function> for every item of <list>")
+    bindWithDoc(scope, "fold", FoldFunction(), "fold <inital> <function> <list> – folds the <list> with <function> and <initial> acc")
+    bindWithDoc(scope, "reduce", ReduceFunction(), "reduce <function> <list> – reduces the <list> with <function>")
 
     bindWithDoc(scope, "is-list?", ListPredicate(), "is-list? <value> – tests if <value> is a list. This also includes strings")
     bindWithDoc(scope, "is-string?", StringPredicate(), "is-string? <value> – tests if <value> is a string")

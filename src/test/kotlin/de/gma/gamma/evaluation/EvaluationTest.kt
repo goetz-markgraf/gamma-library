@@ -105,50 +105,6 @@ class EvaluationTest : BaseEvaluationTest() {
     }
 
     @Test
-    fun `create a simple list generator`() {
-        val code = """
-            let f i = i
-            
-            let gen = list-generator 5 f
-            
-            print (at 1 gen)
-            print (at 2 gen)
-            
-            size gen
-        """.trimIndent()
-
-        val result = execute(code) as IntegerValue
-
-        assertThat(result.longValue).isEqualTo(5L)
-    }
-
-    @Test
-    fun `use a simple map lambda`() {
-        val code = """
-            {1, 2, 3} |> map [i -> i * 2]
-        """.trimIndent()
-
-        val result = execute(code) as ListValue
-
-        assertThat(result.size()).isEqualTo(3)
-        assertThat(result.allItems().map { it.prettyPrint() }).containsExactly("2", "4", "6")
-    }
-
-    @Test
-    fun `use a simple map function`() {
-        val code = """
-            let f i = i * 2
-            
-            {1, 2, 3} |> map f
-        """.trimIndent()
-
-        val result = execute(code) as ListValue
-
-        assertThat(result.size()).isEqualTo(3)
-        assertThat(result.allItems().map { it.prettyPrint() }).containsExactly("2", "4", "6")
-    }
-
-    @Test
     fun `recursive sum`() {
         val code = """
             let sum lst =
