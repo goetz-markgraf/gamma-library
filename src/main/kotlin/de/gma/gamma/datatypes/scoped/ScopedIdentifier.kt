@@ -14,8 +14,7 @@ class ScopedIdentifier(
 ) : Value(sourceName, beginPos, endPos) {
     private var value: Value? = null
 
-    override fun prettyPrint() =
-        id.prettyPrint()
+    override fun prettyPrint() = id.prettyPrint()
 
     override fun evaluate(scope: Scope): Value {
         if (value == null) {

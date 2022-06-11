@@ -15,6 +15,7 @@ class LambdaFunction(
     paramNames: List<String>,
     val expressions: List<Value>
 ) : FunctionValue(sourceName, beginPos, endPos, paramNames) {
+
     override fun prettyPrint() = buildString {
         append("[")
         if (paramNames.isEmpty()) {

@@ -15,12 +15,11 @@ class ScopedExpression(
 
     private var value: Value? = null
 
-    override fun prettyPrint(): String {
-        return if (value != null)
+    override fun prettyPrint() =
+        if (value != null)
             value?.prettyPrint() ?: throw createException("must not happen")
         else
             "Lazy:${expression.prettyPrint()}"
-    }
 
     override fun evaluate(scope: Scope): Value {
         if (value == null) {

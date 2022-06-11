@@ -22,9 +22,9 @@ class SetExpression(
                 append(documentation.prettyPrint()).append(CH_NEWLINE)
 
             if (boundValue !is Expression) {
-                append("let ${identifier.prettyPrint()} = ${boundValue.prettyPrint()}")
+                append("set ${identifier.prettyPrint()} = ${boundValue.prettyPrint()}")
             } else {
-                append("let ${identifier.prettyPrint()} =").append(CH_NEWLINE)
+                append("set ${identifier.prettyPrint()} =").append(CH_NEWLINE)
                 append("    ${boundValue.prettyPrint()}")
             }
             append(CH_NEWLINE)

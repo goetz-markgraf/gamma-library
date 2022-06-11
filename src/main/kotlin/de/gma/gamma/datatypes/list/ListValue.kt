@@ -25,8 +25,7 @@ abstract class ListValue(
         throw createException("$this is not a pair")
     }
 
-    override fun prettyPrint() =
-        prettyPrintList(allItems())
+    override fun prettyPrint() = prettyPrintList(allItems())
 
     abstract fun allItems(): List<Value>
 
