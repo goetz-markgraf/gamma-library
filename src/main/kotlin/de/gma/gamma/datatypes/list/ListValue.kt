@@ -70,6 +70,9 @@ abstract class ListValue(
             else -> UnitValue.build()
         }
 
+    open fun contains(item: Value) =
+        allItems().contains(item)
+
 
     companion object {
         fun build(items: List<Value>) =

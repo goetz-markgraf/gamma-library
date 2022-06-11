@@ -108,4 +108,13 @@ class ListFunctionTest : BaseEvaluationTest() {
         assertThat((result.first() as IntegerValue).longValue).isEqualTo(-1L)
         assertThat((result.last() as IntegerValue).longValue).isEqualTo(-3L)
     }
+
+    @Test
+    fun `filters the list for items above 2`() {
+        val result = execute("{1, 2, 3, 4} |> filter [ item -> item > 2 ]") as ListValue
+
+        assertThat(result.size()).isEqualTo(2)
+        assertThat(result.first().prettyPrint()).isEqualTo("3")
+        assertThat(result.last().prettyPrint()).isEqualTo("4")
+    }
 }

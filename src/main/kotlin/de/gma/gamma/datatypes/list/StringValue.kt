@@ -92,6 +92,12 @@ class StringValue(
 
     override fun evaluate(scope: Scope) = this
 
+    override fun contains(item: Value) =
+        if (item is StringValue)
+            strValue.contains(item.strValue)
+        else
+            super.contains(item)
+
     override fun equals(other: Any?) =
         if (other !is StringValue) false
         else other.strValue == strValue

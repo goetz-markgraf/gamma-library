@@ -43,4 +43,30 @@ class ListPredicateTest : BaseEvaluationTest() {
 
         assertThat(expr.boolValue).isFalse
     }
+
+    @ParameterizedTest
+    @ValueSource(
+        strings = [
+            "{1, 2, 3} |> contains? 2",
+            "\"123\" |> contains? \"2\""
+        ]
+    )
+    fun `the given item is in the list`(code: String) {
+        val result = execute(code) as BooleanValue
+
+        assertThat(result.boolValue).isTrue
+    }
+
+    @ParameterizedTest
+    @ValueSource(
+        strings = [
+            "{1, 2, 3} |> contains? 4",
+            "\"123\" |> contains? \"4\""
+        ]
+    )
+    fun `the given item is not in the list`(code: String) {
+        val result = execute(code) as BooleanValue
+
+        assertThat(result.boolValue).isFalse
+    }
 }
