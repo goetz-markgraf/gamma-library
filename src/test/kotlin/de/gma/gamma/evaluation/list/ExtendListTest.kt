@@ -31,4 +31,16 @@ class ExtendListTest : BaseEvaluationTest() {
         assertThat(l.last().prettyPrint()).isEqualTo("10")
     }
 
+    @Test
+    fun `appends a list to a list`() {
+        val expr = execute("appendAll {4, 5, 6} {1, 2, 3}")
+
+        assertThat(expr).isInstanceOf(ListValue::class.java)
+
+        val l = expr as ListValue
+        assertThat(l.size()).isEqualTo(6)
+        assertThat(l.first().prettyPrint()).isEqualTo("1")
+        assertThat(l.last().prettyPrint()).isEqualTo("6")
+    }
+
 }

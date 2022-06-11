@@ -8,9 +8,9 @@ import de.gma.gamma.datatypes.scope.Scope
 
 class SplitFunction : BuiltinFunction(listOf("string")) {
     override fun callInternal(scope: Scope, callParams: List<Value>): Value {
-        val filename = callParams[0].evaluate(scope).toStringValue()
+        val str = callParams[0].evaluate(scope).toStringValue()
 
-        val split = filename.strValue.split(' ')
+        val split = str.strValue.split(' ')
         return ListValue.build(split.mapNotNull {
             if (it.isNotEmpty())
                 StringValue.build(it)

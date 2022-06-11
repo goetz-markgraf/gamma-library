@@ -58,9 +58,9 @@ abstract class ListValue(
 
     abstract fun append(v: Value): ListValue
 
-    abstract fun insert(v: Value): ListValue
+    abstract fun insertFirst(v: Value): ListValue
 
-    abstract fun join(v: ListValue): ListValue
+    abstract fun appendAll(v: ListValue): ListValue
 
     override fun getValue(id: String): Value =
         when (id) {

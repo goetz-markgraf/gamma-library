@@ -12,6 +12,7 @@ class SimpleList(
 ) : ListValue(sourceName, beginPos, endPos) {
 
     protected var internalItems = items
+    private val internalSize = internalItems.size
 
     override fun prepare(scope: Scope): Value {
         internalItems = internalItems.map { it.prepare(scope) }
@@ -21,14 +22,14 @@ class SimpleList(
 
     override fun evaluate(scope: Scope) = this
 
-    override fun size() = internalItems.size
+    override fun size() = internalSize
 
     override fun getAt(pos: Int): Value =
-        if (pos >= 0 && pos < size())
+        if (pos >= 0 && pos < internalSize)
             internalItems[pos]
         else
-            if (size() > 0)
-                throw createException("Index out of bounds: $pos outside [0..${size() - 1}]")
+            if (internalSize > 0)
+                throw createException("Index out of bounds: $pos outside [0..${internalSize - 1}]")
             else
                 throw createException("Index out of bounds: $pos outside empty list")
 
@@ -53,14 +54,14 @@ class SimpleList(
         })
 
 
-    override fun insert(v: Value): ListValue =
+    override fun insertFirst(v: Value): ListValue =
         build(buildList {
             add(v)
             addAll(internalItems)
         })
 
 
-    override fun join(v: ListValue): ListValue =
+    override fun appendAll(v: ListValue): ListValue =
         build(buildList {
             addAll(internalItems)
             addAll(v.allItems())

@@ -74,14 +74,14 @@ class StringValue(
         else
             throw createException(ERROR_STRING_ONLY_WITH_STRING)
 
-    override fun insert(v: Value): ListValue =
+    override fun insertFirst(v: Value): ListValue =
         if (v is StringValue)
             build(v.strValue + strValue)
         else
             throw createException(ERROR_STRING_ONLY_WITH_STRING)
 
 
-    override fun join(v: ListValue): ListValue =
+    override fun appendAll(v: ListValue): ListValue =
         if (v is StringValue)
             build(strValue + v.strValue)
         else

@@ -52,7 +52,7 @@ class PairValue(
         })
 
 
-    override fun insert(v: Value): ListValue =
+    override fun insertFirst(v: Value): ListValue =
         build(buildList {
             add(v)
             add(left)
@@ -60,7 +60,7 @@ class PairValue(
         })
 
 
-    override fun join(v: ListValue): ListValue =
+    override fun appendAll(v: ListValue): ListValue =
         build(buildList {
             add(left)
             add(right)

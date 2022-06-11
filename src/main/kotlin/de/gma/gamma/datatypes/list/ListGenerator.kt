@@ -56,13 +56,13 @@ class ListGenerator(
             add(v)
         })
 
-    override fun insert(v: Value): ListValue =
+    override fun insertFirst(v: Value): ListValue =
         build(buildList {
             add(v)
             addAll(allItems())
         })
 
-    override fun join(v: ListValue): ListValue =
+    override fun appendAll(v: ListValue): ListValue =
         build(buildList {
             addAll(v.allItems())
             addAll(allItems())
