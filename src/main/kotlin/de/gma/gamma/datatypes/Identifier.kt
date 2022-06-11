@@ -20,13 +20,8 @@ class Identifier(
             GIdentifierType.ID_AS_OP -> "$name:"
         }
 
-    override fun evaluate(scope: Scope): Value {
-        if (name.contains('.')) {
-            TODO("compound identifier not yet implemented")
-        } else {
-            return scope.getValue(name).evaluate(scope)
-        }
-    }
+    override fun evaluate(scope: Scope) =
+        scope.getValue(name).evaluate(scope)
 
     override fun prepare(scope: Scope) =
         ScopedIdentifier(sourceName, beginPos, endPos, this, scope)

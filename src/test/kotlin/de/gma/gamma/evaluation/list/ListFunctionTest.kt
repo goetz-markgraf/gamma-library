@@ -5,6 +5,8 @@ import de.gma.gamma.datatypes.values.IntegerValue
 import de.gma.gamma.evaluation.BaseEvaluationTest
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.ValueSource
 
 class ListFunctionTest : BaseEvaluationTest() {
 
@@ -68,25 +70,42 @@ class ListFunctionTest : BaseEvaluationTest() {
         assertThat(result.longValue).isEqualTo(6L)
     }
 
-    @Test
-    fun `fold a list to create a sum`() {
-        val code = """
-            {1, 2, 3} |> fold 0 [acc i -> acc + i]
-        """.trimIndent()
-
+    @ParameterizedTest
+    @ValueSource(
+        strings = [
+            "{1, 2, 3} |> fold 0 [acc i -> acc + i]",
+            "{1, 2, 3} |> reduce (+)",
+            "repeat 4 |> reduce (+)",
+            "1 .. 3 |> reduce (+)"
+        ]
+    )
+    fun `several ways to create and sum a list`(code: String) {
         val result = execute(code) as IntegerValue
 
         assertThat(result.longValue).isEqualTo(6)
     }
 
     @Test
-    fun `reduce a list to create a sum`() {
-        val code = """
-            {1, 2, 3} |> reduce (+)
-        """.trimIndent()
+    fun `create a descending range`() {
+        val result = execute("3 .. 1") as ListValue
+        assertThat(result.size()).isEqualTo(3)
+        assertThat((result.first() as IntegerValue).longValue).isEqualTo(3L)
+        assertThat((result.last() as IntegerValue).longValue).isEqualTo(1L)
+    }
 
-        val result = execute(code) as IntegerValue
+    @Test
+    fun `create a negative ascending range`() {
+        val result = execute("-3 .. -1") as ListValue
+        assertThat(result.size()).isEqualTo(3)
+        assertThat((result.first() as IntegerValue).longValue).isEqualTo(-3L)
+        assertThat((result.last() as IntegerValue).longValue).isEqualTo(-1L)
+    }
 
-        assertThat(result.longValue).isEqualTo(6)
+    @Test
+    fun `create a negative descending range`() {
+        val result = execute("-1 .. -3") as ListValue
+        assertThat(result.size()).isEqualTo(3)
+        assertThat((result.first() as IntegerValue).longValue).isEqualTo(-1L)
+        assertThat((result.last() as IntegerValue).longValue).isEqualTo(-3L)
     }
 }

@@ -18,6 +18,8 @@ fun populateList(scope: Scope) {
     bindWithDoc(scope, "::", InsertFunction(), "<item> :: <list> – prepends a list with an as the new first element")
 
     bindWithDoc(scope, "list-generator", ListGeneratorFunction(), "list-generator <size> <function> – creates a list of size <size> that uses <function> to generate the values")
+    bindWithDoc(scope, "repeat", RepeatFunction(), "repeat <num> - create a list from 0 to <repeate> - 1")
+    bindWithDoc(scope, "..", RangeFunction(), "<start> .. <end> - create a list from start> to <end> inclusive")
     bindWithDoc(scope, "map", MapFunction(), "map <function> <list> – creates a new list with every item of <list> run through <function>")
     bindWithDoc(scope, "for-each", ForEachFunction(), "for-each <function> <list> – calls <function> for every item of <list>")
     bindWithDoc(scope, "fold", FoldFunction(), "fold <inital> <function> <list> – folds the <list> with <function> and <initial> acc")

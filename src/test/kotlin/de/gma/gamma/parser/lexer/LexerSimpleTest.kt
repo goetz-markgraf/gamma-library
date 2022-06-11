@@ -408,7 +408,7 @@ class LexerSimpleTest {
         )
         assertToken(
             lexer.nextToken(),
-            type = ERROR,
+            type = OP,
             content = ".",
             start = 4,
             end = 4
