@@ -8,6 +8,10 @@ open class ModuleScope(override val parent: Scope? = GammaBaseScope) : Scope {
     private val content: MutableMap<String, Value> = mutableMapOf()
     private val remarks: MutableMap<String, Remark> = mutableMapOf()
 
+    override fun toString(): String {
+        return content.keys.toList().toString()
+    }
+
     override fun getValue(id: String): Value {
 
         return content[id]

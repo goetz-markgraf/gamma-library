@@ -1,9 +1,13 @@
 package de.gma.gamma.datatypes.list
 
 import de.gma.gamma.datatypes.Value
+import de.gma.gamma.datatypes.scope.Scope
+import de.gma.gamma.parser.EvaluationException
 import de.gma.gamma.parser.Position
 
-class SimpleList(
+private const val ERROR_MESSAGE = "ListLiteral cannot be processed"
+
+class ListLiteral(
     sourceName: String,
     beginPos: Position,
     endPos: Position,
@@ -12,6 +16,23 @@ class SimpleList(
 
     protected var internalItems = items
     private val internalSize = internalItems.size
+
+    private var rememberedScope: Scope? = null
+
+    override fun evaluate(scope: Scope): Value {
+        val items = internalItems.map {
+            it.evaluate(rememberedScope ?: scope)
+        }
+        if (items.size == 2)
+            return PairValue(sourceName, beginPos, endPos, items[0], items[1])
+        else
+            return SimpleList(sourceName, beginPos, endPos, items)
+    }
+
+    override fun prepare(scope: Scope): Value {
+        rememberedScope = scope
+        return this
+    }
 
     override fun size() = internalSize
 
@@ -25,38 +46,25 @@ class SimpleList(
                 throw createException("Index out of bounds: $pos outside empty list")
 
     override fun slice(from: Int, length: Int): ListValue {
-        if (from > internalItems.size || from < 0)
-            return buildEmpty()
-
-        val correctLength = if (from + length > internalItems.size)
-            internalItems.size - from
-        else length
-
-        return SubList.buildSublist(this, dropFirst = from, internalItems.size - from - correctLength)
+        throw EvaluationException(ERROR_MESSAGE)
     }
 
     override fun allItems(): List<Value> =
         internalItems
 
-    override fun append(v: Value): ListValue =
-        build(buildList {
-            addAll(internalItems)
-            add(v)
-        })
+    override fun append(v: Value): ListValue {
+        throw EvaluationException(ERROR_MESSAGE)
+    }
 
 
-    override fun insertFirst(v: Value): ListValue =
-        build(buildList {
-            add(v)
-            addAll(internalItems)
-        })
+    override fun insertFirst(v: Value): ListValue {
+        throw EvaluationException(ERROR_MESSAGE)
+    }
 
 
-    override fun appendAll(v: ListValue): ListValue =
-        build(buildList {
-            addAll(internalItems)
-            addAll(v.allItems())
-        })
+    override fun appendAll(v: ListValue): ListValue {
+        throw EvaluationException(ERROR_MESSAGE)
+    }
 
 
     override fun equals(other: Any?) =

@@ -19,6 +19,8 @@ class Block(
     }
 
     override fun evaluate(scope: Scope) =
-        expressions.fold(UnitValue.build() as Value) { _, expr -> expr.evaluate(scope) }
+        expressions.fold(UnitValue.build() as Value) { _, expr ->
+            expr.evaluate(scope)
+        }
 
 }

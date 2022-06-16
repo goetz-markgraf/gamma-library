@@ -1,7 +1,7 @@
 package de.gma.gamma.evaluation
 
-import de.gma.gamma.datatypes.expressions.FunctionCall
 import de.gma.gamma.datatypes.list.ListValue
+import de.gma.gamma.datatypes.list.PairValue
 import de.gma.gamma.datatypes.list.SimpleList
 import de.gma.gamma.datatypes.list.StringValue
 import de.gma.gamma.datatypes.values.IntegerValue
@@ -100,8 +100,8 @@ class EvaluationTest : BaseEvaluationTest() {
 
         val l = result as SimpleList
         assertThat(l.size()).isEqualTo(3)
-        assertThat(l.first()).isInstanceOf(FunctionCall::class.java)
-        assertThat(l.last()).isInstanceOf(FunctionCall::class.java)
+        assertThat(l.first()).isInstanceOf(PairValue::class.java)
+        assertThat(l.last()).isInstanceOf(PairValue::class.java)
     }
 
     @Test

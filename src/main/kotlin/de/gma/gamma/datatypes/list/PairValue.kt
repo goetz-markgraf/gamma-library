@@ -1,7 +1,6 @@
 package de.gma.gamma.datatypes.list
 
 import de.gma.gamma.datatypes.Value
-import de.gma.gamma.datatypes.scope.Scope
 import de.gma.gamma.parser.Position
 
 class PairValue(
@@ -11,15 +10,6 @@ class PairValue(
     var left: Value,
     var right: Value
 ) : ListValue(sourceName, beginPos, endPos) {
-
-    override fun prepare(scope: Scope): Value {
-        left = left.prepare(scope)
-        right = right.prepare(scope)
-
-        return this
-    }
-
-    override fun evaluate(scope: Scope) = this
 
     override fun size() = 2
 

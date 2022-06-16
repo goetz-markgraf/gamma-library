@@ -78,7 +78,7 @@ fun isColon(char: Char) =
     char == CH_COLON
 
 fun isOperatorChar(char: Char) =
-    ".<>-+*^/\\:%$|=!&".contains(char)
+    ".<>-+*^/\\:%$|=!&@".contains(char)
 
 fun isStartOfFunctionOperator(char: Char, peekChar: Char) =
     char == CH_LPARENS && isOperatorChar(peekChar)

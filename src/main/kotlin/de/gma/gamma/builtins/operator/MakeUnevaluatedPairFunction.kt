@@ -5,11 +5,11 @@ import de.gma.gamma.datatypes.Value
 import de.gma.gamma.datatypes.list.ListValue
 import de.gma.gamma.datatypes.scope.Scope
 
-class MakePairFunction : BuiltinFunction(listOf("a", "b")) {
+class MakeUnevaluatedPairFunction : BuiltinFunction(listOf("a", "b")) {
 
     override fun callInternal(scope: Scope, callParams: List<Value>): Value {
-        val a = callParams[0].evaluate(scope)
-        val b = callParams[1].evaluate(scope)
+        val a = callParams[0]
+        val b = callParams[1]
 
         return ListValue.build(listOf(a, b))
     }
