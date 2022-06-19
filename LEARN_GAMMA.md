@@ -302,4 +302,4 @@ These are the functions currenty built in into _Gamma_:
 * 'else - the same as true'
 * 'at <pos> <list> – returns the <pos>th element of this list'
 * 'record <list of pair> – creates a record from a list of pairs'
-* 'copy <list of pair> <record> – creates a new record based on <record> with changes from a list of pairs'
+* 'copy-with <list of pair> <record> – creates a new record based on <record> with changes from a list of pairs'
