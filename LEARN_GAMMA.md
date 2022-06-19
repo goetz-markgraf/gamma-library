@@ -24,7 +24,7 @@ There are only a few special expressions:
         a + b
     
     # change the value bound to the name "mutable!" with a new value (20). Only names that end
-    # with a (!) can be mutated
+    # with a "!" can be mutated
     set mutable! = 20
 ```
 

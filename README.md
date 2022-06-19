@@ -15,7 +15,7 @@ read syntax of ML-based languages.
 
 ## Learn Gamma
 
-See: [LEARN_GAMMA.md](LEARN_GAMMA.md)
+See: [Learn to program in _Gamma_](LEARN_GAMMA.md)
 
 ## Usage
 
