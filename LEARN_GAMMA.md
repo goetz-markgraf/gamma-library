@@ -26,9 +26,15 @@ There are only a few special expressions:
     # change the value bound to the name "mutable!" with a new value (20). Only names that end
     # with a "!" can be mutated
     set mutable! = 20
+    
+    # is is an "if" expression that evaluate the second or third expression, depending
+    # on the result of the first expression (predicate)
+    a > 2 ? "a is bigger that 2" : "a is smaller or equal to 2" 
 ```
 
-Everything else is an expression.
+Everything else is an normal expression.
+
+Every Expression is either a literal value or a computed expression, mostly a function call.
 
 ## Value Literal
 
@@ -158,6 +164,88 @@ You must also place these parenthesis around the operator if you want to create 
 ```
 
 _(Of course, you don't need to do that, because `^` is already a function to raise a number to the nth power.)_
+
+### pipe operator
+
+The pipe operator (`|>`) can be used to enhance the readability of the code. It is defined like this
+
+```
+  let (|>) v f = f v
+```
+
+It take the value from **before** the operator and puts it into the function behind the
+operator. That is why in _Gamma_ the parameter indicating the value to work on comes last.
+
+```
+  # get the size of a list
+  size list
+  
+  # this call produces the same result
+  list |> size
+  
+  # the pipe operator lets to chain call together
+  list
+  |> size
+  |> print
+```
+
+## lambda functions
+
+As I have said before, functions are also values that can be assigned. Function can easily be
+created "on the fly" (aka lambda function) using `[` and `]` and a `->` to seperate parameters from the code. Actually, the
+declaration of functions described above is only a shorthand way of assigning a lambda function
+to a value
+
+```
+  let add a b = a + b
+  
+  # is the same as
+  
+  let add = [a b -> a + b]
+```
+
+You can use lambdas for example in combination with the map function to work over the items of a list
+
+```
+  let list = {1, 2, 3}
+  
+  # add 10 to every item in the list
+  # produces a new list {11, 12, 13}
+  
+  let result = list |> map [item -> item + 10]
+```
+
+## record types
+
+Apart from lists _Gamma_ can create `record`-Types that match a value to a property name.
+
+```
+  # create a record with the 'record'-function
+  let a =
+    record {
+      :name -> "Mueller"
+      :first-name -> "Willi"
+      :birthdate -> "01.01.1980"
+    }
+```
+
+Accessing the record is possible via the property names that work like getter functions:
+
+```
+  # getting the name value of the record 'a'
+  print (:name a)
+```
+
+Like all other data structures in _Gamma_ a `record`-Type is immutable. You can create a modified
+copy with the `copy-with`-function:
+
+```
+  # create a sibling of the person in a
+  let b =
+    a |> copy-with { :first-name -> "Sarah" } 
+```
+
+
 
 # Built-in functions
 
