@@ -1,0 +1,39 @@
+let test-input =
+    {
+        "forward 5"
+        "down 5"
+        "forward 8"
+        "up 3"
+        "down 8"
+        "forward 2"
+    }
+
+let calculate-position start list =
+    let calc-movement cmd-line =
+        let cmd-list = split cmd-line
+        let cmd = first cmd-list
+        let amount = last cmd-list
+
+        when {
+            cmd = "forward" -> (amount @ 0)
+            cmd = "up" -> (0 @ neg amount)
+            cmd = "down" -> (0 @ amount)
+            else -> (0 @ 0)
+        }
+
+    when {
+        is-empty? list -> start
+        else -> (
+            let movement = calc-movement (head list)
+            let new-position = (first start + first movement) @ (last start + last movement)
+            calculate-position new-position (tail list)
+        )
+    }
+
+let test-result = calculate-position (0 @ 0) test-input
+
+print ((first test-result) * (last test-result))
+
+let result = read-lines "src/test/resources/advent-of-code/day2.input" |> calculate-position (0 @ 0)
+
+(first result) * (last result)

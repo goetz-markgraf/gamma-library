@@ -188,8 +188,7 @@ class LexerSimpleTest {
     fun `parse wrong operator function`(source: String) {
         val token = getTokenFromInput(source)
 
-        assertThat(token.type).isEqualTo(ERROR)
-        assertThat(token.content).startsWith(source.drop(1).first().toString())
+        assertThat(token.type).isEqualTo(OPEN_PARENS)
     }
 
     @Test
@@ -202,20 +201,6 @@ class LexerSimpleTest {
             type = UNIT,
             content = "()",
             end = 1
-        )
-    }
-
-
-    @Test
-    fun `parse spread operator`() {
-        val source = "..."
-        val token = getTokenFromInput(source)
-
-        assertToken(
-            token,
-            type = SPREAD,
-            content = "...",
-            end = 2
         )
     }
 

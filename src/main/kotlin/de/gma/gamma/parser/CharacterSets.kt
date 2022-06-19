@@ -71,17 +71,15 @@ fun isEndOfIdentifier(char: Char) =
 fun isStartOfString(char: Char) =
     char == CH_QUOTE
 
-fun isSpread(char: Char, peekChar: Char, peekPeekChar: Char) =
-    char == CH_DOT && peekChar == CH_DOT && peekPeekChar == CH_DOT
-
 fun isColon(char: Char) =
     char == CH_COLON
 
 fun isOperatorChar(char: Char) =
     ".<>-+*^/\\:%$|=!&@".contains(char)
 
-fun isStartOfFunctionOperator(char: Char, peekChar: Char) =
-    char == CH_LPARENS && isOperatorChar(peekChar)
+fun isStartOfFunctionOperator(char: Char, peekChar: Char, peekPeekChar: Char) =
+    char == CH_LPARENS && isOperatorChar(peekChar) && isOperatorChar(peekPeekChar) ||
+            char == CH_LPARENS && isOperatorChar(peekChar) && peekPeekChar == CH_RPARENS
 
 fun isExpressionEndingChar(char: Char) =
     ",;".contains(char)

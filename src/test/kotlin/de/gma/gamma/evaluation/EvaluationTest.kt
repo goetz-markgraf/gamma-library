@@ -2,7 +2,6 @@ package de.gma.gamma.evaluation
 
 import de.gma.gamma.datatypes.list.ListValue
 import de.gma.gamma.datatypes.list.PairValue
-import de.gma.gamma.datatypes.list.SimpleList
 import de.gma.gamma.datatypes.list.StringValue
 import de.gma.gamma.datatypes.values.IntegerValue
 import de.gma.gamma.datatypes.values.UnitValue
@@ -87,6 +86,7 @@ class EvaluationTest : BaseEvaluationTest() {
     @Test
     fun `create a complex list of lists`() {
         val code = """
+            let a = 10
             {
                 a > 2 -> "groesser"
                 a < 2 -> "kleiner"
@@ -94,14 +94,11 @@ class EvaluationTest : BaseEvaluationTest() {
             }
         """.trimIndent()
 
-        val result = execute(code)
+        val result = execute(code) as ListValue
 
-        assertThat(result).isInstanceOf(ListValue::class.java)
-
-        val l = result as SimpleList
-        assertThat(l.size()).isEqualTo(3)
-        assertThat(l.first()).isInstanceOf(PairValue::class.java)
-        assertThat(l.last()).isInstanceOf(PairValue::class.java)
+        assertThat(result.size()).isEqualTo(3)
+        assertThat(result.first()).isInstanceOf(PairValue::class.java)
+        assertThat(result.last()).isInstanceOf(PairValue::class.java)
     }
 
     @Test

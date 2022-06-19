@@ -6,6 +6,7 @@ import de.gma.gamma.builtins.nullPos
 import de.gma.gamma.datatypes.Value
 import de.gma.gamma.datatypes.list.PairValue
 import de.gma.gamma.datatypes.scope.Namespace
+import de.gma.gamma.datatypes.scope.Scope
 import de.gma.gamma.datatypes.values.UnitValue
 import de.gma.gamma.parser.Position
 
@@ -23,11 +24,11 @@ class RecordValue(
     override fun getValue(id: String) =
         internalMap[id] ?: UnitValue.build()
 
-    fun copyWith(changedContent: List<PairValue>) =
+    fun copyWith(changedContent: List<PairValue>, scope: Scope) =
         RecordValue(builtInSource, nullPos, nullPos,
             mutableMapOf<String, Value>().apply {
                 putAll(internalMap)
-                putAll(createMapFromListOfPair(changedContent))
+                putAll(createMapFromListOfPair(changedContent, scope))
             }
         )
 

@@ -1,0 +1,33 @@
+let test-input =
+    {
+        199
+        200
+        208
+        210
+        200
+        207
+        240
+        269
+        260
+        263
+    }
+
+let count-increase-window list =
+    let calc-depth list =
+        (at 0 list) + (at 1 list) + (at 2 list)
+
+    let count-rec last list =
+        when {
+            size list < 3 -> 0
+            size list >=3 ->
+                (
+                    let depth = calc-depth list
+                    (depth > last ? 1 : 0) + count-rec depth (tail list)
+                )
+        }
+
+    (count-rec 0 list) - 1
+
+print (join " " {"test:", count-increase-window test-input})
+
+read-lines "src/test/resources/advent-of-code/day1.input" |> count-increase-window

@@ -1,0 +1,46 @@
+let test-input =
+    {
+        "forward 5"
+        "down 5"
+        "forward 8"
+        "up 3"
+        "down 8"
+        "forward 2"
+    }
+
+let calculate-position start list =
+    let calc-movement cmd-line =
+        let cmd-list = split cmd-line
+        let cmd = first cmd-list
+        let amount = last cmd-list
+
+        when {
+            cmd = "forward" -> record { :forward -> amount, :depth -> :aim start * amount, :aim -> 0}
+            cmd = "up" -> record {:forward -> 0, :depth -> 0, :aim -> neg amount}
+            cmd = "down" -> record { :forward -> 0, :depth -> 0, :aim -> amount}
+            else -> record { :forward -> 0, :depth -> 0, :aim -> 0}
+        }
+
+    when {
+        is-empty? list -> start
+        else -> (
+            let delta-movement = calc-movement (head list)
+            let new-position =
+                record {
+                    :forward -> :forward start + :forward delta-movement
+                    :depth -> :depth start + :depth delta-movement
+                    :aim -> :aim start + :aim delta-movement
+                }
+            calculate-position new-position (tail list)
+        )
+    }
+
+let test-result = calculate-position (record {:forward -> 0, :depth -> 0, :aim -> 0}) test-input
+
+print ((:depth test-result) * ( :forward test-result))
+
+let result =
+    read-lines "src/test/resources/advent-of-code/day2.input"
+    |> calculate-position (record {:forward -> 0, :depth -> 0, :aim -> 0})
+
+(:depth result) * (:forward result)

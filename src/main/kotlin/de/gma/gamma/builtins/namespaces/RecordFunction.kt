@@ -13,7 +13,8 @@ class RecordFunction : BuiltinFunction(listOf("property-list")) {
 
         val checkedList = extractListOfPairFromList(list, scope)
 
-        return RecordValue(list.sourceName, list.beginPos, list.endPos, createMapFromListOfPair(checkedList))
+        val map = createMapFromListOfPair(checkedList, scope)
+        return RecordValue(list.sourceName, list.beginPos, list.endPos, map)
     }
 
 

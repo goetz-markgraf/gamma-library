@@ -43,10 +43,10 @@ fun extractListOfPairFromList(
         throw EvaluationException("Wrong Parameter, not list of pairs")
 }
 
-fun createMapFromListOfPair(content: List<PairValue>) = buildMap<String, Value> {
+fun createMapFromListOfPair(content: List<PairValue>, scope: Scope) = buildMap<String, Value> {
     content.forEach {
         if (it.size() >= 2) {
-            put((it.first() as PropertyValue).identifier, it.getAt(1))
+            put((it.first() as PropertyValue).identifier, it.getAt(1).evaluate(scope))
         } else {
             throw EvaluationException("cannot create record")
         }

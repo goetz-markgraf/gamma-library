@@ -122,7 +122,7 @@ class OperationTest : BaseParserTest() {
 
     @Test
     fun `check order sum and op`() {
-        val op = getExpression("10 + 20 -> 30 + 40") as OperaterCall
+        val op = getExpression("10 + 20 |> 30 + 40") as OperaterCall
 
         assertThat(op.op1).isInstanceOf(FunctionCall::class.java)
         assertThat(op.op2).isInstanceOf(FunctionCall::class.java)

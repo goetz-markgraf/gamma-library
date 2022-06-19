@@ -25,6 +25,13 @@ class ValueTest : BaseParserTest() {
 
             assertThat(prop.prettyPrint()).isEqualTo(":hallo")
         }
+
+        @Test
+        fun `parse a property behind an opening parans`() {
+            val expression = getExpression("(:hallo)") as PropertyValue
+
+            assertThat(expression.identifier).isEqualTo("hallo")
+        }
     }
 
     @Nested

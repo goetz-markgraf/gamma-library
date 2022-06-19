@@ -1,0 +1,28 @@
+let input =
+    {
+        199
+        200
+        208
+        210
+        200
+        207
+        240
+        269
+        260
+        263
+    }
+
+
+let count-increase list =
+    let current! = 10000
+
+    list |> fold 0 [ acc i ->
+        let increase = i > current!
+        set current! = i
+        acc + (increase ? 1 : 0) ]
+
+
+
+print (input |> count-increase)
+
+read-lines "src/test/resources/advent-of-code/day1.input" |> count-increase

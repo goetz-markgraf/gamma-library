@@ -12,6 +12,6 @@ class CopyWithFunction : BuiltinFunction(listOf("property-list", "record")) {
 
         val checkedList = extractListOfPairFromList(list, scope)
 
-        return record.copyWith(checkedList)
+        return record.copyWith(checkedList, scope)
     }
 }

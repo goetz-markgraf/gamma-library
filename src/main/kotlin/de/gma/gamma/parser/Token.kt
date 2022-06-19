@@ -25,7 +25,6 @@ enum class TokenType {
     CLOSE_PARENS,
     STRING,
     OP,
-    SPREAD,
     OP_AS_ID,
     ID,
     ID_AS_OP,

@@ -56,11 +56,9 @@ class Lexer(
 
             isStartOfIdentifier(char, peekChar) -> parseIdentifier()
 
-            isSpread(char, peekChar, peekPeekChar) -> parseSpread()
-
             isOperatorChar(char) -> parseOperator()
 
-            isStartOfFunctionOperator(char, peekChar) -> parseOperatorAsIdentifier()
+            isStartOfFunctionOperator(char, peekChar, peekPeekChar) -> parseOperatorAsIdentifier()
 
             isUnit(char, peekChar) -> parseUnit()
 
@@ -166,22 +164,6 @@ class Lexer(
         } else {
             ret.copy(type = TokenType.ERROR)
         }
-    }
-
-
-    private fun parseSpread(): Token {
-        val start = position()
-        next()
-        next()
-        val end = position()
-        next()
-        return Token(
-            type = TokenType.SPREAD,
-            content = "...",
-            sourceName = sourceName,
-            start = start,
-            end = end
-        )
     }
 
 
