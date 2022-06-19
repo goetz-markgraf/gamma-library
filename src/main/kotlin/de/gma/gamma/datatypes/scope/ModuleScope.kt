@@ -12,6 +12,12 @@ open class ModuleScope(override val parent: Scope? = GammaBaseScope) : Scope {
         return content.keys.toList().toString()
     }
 
+    fun getAllNames() =
+        content.keys.toList()
+
+    fun getRemark(name: String) =
+        remarks[name]
+
     override fun getValue(id: String): Value {
 
         return content[id]
