@@ -2,7 +2,6 @@ package de.gma.gamma.builtins
 
 import de.gma.gamma.datatypes.Value
 import de.gma.gamma.datatypes.list.ListValue
-import de.gma.gamma.datatypes.list.PairValue
 import de.gma.gamma.datatypes.list.StringValue
 import de.gma.gamma.datatypes.scope.Scope
 import de.gma.gamma.datatypes.values.FloatValue
@@ -32,21 +31,19 @@ private fun extractNumberFromString(value: StringValue): Value {
     return UnitValue.build()
 }
 
-fun extractListOfPairFromList(
+fun checkForListOfPairs(
     list: ListValue,
-    scope: Scope
 ) = list.allItems().map {
-    val item = it.evaluate(scope)
-    if (item is ListValue && item.size() == 2)
-        item.toPair()
+    if (it is ListValue && it.size() == 2)
+        it
     else
         throw EvaluationException("Wrong Parameter, not list of pairs")
 }
 
-fun createMapFromListOfPair(content: List<PairValue>, scope: Scope) = buildMap<String, Value> {
+fun createMapFromListOfPair(content: List<ListValue>, scope: Scope) = buildMap<String, Value> {
     content.forEach {
         if (it.size() >= 2) {
-            put((it.first() as PropertyValue).identifier, it.getAt(1).evaluate(scope))
+            put((it.first() as PropertyValue).identifier, it.last().evaluate(scope))
         } else {
             throw EvaluationException("cannot create record")
         }

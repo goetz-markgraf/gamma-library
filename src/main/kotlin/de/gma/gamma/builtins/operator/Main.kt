@@ -11,8 +11,6 @@ fun populateOperator(scope: Scope) {
     bindWithDoc(scope, "/", DividedByFunction(), "<a> / <b> - divides <a> by <b>")
     bindWithDoc(scope, "^", PowerToFunction(), "<a> ^ <b> - raise <a> to the <b>th power")
     bindWithDoc(scope, "neg", NegativeFunction(), "neg <a> - return the negative of a number")
-    bindWithDoc(scope, "->", MakeUnevaluatedPairFunction(), "needed for constructing records and predicated")
-    bindWithDoc(scope, "@", MakePairFunction(), "<a> -> <b> - creates a list from the two values")
     bindWithDoc(scope, "|>", PipeFunction(), "<value> |> <function> - calls <function> with <value> as parameter")
     // @Formatter:on
 }

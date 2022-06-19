@@ -123,7 +123,10 @@ class Parser(
 
             assertNotNull(op2)
 
-            op1 = OperaterCall(sourceName, start, currEnd, op, op1, op2!!, level)
+            if (op.name == "->" && op2 != null)
+                op1 = ListLiteral(sourceName, start, currEnd, listOf(op1, op2))
+            else
+                op1 = OperaterCall(sourceName, start, currEnd, op, op1, op2!!, level)
         }
 
         return op1
