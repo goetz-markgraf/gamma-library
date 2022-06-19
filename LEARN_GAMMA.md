@@ -192,7 +192,8 @@ operator. That is why in _Gamma_ the parameter indicating the value to work on c
 ## lambda functions
 
 As I have said before, functions are also values that can be assigned. Function can easily be
-created "on the fly" (aka lambda function) using `[` and `]` and a `->` to seperate parameters from the code. Actually, the
+created "on the fly" (aka lambda function) using `[` and `]` and a `->` to seperate parameters from the code. Actually,
+the
 declaration of functions described above is only a shorthand way of assigning a lambda function
 to a value
 
@@ -245,8 +246,6 @@ copy with the `copy-with`-function:
     a |> copy-with { :first-name -> "Sarah" } 
 ```
 
-
-
 # Built-in functions
 
 These are the functions currenty built in into _Gamma_:
@@ -255,7 +254,8 @@ These are the functions currenty built in into _Gamma_:
 * 'print* &lt;value&gt; - prints a value to standard out without a newline at the end'
 * 'read-lines &lt;filename&gt; - reads the content of &lt;filename&gt; as a list of strings'
 * 'split &lt;string&gt; - splits a string separated by blank into a list of strings'
-* 'join &lt;string&gt; &lt;list&gt; - joins all elements of &lt;list&gt; together as one string, seperated by &lt;string&gt;'
+* 'join &lt;string&gt; &lt;list&gt; - joins all elements of &lt;list&gt; together as one string, seperated by
+  &lt;string&gt;'
 * '&lt;a&gt; + &lt;b&gt; - adds two number values'
 * '&lt;a&gt; - &lt;b&gt; - subtract &lt;b&gt; from &lt;a&gt;'
 * '&lt;a&gt; * &lt;b&gt; - multiplies two number values'
@@ -274,19 +274,23 @@ These are the functions currenty built in into _Gamma_:
 * 'append &lt;item&gt; &lt;list&gt; – appends an item to the end of the list'
 * 'appendAll &lt;new-list&gt; &lt;list&gt; – appends all items of &lt;new-list&gt; the end of &lt;list&gt;'
 * '&lt;item&gt; :: &lt;list&gt; – prepends a list with an as the new first element'
-* 'list-generator &lt;size&gt; &lt;function&gt; – creates a list of size &lt;size&gt; that uses &lt;function&gt; to generate the values'
-* 'repeat &lt;num&gt; - create a list from 0 to &lt;repeate&gt; - 1'
+* 'list-generator &lt;size&gt; &lt;function&gt; – creates a list of size &lt;size&gt; that uses &lt;function&gt; to
+  generate the values'
+* 'repeat &lt;num&gt; - create a list from 0 to &lt;repeat&gt; - 1'
 * '&lt;start&gt; .. &lt;end&gt; - create a list from start&gt; to &lt;end&gt; inclusive'
 * 'map &lt;function&gt; &lt;list&gt; – creates a new list with every item of &lt;list&gt; run through &lt;function&gt;'
 * 'for-each &lt;function&gt; &lt;list&gt; – calls &lt;function&gt; for every item of &lt;list&gt;'
-* 'fold &lt;inital&gt; &lt;function&gt; &lt;list&gt; – folds the &lt;list&gt; with &lt;function&gt; and &lt;initial&gt; acc'
+* 'fold &lt;inital&gt; &lt;function&gt; &lt;list&gt; – folds the &lt;list&gt; with &lt;function&gt; and &lt;initial&gt;
+  acc'
 * 'reduce &lt;function&gt; &lt;list&gt; – reduces the &lt;list&gt; with &lt;function&gt;'
-* 'reduce &lt;predicate&gt; &lt;list&gt; – filters the &lt;list&gt; such that it contains only elements the match the &lt;predicate&gt;'
+* 'filter &lt;predicate&gt; &lt;list&gt; – filters the &lt;list&gt; such that it contains only elements the match the
+  &lt;predicate&gt;'
 * 'contains? &lt;item&gt; &lt;list&gt; – tests if &lt;item&gt; is in &lt;list&gt;. This also includes strings.'
 * 'is-list? &lt;value&gt; – tests if &lt;value&gt; is a list. This also includes strings'
 * 'is-string? &lt;value&gt; – tests if &lt;value&gt; is a string'
 * 'is-pair? &lt;value&gt; – tests if &lt;value&gt; is a pair, i. e. a list with two elements'
-* 'is-empty? &lt;list or string&gt; – tests if &lt;list or string&gt; is empty, i. e. does not contain elements or characters'
+* 'is-empty? &lt;list or string&gt; – tests if &lt;list or string&gt; is empty, i. e. does not contain elements or
+  characters'
 * 'is-not-empty? &lt;list or string&gt; – tests if &lt;list or string&gt; contains at least one element or character'
 * 'when &lt;list of predicate/expression lists&gt; - checks each predicate to evaluate to first expression with a true
   predicate'
@@ -302,4 +306,5 @@ These are the functions currenty built in into _Gamma_:
 * 'else - the same as true'
 * 'at &lt;pos&gt; &lt;list&gt; – returns the &lt;pos&gt;th element of this list'
 * 'record &lt;list of pair&gt; – creates a record from a list of pairs'
-* 'copy-with &lt;list of pair&gt; &lt;record&gt; – creates a new record based on &lt;record&gt; with changes from a list of pairs'
+* 'copy-with &lt;list of pair&gt; &lt;record&gt; – creates a new record based on &lt;record&gt; with changes from a list
+  of pairs'

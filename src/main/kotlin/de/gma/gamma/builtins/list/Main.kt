@@ -25,7 +25,7 @@ fun populateList(scope: Scope) {
     bindWithDoc(scope, "for-each", ForEachFunction(), "for-each <function> <list> – calls <function> for every item of <list>")
     bindWithDoc(scope, "fold", FoldFunction(), "fold <inital> <function> <list> – folds the <list> with <function> and <initial> acc")
     bindWithDoc(scope, "reduce", ReduceFunction(), "reduce <function> <list> – reduces the <list> with <function>")
-    bindWithDoc(scope, "filter", FilterFunction(), "reduce <predicate> <list> – filters the <list> such that it contains only elements the match the <predicate>")
+    bindWithDoc(scope, "filter", FilterFunction(), "filter <predicate> <list> – filters the <list> such that it contains only elements the match the <predicate>")
 
     bindWithDoc(scope, "contains?", ContainsPredicate(), "contains? <item> <list> – tests if <item> is in <list>. This also includes strings.")
     bindWithDoc(scope, "is-list?", ListPredicate(), "is-list? <value> – tests if <value> is a list. This also includes strings")
