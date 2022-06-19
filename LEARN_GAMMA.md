@@ -265,7 +265,7 @@ These are the functions currenty built in into _Gamma_:
 * '&lt;value&gt; |&gt; &lt;function&gt; - calls &lt;function&gt; with &lt;value&gt; as parameter'
 * 'first &lt;list&gt; – returns the first element or () if empty list'
 * 'second &lt;list&gt; – returns the second element or () if there is none'
-* 'first &lt;list&gt; – returns the first element or () if empty list'
+* 'head &lt;list&gt; – returns the first element or () if empty list'
 * 'tail &lt;list&gt; – returns all but the fist element or empty list if empty list'
 * 'last &lt;list&gt; – returns the last element or () if empty list'
 * 'drop-last &lt;list&gt; – returns all but the last element or empty list if empty list'

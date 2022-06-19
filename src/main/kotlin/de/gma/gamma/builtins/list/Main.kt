@@ -8,7 +8,7 @@ fun populateList(scope: Scope) {
     // @Formatter:off
     bindWithDoc(scope, "first", FirstFunction(), "first <list> – returns the first element or () if empty list")
     bindWithDoc(scope, "second", SecondFunction(), "second <list> – returns the second element or () if there is none")
-    bindWithDoc(scope, "head", FirstFunction(), "first <list> – returns the first element or () if empty list")
+    bindWithDoc(scope, "head", FirstFunction(), "head <list> – returns the first element or () if empty list")
     bindWithDoc(scope, "tail", TailFunction(), "tail <list> – returns all but the fist element or empty list if empty list")
     bindWithDoc(scope, "last", LastFunction(), "last <list> – returns the last element or () if empty list")
     bindWithDoc(scope, "drop-last", DropLastFunction(), "drop-last <list> – returns all but the last element or empty list if empty list")
