@@ -13,6 +13,10 @@ language that borrows heavyly from two sources:
 The idea is to create a language that combines the simplicity of the inner workings of lips with the easy to write and
 read syntax of ML-based languages.
 
+## Learn Gamma
+
+See: [LEARN_GAMMA.md](LEARN_GAMMA.md)
+
 ## Usage
 
 You can link this library to your project and use it to include a scripting language in your software.
