@@ -15,10 +15,15 @@ let test-input =
     }
 
 
+
+
 let make-initial-list first-line =
     list-generator (size first-line) [i -> 0]
 
-let most-common-bits list = 
+
+
+
+let find-common-bits list = 
     
     let apply line current =
         let additions =
@@ -37,6 +42,10 @@ let most-common-bits list =
     inner-rec (make-initial-list (first list)) list
 
 
+
+
+
+
 let make-binary-from-list positiv number-list =
     number-list
     |> map [ number ->
@@ -52,8 +61,11 @@ let make-number-from-binary list =
     ]
 
 
+
+
+
 let produce-result input =
-    let common-bits = most-common-bits input
+    let common-bits = find-common-bits input
 
     let gamma-rate =
         common-bits
@@ -68,9 +80,13 @@ let produce-result input =
     gamma-rate * epsilon-rate
 
 
+
+
 test-input
 |> produce-result
 |> print
+
+
 
 
 read-lines "src/test/resources/advent-of-code/day3.input"
