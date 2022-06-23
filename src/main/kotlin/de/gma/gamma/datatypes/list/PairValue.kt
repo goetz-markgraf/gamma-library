@@ -1,5 +1,7 @@
 package de.gma.gamma.datatypes.list
 
+import de.gma.gamma.builtins.builtInSource
+import de.gma.gamma.builtins.nullPos
 import de.gma.gamma.datatypes.Value
 import de.gma.gamma.parser.Position
 
@@ -63,4 +65,8 @@ class PairValue(
         else other.allItems() == allItems()
 
     override fun hashCode() = (left.hashCode() + right.hashCode())
+
+    companion object {
+        fun build(a: Value, b: Value) = PairValue(builtInSource, nullPos, nullPos, a, b)
+    }
 }

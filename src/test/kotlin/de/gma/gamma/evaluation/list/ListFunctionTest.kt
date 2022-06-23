@@ -117,4 +117,38 @@ class ListFunctionTest : BaseEvaluationTest() {
         assertThat(result.first().prettyPrint()).isEqualTo("3")
         assertThat(result.last().prettyPrint()).isEqualTo("4")
     }
+
+    @Test
+    fun `zips two lists together`() {
+        val result = execute("zip {1, 2, 3} {3, 2, 1}") as ListValue
+
+        assertThat(result.size()).isEqualTo(3)
+
+        val firstPair = result.first() as ListValue
+        assertThat(firstPair.size()).isEqualTo(2)
+        assertThat((firstPair.first() as IntegerValue).longValue).isEqualTo(1L)
+        assertThat((firstPair.last() as IntegerValue).longValue).isEqualTo(3L)
+
+        val lastPair = result.last() as ListValue
+        assertThat(lastPair.size()).isEqualTo(2)
+        assertThat((lastPair.first() as IntegerValue).longValue).isEqualTo(3L)
+        assertThat((lastPair.last() as IntegerValue).longValue).isEqualTo(1L)
+    }
+
+    @Test
+    fun `zip shortens to shortest list`() {
+        val result = execute("zip {1, 2, 3} {5, 4, 3, 2, 1}") as ListValue
+
+        assertThat(result.size()).isEqualTo(3)
+
+        val firstPair = result.first() as ListValue
+        assertThat(firstPair.size()).isEqualTo(2)
+        assertThat((firstPair.first() as IntegerValue).longValue).isEqualTo(1L)
+        assertThat((firstPair.last() as IntegerValue).longValue).isEqualTo(5L)
+
+        val lastPair = result.last() as ListValue
+        assertThat(lastPair.size()).isEqualTo(2)
+        assertThat((lastPair.first() as IntegerValue).longValue).isEqualTo(3L)
+        assertThat((lastPair.last() as IntegerValue).longValue).isEqualTo(3L)
+    }
 }
