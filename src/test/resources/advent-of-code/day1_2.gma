@@ -28,6 +28,7 @@ let count-increase-window list =
 
     (count-rec 0 list) - 1
 
-print (join " " {"test:", count-increase-window test-input})
+count-increase-window test-input
+|> print
 
 read-lines "src/test/resources/advent-of-code/day1.input" |> count-increase-window
