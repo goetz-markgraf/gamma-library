@@ -88,13 +88,13 @@ class Parser(
         if (predicate != null && checkType(col, ELVIS) && currToken.content == "?") {
             nextToken()
 
-            val thenExpr = parseOperation(col, MAX_OPERATOR_LEVEL)
+            val thenExpr = nextExpression(col)
             assertNotNull(thenExpr)
 
             assertTypeWithContent(col, ELVIS, ":")
             nextToken()
 
-            val elseExpr = parseOperation(col, MAX_OPERATOR_LEVEL)
+            val elseExpr = nextExpression(col)
             assertNotNull(elseExpr)
 
             return IfExpression(sourceName, start, currEnd, predicate, thenExpr!!, elseExpr!!)
