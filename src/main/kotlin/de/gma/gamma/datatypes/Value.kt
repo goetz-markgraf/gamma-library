@@ -1,6 +1,6 @@
 package de.gma.gamma.datatypes
 
-import de.gma.gamma.builtins.namespaces.PropertyFunction
+import de.gma.gamma.builtins.namespaces.special.PropertyFunction
 import de.gma.gamma.datatypes.functions.FunctionValue
 import de.gma.gamma.datatypes.list.ListValue
 import de.gma.gamma.datatypes.list.StringValue

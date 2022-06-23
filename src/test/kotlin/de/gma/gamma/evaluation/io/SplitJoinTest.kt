@@ -37,6 +37,38 @@ class SplitJoinTest : BaseEvaluationTest() {
     }
 
     @Nested
+    inner class SplitBy {
+
+        @Test
+        fun `split a string by comma`() {
+            val result = execute("split-by \",\" \"1,2,3\"") as ListValue
+
+            assertThat(result.size()).isEqualTo(3)
+            assertThat(result.first().toStringValue().strValue).isEqualTo("1")
+            assertThat(result.last().toStringValue().strValue).isEqualTo("3")
+        }
+
+        @Test
+        fun `split a string by multiple commas`() {
+            val result = execute("split-by \",\" \"1,,2,3\"") as ListValue
+
+            assertThat(result.size()).isEqualTo(4)
+            assertThat(result.first().toStringValue().strValue).isEqualTo("1")
+            assertThat(result.getAt(1).toStringValue().strValue).isEqualTo("")
+            assertThat(result.last().toStringValue().strValue).isEqualTo("3")
+        }
+
+        @Test
+        fun `split a string by multiple characters`() {
+            val result = execute("split-by \",;\" \"1,;2;3\"") as ListValue
+
+            assertThat(result.size()).isEqualTo(2)
+            assertThat(result.first().toStringValue().strValue).isEqualTo("1")
+            assertThat(result.last().toStringValue().strValue).isEqualTo("2;3")
+        }
+    }
+
+    @Nested
     inner class Join {
 
         @Test

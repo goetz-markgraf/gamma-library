@@ -5,7 +5,7 @@ import de.gma.gamma.datatypes.Value
 import de.gma.gamma.datatypes.list.ListValue
 import de.gma.gamma.datatypes.scope.Scope
 
-class FilterFunction : BuiltinFunction(listOf("predicate", "list")) {
+object FilterFunction : BuiltinFunction(listOf("predicate", "list")) {
     override fun callInternal(scope: Scope, callParams: List<Value>): Value {
         val function = callParams[0].evaluate(scope).toFunction()
         val list = callParams[1].evaluate(scope).toList()

@@ -5,7 +5,7 @@ import de.gma.gamma.datatypes.Value
 import de.gma.gamma.datatypes.list.StringValue
 import de.gma.gamma.datatypes.scope.Scope
 
-class JoinFunction : BuiltinFunction(listOf("string", "list")) {
+object JoinFunction : BuiltinFunction(listOf("string", "list")) {
     override fun callInternal(scope: Scope, callParams: List<Value>): Value {
         val separator = callParams[0].evaluate(scope).toStringValue()
         val list = callParams[1].evaluate(scope).toList()

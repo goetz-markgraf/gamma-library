@@ -4,7 +4,7 @@ import de.gma.gamma.builtins.BuiltinFunction
 import de.gma.gamma.datatypes.Value
 import de.gma.gamma.datatypes.scope.Scope
 
-class FoldFunction : BuiltinFunction(listOf("initial", "function", "list")) {
+object FoldFunction : BuiltinFunction(listOf("initial", "function", "list")) {
     override fun callInternal(scope: Scope, callParams: List<Value>): Value {
         val initial = callParams[0].evaluate(scope)
         val function = callParams[1].evaluate(scope).toFunction()

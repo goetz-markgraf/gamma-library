@@ -6,7 +6,7 @@ import de.gma.gamma.datatypes.list.StringValue
 import de.gma.gamma.datatypes.scope.Namespace
 import de.gma.gamma.datatypes.scope.Scope
 
-class GetAtFunction : BuiltinFunction(listOf("pos", "list")) {
+object GetAtFunction : BuiltinFunction(listOf("pos", "list")) {
     override fun callInternal(scope: Scope, callParams: List<Value>): Value {
         val pos = callParams[0].evaluate(scope)
         val obj = callParams[1].evaluate(scope)

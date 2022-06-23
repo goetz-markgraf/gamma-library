@@ -5,7 +5,7 @@ import de.gma.gamma.datatypes.Value
 import de.gma.gamma.datatypes.scope.Scope
 import de.gma.gamma.parser.EvaluationException
 
-class GreaterThanOrEqualFunction : FunctionTwoNumbersToBoolean() {
+object GreaterThanOrEqualFunction : FunctionTwoNumbersToBoolean() {
     override fun callInternal(scope: Scope, callParams: List<Value>): Value {
         val ret = operateOnTwoNumbers(
             scope,

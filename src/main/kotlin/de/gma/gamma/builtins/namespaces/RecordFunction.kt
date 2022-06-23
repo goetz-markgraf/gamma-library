@@ -7,7 +7,7 @@ import de.gma.gamma.datatypes.Value
 import de.gma.gamma.datatypes.record.RecordValue
 import de.gma.gamma.datatypes.scope.Scope
 
-class RecordFunction : BuiltinFunction(listOf("property-list")) {
+object RecordFunction : BuiltinFunction(listOf("property-list")) {
     override fun callInternal(scope: Scope, callParams: List<Value>): Value {
         val list = callParams[0].evaluate(scope).toList()
 

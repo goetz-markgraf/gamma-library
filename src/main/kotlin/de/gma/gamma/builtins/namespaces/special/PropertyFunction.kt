@@ -1,4 +1,4 @@
-package de.gma.gamma.builtins.namespaces
+package de.gma.gamma.builtins.namespaces.special
 
 import de.gma.gamma.builtins.BuiltinFunction
 import de.gma.gamma.datatypes.Value

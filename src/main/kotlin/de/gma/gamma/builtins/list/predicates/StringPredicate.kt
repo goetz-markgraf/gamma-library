@@ -6,7 +6,7 @@ import de.gma.gamma.datatypes.list.StringValue
 import de.gma.gamma.datatypes.scope.Scope
 import de.gma.gamma.datatypes.values.BooleanValue
 
-class StringPredicate : BuiltinFunction(listOf("list")) {
+object StringPredicate : BuiltinFunction(listOf("list")) {
     override fun callInternal(scope: Scope, callParams: List<Value>): Value {
         val l = callParams[0].evaluate(scope)
 

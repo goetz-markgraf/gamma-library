@@ -6,15 +6,14 @@ import de.gma.gamma.datatypes.list.ListValue
 import de.gma.gamma.datatypes.list.StringValue
 import de.gma.gamma.datatypes.scope.Scope
 
-object SplitFunction : BuiltinFunction(listOf("string")) {
+object SplitByFunction : BuiltinFunction(listOf("separator", "string")) {
     override fun callInternal(scope: Scope, callParams: List<Value>): Value {
-        val str = callParams[0].evaluate(scope).toStringValue()
+        val sep = callParams[0].evaluate(scope).toStringValue()
+        val str = callParams[1].evaluate(scope).toStringValue()
 
-        val split = str.strValue.split(' ')
+        val split = str.strValue.split(sep.strValue)
         return ListValue.build(split.mapNotNull {
-            if (it.isNotEmpty())
-                StringValue.build(it)
-            else null
+            StringValue.build(it)
         })
     }
 }

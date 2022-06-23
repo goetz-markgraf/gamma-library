@@ -12,8 +12,10 @@ class BooleanLogicTest : BaseEvaluationTest() {
     @ValueSource(
         strings = [
             "2 > 1 & 1 < 2",
+            "2 ≥ 1 ⋀ 1 < 2",
             "2 > 1 | 1 > 2",
             "2 < 1 | 1 < 2",
+            "2 < 1 ⋁ 1 ≤ 2",
             "not false",
             "not (1 > 2)"
         ]
@@ -27,8 +29,10 @@ class BooleanLogicTest : BaseEvaluationTest() {
     @ValueSource(
         strings = [
             "2 < 1 & 1 < 2",
+            "2 < 1 ⋀ 1 < 2",
             "2 > 1 & 1 > 2",
-            "2 < 1 | 1 > 2",
+            "2 ≤ 1 | 1 > 2",
+            "2 < 1 ⋁ 1 ≥ 2",
             "not true",
             "not (1 < 2)"
         ]

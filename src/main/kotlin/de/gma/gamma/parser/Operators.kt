@@ -12,12 +12,12 @@ const val OP_LEVEL_ARROW = 7
 
 val operatorLevels = listOf(
     mutableListOf("^", "..", "::", "@"),
-    mutableListOf("*", "/"),
+    mutableListOf("*", "/", "×", "÷"),
     mutableListOf("+", "-"),
     mutableListOf(),
-    mutableListOf(">", ">=", "<", "<=", "=", "=", "!="),
-    mutableListOf("&"),
-    mutableListOf("|"),
+    mutableListOf(">", ">=", "≥", "<", "<=", "≤", "=", "≠", "!="),
+    mutableListOf("&", "⋀"),
+    mutableListOf("|", "⋁"),
     mutableListOf("->", "|>")
 )
 

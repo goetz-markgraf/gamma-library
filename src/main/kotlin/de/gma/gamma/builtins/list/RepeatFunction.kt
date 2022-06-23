@@ -6,7 +6,7 @@ import de.gma.gamma.datatypes.Value
 import de.gma.gamma.datatypes.list.ListGenerator
 import de.gma.gamma.datatypes.scope.Scope
 
-class RepeatFunction : BuiltinFunction(listOf("size")) {
+object RepeatFunction : BuiltinFunction(listOf("size")) {
     override fun callInternal(scope: Scope, callParams: List<Value>): Value {
         val size = callParams[0].evaluate(scope).toInteger()
 

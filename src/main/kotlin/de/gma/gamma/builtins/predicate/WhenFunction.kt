@@ -7,7 +7,7 @@ import de.gma.gamma.datatypes.list.ListValue
 import de.gma.gamma.datatypes.scope.Scope
 import de.gma.gamma.datatypes.values.UnitValue
 
-class WhenFunction : BuiltinFunction(listOf("cases")) {
+object WhenFunction : BuiltinFunction(listOf("cases")) {
     override fun callInternal(scope: Scope, callParams: List<Value>): Value {
         var list = callParams[0]
 

@@ -5,7 +5,7 @@ import de.gma.gamma.datatypes.Value
 import de.gma.gamma.datatypes.scope.Scope
 import de.gma.gamma.parser.EvaluationException
 
-class TimesFunction : FunctionTwoNumbersToNumber() {
+object TimesFunction : FunctionTwoNumbersToNumber() {
     override fun callInternal(scope: Scope, callParams: List<Value>): Value {
         val ret = operateOnTwoNumbers(
             scope,

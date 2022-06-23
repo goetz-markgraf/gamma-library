@@ -50,4 +50,11 @@ class TimesTest : BaseEvaluationTest() {
         val result = execute(code)
         assertThat(result).isEqualTo(FloatValue.build(205.0))
     }
+    
+    @Test
+    fun `multiply with the mathematical sign`() {
+        val code = "10 × 20"
+        val result = execute(code)
+        assertThat(result).isEqualTo(IntegerValue.build(200))
+    }
 }

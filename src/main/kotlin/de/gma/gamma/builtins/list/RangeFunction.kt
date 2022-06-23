@@ -7,7 +7,7 @@ import de.gma.gamma.datatypes.scope.Scope
 import de.gma.gamma.datatypes.values.IntegerValue
 import java.lang.Math.abs
 
-class RangeFunction : BuiltinFunction(listOf("from", "to")) {
+object RangeFunction : BuiltinFunction(listOf("from", "to")) {
     override fun callInternal(scope: Scope, callParams: List<Value>): Value {
         val from = callParams[0].evaluate(scope).toInteger().longValue.toInt()
         val to = callParams[1].evaluate(scope).toInteger().longValue.toInt()
@@ -19,20 +19,20 @@ class RangeFunction : BuiltinFunction(listOf("from", "to")) {
         return ListGenerator.build(size, InternalRangeFunction(from, asc))
     }
 
-    inner class InternalRangeFunction(
-        private val from: Int,
-        private val asc: Boolean
-    ) : BuiltinFunction(
-        listOf("pos")
-    ) {
-        override fun callInternal(scope: Scope, callParams: List<Value>): Value {
-            val pos = callParams[0].evaluate(scope).toInteger().longValue.toInt()
+}
 
-            val ret = if (asc) from + pos else from - pos
+private class InternalRangeFunction(
+    private val from: Int,
+    private val asc: Boolean
+) : BuiltinFunction(
+    listOf("pos")
+) {
+    override fun callInternal(scope: Scope, callParams: List<Value>): Value {
+        val pos = callParams[0].evaluate(scope).toInteger().longValue.toInt()
 
-            return IntegerValue.build(ret.toLong())
-        }
+        val ret = if (asc) from + pos else from - pos
 
+        return IntegerValue.build(ret.toLong())
     }
 
 }
