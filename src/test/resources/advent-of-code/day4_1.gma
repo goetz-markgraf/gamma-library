@@ -1,0 +1,118 @@
+let test-input =
+    {
+        "7,4,9,5,11,17,23,2,0,14,21,24,10,16,13,6,15,25,12,22,18,20,8,19,3,26,1"
+        ""
+        "22 13 17 11  0"
+        " 8  2 23  4 24"
+        "21  9 14 16  7"
+        " 6 10  3 18  5"
+        " 1 12 20 15 19"
+        ""
+        " 3 15  0  2 22"
+        " 9 18 13 17  5"
+        "19  8  7 25 23"
+        "20 11 10 24  4"
+        "14 21 16 12  6"
+        ""
+        "14 21 17 24  4"
+        "10 16 15  9 19"
+        "18  8 23 26 20"
+        "22 11 13  6  5"
+        " 2  0 12  3  7"
+    }
+
+
+
+let extract-numbers-from-first-line list =
+    list |> first |> split-by ","
+
+
+
+let create-boards board-list input-list =
+
+    let extract-board-lines input-list =
+        input-list |> slice 1 5
+
+    let extract-next-boards-lines input-list =
+        input-list |> slice 6 (size input-list - 6)
+
+    let create-board input-list =
+        input-list |> map [ line -> line |> split ]
+
+    size input-list ≥ 6
+    ? create-boards
+        (board-list |> append (create-board (extract-board-lines input-list)))
+        (extract-next-boards-lines input-list)
+    : board-list
+
+
+
+let find-winning-num-board-pair boards numbers =
+
+    let play-round number boards =
+        let play-round number board =
+            board
+            |> map [ line ->
+                line |> map [num ->
+                    num = number ? () : num
+                ]
+            ]
+
+        boards |> map (play-round number)
+
+    let has-won? boards =
+
+        let winning-board! = ()
+
+        let line-won? board =
+            board
+            |> filter [ line ->
+                line |> filter [ num -> num ≠ ()] |> is-empty?
+            ] |> is-not-empty?
+
+        let col-won? board =
+            let board-won! = false
+            0 .. 4 |> for-each [ col ->
+                let row-won! = true
+                0 .. 4 |> for-each [ row ->
+                    (board |> at row |> at col) ≠ ()
+                    ? set row-won! = false
+                    : () ]
+                row-won! ? (set board-won! = true) : () ]
+            board-won!
+
+        boards |> for-each [ board -> (line-won? board | col-won? board) ? set winning-board! = board : () ]
+        winning-board!
+
+    let new-boards = play-round (first numbers) boards
+    let board-won = has-won? new-boards
+
+    board-won ≠ () | (size numbers) ≤ 1
+    ? (first numbers) -> (board-won = () ? boards : board-won)
+    : find-winning-num-board-pair new-boards (tail numbers)
+
+
+
+let calculate-score num-board-pair =
+    first num-board-pair *
+    (last num-board-pair
+        |> fold 0 [ acc line ->
+            acc + (line |> fold 0 [ acc num -> acc + (num ≠ () ? num : 0) ])
+        ])
+
+
+let produce-result list =
+    let numbers = list |> extract-numbers-from-first-line
+
+    let boards = create-boards {} (tail list)
+
+    find-winning-num-board-pair boards numbers
+    |> calculate-score
+
+
+test-input
+|> produce-result
+|> print
+
+read-lines "src/test/resources/advent-of-code/day4.input"
+|> produce-result

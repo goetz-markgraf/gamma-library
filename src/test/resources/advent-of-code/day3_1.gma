@@ -50,8 +50,8 @@ let make-binary-from-list positiv number-list =
     number-list
     |> map [ number ->
         positiv
-        ? (number > 0 ? 1 : 0)
-        : (number > 0 ? 0 : 1) ]
+        ? number > 0 ? 1 : 0
+        : number > 0 ? 0 : 1 ]
 
 
 let make-number-from-binary list =
