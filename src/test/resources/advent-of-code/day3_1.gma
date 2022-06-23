@@ -1,0 +1,77 @@
+let test-input =
+    {
+        "00100"
+        "11110"
+        "10110"
+        "10111"
+        "10101"
+        "01111"
+        "00111"
+        "11100"
+        "10000"
+        "11001"
+        "00010"
+        "01010"
+    }
+
+
+let make-initial-list first-line =
+    list-generator (size first-line) [i -> 0]
+
+let most-common-bits list = 
+    
+    let apply line current =
+        let additions =
+            line |> map [char -> char = "1" ? 1 : -1]
+
+        zip current additions
+        |> map [ pair ->
+            first pair + last pair ]
+
+    let inner-rec current list =
+        when {
+            is-empty? list -> current
+            else -> inner-rec (current |> apply (head list)) (tail list)
+        }
+
+    inner-rec (make-initial-list (first list)) list
+
+
+let make-binary-from-list positiv number-list =
+    number-list
+    |> map [ number ->
+        positiv
+        ? (number > 0 ? 1 : 0)
+        : (number > 0 ? 0 : 1) ]
+
+
+let make-number-from-binary list =
+    list
+    |> fold 0 [ acc i ->
+        acc * 2 + i
+    ]
+
+
+let produce-result input =
+    let common-bits = most-common-bits input
+
+    let gamma-rate =
+        common-bits
+        |> make-binary-from-list true
+        |> make-number-from-binary
+
+    let epsilon-rate =
+        common-bits
+        |> make-binary-from-list false
+        |> make-number-from-binary
+
+    gamma-rate * epsilon-rate
+
+
+test-input
+|> produce-result
+|> print
+
+
+read-lines "src/test/resources/advent-of-code/day3.input"
+|> produce-result
