@@ -37,7 +37,7 @@ let calculate-position start list =
 
 let test-result = calculate-position (record {:forward -> 0, :depth -> 0, :aim -> 0}) test-input
 
-print ((:depth test-result) * ( :forward test-result))
+print ((:depth test-result) * (:forward test-result))
 
 let result =
     read-lines "src/test/resources/advent-of-code/day2.input"
