@@ -10,6 +10,7 @@ fun populateIO(scope: Scope) {
     bindWithDoc(scope, "read-lines", ReadLinesFunction, "read-lines <filename> - reads the content of <filename> as a list of strings")
     bindWithDoc(scope, "split", SplitFunction, "split <string> - splits a string separated by blank into a list of strings")
     bindWithDoc(scope, "split-by", SplitByFunction, "split-by <separator> <string> - splits a string separated by <separator> into a list of strings")
-    bindWithDoc(scope, "join", JoinFunction, "join <string> <list> - joins all elements of <list> together as one string, seperated by <string>")
+    bindWithDoc(scope, "join", JoinFunction, "join <list> - joins all elements of <list> together as one string, seperated by a blank")
+    bindWithDoc(scope, "join-by", JoinByFunction, "join-by <string> <list> - joins all elements of <list> together as one string, seperated by <string>")
     // @Formatter:on
 }

@@ -73,16 +73,23 @@ class SplitJoinTest : BaseEvaluationTest() {
 
         @Test
         fun `join all numbers of a list together as one string`() {
-            val result = execute("{1, 2, 3} |> join \", \"") as StringValue
+            val result = execute("{1, 2, 3} |> join-by \"-\"") as StringValue
 
-            assertThat(result.strValue).isEqualTo("1, 2, 3")
+            assertThat(result.strValue).isEqualTo("1-2-3")
         }
 
         @Test
         fun `join all boolean of a list together as one string`() {
-            val result = execute("{1 < 1, 1 < 2} |> join \", \"") as StringValue
+            val result = execute("{1 < 1, 1 < 2} |> join-by \", \"") as StringValue
 
             assertThat(result.strValue).isEqualTo("false, true")
+        }
+
+        @Test
+        fun `join all numbers of a list together as one string separated with a blank`() {
+            val result = execute("join {1, 2, 3}") as StringValue
+
+            assertThat(result.strValue).isEqualTo("1 2 3")
         }
     }
 }
