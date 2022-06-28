@@ -39,7 +39,7 @@ class SetExpression(
             currentScope = currentScope.parent
 
         if (currentScope != null) {
-            currentScope.set(identifier.name, value, documentation)
+            currentScope.setValue(identifier.name, value, documentation)
 
             return value
         } else {

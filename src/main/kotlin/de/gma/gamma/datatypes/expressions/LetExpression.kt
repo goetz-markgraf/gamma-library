@@ -32,7 +32,7 @@ class LetExpression(
     override fun evaluate(scope: Scope): Value {
         val value = boundValue.evaluate(scope)
 
-        scope.bind(identifier.name, value, documentation)
+        scope.bindValue(identifier.name, value, documentation)
         return value
     }
 }

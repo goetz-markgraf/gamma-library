@@ -66,6 +66,7 @@ abstract class ListValue(
         when (id) {
             "first" -> first()
             "last" -> last()
+            "tail" -> tail()
             "size" -> IntegerValue.build(size().toLong())
             else -> UnitValue.build()
         }

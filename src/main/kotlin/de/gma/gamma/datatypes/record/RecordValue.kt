@@ -25,7 +25,8 @@ class RecordValue(
         internalMap[id] ?: UnitValue.build()
 
     fun copyWith(changedContent: List<ListValue>, scope: Scope) =
-        RecordValue(builtInSource, nullPos, nullPos,
+        RecordValue(
+            builtInSource, nullPos, nullPos,
             mutableMapOf<String, Value>().apply {
                 putAll(internalMap)
                 putAll(createMapFromListOfPair(changedContent, scope))

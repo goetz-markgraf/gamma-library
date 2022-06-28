@@ -10,5 +10,5 @@ const val builtInSource = "<builtin>"
 val nullPos = Position(0, 0, 0)
 
 fun bindWithDoc(scope: Scope, id: String, func: FunctionValue, doc: String) {
-    scope.bind(id, func, Remark.buildDoc(doc))
+    scope.bindValue(id, func, Remark.buildDoc(doc))
 }

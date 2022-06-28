@@ -1,6 +1,7 @@
 package de.gma.gamma.builtins.predicate
 
 import de.gma.gamma.builtins.bindWithDoc
+import de.gma.gamma.datatypes.Remark
 import de.gma.gamma.datatypes.scope.Scope
 import de.gma.gamma.datatypes.values.BooleanValue
 
@@ -24,5 +25,9 @@ fun populateComparison(scope: Scope) {
     bindWithDoc(scope, "not", NotFunction, "not <a> - returns true if <a> is false and false if <a> is true")
     // @Formatter:on
 
-    scope.bind("else", BooleanValue.build(true))
+    scope.bindValue(
+        "else",
+        BooleanValue.build(true),
+        Remark.buildDoc("else - equal to true, can be used in when expressions")
+    )
 }

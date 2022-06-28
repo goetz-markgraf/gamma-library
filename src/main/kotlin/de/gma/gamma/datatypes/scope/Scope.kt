@@ -9,7 +9,7 @@ interface Scope : Namespace {
 
     val parent: Scope?
 
-    fun bind(name: String, value: Value, documentation: Remark? = null)
+    fun bindValue(name: String, value: Value, documentation: Remark? = null)
 
-    fun set(name: String, value: Value, documentation: Remark? = null)
+    fun setValue(name: String, value: Value, documentation: Remark? = null)
 }

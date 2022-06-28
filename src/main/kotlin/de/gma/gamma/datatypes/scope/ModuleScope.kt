@@ -30,7 +30,7 @@ open class ModuleScope(override val parent: Scope? = GammaBaseScope) : Scope {
     override fun containsLocally(id: String) =
         content.containsKey(id)
 
-    override fun bind(name: String, value: Value, documentation: Remark?) {
+    override fun bindValue(name: String, value: Value, documentation: Remark?) {
         if (content.contains(name))
             throw ScopeException("Id $name is already defined.")
 
@@ -39,7 +39,7 @@ open class ModuleScope(override val parent: Scope? = GammaBaseScope) : Scope {
             remarks[name] = documentation
     }
 
-    override fun set(name: String, value: Value, documentation: Remark?) {
+    override fun setValue(name: String, value: Value, documentation: Remark?) {
         if (!content.contains(name))
             throw ScopeException("Id $name is not defined.")
 

@@ -48,7 +48,7 @@ class LambdaFunction(
 
         val newScope: Scope = ModuleScope(scope)
         paramNames.zip(callParams).map { pair ->
-            newScope.bind(pair.first, pair.second)
+            newScope.bindValue(pair.first, pair.second)
         }
 
         return expressions.fold(UnitValue.build() as Value) { _, expr ->
