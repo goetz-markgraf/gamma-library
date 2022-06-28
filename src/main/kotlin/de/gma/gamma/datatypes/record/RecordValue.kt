@@ -7,7 +7,7 @@ import de.gma.gamma.datatypes.Value
 import de.gma.gamma.datatypes.list.ListValue
 import de.gma.gamma.datatypes.scope.Namespace
 import de.gma.gamma.datatypes.scope.Scope
-import de.gma.gamma.datatypes.values.UnitValue
+import de.gma.gamma.parser.EvaluationException
 import de.gma.gamma.parser.Position
 
 class RecordValue(
@@ -17,12 +17,11 @@ class RecordValue(
     private val internalMap: Map<String, Value>
 ) : Value(sourceName, beginPos, endPos), Namespace {
 
-    override fun prettyPrint(): String {
-        TODO("Not yet implemented")
-    }
+    override fun prettyPrint(): String =
+        "record {${internalMap.toList().joinToString(", ") { (a, b) -> ":$a -> $b" }}}"
 
     override fun getValue(id: String) =
-        internalMap[id] ?: UnitValue.build()
+        internalMap[id] ?: throw EvaluationException("Property $id not found in $this")
 
     fun copyWith(changedContent: List<ListValue>, scope: Scope) =
         RecordValue(

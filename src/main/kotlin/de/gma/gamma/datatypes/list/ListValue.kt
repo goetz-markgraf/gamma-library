@@ -7,6 +7,7 @@ import de.gma.gamma.datatypes.prettyPrintList
 import de.gma.gamma.datatypes.scope.Namespace
 import de.gma.gamma.datatypes.values.IntegerValue
 import de.gma.gamma.datatypes.values.UnitValue
+import de.gma.gamma.parser.EvaluationException
 import de.gma.gamma.parser.Position
 
 abstract class ListValue(
@@ -69,7 +70,7 @@ abstract class ListValue(
             "last" -> last()
             "tail" -> tail()
             "size" -> IntegerValue.build(size().toLong())
-            else -> UnitValue.build()
+            else -> throw EvaluationException("property $id not found in $this")
         }
 
     open fun contains(item: Value) =

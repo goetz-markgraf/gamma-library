@@ -3,9 +3,11 @@ package de.gma.gamma.evaluation.namespace
 import de.gma.gamma.datatypes.list.ListValue
 import de.gma.gamma.datatypes.record.RecordValue
 import de.gma.gamma.datatypes.values.IntegerValue
-import de.gma.gamma.datatypes.values.UnitValue
 import de.gma.gamma.evaluation.BaseEvaluationTest
+import de.gma.gamma.parser.EvaluationException
+import org.assertj.core.api.Assertions
 import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
@@ -93,7 +95,27 @@ class RecordTest : BaseEvaluationTest() {
 
         assertThat(orig.getValue("b").toInteger().longValue).isEqualTo(2L)
         assertThat(changed.getValue("b").toInteger().longValue).isEqualTo(3L)
-        assertThat(orig.getValue("c")).isInstanceOf(UnitValue::class.java)
+        assertThatThrownBy {
+            orig.getValue("c")
+        }.isInstanceOf(EvaluationException::class.java)
+            .hasMessage("Property c not found in record {:a -> 1, :b -> 2}")
         assertThat(changed.getValue("c").toInteger().longValue).isEqualTo(4L)
     }
+
+    @Test
+    fun `throws error if property is not found`() {
+        Assertions.assertThatThrownBy {
+            execute("record {:a -> 1} |> :b")
+        }.isInstanceOf(EvaluationException::class.java)
+            .hasMessage("Property b not found in record {:a -> 1}")
+    }
+
+    @Test
+    fun `throws error if property is not found by compound identifier`() {
+        Assertions.assertThatThrownBy {
+            execute("let r = record {:a -> 1}; r.b")
+        }.isInstanceOf(EvaluationException::class.java)
+            .hasMessage("Property b not found in record {:a -> 1}")
+    }
+
 }
