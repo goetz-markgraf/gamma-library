@@ -56,6 +56,24 @@ class RecordTest : BaseEvaluationTest() {
         assertThat(result.longValue).isEqualTo(expected)
     }
 
+    @ParameterizedTest
+    @CsvSource(
+        value = [
+            "a,1",
+            "b,2"
+        ]
+    )
+    fun `shall read values from record in dot notation`(name: String, expected: Long) {
+        val code = """
+            let r = record {:a -> 1, :b -> 2}
+            r.$name
+        """.trimIndent()
+
+        val result = execute(code) as IntegerValue
+
+        assertThat(result.longValue).isEqualTo(expected)
+    }
+
     @Test
     fun `create copy from a record with changes`() {
         val code = """

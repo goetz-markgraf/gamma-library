@@ -43,4 +43,25 @@ class ListAsNamespaceTest : BaseEvaluationTest() {
 
         assertThat(result.longValue).isEqualTo(expected)
     }
+
+    @ParameterizedTest
+    @CsvSource(
+        value = [
+            "first,1",
+            "head,1",
+            "last,3",
+            "size,3"
+        ]
+    )
+    fun `access list via compound identifiers`(id: String, expected: Long) {
+        val code = """
+            let list = {1, 2, 3}
+            
+            list.$id
+        """.trimIndent()
+
+        val result = execute(code) as IntegerValue
+
+        assertThat(result.longValue).isEqualTo(expected)
+    }
 }

@@ -65,6 +65,7 @@ abstract class ListValue(
     override fun getValue(id: String): Value =
         when (id) {
             "first" -> first()
+            "head" -> first()
             "last" -> last()
             "tail" -> tail()
             "size" -> IntegerValue.build(size().toLong())

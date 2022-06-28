@@ -1,9 +1,6 @@
 package de.gma.gamma.parser
 
-import de.gma.gamma.datatypes.GIdentifierType
-import de.gma.gamma.datatypes.Identifier
-import de.gma.gamma.datatypes.Remark
-import de.gma.gamma.datatypes.Value
+import de.gma.gamma.datatypes.*
 import de.gma.gamma.datatypes.expressions.*
 import de.gma.gamma.datatypes.functions.LambdaFunction
 import de.gma.gamma.datatypes.list.ListLiteral
@@ -169,7 +166,7 @@ class Parser(
             return null
 
         return when (currType) {
-            ID, OP_AS_ID -> parseIdentifier(col)
+            ID, OP_AS_ID -> parseCompoundIdentifier(col)
 
             NUMBER -> parseNumber(col)
 
@@ -303,6 +300,25 @@ class Parser(
         val ret = PropertyValue(sourceName, currStart, currEnd, name)
         nextToken()
         return ret
+    }
+
+    private fun parseCompoundIdentifier(col: Int): Value {
+        val start = currStart
+        if (currType == OP_AS_ID)
+            return parseIdentifier(col)
+
+        val ids = buildList {
+            add(parseIdentifier(col))
+            while (currStart.col >= col && currType == OP && currToken.content == ".") {
+                nextToken()
+                add(parseIdentifier(col))
+            }
+        }
+
+        if (ids.size == 1)
+            return ids.first()
+        else
+            return CompoundIdentifier(sourceName, start, currEnd, ids.map { it.name })
     }
 
 
