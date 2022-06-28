@@ -13,11 +13,11 @@ let test-input =
 let calculate-position start list =
     let calc-movement cmd-line =
         let cmd-list = split cmd-line
-        let cmd = first cmd-list
-        let amount = last cmd-list
+        let cmd = cmd-list.first
+        let amount = cmd-list.last
 
         when {
-            cmd = "forward" -> record { :forward -> amount, :depth -> :aim start * amount, :aim -> 0}
+            cmd = "forward" -> record { :forward -> amount, :depth -> start.aim * amount, :aim -> 0}
             cmd = "up" -> record {:forward -> 0, :depth -> 0, :aim -> neg amount}
             cmd = "down" -> record { :forward -> 0, :depth -> 0, :aim -> amount}
             else -> record { :forward -> 0, :depth -> 0, :aim -> 0}
@@ -26,14 +26,14 @@ let calculate-position start list =
     when {
         is-empty? list -> start
         else -> (
-            let delta-movement = calc-movement (head list)
+            let delta-movement = calc-movement list.head
             let new-position =
                 record {
-                    :forward -> :forward start + :forward delta-movement
-                    :depth -> :depth start + :depth delta-movement
-                    :aim -> :aim start + :aim delta-movement
+                    :forward -> start.forward  + delta-movement.forward
+                    :depth -> start.depth + delta-movement.depth
+                    :aim -> start.aim + delta-movement.aim
                 }
-            calculate-position new-position (tail list)
+            calculate-position new-position list.tail
         )
     }
 
@@ -41,7 +41,7 @@ let calculate-position start list =
 
 let test-result = calculate-position (record {:forward -> 0, :depth -> 0, :aim -> 0}) test-input
 
-print ((:depth test-result) * (:forward test-result))
+print (test-result.depth * test-result.forward)
 
 
 
@@ -49,4 +49,4 @@ let result =
     read-lines "src/test/resources/advent-of-code/day2.input"
     |> calculate-position (record {:forward -> 0, :depth -> 0, :aim -> 0})
 
-(:depth result) * (:forward result)
+result.depth * result.forward
