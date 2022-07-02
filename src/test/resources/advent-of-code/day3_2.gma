@@ -15,33 +15,43 @@ let test-input =
     }
 
 
+let determine-winning-bit select-most-bits? count-0 count-1 =
+    select-most-bits?
+    ? count-1 ≥ count-0 ? "1" : "0"
+    : count-0 ≤ count-1 ? "0" : "1"
 
 
-let make-initial-list first-line =
-    list-generator (size first-line) [i -> 0]
 
+let find-common-bits select-most-bits? input =
+    let rec-find-common-bits position select-most-bits? input =
+        let determine-bit position select-most-bits? input =
+            let bits-in-position =
+                input
+                |> map [line -> at position line]
 
+            let count-0 = bits-in-position |> filter [bit -> bit = "0"] |> size
+            let count-1 = bits-in-position |> filter [bit -> bit = "1"] |> size
 
+            determine-winning-bit select-most-bits? count-0 count-1
 
-let find-common-bits list = 
-    
-    let apply line current =
-        let additions =
-            line |> map [char -> char = "1" ? 1 : -1]
+        let bit = determine-bit position select-most-bits? input
 
-        zip current additions
-        |> map [ pair ->
-            first pair + last pair ]
+        let matching-lines = input |> filter [line -> (at position line) = bit]
 
-    let inner-rec current list =
         when {
-            is-empty? list -> current
-            else -> inner-rec (current |> apply (head list)) (tail list)
+            matching-lines.size = 1 ∨ position = matching-lines.first.size
+                -> matching-lines.first
+
+            else -> rec-find-common-bits (position + 1) select-most-bits? matching-lines
         }
 
-    inner-rec (make-initial-list (first list)) list
+    rec-find-common-bits 0 select-most-bits? input
 
 
+
+let find-most-common-bits = find-common-bits true
+
+let find-least-common-bits = find-common-bits false
 
 
 
@@ -63,20 +73,18 @@ let make-number-from-binary list =
 
 
 let produce-result input =
-    let common-bits = find-comm
-    on-bits input
 
-    let gamma-rate =
-        common-bits
+    let oxygen-rate =
+        find-most-common-bits input
         |> make-binary-from-list true
         |> make-number-from-binary
 
-    let epsilon-rate =
-        common-bits
+    let co2-rate =
+        find-least-common-bits input
         |> make-binary-from-list false
         |> make-number-from-binary
 
-    gamma-rate * epsilon-rate
+    oxygen-rate * co2-rate
 
 
 
