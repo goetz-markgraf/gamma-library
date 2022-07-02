@@ -36,7 +36,9 @@ class Parser(
 
         skipWhitespace()
 
-        return when (currType) {
+        val ret = when (currType) {
+            EOF -> return null
+
             DOCUMENTATION -> parseDocumentation(minCol)
 
             REMARK -> parseRemark(minCol)
@@ -47,6 +49,17 @@ class Parser(
 
             else -> parseTenery(minCol)
         }
+        if (ret != null)
+            return ret
+        else if (col >= 0)
+            return null
+
+        throw EvaluationException(
+            "Parsing error, cannot interpret current token ${currToken.content}",
+            sourceName,
+            currStart.line,
+            currStart.col
+        )
     }
 
     // ==========================================================
