@@ -34,7 +34,7 @@ let create-boards board-list input-list =
         input-list |> slice 1 5
 
     let extract-next-boards-lines input-list =
-        input-list |> slice 6 (size input-list - 6)
+        input-list |> slice 6 (input-list.size - 6)
 
     let create-board input-list =
         input-list |> map [ line -> line |> split ]

@@ -1,7 +1,7 @@
 package de.gma.gamma.datatypes.functions
 
 import de.gma.gamma.datatypes.Value
-import de.gma.gamma.datatypes.list.ListValue
+import de.gma.gamma.datatypes.list.ListLiteral
 import de.gma.gamma.datatypes.scope.Scope
 import de.gma.gamma.datatypes.values.UnitValue
 import de.gma.gamma.parser.Position
@@ -27,10 +27,10 @@ abstract class FunctionValue(
                 this
             )
             missing < 0 -> {
-                val varParamsSize = missing
                 val varArgs = buildList {
                     addAll(callParams.subList(0, paramNames.size - 1))
-                    add(ListValue.build(callParams.subList(paramNames.size - 1, callParams.size)))
+                    // We put all the rest into a ListLiteral such that items will be evaluated when list is evaluated
+                    add(ListLiteral.build(callParams.subList(paramNames.size - 1, callParams.size)))
                 }
 
                 doCallAndPrepareReturn(scope, varArgs)

@@ -1,7 +1,10 @@
 package de.gma.gamma.datatypes.list
 
+import de.gma.gamma.builtins.builtInSource
+import de.gma.gamma.builtins.nullPos
 import de.gma.gamma.datatypes.Value
 import de.gma.gamma.datatypes.scope.Scope
+import de.gma.gamma.datatypes.scoped.ScopedValue
 import de.gma.gamma.parser.EvaluationException
 import de.gma.gamma.parser.Position
 
@@ -17,11 +20,9 @@ class ListLiteral(
     protected var internalItems = items
     private val internalSize = internalItems.size
 
-    private var rememberedScope: Scope? = null
-
     override fun evaluate(scope: Scope): Value {
         val items = internalItems.map {
-            it.evaluate(rememberedScope ?: scope)
+            it.evaluate(scope)
         }
         if (items.size == 2)
             return PairValue(sourceName, beginPos, endPos, items[0], items[1])
@@ -29,10 +30,8 @@ class ListLiteral(
             return SimpleList(sourceName, beginPos, endPos, items)
     }
 
-    override fun prepare(scope: Scope): Value {
-        rememberedScope = scope
-        return this
-    }
+    override fun prepare(scope: Scope) =
+        ScopedValue(sourceName, beginPos, endPos, this, scope)
 
     override fun size() = internalSize
 
@@ -72,4 +71,9 @@ class ListLiteral(
         else other.allItems() == allItems()
 
     override fun hashCode() = internalItems.hashCode()
+
+    companion object {
+        fun build(items: List<Value>) =
+            ListLiteral(builtInSource, nullPos, nullPos, items)
+    }
 }

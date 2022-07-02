@@ -11,7 +11,7 @@ object PrintStarFunction : BuiltinFunction(listOf("value")) {
         val printVal = callParams[0].evaluate(scope)
 
         val printString = if (printVal is ListValue && printVal !is StringValue) {
-            printVal.allItems().joinToString(" ") { it.prettyPrint() }
+            printVal.allItems().joinToString(" ") { it.toStringValue().strValue }
         } else {
             printVal.toStringValue().strValue
         }

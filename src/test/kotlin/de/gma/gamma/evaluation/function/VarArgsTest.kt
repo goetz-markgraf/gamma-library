@@ -19,6 +19,15 @@ class VarArgsTest : BaseEvaluationTest() {
     }
 
     @Test
+    fun `call varargs that must be evaluated first`() {
+        val result = execute("print \"Hello\" (10+20)") as ListValue
+
+        assertThat(result.size()).isEqualTo(2)
+        assertThat(result.first().toStringValue().strValue).isEqualTo("Hello")
+        assertThat(result.last().toStringValue().strValue).isEqualTo("30")
+    }
+
+    @Test
     fun `when without the list definition`() {
         val result = execute(
             """

@@ -1,7 +1,7 @@
 package de.gma.gamma.datatypes
 
 import de.gma.gamma.datatypes.scope.Scope
-import de.gma.gamma.datatypes.scoped.ScopedIdentifier
+import de.gma.gamma.datatypes.scoped.ScopedValue
 import de.gma.gamma.parser.Position
 
 class Identifier(
@@ -24,7 +24,7 @@ class Identifier(
         scope.getValue(name).evaluate(scope)
 
     override fun prepare(scope: Scope) =
-        ScopedIdentifier(sourceName, beginPos, endPos, this, scope)
+        ScopedValue(sourceName, beginPos, endPos, this, scope)
 
     override fun equals(other: Any?) =
         if (other !is Identifier) false
