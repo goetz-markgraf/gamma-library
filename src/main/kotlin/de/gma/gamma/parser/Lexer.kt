@@ -68,7 +68,7 @@ class Lexer(
 
             isExpressionEndingChar(char) -> parseExpressionEnding()
 
-            isElvisCharacter(char) -> parseElvisCharacter()
+            isTeneryCharacter(char) -> parseTeneryCharacter()
 
             isEof(char) -> eof()
 
@@ -108,9 +108,9 @@ class Lexer(
         )
     }
 
-    private fun parseElvisCharacter(): Token {
+    private fun parseTeneryCharacter(): Token {
         val ret = Token(
-            type = TokenType.ELVIS,
+            type = TokenType.TENERY,
             content = char.toString(),
             sourceName = sourceName,
             start = position(),
@@ -180,7 +180,7 @@ class Lexer(
 
         val c = content.toString()
         return Token(
-            type = if (c == ":") TokenType.ELVIS else TokenType.OP,
+            type = if (c == ":") TokenType.TENERY else TokenType.OP,
             content = c,
             sourceName = sourceName,
             start = start,

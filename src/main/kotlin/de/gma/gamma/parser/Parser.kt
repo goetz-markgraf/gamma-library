@@ -45,7 +45,7 @@ class Parser(
 
             SET -> parseSetExpression(minCol)
 
-            else -> parseElvis(minCol)
+            else -> parseTenery(minCol)
         }
     }
 
@@ -78,17 +78,17 @@ class Parser(
         }
     }
 
-    private fun parseElvis(col: Int): Value? {
+    private fun parseTenery(col: Int): Value? {
         val start = currStart
 
         val predicate = parseOperation(col, MAX_OPERATOR_LEVEL)
-        if (predicate != null && checkType(col, ELVIS) && currToken.content == "?") {
+        if (predicate != null && checkType(col, TENERY) && currToken.content == "?") {
             nextToken()
 
             val thenExpr = nextExpression(col)
             assertNotNull(thenExpr)
 
-            assertTypeWithContent(col, ELVIS, ":")
+            assertTypeWithContent(col, TENERY, ":")
             nextToken()
 
             val elseExpr = nextExpression(col)
@@ -161,7 +161,7 @@ class Parser(
         if (currStart.col < col)
             return null
 
-        val endTokens = listOf(EOF, EXEND, CLOSE_PARENS, OP, ID_AS_OP, ERROR, LET, SET, TYPE, MODULE, ELVIS)
+        val endTokens = listOf(EOF, EXEND, CLOSE_PARENS, OP, ID_AS_OP, ERROR, LET, SET, TYPE, MODULE, TENERY)
         if (endTokens.indexOf(currType) >= 0)
             return null
 

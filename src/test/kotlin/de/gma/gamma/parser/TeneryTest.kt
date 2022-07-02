@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
 
-class ElvisTest : BaseParserTest() {
+class TeneryTest : BaseParserTest() {
     @Test
     fun `parse a simple if expression`() {
         val expression = getExpression("a ? 1 : 2.3")
@@ -34,7 +34,7 @@ class ElvisTest : BaseParserTest() {
             " a ? b :\nc"
         ]
     )
-    fun `elvis error when no then expression`(source: String) {
+    fun `tenery error when no then expression`(source: String) {
         assertThatThrownBy {
             getExpression(source)
         }.isInstanceOf(EvaluationException::class.java)

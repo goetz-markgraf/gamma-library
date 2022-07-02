@@ -38,7 +38,7 @@ enum class TokenType {
     MODULE,
     MATCH,
     WITH,
-    ELVIS,
+    TENERY,
     REMARK,
     DOCUMENTATION
 }

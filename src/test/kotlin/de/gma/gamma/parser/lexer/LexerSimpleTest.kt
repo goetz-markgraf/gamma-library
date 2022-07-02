@@ -113,12 +113,12 @@ class LexerSimpleTest {
 
 
     @Test
-    fun `single colon is elvis character`() {
+    fun `single colon is tenery character`() {
         val token = getTokenFromInput(":")
 
         assertToken(
             token,
-            type = ELVIS,
+            type = TENERY,
             content = ":",
             end = 0
         )

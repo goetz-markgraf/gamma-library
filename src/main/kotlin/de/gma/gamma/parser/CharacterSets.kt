@@ -84,5 +84,5 @@ fun isStartOfFunctionOperator(char: Char, peekChar: Char, peekPeekChar: Char) =
 fun isExpressionEndingChar(char: Char) =
     ",;".contains(char)
 
-fun isElvisCharacter(char: Char) =
+fun isTeneryCharacter(char: Char) =
     char == CH_QUESTION_MARK
