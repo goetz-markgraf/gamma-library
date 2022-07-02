@@ -230,6 +230,8 @@ Apart from lists _Gamma_ can create `record`-Types that match a value to a prope
     }
 ```
 
+_Alternatively you can also use the `r*`-function that is a shortcut for `record`._
+
 Accessing the record is possible via the property names that work like getter functions:
 
 ```
@@ -255,7 +257,8 @@ These are the functions currenty built in into _Gamma_:
 * 'read-lines &lt;filename&gt; - reads the content of &lt;filename&gt; as a list of strings'
 * 'split &lt;string&gt; - splits a string separated by blank into a list of strings'
 * 'split-by &lt;separator&gt; &lt;string&gt; - splits a string separated by &lt;separator&gt; into a list of strings'
-* 'join &lt;string&gt; &lt;list&gt; - joins all elements of &lt;list&gt; together as one string, seperated by
+* 'join &lt;list&gt; - joins all elements of &lt;list&gt; together as one string, seperated by a blank'
+* 'join-by &lt;string&gt; &lt;list&gt; - joins all elements of &lt;list&gt; together as one string, seperated by
   &lt;string&gt;'
 * '&lt;a&gt; + &lt;b&gt; - adds two number values'
 * '&lt;a&gt; - &lt;b&gt; - subtract &lt;b&gt; from &lt;a&gt;'
@@ -266,6 +269,8 @@ These are the functions currenty built in into _Gamma_:
 * '&lt;a&gt; ^ &lt;b&gt; - raise &lt;a&gt; to the &lt;b&gt;th power'
 * 'neg &lt;a&gt; - return the negative of a number'
 * '&lt;value&gt; |&gt; &lt;function&gt; - calls &lt;function&gt; with &lt;value&gt; as parameter'
+* '&lt;value&gt; ► &lt;function&gt; - calls &lt;function&gt; with &lt;value&gt; as parameter'
+* '&lt;list&gt; =&gt;&gt; &lt;function&gt; - calls map on &lt;list&gt; with &lt;function&gt; as parameter'
 * 'first &lt;list&gt; – returns the first element or () if empty list'
 * 'second &lt;list&gt; – returns the second element or () if there is none'
 * 'head &lt;list&gt; – returns the first element or () if empty list'
@@ -313,8 +318,10 @@ These are the functions currenty built in into _Gamma_:
 * '&lt;a&gt; | &lt;b&gt; - returns true if either &lt;a&gt; or &lt;b&gt; or both are true'
 * '&lt;a&gt; ⋁ &lt;b&gt; - returns true if either &lt;a&gt; or &lt;b&gt; or both are true'
 * 'not &lt;a&gt; - returns true if &lt;a&gt; is false and false if &lt;a&gt; is true'
-* else - synonym for true
+* 'else - equal to true, can be used in when expressions'
 * 'at &lt;pos&gt; &lt;list&gt; – returns the &lt;pos&gt;th element of this list'
 * 'record &lt;list of pair&gt; – creates a record from a list of pairs'
+* 'r* &lt;list of pair&gt; – creates a record from a list of pairs'
 * 'copy-with &lt;list of pair&gt; &lt;record&gt; – creates a new record based on &lt;record&gt; with changes from a list
   of pairs'
+*  
