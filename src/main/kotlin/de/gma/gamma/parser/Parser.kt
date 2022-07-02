@@ -163,7 +163,6 @@ class Parser(
                 nextElem = null
         }
 
-        // there have been no params
         if (params.isEmpty())
             return elem1
 
