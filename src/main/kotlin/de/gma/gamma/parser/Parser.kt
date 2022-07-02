@@ -161,7 +161,8 @@ class Parser(
         if (currStart.col < col)
             return null
 
-        val endTokens = listOf(EOF, EXEND, CLOSE_PARENS, OP, ID_AS_OP, ERROR, LET, SET, TYPE, MODULE, TENERY)
+        val endTokens =
+            listOf(EOF, EXEND, CLOSE_PARENS, OP, ID_AS_OP, ERROR, LET, SET, TYPE, MODULE, TENERY, REMARK, DOCUMENTATION)
         if (endTokens.indexOf(currType) >= 0)
             return null
 
