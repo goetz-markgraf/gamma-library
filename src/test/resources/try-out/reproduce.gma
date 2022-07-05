@@ -1,0 +1,11 @@
+
+let sum-with-base base input =
+    base + fold 0 (+) input
+
+let sum-with-base-10 = sum-with-base 10
+
+let produce-result input =
+    sum-with-base-10 input
+
+
+produce-result {1, 2, 3}

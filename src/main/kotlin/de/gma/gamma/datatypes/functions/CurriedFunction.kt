@@ -14,8 +14,10 @@ class CurriedFunction(
     val function: FunctionValue
 ) : FunctionValue(sourceName, beginPos, endPos, params) {
 
-    override fun call(scope: Scope, callParams: List<Value>) =
-        function.call(savedScope, bakedInParams + callParams)
+    override fun call(scope: Scope, callParams: List<Value>): Value {
+        val preparedCallParams = callParams.map { it.prepare(scope) }
+        return function.call(savedScope, bakedInParams + preparedCallParams)
+    }
 
     override fun callInternal(scope: Scope, callParams: List<Value>): Value {
         throw createException("must not happen")
