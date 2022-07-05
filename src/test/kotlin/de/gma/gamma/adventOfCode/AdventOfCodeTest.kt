@@ -18,6 +18,7 @@ class AdventOfCodeTest : BaseEvaluationTest() {
             "day2_1.gma,1507611",
             "day2_2.gma,1880593125",
             "day3_1.gma,4138664",
+            "day3_2.gma,4273224",
             "day4_1.gma,8442",
             "day4_2.gma,4590",
         ]
