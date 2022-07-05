@@ -16,16 +16,6 @@ abstract class ListValue(
     endPos: Position,
 ) : Value(sourceName, beginPos, endPos), Namespace {
 
-    fun toPair(): PairValue {
-        if (this is PairValue)
-            return this
-
-        if (this.size() == 2)
-            return PairValue(sourceName, beginPos, endPos, first(), last())
-
-        throw createException("$this is not a pair")
-    }
-
     override fun prettyPrint() = prettyPrintList(allItems())
 
     abstract fun allItems(): List<Value>
@@ -76,6 +66,17 @@ abstract class ListValue(
     open fun contains(item: Value) =
         allItems().contains(item)
 
+
+    override fun equals(other: Any?): Boolean {
+        if (other !is ListValue)
+            return false
+
+        return allItems().equals(other.allItems())
+    }
+
+    override fun hashCode(): Int {
+        return allItems().hashCode()
+    }
 
     companion object {
         fun build(items: List<Value>) =
