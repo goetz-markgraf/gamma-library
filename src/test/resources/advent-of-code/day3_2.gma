@@ -120,9 +120,6 @@ print "Test 'make-number':"
 
 let produce-result input =
 
-    let test-dummy =
-        input |> find-most-common-bits
-
     let oxygen-rate =
         input
         |> find-most-common-bits
