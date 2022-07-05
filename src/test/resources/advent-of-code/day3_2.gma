@@ -23,27 +23,10 @@ let determine-winning-bit select-most-bits? count-0 count-1 =
 
 
 
-print "Test 'determine-winning-bit':"
-    (determine-winning-bit true 4 0 = "0")
-    (determine-winning-bit true 2 2 = "1")
-    (determine-winning-bit true 2 3 = "1")
-    (determine-winning-bit false 3 2 = "1")
-    (determine-winning-bit false 2 2 = "0")
-    (determine-winning-bit false 2 3 = "0")
-
-
-
-
 let bits-in-position position input =
     input
     |> map [line -> at position line]
 
-
-print "Test 'bits-in-position':"
-    (bits-in-position 0 {"10","01","00","11"} = {"1","0","0","1"})
-    (bits-in-position 0 {"00","01","00","11"} = {"0","0","0","1"})
-    (bits-in-position 1 {"10","01","00","11"} = {"0","1","0","1"})
-    (bits-in-position 1 {"00","01","01","11"} = {"0","1","1","1"})
 
 
 let determine-bit position select-most-bits? input =
@@ -54,18 +37,6 @@ let determine-bit position select-most-bits? input =
     determine-winning-bit select-most-bits? count-0 count-1
 
 
-print "Test count 0:"
-    (({"0","0","0","1"} |> filter [bit -> bit = "0"] |> size) = 3)
-    (({"0","0","0","0"} |> filter [bit -> bit = "0"] |> size) = 4)
-
-print "Test count 1:"
-    (({"0","0","0","1"} |> filter [bit -> bit = "1"] |> size) = 1)
-    (({"0","0","0","0"} |> filter [bit -> bit = "1"] |> size) = 0)
-
-print "Test 'determine-bit':"
-    (determine-bit 0 true {"10","01","00","11"} = "1")
-    (determine-bit 0 true {"10","11","00","11"} = "1")
-    (determine-bit 0 true {"00","01","00","11"} = "0")
 
 
 
@@ -90,11 +61,6 @@ let find-most-common-bits = find-common-bits 0 true
 let find-least-common-bits = find-common-bits 0 false
 
 
-print "Test 'find-common-bits':"
-    ((test-input |> find-most-common-bits) = "10111")
-    ((test-input |> find-least-common-bits) = "01010")
-    ((find-most-common-bits test-input) = "10111")
-    ((find-least-common-bits test-input) = "01010")
 
 
 let make-binary-from-list number-list =
@@ -110,25 +76,18 @@ let make-number-from-binary list =
     ]
 
 
-print "Test 'make-number':"
-    (("10111" |> make-binary-from-list |> make-number-from-binary) = 23)
-    (("01010" |> make-binary-from-list |> make-number-from-binary) = 10)
-    ((find-most-common-bits test-input |> make-binary-from-list |> make-number-from-binary) = 23)
-    ((find-least-common-bits test-input |> make-binary-from-list |> make-number-from-binary) = 10)
 
 
 
 let produce-result input =
 
     let oxygen-rate =
-        input
-        |> find-most-common-bits
+        find-most-common-bits input
         |> make-binary-from-list
         |> make-number-from-binary
 
     let co2-rate =
-        input
-        |> find-least-common-bits
+        find-least-common-bits input
         |> make-binary-from-list
         |> make-number-from-binary
 
@@ -137,8 +96,9 @@ let produce-result input =
 
 
 
-print "Test test-input:"
-    ((test-input |> produce-result) = 230)
+test-input
+|> produce-result
+|> print
 
 
 
