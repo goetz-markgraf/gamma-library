@@ -18,15 +18,15 @@ There are only a few special expressions:
 ```
     # bind a value (10) to a name ("a")
     let a = 10
-    
+  
     # binding a function with two parameters ("a" and "b") to a name ("add")
     let add a b =
         a + b
-    
+  
     # change the value bound to the name "mutable!" with a new value (20). Only names that end
     # with a "!" can be mutated
     set mutable! = 20
-    
+  
     # is is an "if" expression that evaluate the second or third expression, depending
     # on the result of the first expression (predicate)
     a > 2 ? "a is bigger that 2" : "a is smaller or equal to 2" 
@@ -45,22 +45,30 @@ _Gamma_ knows the following value literals
     12764
     -364
     0
-    
+  
     # float values (64 bit)
     10.5
     -3847.24
     0.0
-    
+  
     # boolean values
     true
     false
-    
+  
     # Strings
     "Hello World."
     "New\nLine"
-    
+  
     # the empty value (aka Unit)
     ()
+
+    # comments are literal expressions, too
+    # all comments have an empty value (), but they do have a value!
+    # comments come in two flawours:
+
+    # line comments start with a '#' and end at the end of the line
+    ' block comments can span more than one line
+      and are terminated with single quotes'
 ```
 
 Additionally there are two ways of constructing a list of values:
@@ -68,16 +76,16 @@ Additionally there are two ways of constructing a list of values:
 ```
     # a pair is a list of two values
     10 -> 20
-    
+  
     # a list is values between { and }
     {
         10
         20
         30
     }
-    
+  
     # if you want to place multiple expressions on one line, separate with "," or ";"
-    # the tree following expressions produce equal results 
+    # the tree following expressions produce identical results 
     {1, 2, 3}
     {1; 2; 3} 
     {
@@ -101,10 +109,10 @@ function name:
 ```
     # calling the built-in function to print a value to the system console
     print "Hello, World."
-    
+  
     # getting the size (=length) of a list
     size {1, 2, 3}
-    
+  
     # getting the 2nd element of a list (lists are 0 based)
     at 1 {1, 2, 3)
 ```
@@ -117,15 +125,15 @@ remaining parameters but has the first ones already "baked in":
 ```
     # create a function the adds two numbers together
     let add a b = a + b
-    
+  
     # create a partial applicated function the adds 10 to any other value
     let addTen = add 10
-    
+  
     # this will produce 30
     addTen 20
 ```
 
-## operators
+### operators
 
 All operators (like '+', '-' etc.) are also function calls. They have some restrictions, though:
 
@@ -136,15 +144,15 @@ All operators (like '+', '-' etc.) are also function calls. They have some restr
 ```
     # add two numbers
     10 + 20
-    
+  
     # add a number to the result of a function call
     (size {1, 2, 3}) + 10
-    
+  
     # since function calls bind higher than operator call, you can write also
     size {1, 2, 3} + 10 
 ```
 
-### usage of operators as function names
+## usage of operators as function names
 
 If you want to use an operator like a normal function, you can place the operator between
 parenthesis (without whitespace!) and place it at the beginning of the function call.
@@ -159,11 +167,42 @@ You must also place these parenthesis around the operator if you want to create 
 ```
     # create a "power two" function
     let (**) a b = a ^ b
-    
+  
     10 ** 20 
 ```
 
 _(Of course, you don't need to do that, because `^` is already a function to raise a number to the nth power.)_
+
+## usage of function names in infix position
+
+If you have a function that takes two parameters, you can write this function in infix position. You
+simply have to place a colon `:` after the name of the function.
+
+```
+    # add function taking two number values
+    let add a b = a + b
+    
+    # these two expressions produce identical results
+    add 10 20
+    10 add: 20
+```
+
+Keep in mind that the order of parameters is not changed:
+
+```
+    let list = {1, 2, 3}
+    
+    let map-function it = it * 2
+    
+    # normal way of writing
+    map map-function list
+    
+    # function name in infix position
+    map-function map: list
+    
+    # and not:
+    # list map: map-function
+```
 
 ### pipe operator
 
@@ -191,7 +230,7 @@ operator. That is why in _Gamma_ the parameter indicating the value to work on c
 
 ## lambda functions
 
-As I have said before, functions are also values that can be assigned. Function can easily be
+As said before, functions are also values that can be assigned. Function can easily be
 created "on the fly" (aka lambda function) using `[` and `]` and a `->` to seperate parameters from the code. Actually,
 the
 declaration of functions described above is only a shorthand way of assigning a lambda function
@@ -324,4 +363,3 @@ These are the functions currenty built in into _Gamma_:
 * 'r* &lt;list of pair&gt; – creates a record from a list of pairs'
 * 'copy-with &lt;list of pair&gt; &lt;record&gt; – creates a new record based on &lt;record&gt; with changes from a list
   of pairs'
-*  
