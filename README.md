@@ -4,14 +4,14 @@ a functional programming language interpreter written in kotlin
 
 ## Introduction
 
-`gamma-library` is a parser and interpreter for the `gamma` programming language. It is a functional programming
-language that borrows heavyly from two sources:
+`gamma-library` is a parser and interpreter for the `gamma` programming language. It is a
+functional programming language that borrows heavily from two sources:
 
-- lisp – for the idea of the evaluation loop and the basic inner workings
+- Lisp – for the idea of the evaluation loop and the basic inner workings
 - ML – for the idea for the syntax of the language
 
-The idea is to create a language that combines the simplicity of the inner workings of lips with the easy to write and
-read syntax of ML-based languages.
+The idea is to create a language that combines the simplicity of the inner workings of Lisp with
+the easy to write and read syntax of ML-based languages.
 
 ## Learn Gamma
 
