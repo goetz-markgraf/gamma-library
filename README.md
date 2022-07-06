@@ -27,14 +27,14 @@ To use `gamma-library` simply call these functions with your `gamma`-Sourcecode 
         val scope = ModuleScope()
 
         val parser = Parser(code)
-        var expr = parser.nextExpression(-1)
+        var expr = parser.nextExpression()
 
         while (expr != null) {
             val result = expr.evaluate(scope)
             if (result !is Expression && result !is AbstractFunction) // these lines only if you want to display the result
                 println("-> ${result.prettyPrint()}")                 // these lines only if you want to display the result
 
-            expr = parser.nextExpression(-1)
+            expr = parser.nextExpression()
         }
 
 ```
