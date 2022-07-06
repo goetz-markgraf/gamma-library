@@ -1,17 +1,17 @@
-# Learn to program in _Gamma_
+# Learn to program in _gamma_
 
-_(Please keep in mind that __Gamma__ is still work in progress, not free from errors and probably changin
-a lot in the future)_
+_(Please keep in mind that _gamma_ is still work in progress, not free from errors and
+will probably change a lot in the future)_
 
 ## Introduction
 
-Gamma is an expression based functional language. That meens that everything in Gamma is an executable
+_gamma_ is an expression based functional language. That meens that everything in _gamma_ is an executable
 expression and has a value. There are only very few keywords or language constructs, almost everything is
 or can be done with writing and calling functions.
 
 ## Basic Syntax
 
-_Gamma_ uses indentation to structure blocks if they are not already structures by parenthesis or brackets.
+_gamma_ uses indentation to structure blocks if they are not already structures by parenthesis or brackets.
 
 There are only a few special expressions:
 
@@ -38,7 +38,7 @@ Every Expression is either a literal value or a computed expression, mostly a fu
 
 ## Value Literal
 
-_Gamma_ knows the following value literals
+_gamma_ knows the following value literals
 
 ```
     # integer values (64 bit)
@@ -99,7 +99,7 @@ A list can hold any number of values of any type.
 
 ## calling functions
 
-There are two kinds of function call in _Gamma_.
+There are two kinds of function call in _gamma_.
 
 ### function calls by name
 
@@ -213,7 +213,7 @@ The pipe operator (`|>`) can be used to enhance the readability of the code. It 
 ```
 
 It take the value from **before** the operator and puts it into the function behind the
-operator. That is why in _Gamma_ the parameter indicating the value to work on comes last.
+operator. That is why in _gamma_ the parameter indicating the value to work on comes last.
 
 ```
   # get the size of a list
@@ -257,7 +257,7 @@ You can use lambdas for example in combination with the map function to work ove
 
 ## record types
 
-Apart from lists _Gamma_ can create `record`-Types that match a value to a property name.
+Apart from lists _gamma_ can create `record`-Types that match a value to a property name.
 
 ```
   # create a record with the 'record'-function
@@ -278,7 +278,7 @@ Accessing the record is possible via the property names that work like getter fu
   print (:name a)
 ```
 
-Like all other data structures in _Gamma_ a `record`-Type is immutable. You can create a modified
+Like all other data structures in _gamma_ a `record`-Type is immutable. You can create a modified
 copy with the `copy-with`-function:
 
 ```
@@ -289,7 +289,7 @@ copy with the `copy-with`-function:
 
 # Built-in functions
 
-These are the functions currenty built in into _Gamma_:
+These are the functions currenty built in into _gamma_:
 
 * 'print &lt;value&gt; - prints a value to standard out'
 * 'print* &lt;value&gt; - prints a value to standard out without a newline at the end'

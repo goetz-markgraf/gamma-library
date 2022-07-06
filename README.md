@@ -1,10 +1,10 @@
-# GAMMA
+# _gamma_
 
 a functional programming language interpreter written in kotlin
 
 ## Introduction
 
-`gamma-library` is a parser and interpreter for the `gamma` programming language. It is a
+`gamma-library` is a parser and interpreter for the _gamma_ programming language. It is a
 functional programming language that borrows heavily from two sources:
 
 - Lisp – for the idea of the evaluation loop and the basic inner workings
@@ -13,15 +13,15 @@ functional programming language that borrows heavily from two sources:
 The idea is to create a language that combines the simplicity of the inner workings of Lisp with
 the easy to write and read syntax of ML-based languages.
 
-## Learn Gamma
+## Learn _gamma_
 
-See: [Learn to program in _Gamma_](LEARN_GAMMA.md)
+See: [Learn to program in _gamma_](LEARN_GAMMA.md)
 
 ## Usage
 
 You can link this library to your project and use it to include a scripting language in your software.
 
-To use `gamma-library` simply call these functions with your `gamma`-Sourcecode in the variable `code`
+To use `gamma-library` simply call these functions with your _gamma_-Sourcecode in the variable `code`
 
 ```
         val scope = ModuleScope()
@@ -42,14 +42,14 @@ To use `gamma-library` simply call these functions with your `gamma`-Sourcecode 
 The `parser` takes the code as a parameter. If your code is read from a file, supply the filename as a second parameter
 for better error messages in case of exceptions: `Parser(code, filename)`.
 
-The function `nextExpression()` returns the next parsed `expression` in for of a valid `gamma`datatype, or`null`if
+The function `nextExpression()` returns the next parsed `expression` in for of a valid _gamma_ datatype, or`null`if
 the`Parser` has reached the end of the sourcecode.
 
 The returned `expression` can now be evaluated within a `scope`.
 
 ## add your own functions
 
-If you want to enhance the functionality of `gamma` with your own functions, you have to add them to the scope before
+If you want to enhance the functionality of _gamma_ with your own functions, you have to add them to the scope before
 executing the first `expression`
 
 ```
