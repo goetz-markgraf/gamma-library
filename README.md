@@ -1,6 +1,6 @@
 # _gamma_
 
-a functional programming language interpreter written in kotlin
+A functional programming language with an interpreter written in kotlin.
 
 ## Introduction
 
