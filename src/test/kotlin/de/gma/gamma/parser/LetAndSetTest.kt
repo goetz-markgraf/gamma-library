@@ -1,9 +1,11 @@
 package de.gma.gamma.parser
 
 import de.gma.gamma.datatypes.expressions.LetExpression
+import de.gma.gamma.datatypes.expressions.OperaterCall
 import de.gma.gamma.datatypes.expressions.SetExpression
 import de.gma.gamma.datatypes.functions.FunctionValue
 import de.gma.gamma.datatypes.functions.LambdaFunction
+import de.gma.gamma.datatypes.list.ListLiteral
 import de.gma.gamma.datatypes.values.IntegerValue
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
@@ -48,6 +50,7 @@ class LetAndSetTest : BaseParserTest() {
 
     @Test
     fun `let with more that one expression`() {
+        // This is a wrongly formatted expression, the 20 will be considered a parameter for the function call "20 20"
         val source = """
             let a =
                 10 + 20
@@ -55,9 +58,23 @@ class LetAndSetTest : BaseParserTest() {
         """.trimIndent()
 
         val result = getExpressions(source)
-        assertThat(result).hasSize(2)
-        assertThat(result.first()).isInstanceOf(LetExpression::class.java)
-        assertThat(result.last()).isInstanceOf(IntegerValue::class.java)
+        assertThat(result).hasSize(1)
+        assertThat((result.first() as LetExpression).boundValue).isInstanceOf(OperaterCall::class.java)
+    }
+
+    @Test
+    fun `single let expressions needn't be inserted`() {
+        val source = """
+            let a = {
+                1
+                2
+                3
+            }
+        """.trimIndent()
+
+        val result = getExpressions(source)
+        assertThat(result).hasSize(1)
+        assertThat((result.first() as LetExpression).boundValue).isInstanceOf(ListLiteral::class.java)
     }
 
     @Test

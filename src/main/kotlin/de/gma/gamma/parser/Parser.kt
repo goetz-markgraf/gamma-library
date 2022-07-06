@@ -405,17 +405,10 @@ class Parser(
     ): LetExpression {
         nextToken()
 
-        val nextCol =
-            if (currType == OPEN_PARENS && currToken.content == "[")
-                col
-            else {
-                if (currToken.start.col <= col)
-                    throw createIllegalColumnException(col + 1)
+        if (currToken.start.col <= col)
+            throw createIllegalColumnException(col + 1)
 
-                currToken.start.col
-            }
-
-        val expression = nextExpression(nextCol) ?: throw createIllegalTokenException()
+        val expression = nextExpression(col) ?: throw createIllegalTokenException()
 
         return LetExpression(sourceName, start, currEnd, id, expression, documentation)
     }
