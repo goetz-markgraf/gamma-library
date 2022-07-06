@@ -9,7 +9,7 @@ class ReadLineTest : BaseEvaluationTest() {
 
     @Test
     fun `read the content of a file`() {
-        val result = execute("read-lines \"test-files/read-line.txt\"") as ListValue
+        val result = execute("read-lines \"src/test/resources/test-files/read-line.txt\"") as ListValue
 
         assertThat(result.size()).isEqualTo(3)
         assertThat(result.first().toStringValue().strValue).isEqualTo("line 1")
