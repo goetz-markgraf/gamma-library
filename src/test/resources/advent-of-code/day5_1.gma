@@ -1,0 +1,113 @@
+let test-input = {
+    "0,9 → 5,9"
+    "8,0 → 0,8"
+    "9,4 → 3,4"
+    "2,2 → 2,1"
+    "7,0 → 7,4"
+    "6,4 → 2,0"
+    "0,9 → 2,9"
+    "3,4 → 1,4"
+    "0,0 → 8,8"
+    "5,5 → 8,2"
+}
+
+let max a b =
+    a > b ? a : b
+
+assert
+    "max"
+    (max 1 2 → 2)
+    (max "1" "2" → "2")
+    (max "2" "11" → "11")
+
+
+
+
+let split-line-into-coordinates line =
+    let components = split line
+    let start-cmd = split-by "," components.first
+    let end-cmd = split-by "," components.last
+
+    (start-cmd.first → start-cmd.last) → (end-cmd.first → end-cmd.last)
+
+assert
+    "split-line-into-coordinates"
+    (split-line-into-coordinates "0,9 → 5,9" → {{"0","9"},{"5","9"}})
+    (split-line-into-coordinates "8,0 → 0,8" → {{"8","0"},{"0","8"}})
+
+
+
+
+
+
+let is-strait? coordinates =
+    coordinates.first.first = coordinates.last.first ∨
+    coordinates.first.last = coordinates.last.last
+
+assert
+    "is-strait?"
+    (is-strait? {{"0","9"},{"5","9"}} → true)
+    (is-strait? {{"8","0"},{"0","8"}} → false)
+
+
+
+
+let find-max-coordinates list =
+    let max-x! = 0
+    let max-y! = 0
+    list ▷ for-each [coord →
+        set max-x! = max (max coord.first.first coord.last.first) max-x!
+        set max-y! = max (max coord.first.last coord.last.last) max-y!
+    ]
+    (max-x! → max-y!)
+
+assert
+    "find-max-coordinates"
+    (test-input ▷ map split-line-into-coordinates ▷ filter is-strait? ▷ find-max-coordinates → {"9","9"})
+
+
+
+
+
+let create-field x-max y-max =
+    0 .. y-max ▷ map [line → 0 .. x-max ▷ map [i → 0]]
+
+assert
+    "create-field"
+    (create-field 2 2 → {{0,0,0},{0,0,0},{0,0,0}})
+
+
+
+
+
+let set-position x-pos y-pos field =
+    field ▷ map* [line pos →
+        pos ≠ y-pos
+        ? line
+        : line ▷ map* [col pos →
+            pos ≠ x-pos
+            ? col
+            : col + 1 ]]
+
+assert
+    "set-position"
+    (create-field 2 2 ▷ set-position 1 1 → {{0,0,0},{0,1,0},{0,0,0}})
+    ({{0,0,0},{1,0,0},{0,0,1}} ▷ set-position 0 1 → {{0,0,0},{2,0,0},{0,0,1}})
+
+
+
+# todo: make-list-from-coordinates
+# todo: set-position-from-list
+
+
+
+let produce-result input =
+    let relevant =
+        input
+        ▷ map split-line-into-coordinates
+        ▷ filter is-strait?
+
+    relevant
+
+test-input
+▷ produce-result
