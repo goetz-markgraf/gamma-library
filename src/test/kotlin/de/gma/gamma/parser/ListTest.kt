@@ -1,5 +1,6 @@
 package de.gma.gamma.parser
 
+import de.gma.gamma.datatypes.list.ListLiteral
 import de.gma.gamma.datatypes.list.ListValue
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -60,9 +61,9 @@ class ListTest : BaseParserTest() {
         val expression = getExpression(
             """
             {
-                a > b » print "groesser"
-                a < b » print "kleiner"
-                else » print "gleich"
+                a > b → print "groesser"
+                a < b → print "kleiner"
+                else → print "gleich"
             }
         """.trimIndent()
         )
@@ -71,5 +72,6 @@ class ListTest : BaseParserTest() {
 
         val list = expression as ListValue
         assertThat(list.size()).isEqualTo(3)
+        assertThat(list.allItems()).allMatch { it is ListLiteral }
     }
 }
