@@ -56,11 +56,21 @@ class ListFunctionTest : BaseEvaluationTest() {
     }
 
     @Test
+    fun `use a map-star function that uses the index value`() {
+        val code = "{1, 2, 3} |> map* [item pos -> item * 2 + pos]"
+
+        val result = execute(code) as ListValue
+
+        assertThat(result.size()).isEqualTo(3)
+        assertThat(result.allItems().map { it.prettyPrint() }).containsExactly("2", "5", "8")
+    }
+
+    @Test
     fun `runs a function for every item in a list`() {
         val code = """
             let sum! = 0
             
-            {1, 2, 3} |> for-each [item -> set sum! = sum! + item]
+            {1, 2, 3} ▷ for-each [item → set sum! = sum! + item]
             
             sum!
         """.trimIndent()
@@ -74,7 +84,8 @@ class ListFunctionTest : BaseEvaluationTest() {
     @ValueSource(
         strings = [
             "{1, 2, 3} |> fold 0 [acc i -> acc + i]",
-            "{1, 2, 3} |> reduce (+)",
+            "{1, 2, 3} ▷ fold 0 [acc i → acc + i]",
+            "{1, 2, 3} ▷ reduce (+)",
             "repeat 4 |> reduce (+)",
             "1 .. 3 |> reduce (+)"
         ]

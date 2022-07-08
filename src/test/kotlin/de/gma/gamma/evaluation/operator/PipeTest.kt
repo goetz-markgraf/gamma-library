@@ -17,7 +17,7 @@ class PipeTest : BaseEvaluationTest() {
 
     @Test
     fun `normal map alternate form`() {
-        val result = execute("{0} ► size") as IntegerValue
+        val result = execute("{0} ▷ size") as IntegerValue
 
         assertThat(result.longValue).isEqualTo(1L)
     }

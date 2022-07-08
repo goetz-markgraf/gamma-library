@@ -18,7 +18,7 @@ val operatorLevels = listOf(
     mutableListOf(">", ">=", "≥", "<", "<=", "≤", "=", "≠", "!="),
     mutableListOf("&", "∧"),
     mutableListOf("|", "∨"),
-    mutableListOf("->", "|>")
+    mutableListOf("->", "→", "|>", "▷")
 )
 
 const val MAX_OPERATOR_LEVEL = OP_LEVEL_ARROW

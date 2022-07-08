@@ -1,6 +1,5 @@
 package de.gma.gamma.parser
 
-import org.assertj.core.api.Assertions
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.Test
 
@@ -12,7 +11,7 @@ class IndentationTest : BaseParserTest() {
              let a =
             10
         """.trimIndent()
-        Assertions.assertThatThrownBy {
+        assertThatThrownBy {
 
             getExpression(source)
         }
@@ -26,7 +25,7 @@ class IndentationTest : BaseParserTest() {
              set a! =
             10
         """.trimIndent()
-        Assertions.assertThatThrownBy {
+        assertThatThrownBy {
 
             getExpression(source)
         }
@@ -45,7 +44,7 @@ class IndentationTest : BaseParserTest() {
             getExpression(source)
         }
             .isInstanceOf(EvaluationException::class.java)
-            .hasMessage("Illegal Token 20 but was expecting )")
+            .hasMessage("Illegal Token 20 but was expecting [)]")
     }
 
     @Test

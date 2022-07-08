@@ -14,7 +14,7 @@ fun populateOperator(scope: Scope) {
     bindWithDoc(scope, "^", PowerToFunction, "<a> ^ <b> - raise <a> to the <b>th power")
     bindWithDoc(scope, "neg", NegativeFunction, "neg <a> - return the negative of a number")
     bindWithDoc(scope, "|>", PipeFunction, "<value> |> <function> - calls <function> with <value> as parameter")
-    bindWithDoc(scope, "►", PipeFunction, "<value> ► <function> - calls <function> with <value> as parameter")
+    bindWithDoc(scope, "▷", PipeFunction, "<value> ► <function> - calls <function> with <value> as parameter")
     bindWithDoc(scope, "=>>", MapPipeFunction, "<list> =>> <function> - calls map on <list> with <function> as parameter")
     // @Formatter:on
 }

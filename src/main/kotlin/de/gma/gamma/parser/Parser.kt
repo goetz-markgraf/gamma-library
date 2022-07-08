@@ -133,7 +133,7 @@ class Parser(
 
             assertNotNull(op2)
 
-            if (op.name == "->" && op2 != null)
+            if ((op.name == "->" || op.name == "→") && op2 != null)
                 op1 = ListLiteral(sourceName, start, currEnd, listOf(op1, op2))
             else
                 op1 = OperaterCall(sourceName, start, currEnd, op, op1, op2!!, level)
@@ -226,7 +226,7 @@ class Parser(
             }
         }
 
-        assertTypeWithContent(col, OP, "->")
+        assertTypeWithContent(col, OP, "->", "→")
         nextToken()
 
         val expressions = parseIndentedExpressions(col)
@@ -462,11 +462,11 @@ class Parser(
             throw createIllegalEndOfExpression()
     }
 
-    private fun assertTypeWithContent(col: Int, type: TokenType, content: String) {
+    private fun assertTypeWithContent(col: Int, type: TokenType, vararg content: String) {
         if (currStart.col < col)
             throw createIllegalColumnException(col)
-        if (currType != type && currToken.content != content)
-            throw createIllegalTokenException(content)
+        if (currType != type && content.indexOf(currToken.content) < 0)
+            throw createIllegalTokenException(content.toList().toString())
 
     }
 

@@ -54,4 +54,22 @@ class ListTest : BaseParserTest() {
         val list = expression as ListValue
         assertThat(list.size()).isEqualTo(3)
     }
+
+    @Test
+    fun `parse complex list with function calls alternative characters`() {
+        val expression = getExpression(
+            """
+            {
+                a > b » print "groesser"
+                a < b » print "kleiner"
+                else » print "gleich"
+            }
+        """.trimIndent()
+        )
+
+        assertThat(expression).isInstanceOf(ListValue::class.java)
+
+        val list = expression as ListValue
+        assertThat(list.size()).isEqualTo(3)
+    }
 }

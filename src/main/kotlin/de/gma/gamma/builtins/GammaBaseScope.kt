@@ -1,5 +1,6 @@
 package de.gma.gamma.builtins
 
+import de.gma.gamma.builtins.assertions.populateAssertion
 import de.gma.gamma.builtins.io.populateIO
 import de.gma.gamma.builtins.list.populateList
 import de.gma.gamma.builtins.namespaces.populateNamespace
@@ -14,5 +15,6 @@ object GammaBaseScope : ModuleScope(null) {
         populateList(this)
         populateComparison(this)
         populateNamespace(this)
+        populateAssertion(this)
     }
 }
