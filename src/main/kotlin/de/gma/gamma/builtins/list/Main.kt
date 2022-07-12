@@ -17,6 +17,7 @@ fun populateList(scope: Scope) {
     bindWithDoc(scope, "append", AppendFunction, "append <item> <list> – appends an item to the end of the list")
     bindWithDoc(scope, "appendAll", AppendAllFunction, "appendAll <new-list> <list> – appends all items of <new-list> the end of <list>")
     bindWithDoc(scope, "::", InsertFirstFunction, "<item> :: <list> – prepends a list with an as the new first element")
+    bindWithDoc(scope, "@", ConcatFunction, "<list-1> @ <list-2> – appends <list-2> to <list-1>")
 
     bindWithDoc(scope, "list-generator", ListGeneratorFunction, "list-generator <size> <function> – creates a list of size <size> that uses <function> to generate the values")
     bindWithDoc(scope, "repeat", RepeatFunction, "repeat <num> - create a list from 0 to <repeate> - 1")
