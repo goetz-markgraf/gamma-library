@@ -78,6 +78,8 @@ abstract class ListValue(
         return allItems().hashCode()
     }
 
+    open fun persist(): ListValue = this
+
     companion object {
         fun build(items: List<Value>) =
             if (items.size == 2)

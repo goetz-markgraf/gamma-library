@@ -78,6 +78,9 @@ class ListGenerator(
         storage[pos] = generatorFunction.call(internalScope, params)
     }
 
+    override fun persist(): ListValue =
+        build(allItems())
+
     companion object {
         fun build(size: Int, function: FunctionValue) = ListGenerator(builtInSource, nullPos, nullPos, size, function)
     }

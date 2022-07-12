@@ -2,6 +2,7 @@ package de.gma.gamma.datatypes.functions
 
 import de.gma.gamma.datatypes.Value
 import de.gma.gamma.datatypes.list.ListLiteral
+import de.gma.gamma.datatypes.list.ListValue
 import de.gma.gamma.datatypes.scope.Scope
 import de.gma.gamma.datatypes.values.UnitValue
 import de.gma.gamma.parser.Position
@@ -48,6 +49,8 @@ abstract class FunctionValue(
         // save the scope for lazy evaluation
         return if (result is LambdaFunction)
             result.prepare(scope)
+        else if (result is ListValue)
+            result.persist()
         else
             result
     }
