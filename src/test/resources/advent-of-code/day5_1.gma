@@ -1,15 +1,17 @@
 let test-input = {
-    "0,9 → 5,9"
-    "8,0 → 0,8"
-    "9,4 → 3,4"
-    "2,2 → 2,1"
-    "7,0 → 7,4"
-    "6,4 → 2,0"
-    "0,9 → 2,9"
-    "3,4 → 1,4"
-    "0,0 → 8,8"
-    "5,5 → 8,2"
+    "0,9 -> 5,9"
+    "8,0 -> 0,8"
+    "9,4 -> 3,4"
+    "2,2 -> 2,1"
+    "7,0 -> 7,4"
+    "6,4 -> 2,0"
+    "0,9 -> 2,9"
+    "3,4 -> 1,4"
+    "0,0 -> 8,8"
+    "5,5 -> 8,2"
 }
+
+
 
 let max a b =
     a > b ? a : b
@@ -23,17 +25,19 @@ assert
 
 
 
+
+
 let split-line-into-coordinates line =
     let components = split line
     let start-cmd = split-by "," components.first
     let end-cmd = split-by "," components.last
 
-    (start-cmd.first → start-cmd.last) → (end-cmd.first → end-cmd.last)
+    (start-cmd.first + 0 → start-cmd.last + 0) → (end-cmd.first + 0 → end-cmd.last + 0)
 
 assert
     "split-line-into-coordinates"
-    (split-line-into-coordinates "0,9 → 5,9" → {{"0","9"},{"5","9"}})
-    (split-line-into-coordinates "8,0 → 0,8" → {{"8","0"},{"0","8"}})
+    (split-line-into-coordinates "0,9 → 5,9" → {{0,9},{5,9}})
+    (split-line-into-coordinates "8,0 → 0,8" → {{8,0},{0,8}})
 
 
 
@@ -63,7 +67,10 @@ let find-max-coordinates list =
 
 assert
     "find-max-coordinates"
-    (test-input ▷ map split-line-into-coordinates ▷ filter is-strait? ▷ find-max-coordinates → {"9","9"})
+    (test-input ▷ map split-line-into-coordinates ▷ find-max-coordinates → {9,9})
+    ({{{1,1},{1,5}}, {{4,1},{2,1}}} ▷ find-max-coordinates → {4,5})
+
+
 
 
 
@@ -75,6 +82,7 @@ let create-field x-max y-max =
 assert
     "create-field"
     (create-field 2 2 → {{0,0,0},{0,0,0},{0,0,0}})
+
 
 
 
@@ -96,18 +104,77 @@ assert
 
 
 
-# todo: make-list-from-coordinates
-# todo: set-position-from-list
+
+
+let make-line coord =
+    let make-horizontal-line coord =
+        coord.first.first .. coord.last.first ▷ map [it → {it, coord.first.last}]
+
+    let make-vertical-line coord =
+        coord.first.last .. coord.last.last ▷ map [it → {coord.first.first, it}]
+
+    when
+        (coord.first.first = coord.last.first → make-vertical-line coord)
+        (coord.first.last = coord.last.last → make-horizontal-line coord)
+        (else → {})
+
+assert
+    "make-line"
+    (make-line {{0,0},{2,0}} → {{0,0},{1,0},{2,0}})
+    (make-line {{0,2},{0,0}} → {{0,2},{0,1},{0,0}})
+
+
+
+
+let set-positions-from-line field line =
+    line ▷ fold field [acc coord → acc ▷ set-position coord.first coord.last]
+
+assert
+    "set-positions-from-list"
+    (set-positions-from-line (create-field 2 2) {{1,0},{2,0}} → {{0, 1, 1}, {0, 0, 0}, {0, 0, 0}})
+    (set-positions-from-line (create-field 2 2) {{1,1},{1,2}} → {{0, 0, 0}, {0, 1, 0}, {0, 1, 0}})
+    (set-positions-from-line (create-field 2 2) {} → {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}})
+
+
+
+
+let count-fields-over-1 field =
+    let count! = 0
+    field
+    ▷ for-each [ line →
+        line ▷ for-each [ field →
+            field > 1
+            ? set count! = count! + 1
+            : () ] ]
+    count!
+
+assert
+    "count-fields-over-1"
+    ({{0,1,2},{1,0,2}} ▷ count-fields-over-1 → 2 )
+
 
 
 
 let produce-result input =
-    let relevant =
+    let lines =
         input
         ▷ map split-line-into-coordinates
         ▷ filter is-strait?
+        ▷ map make-line
 
-    relevant
+    let max-coord = find-max-coordinates lines
+
+    let field = create-field max-coord.first max-coord.last
+
+    let final-field = lines ▷ fold field [acc line → set-positions-from-line acc line]
+
+    final-field ▷ count-fields-over-1
+
 
 test-input
+▷ produce-result
+▷ print
+
+
+read-lines "src/test/resources/advent-of-code/day5.input"
 ▷ produce-result
