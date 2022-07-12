@@ -3,6 +3,7 @@ package de.gma.gamma.datatypes.scope
 import de.gma.gamma.builtins.GammaBaseScope
 import de.gma.gamma.datatypes.Remark
 import de.gma.gamma.datatypes.Value
+import de.gma.gamma.parser.EvaluationException
 
 open class ModuleScope(override val parent: Scope? = GammaBaseScope) : Scope {
     private val content: MutableMap<String, Value> = mutableMapOf()
@@ -24,7 +25,7 @@ open class ModuleScope(override val parent: Scope? = GammaBaseScope) : Scope {
             ?: if (parent != null)
                 parent!!.getValue(id)
             else
-                throw ScopeException("Id $id is undefined.")
+                throw EvaluationException("id $id is undefined.")
     }
 
     override fun containsLocally(id: String) =
