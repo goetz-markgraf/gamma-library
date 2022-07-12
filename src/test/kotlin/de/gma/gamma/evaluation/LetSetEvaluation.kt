@@ -128,8 +128,8 @@ class LetSetEvaluation : BaseEvaluationTest() {
     fun `error if an identifier is not bound`() {
         assertThatThrownBy {
             execute("a")
-        }.isInstanceOf(ScopeException::class.java)
-            .hasMessage("Id a is undefined.")
+        }.isInstanceOf(EvaluationException::class.java)
+            .hasMessage("id a is undefined.")
     }
 
     @Test
