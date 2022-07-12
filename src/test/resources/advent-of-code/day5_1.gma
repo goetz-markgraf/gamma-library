@@ -89,13 +89,15 @@ assert
 
 
 let set-position x-pos y-pos field =
-    field ▷ map* [line pos →
-        pos ≠ y-pos
-        ? line
-        : line ▷ map* [col pos →
-            pos ≠ x-pos
-            ? col
-            : col + 1 ]]
+    (y-pos > 0 ? field ▷ slice 0 (y-pos) : ())
+    @
+    { field ▷ at y-pos ▷ map* [col pos →
+        pos ≠ x-pos
+        ? col
+        : col + 1 ] }
+    @
+    (y-pos < field.size - 1 ? slice (y-pos + 1) (field.size - y-pos - 1) field : ())
+
 
 assert
     "set-position"
