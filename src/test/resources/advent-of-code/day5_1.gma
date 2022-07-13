@@ -22,6 +22,15 @@ assert
     (max "1" "2" → "2")
     (max "2" "11" → "11")
 
+let min a b =
+    a < b ? a : b
+
+assert
+    "min"
+    (min 1 2 → 1)
+    (min "1" "2" → "1")
+    (min "2" "11" → "2")
+
 
 
 
@@ -42,16 +51,25 @@ assert
 
 
 
+let is-horizontal? coordinates =
+    is-not-empty? coordinates ∧
+    coordinates.first.last = coordinates.last.last
+
+let is-vertical? coordinates =
+    is-not-empty? coordinates ∧
+    coordinates.first.first = coordinates.last.first
+
 
 
 let is-strait? coordinates =
-    coordinates.first.first = coordinates.last.first ∨
-    coordinates.first.last = coordinates.last.last
+    is-vertical? ∨ is-horizontal?
 
 assert
     "is-strait?"
-    (is-strait? {{"0","9"},{"5","9"}} → true)
-    (is-strait? {{"8","0"},{"0","8"}} → false)
+    (is-horizontal? {{"0","9"},{"5","9"}} → true)
+    (is-vertical? {{"8","0"},{"0","8"}} → false)
+    (is-horizontal? {} → false)
+    (is-vertical? {} → false)
 
 
 
@@ -60,8 +78,8 @@ let find-max-coordinates list =
     let max-x! = 0
     let max-y! = 0
     list ▷ for-each [coord →
-        set max-x! = max (max coord.first.first coord.last.first) max-x!
-        set max-y! = max (max coord.first.last coord.last.last) max-y!
+        set max-x! = is-not-empty? coord ? max (max coord.first.first coord.last.first) max-x! : max-x!
+        set max-y! = is-not-empty? coord ? max (max coord.first.last coord.last.last) max-y! : max-y!
     ]
     (max-x! → max-y!)
 
@@ -69,6 +87,7 @@ assert
     "find-max-coordinates"
     (test-input ▷ map split-line-into-coordinates ▷ find-max-coordinates → {9,9})
     ({{{1,1},{1,5}}, {{4,1},{2,1}}} ▷ find-max-coordinates → {4,5})
+    ({{{1,1},{1,5}}, {}} ▷ find-max-coordinates → {1,5})
 
 
 
@@ -83,28 +102,6 @@ assert
     "create-field"
     (create-field 2 2 → {{0,0,0},{0,0,0},{0,0,0}})
 
-
-
-
-
-
-let set-position x-pos y-pos field =
-    (y-pos > 0 ? field ▷ slice 0 (y-pos) : ())
-    @
-    { field ▷ at y-pos ▷ map* [col pos →
-        pos ≠ x-pos
-        ? col
-        : col + 1 ] }
-    @
-    (y-pos < field.size - 1 ? slice (y-pos + 1) (field.size - y-pos - 1) field : ())
-
-
-assert
-    "set-position"
-    ({{0,0,0},{0,0,0},{0,0,0}} ▷ set-position 0 0 → {{1,0,0},{0,0,0},{0,0,0}})
-    ({{0,0,0},{0,0,0},{0,0,0}} ▷ set-position 2 2 → {{0,0,0},{0,0,0},{0,0,1}})
-    ({{0,0,0},{0,0,0},{0,0,0}} ▷ set-position 1 1 → {{0,0,0},{0,1,0},{0,0,0}})
-    ({{0,0,0},{1,0,0},{0,0,1}} ▷ set-position 0 1 → {{0,0,0},{2,0,0},{0,0,1}})
 
 
 
@@ -126,12 +123,68 @@ assert
     "make-line"
     (make-line {{0,0},{2,0}} → {{0,0},{1,0},{2,0}})
     (make-line {{0,2},{0,0}} → {{0,2},{0,1},{0,0}})
+    (make-line {{0,0},{2,2}} → {})
+
+
+
+
+
+let fill-horizontal-line field line =
+    let y-pos = line.first.last
+    let x-pos-start = min line.first.first line.last.first
+    let x-pos-end = max line.first.first line.last.first
+
+    (y-pos > 0 ? field ▷ slice 0 (y-pos) : ())
+    @
+    { field ▷ at y-pos ▷ map* [col pos →
+        pos < x-pos-start ∨ pos > x-pos-end
+        ? col
+        : col + 1 ] }
+    @
+    (y-pos < field.size - 1 ? slice (y-pos + 1) (field.size - y-pos - 1) field : ())
+
+
+assert
+    "fill-horizontal-line"
+    (fill-horizontal-line (create-field 2 2) {{1,0},{2,0}} → {{0, 1, 1}, {0, 0, 0}, {0, 0, 0}})
+    (fill-horizontal-line (create-field 2 2) {{0,1},{2,1}} → {{0, 0, 0}, {1, 1, 1}, {0, 0, 0}})
+    (fill-horizontal-line (create-field 2 2) {{0,2},{2,2}} → {{0, 0, 0}, {0, 0, 0}, {1, 1, 1}})
+
+
+let fill-vertical-line field line =
+    let y-pos-start = min line.first.last line.last.last
+    let y-pos-end = max line.first.last line.last.last
+    let x-pos = line.first.first
+
+    (y-pos-start > 0 ? field ▷ slice 0 (y-pos-start) : ())
+    @
+    (y-pos-start .. y-pos-end ▷ map [ line-index →
+        field
+        ▷ at line-index
+        ▷ map* [col pos →
+            pos ≠ x-pos
+            ? col
+            : col + 1 ] ] )
+    @
+    (y-pos-end < field.size - 1 ? slice (y-pos-end + 1) (field.size - y-pos-end - 1) field : ())
+
+
+assert
+    "fill-vertical-line"
+    (fill-vertical-line (create-field 2 2) {{0,1},{0,2}} → {{0, 0, 0}, {1, 0, 0}, {1, 0, 0}})
+    (fill-vertical-line (create-field 2 2) {{1,0},{1,2}} → {{0, 1, 0}, {0, 1, 0}, {0, 1, 0}})
+    (fill-vertical-line (create-field 2 2) {{2,0},{2,2}} → {{0, 0, 1}, {0, 0, 1}, {0, 0, 1}})
+
+
 
 
 
 
 let set-positions-from-line field line =
-    line ▷ fold field [acc coord → acc ▷ set-position coord.first coord.last]
+    when
+        (is-horizontal? line → fill-horizontal-line field line)
+        (is-vertical? line → fill-vertical-line field line)
+        (else → field)
 
 assert
     "set-positions-from-list"
@@ -163,7 +216,6 @@ let produce-result input =
     let lines =
         input
         ▷ map split-line-into-coordinates
-        ▷ filter is-strait?
         ▷ map make-line
 
     let max-coord = find-max-coordinates lines
