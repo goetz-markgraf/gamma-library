@@ -10,6 +10,6 @@ fun populateNamespace(scope: Scope) {
     bindWithDoc(scope, "record", RecordFunction, "record <list of pair> – creates a record from a list of pairs")
     bindWithDoc(scope, "r*", RecordFunction, "r* <list of pair> – creates a record from a list of pairs")
     bindWithDoc(scope, "copy-with", CopyWithFunction, "copy-with <list of pair> <record> – creates a new record based on <record> with changes from a list of pairs")
-    bindWithDoc(scope, "get-properties", GetPropertiesFunction, "get-properties <namespace> – returns all keys in this namespace as a list of strings")
+    bindWithDoc(scope, "get-properties", GetPropertiesFunction, "get-properties <record> – returns all keys in this record as a list of strings")
     // @Formatter:on
 }
