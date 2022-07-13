@@ -43,7 +43,10 @@ fun checkForListOfPairs(
 fun createMapFromListOfPair(content: List<ListValue>, scope: Scope) = buildMap<String, Value> {
     content.forEach {
         if (it.size() >= 2) {
-            put((it.first() as PropertyValue).identifier, it.last().evaluate(scope))
+            if (it.first() is PropertyValue)
+                put((it.first() as PropertyValue).identifier, it.last().evaluate(scope))
+            else
+                put(it.first().toStringValue().strValue, it.last().evaluate(scope))
         } else {
             throw EvaluationException("cannot create record")
         }
