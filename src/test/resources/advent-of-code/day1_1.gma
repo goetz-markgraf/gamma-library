@@ -22,6 +22,6 @@ let count-increase list =
 
 
 
-print "Test:" (input |> count-increase)
+print (input |> count-increase)
 
 read-lines "src/test/resources/advent-of-code/day1.input" |> count-increase
