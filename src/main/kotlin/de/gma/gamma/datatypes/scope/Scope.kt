@@ -5,8 +5,6 @@ import de.gma.gamma.datatypes.Value
 
 interface Scope : Namespace {
 
-    fun containsLocally(id: String): Boolean
-
     val parent: Scope?
 
     fun bindValue(name: String, value: Value, documentation: Remark? = null)

@@ -63,6 +63,15 @@ abstract class ListValue(
             else -> throw EvaluationException("property $id not found in $this")
         }
 
+    override fun containsLocally(id: String) =
+        listOf(
+            "first",
+            "head",
+            "last",
+            "tail",
+            "size"
+        ).contains(id)
+
     open fun contains(item: Value) =
         allItems().contains(item)
 

@@ -23,6 +23,9 @@ class RecordValue(
     override fun getValue(id: String) =
         internalMap[id] ?: throw EvaluationException("Property $id not found in $this")
 
+    override fun containsLocally(id: String) =
+        internalMap.containsKey(id)
+
     fun copyWith(changedContent: List<ListValue>, scope: Scope) =
         RecordValue(
             builtInSource, nullPos, nullPos,
@@ -32,6 +35,19 @@ class RecordValue(
             }
         )
 
+    fun getPropertyNames() =
+        internalMap.keys.toList()
+
     fun size() =
         internalMap.size
+
+    override fun equals(other: Any?): Boolean {
+        if (other !is RecordValue)
+            return false
+
+        return internalMap == other.internalMap
+    }
+
+    override fun hashCode() =
+        internalMap.hashCode()
 }

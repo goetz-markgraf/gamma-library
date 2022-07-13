@@ -55,6 +55,20 @@ class BasicListTest : BaseEvaluationTest() {
     }
 
     @Test
+    fun `access an element behind the list`() {
+        assertThatThrownBy {
+            execute("at 10 {1, 2, 3}")
+        }.isInstanceOf(EvaluationException::class.java)
+            .hasMessage("Index out of bounds: 10 outside [0..2]")
+    }
+
+    @Test
+    fun `access an element behind the list with at star`() {
+        val expr = execute("at* 10 {1, 2, 3}")
+        assertThat(expr).isInstanceOf(UnitValue::class.java)
+    }
+
+    @Test
     fun `get the tail of a list`() {
         val expr = execute("tail {1, 2, 3}") as ListValue
 

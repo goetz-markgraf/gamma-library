@@ -6,4 +6,6 @@ interface Namespace {
 
     fun getValue(id: String): Value
 
+    fun containsLocally(id: String): Boolean
+
 }

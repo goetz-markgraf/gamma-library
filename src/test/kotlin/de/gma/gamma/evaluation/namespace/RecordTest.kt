@@ -1,6 +1,7 @@
 package de.gma.gamma.evaluation.namespace
 
 import de.gma.gamma.datatypes.list.ListValue
+import de.gma.gamma.datatypes.list.StringValue
 import de.gma.gamma.datatypes.record.RecordValue
 import de.gma.gamma.datatypes.values.IntegerValue
 import de.gma.gamma.evaluation.BaseEvaluationTest
@@ -41,6 +42,19 @@ class RecordTest : BaseEvaluationTest() {
 
         assertThat(result.getValue("a").toInteger().longValue).isEqualTo(1L)
         assertThat(result.getValue("b").toInteger().longValue).isEqualTo(2L)
+    }
+
+    @Test
+    fun `create a record with a dynamic created list`() {
+        val result = execute(
+            """
+                let rec-map = 1 .. 2 ▷ map [pos → join pos "-" 1 → pos]
+                record rec-map
+            """.trimIndent()
+        ) as RecordValue
+
+        assertThat(result.getValue("1 - 1").toInteger().longValue).isEqualTo(1L)
+        assertThat(result.getValue("2 - 1").toInteger().longValue).isEqualTo(2L)
     }
 
     @ParameterizedTest
@@ -165,4 +179,13 @@ class RecordTest : BaseEvaluationTest() {
             .hasMessage("Property b not found in record {:a -> 1}")
     }
 
+    @Test
+    fun `list all namespace properties`() {
+        val result = execute("r* {:a → 1, :b → 2} ▷ get-properties") as ListValue
+
+        assertThat(result.size()).isEqualTo(2)
+        assertThat(result.allItems()).allMatch {
+            (it as StringValue).strValue == "a" || it.strValue == "b"
+        }
+    }
 }
