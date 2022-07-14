@@ -23,6 +23,7 @@ fun populateComparison(scope: Scope) {
     bindWithDoc(scope, "|", OrFunction, "<a> | <b> - returns true if either <a> or <b> or both are true")
     bindWithDoc(scope, "∨", OrFunction, "<a> ⋁ <b> - returns true if either <a> or <b> or both are true")
     bindWithDoc(scope, "not", NotFunction, "not <a> - returns true if <a> is false and false if <a> is true")
+    bindWithDoc(scope, "pipeline", PipelineFunction, "pipeline <id> <list of expressions> - executes each <expression>, always using <id> for the result of the previous one")
     // @Formatter:on
 
     scope.bindValue(

@@ -44,8 +44,8 @@ open class ModuleScope(override val parent: Scope? = GammaBaseScope) : Scope {
             remarks[name] = documentation
     }
 
-    override fun setValue(name: String, value: Value, documentation: Remark?) {
-        if (!content.contains(name))
+    override fun setValue(name: String, value: Value, documentation: Remark?, strict: Boolean) {
+        if (strict && !content.contains(name))
             throw ScopeException("Id $name is not defined.")
 
         content[name] = value

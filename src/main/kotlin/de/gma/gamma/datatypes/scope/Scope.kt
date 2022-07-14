@@ -9,5 +9,5 @@ interface Scope : Namespace {
 
     fun bindValue(name: String, value: Value, documentation: Remark? = null)
 
-    fun setValue(name: String, value: Value, documentation: Remark? = null)
+    fun setValue(name: String, value: Value, documentation: Remark? = null, strict: Boolean = true)
 }
