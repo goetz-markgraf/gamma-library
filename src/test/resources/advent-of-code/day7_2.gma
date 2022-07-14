@@ -4,17 +4,16 @@ let test-input = {
 }
 
 
+let sum = reduce (+)
+
 
 
 let calculate-fuel target crab-list =
     crab-list ▷ map [crab →
         let dist = abs (crab - target)
         (dist × (dist + 1)) ÷ 2
-    ]
+    ] ▷ sum
 
-
-
-let sum = reduce (+)
 
 
 
@@ -24,8 +23,8 @@ let produce-result input =
     let max-crab = max crab-list
 
     min-crab .. max-crab
-    ▷ map [target → target → (crab-list ▷ calculate-fuel target ▷ sum)]
-    ▷ reduce [acc fuel → acc.last < fuel.last ? acc : fuel]
+    ▷ map [target → { target, calculate-fuel target crab-list }]
+    ▷ reduce [acc pair → acc.last < pair.last ? acc : pair]
     ▷ at "last"
 
 
