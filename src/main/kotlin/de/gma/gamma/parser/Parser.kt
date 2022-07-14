@@ -185,7 +185,7 @@ class Parser(
 
             STRING -> parseString(col)
 
-            UNIT -> parseUnit(col)
+            EMPTY -> parseEmpty(col)
 
             PROPERTY -> parseProperty(col)
 
@@ -214,10 +214,10 @@ class Parser(
         val start = currStart
         nextToken()
 
-        if (currType != UNIT && currType != ID)
+        if (currType != EMPTY && currType != ID)
             throw createEmptyParamsException()
 
-        val params: List<String> = if (currType == UNIT) {
+        val params: List<String> = if (currType == EMPTY) {
             nextToken()
             emptyList()
         } else buildList {
@@ -261,7 +261,7 @@ class Parser(
         nextToken()
 
         return when {
-            expressions.isEmpty() -> UnitValue(sourceName, start, currEnd)
+            expressions.isEmpty() -> EmptyValue(sourceName, start, currEnd)
 
             expressions.size == 1 -> expressions.first()
 
@@ -277,9 +277,9 @@ class Parser(
         return ret
     }
 
-    private fun parseUnit(col: Int): UnitValue {
-        assertType(col, UNIT)
-        val ret = UnitValue(sourceName, currStart, currEnd)
+    private fun parseEmpty(col: Int): EmptyValue {
+        assertType(col, EMPTY)
+        val ret = EmptyValue(sourceName, currStart, currEnd)
         nextToken()
         return ret
     }
@@ -363,7 +363,7 @@ class Parser(
 
         return if (currType == OP && currToken.content == "=") {
             parseSimpleLetExpression(col, start, id, documentation)
-        } else if (currType == ID || currType == UNIT) {
+        } else if (currType == ID || currType == EMPTY) {
             parseFunctionLetExpression(col, start, id, documentation)
         } else {
             throw createIllegalTokenException("=")
@@ -376,7 +376,7 @@ class Parser(
         id: Identifier,
         documentation: Remark?
     ): LetExpression {
-        val identifiers = if (currType == UNIT) {
+        val identifiers = if (currType == EMPTY) {
             nextToken()
             emptyList()
         } else

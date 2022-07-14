@@ -3,7 +3,7 @@ package de.gma.gamma.datatypes
 import de.gma.gamma.builtins.builtInSource
 import de.gma.gamma.builtins.nullPos
 import de.gma.gamma.datatypes.scope.Scope
-import de.gma.gamma.datatypes.values.UnitValue
+import de.gma.gamma.datatypes.values.EmptyValue
 import de.gma.gamma.parser.Position
 
 class Remark(
@@ -16,7 +16,7 @@ class Remark(
 
     override fun prettyPrint() = if (!documentation) "# $strValue" else "'${strValue.replace("'", "\\'")}'"
 
-    override fun evaluate(scope: Scope) = UnitValue(sourceName, beginPos, endPos)
+    override fun evaluate(scope: Scope) = EmptyValue(sourceName, beginPos, endPos)
 
     companion object {
         fun buildDoc(doc: String) = Remark(builtInSource, nullPos, nullPos, doc, true)

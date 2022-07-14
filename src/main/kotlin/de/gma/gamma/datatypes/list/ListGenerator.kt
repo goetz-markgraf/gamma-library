@@ -5,8 +5,8 @@ import de.gma.gamma.builtins.nullPos
 import de.gma.gamma.datatypes.Value
 import de.gma.gamma.datatypes.functions.FunctionValue
 import de.gma.gamma.datatypes.scope.ModuleScope
+import de.gma.gamma.datatypes.values.EmptyValue
 import de.gma.gamma.datatypes.values.IntegerValue
-import de.gma.gamma.datatypes.values.UnitValue
 import de.gma.gamma.parser.Position
 
 class ListGenerator(
@@ -28,7 +28,7 @@ class ListGenerator(
 
     override fun getAt(pos: Int): Value {
         if (pos >= size)
-            return UnitValue.build()
+            return EmptyValue.build()
 
         if (storage[pos] == null)
             fillStorage(pos)

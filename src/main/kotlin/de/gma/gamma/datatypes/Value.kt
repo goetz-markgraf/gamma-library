@@ -29,14 +29,14 @@ abstract class Value(
             is IntegerValue -> BooleanValue.build(this.longValue != 0L)
             is FloatValue -> BooleanValue.build(this.doubleValue != 0.0)
             is StringValue -> BooleanValue.build(this.strValue.isNotEmpty())
-            is UnitValue -> BooleanValue.build(false)
+            is EmptyValue -> BooleanValue.build(false)
             else -> BooleanValue.build(true)
         }
 
     fun toList(): ListValue =
         when (this) {
             is ListValue -> this
-            is UnitValue -> ListValue.build(emptyList())
+            is EmptyValue -> ListValue.build(emptyList())
             else -> ListValue.build(listOf(this))
         }
 

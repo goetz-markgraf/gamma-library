@@ -59,7 +59,7 @@ _gamma_ knows the following value literals
     "Hello World."
     "New\nLine"
   
-    # the empty value (aka Unit)
+    # the empty value
     ()
 
     # comments are literal expressions, too

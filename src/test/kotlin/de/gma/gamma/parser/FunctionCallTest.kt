@@ -2,7 +2,7 @@ package de.gma.gamma.parser
 
 import de.gma.gamma.datatypes.Identifier
 import de.gma.gamma.datatypes.expressions.FunctionCall
-import de.gma.gamma.datatypes.values.UnitValue
+import de.gma.gamma.datatypes.values.EmptyValue
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
@@ -23,14 +23,14 @@ class FunctionCallTest : BaseParserTest() {
     }
 
     @Test
-    fun `parse a function call with unit parameters`() {
+    fun `parse a function call with empty parameters`() {
         val expression = getExpression("print ()")
 
         assertThat(expression).isInstanceOf(FunctionCall::class.java)
         val call = expression as FunctionCall
         assertThat(call.function.prettyPrint()).isEqualTo("print")
         assertThat(call.params).hasSize(1)
-            .first().isInstanceOf(UnitValue::class.java)
+            .first().isInstanceOf(EmptyValue::class.java)
 
         assertThat(call.prettyPrint()).isEqualTo("print ()")
     }
@@ -93,7 +93,7 @@ class FunctionCallTest : BaseParserTest() {
             "print () ()"
         ]
     )
-    fun `unit mixed with other params is ok`(code: String) {
+    fun `empty mixed with other params is ok`(code: String) {
         val expression = getExpression(code)
 
         assertThat(expression).isInstanceOf(FunctionCall::class.java)

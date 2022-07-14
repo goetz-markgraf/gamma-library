@@ -6,7 +6,7 @@ import de.gma.gamma.datatypes.Value
 import de.gma.gamma.datatypes.scope.Scope
 import de.gma.gamma.parser.Position
 
-class UnitValue(
+class EmptyValue(
     sourceName: String,
     beginPos: Position,
     endPos: Position
@@ -17,12 +17,12 @@ class UnitValue(
     override fun evaluate(scope: Scope) = this
 
     companion object {
-        private val singleton = UnitValue(builtInSource, nullPos, nullPos)
+        private val singleton = EmptyValue(builtInSource, nullPos, nullPos)
         fun build() = singleton
     }
 
     override fun equals(other: Any?) =
-        other is UnitValue
+        other is EmptyValue
 
     override fun hashCode() = Unit.hashCode()
 

@@ -4,7 +4,7 @@ import de.gma.gamma.datatypes.Value
 import de.gma.gamma.datatypes.list.ListLiteral
 import de.gma.gamma.datatypes.list.ListValue
 import de.gma.gamma.datatypes.scope.Scope
-import de.gma.gamma.datatypes.values.UnitValue
+import de.gma.gamma.datatypes.values.EmptyValue
 import de.gma.gamma.parser.Position
 
 abstract class FunctionValue(
@@ -59,14 +59,14 @@ abstract class FunctionValue(
         val expectedParams = paramNames.size
         val suppliedParams = callParams.size
 
-        if (expectedParams == suppliedParams || isUnitCall(callParams))
+        if (expectedParams == suppliedParams || isEmptyCall(callParams))
             return 0
 
         return expectedParams - suppliedParams
     }
 
-    private fun isUnitCall(callParams: List<Value>) =
-        paramNames.isEmpty() && callParams.size == 1 && callParams.first() is UnitValue
+    private fun isEmptyCall(callParams: List<Value>) =
+        paramNames.isEmpty() && callParams.size == 1 && callParams.first() is EmptyValue
 
 
     abstract fun callInternal(scope: Scope, callParams: List<Value>): Value

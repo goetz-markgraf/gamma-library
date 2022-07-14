@@ -60,7 +60,7 @@ class Lexer(
 
             isStartOfFunctionOperator(char, peekChar, peekPeekChar) -> parseOperatorAsIdentifier()
 
-            isUnit(char, peekChar) -> parseUnit()
+            isEmpty(char, peekChar) -> parseEmpty()
 
             isParens(char) -> parseParens()
 
@@ -141,14 +141,14 @@ class Lexer(
     }
 
 
-    private fun parseUnit(): Token {
+    private fun parseEmpty(): Token {
         val start = position()
         next()
         val end = position()
         next()
         return Token(
-            type = TokenType.UNIT,
-            content = "$CH_UNIT1$CH_UNIT2",
+            type = TokenType.EMPTY,
+            content = "$CH_EMPTY1$CH_EMPTY2",
             sourceName = sourceName,
             start = start,
             end = end

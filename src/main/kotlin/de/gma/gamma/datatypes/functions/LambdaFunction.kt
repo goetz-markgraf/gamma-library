@@ -4,7 +4,7 @@ import de.gma.gamma.datatypes.Value
 import de.gma.gamma.datatypes.scope.ModuleScope
 import de.gma.gamma.datatypes.scope.Scope
 import de.gma.gamma.datatypes.scoped.ScopedFunction
-import de.gma.gamma.datatypes.values.UnitValue
+import de.gma.gamma.datatypes.values.EmptyValue
 import de.gma.gamma.parser.CH_NEWLINE
 import de.gma.gamma.parser.Position
 
@@ -51,7 +51,7 @@ class LambdaFunction(
             newScope.bindValue(pair.first, pair.second)
         }
 
-        return expressions.fold(UnitValue.build() as Value) { _, expr ->
+        return expressions.fold(EmptyValue.build() as Value) { _, expr ->
             expr.evaluate(newScope)
         }
     }

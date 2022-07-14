@@ -2,7 +2,7 @@ package de.gma.gamma.datatypes.expressions
 
 import de.gma.gamma.datatypes.Value
 import de.gma.gamma.datatypes.scope.Scope
-import de.gma.gamma.datatypes.values.UnitValue
+import de.gma.gamma.datatypes.values.EmptyValue
 import de.gma.gamma.parser.Position
 
 class Block(
@@ -19,7 +19,7 @@ class Block(
     }
 
     override fun evaluate(scope: Scope) =
-        expressions.fold(UnitValue.build() as Value) { _, expr ->
+        expressions.fold(EmptyValue.build() as Value) { _, expr ->
             expr.evaluate(scope)
         }
 

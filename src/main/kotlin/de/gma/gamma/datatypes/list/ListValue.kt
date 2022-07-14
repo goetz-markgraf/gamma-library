@@ -5,8 +5,8 @@ import de.gma.gamma.builtins.nullPos
 import de.gma.gamma.datatypes.Value
 import de.gma.gamma.datatypes.prettyPrintList
 import de.gma.gamma.datatypes.scope.Namespace
+import de.gma.gamma.datatypes.values.EmptyValue
 import de.gma.gamma.datatypes.values.IntegerValue
-import de.gma.gamma.datatypes.values.UnitValue
 import de.gma.gamma.parser.EvaluationException
 import de.gma.gamma.parser.Position
 
@@ -26,7 +26,7 @@ abstract class ListValue(
 
     open fun first(): Value {
         return if (size() == 0)
-            UnitValue.build()
+            EmptyValue.build()
         else
             getAt(0)
     }
@@ -34,7 +34,7 @@ abstract class ListValue(
     open fun last(): Value {
         val size = size()
         return if (size == 0)
-            UnitValue.build()
+            EmptyValue.build()
         else
             getAt(size - 1)
     }

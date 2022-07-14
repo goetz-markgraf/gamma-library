@@ -5,7 +5,7 @@ import de.gma.gamma.datatypes.Value
 import de.gma.gamma.datatypes.list.StringValue
 import de.gma.gamma.datatypes.scope.Namespace
 import de.gma.gamma.datatypes.scope.Scope
-import de.gma.gamma.datatypes.values.UnitValue
+import de.gma.gamma.datatypes.values.EmptyValue
 
 object GetAtStarFunction : BuiltinFunction(listOf("pos", "list")) {
     override fun callInternal(scope: Scope, callParams: List<Value>): Value {
@@ -19,7 +19,7 @@ object GetAtStarFunction : BuiltinFunction(listOf("pos", "list")) {
             return if (namespace.containsLocally(posStr.strValue))
                 namespace.getValue(posStr.strValue)
             else
-                UnitValue.build()
+                EmptyValue.build()
         }
 
         val posInt = pos.toInteger().longValue.toInt()
@@ -28,7 +28,7 @@ object GetAtStarFunction : BuiltinFunction(listOf("pos", "list")) {
         return if (posInt >= 0 && posInt < list.size())
             list.getAt(posInt)
         else
-            UnitValue.build()
+            EmptyValue.build()
 
     }
 }
