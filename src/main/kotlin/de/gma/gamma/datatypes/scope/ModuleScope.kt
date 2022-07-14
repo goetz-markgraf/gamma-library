@@ -3,6 +3,7 @@ package de.gma.gamma.datatypes.scope
 import de.gma.gamma.builtins.GammaBaseScope
 import de.gma.gamma.datatypes.Remark
 import de.gma.gamma.datatypes.Value
+import de.gma.gamma.datatypes.values.EmptyValue
 import de.gma.gamma.parser.EvaluationException
 
 open class ModuleScope(override val parent: Scope? = GammaBaseScope) : Scope {
@@ -19,13 +20,16 @@ open class ModuleScope(override val parent: Scope? = GammaBaseScope) : Scope {
     fun getRemark(name: String) =
         remarks[name]
 
-    override fun getValue(id: String): Value {
+    override fun getValue(id: String, strict: Boolean): Value {
 
         return content[id]
             ?: if (parent != null)
-                parent!!.getValue(id)
+                parent!!.getValue(id, strict)
             else
-                throw EvaluationException("id $id is undefined.")
+                if (strict)
+                    throw EvaluationException("id $id is undefined.")
+                else
+                    EmptyValue.build()
     }
 
     override fun containsLocally(id: String) =

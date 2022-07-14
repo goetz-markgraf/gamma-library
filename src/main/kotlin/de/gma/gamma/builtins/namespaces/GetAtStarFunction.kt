@@ -16,10 +16,7 @@ object GetAtStarFunction : BuiltinFunction(listOf("pos", "list")) {
             val posStr = pos.toStringValue()
             val namespace = obj as Namespace
 
-            return if (namespace.containsLocally(posStr.strValue))
-                namespace.getValue(posStr.strValue)
-            else
-                EmptyValue.build()
+            return namespace.getValue(posStr.strValue, strict = false)
         }
 
         val posInt = pos.toInteger().longValue.toInt()

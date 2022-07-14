@@ -17,15 +17,14 @@ class CompoundIdentifier(
 
     override fun evaluate(scope: Scope) =
         names.fold(scope as Any) { namespace, item ->
-            (namespace as Namespace).getValue(item).evaluate(scope)
+            (namespace as Namespace).getValue(item, strict = true).evaluate(scope)
         } as Value
 
     override fun prepare(scope: Scope) =
         ScopedValue(sourceName, beginPos, endPos, this, scope)
 
     override fun equals(other: Any?) =
-        if (other !is CompoundIdentifier) false
-        else other.names == names
+        other is CompoundIdentifier && other.names == names
 
     override fun hashCode() = names.hashCode()
 

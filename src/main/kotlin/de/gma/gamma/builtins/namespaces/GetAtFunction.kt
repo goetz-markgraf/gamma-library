@@ -15,7 +15,7 @@ object GetAtFunction : BuiltinFunction(listOf("pos", "list")) {
             val posStr = pos.toStringValue()
             val namespace = obj as Namespace
 
-            return namespace.getValue(posStr.strValue)
+            return namespace.getValue(posStr.strValue, strict = true)
         }
 
         val posInt = pos.toInteger()

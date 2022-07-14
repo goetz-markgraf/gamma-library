@@ -7,6 +7,7 @@ import de.gma.gamma.datatypes.Value
 import de.gma.gamma.datatypes.list.ListValue
 import de.gma.gamma.datatypes.scope.Namespace
 import de.gma.gamma.datatypes.scope.Scope
+import de.gma.gamma.datatypes.values.EmptyValue
 import de.gma.gamma.parser.EvaluationException
 import de.gma.gamma.parser.Position
 
@@ -20,8 +21,9 @@ class RecordValue(
     override fun prettyPrint(): String =
         "record {${internalMap.toList().joinToString(", ") { (a, b) -> ":$a -> $b" }}}"
 
-    override fun getValue(id: String) =
-        internalMap[id] ?: throw EvaluationException("Property $id not found in $this")
+    override fun getValue(id: String, strict: Boolean) =
+        internalMap[id]
+            ?: if (strict) throw EvaluationException("Property $id not found in $this") else EmptyValue.build()
 
     override fun containsLocally(id: String) =
         internalMap.containsKey(id)

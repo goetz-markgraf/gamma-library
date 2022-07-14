@@ -12,6 +12,6 @@ class PropertyFunction(val name: PropertyValue) : BuiltinFunction(listOf("obj"))
 
         val posStr = name.identifier
 
-        return obj.getValue(posStr)
+        return obj.getValue(posStr, strict = true)
     }
 }

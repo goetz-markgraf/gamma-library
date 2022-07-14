@@ -53,14 +53,14 @@ abstract class ListValue(
 
     abstract fun appendAll(v: ListValue): ListValue
 
-    override fun getValue(id: String): Value =
+    override fun getValue(id: String, strict: Boolean): Value =
         when (id) {
             "first" -> first()
             "head" -> first()
             "last" -> last()
             "tail" -> tail()
             "size" -> IntegerValue.build(size().toLong())
-            else -> throw EvaluationException("property $id not found in $this")
+            else -> if (strict) throw EvaluationException("property $id not found in $this") else EmptyValue.build()
         }
 
     override fun containsLocally(id: String) =

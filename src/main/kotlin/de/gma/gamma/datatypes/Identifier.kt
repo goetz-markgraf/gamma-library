@@ -21,14 +21,13 @@ class Identifier(
         }
 
     override fun evaluate(scope: Scope) =
-        scope.getValue(name).evaluate(scope)
+        scope.getValue(name, strict = true).evaluate(scope)
 
     override fun prepare(scope: Scope) =
         ScopedValue(sourceName, beginPos, endPos, this, scope)
 
     override fun equals(other: Any?) =
-        if (other !is Identifier) false
-        else other.name == name
+        other is Identifier && other.name == name
 
     override fun hashCode() = name.hashCode()
 
