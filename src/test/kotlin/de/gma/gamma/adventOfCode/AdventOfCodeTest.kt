@@ -22,6 +22,7 @@ class AdventOfCodeTest : BaseEvaluationTest() {
             "day4_1.gma,8442",
             "day4_2.gma,4590",
             "day5_1.gma,7269",
+            "day5_2.gma,21140",
         ]
     )
     fun `check advent-of-code`(filename: String, expected: Long) {
