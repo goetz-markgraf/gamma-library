@@ -25,7 +25,7 @@ let produce-result input =
 
     min-crab .. max-crab
     ▷ map [target → { target, calculate-fuel target crab-list }]
-    ▷ reduce [acc pair → acc.last < pair.last ? acc : pair]
+    ▷ reduce [pair-1 pair-2 → pair-1.last < pair-2.last ? pair-1 : pair-2 ]
     ▷ at "last"
 
 
