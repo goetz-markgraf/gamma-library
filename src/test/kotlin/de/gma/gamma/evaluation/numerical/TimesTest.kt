@@ -1,4 +1,4 @@
-package de.gma.gamma.evaluation.operator
+package de.gma.gamma.evaluation.numerical
 
 import de.gma.gamma.datatypes.values.FloatValue
 import de.gma.gamma.datatypes.values.IntegerValue
@@ -50,7 +50,7 @@ class TimesTest : BaseEvaluationTest() {
         val result = execute(code)
         assertThat(result).isEqualTo(FloatValue.build(205.0))
     }
-    
+
     @Test
     fun `multiply with the mathematical sign`() {
         val code = "10 × 20"

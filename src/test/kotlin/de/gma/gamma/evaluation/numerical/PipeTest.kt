@@ -1,6 +1,5 @@
-package de.gma.gamma.evaluation.operator
+package de.gma.gamma.evaluation.numerical
 
-import de.gma.gamma.datatypes.list.ListValue
 import de.gma.gamma.datatypes.values.IntegerValue
 import de.gma.gamma.evaluation.BaseEvaluationTest
 import org.assertj.core.api.Assertions.assertThat
@@ -20,14 +19,5 @@ class PipeTest : BaseEvaluationTest() {
         val result = execute("{0} ▷ size") as IntegerValue
 
         assertThat(result.longValue).isEqualTo(1L)
-    }
-
-    @Test
-    fun `map pipe function`() {
-        val result = execute("{1, 2, 3} =>> [i -> i + 10]") as ListValue
-
-        assertThat(result.size()).isEqualTo(3)
-        assertThat((result.first() as IntegerValue).longValue).isEqualTo(11L)
-        assertThat((result.last() as IntegerValue).longValue).isEqualTo(13L)
     }
 }

@@ -1,4 +1,4 @@
-package de.gma.gamma.evaluation.operator
+package de.gma.gamma.evaluation.numerical
 
 import de.gma.gamma.datatypes.values.FloatValue
 import de.gma.gamma.datatypes.values.IntegerValue

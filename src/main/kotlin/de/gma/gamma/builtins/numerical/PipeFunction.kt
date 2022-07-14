@@ -1,4 +1,4 @@
-package de.gma.gamma.builtins.operator
+package de.gma.gamma.builtins.numerical
 
 import de.gma.gamma.builtins.BuiltinFunction
 import de.gma.gamma.datatypes.Value

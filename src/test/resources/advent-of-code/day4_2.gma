@@ -62,8 +62,8 @@ let play-game boards numbers =
 
     let play-round number boards =
         let play-round-internal number board =
-            board =>> [ line -> line =>> [num -> num = number ? () : num ] ]
-        boards =>> play-round-internal number
+            board ▷ map [ line -> line ▷ map [num -> num = number ? () : num ] ]
+        boards ▷ map (play-round-internal number)
 
 
     let has-won? board =

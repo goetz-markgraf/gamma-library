@@ -1,4 +1,4 @@
-package de.gma.gamma.builtins.operator
+package de.gma.gamma.builtins.numerical
 
 import de.gma.gamma.builtins.bindWithDoc
 import de.gma.gamma.datatypes.scope.Scope
@@ -15,6 +15,8 @@ fun populateOperator(scope: Scope) {
     bindWithDoc(scope, "neg", NegativeFunction, "neg <a> - return the negative of a number")
     bindWithDoc(scope, "|>", PipeFunction, "<value> |> <function> - calls <function> with <value> as parameter")
     bindWithDoc(scope, "▷", PipeFunction, "<value> ▷ <function> - calls <function> with <value> as parameter")
-    bindWithDoc(scope, "=>>", MapPipeFunction, "<list> =>> <function> - calls map on <list> with <function> as parameter")
+    bindWithDoc(scope, "min", MinFunction, "min <list of numbers> - returns the smallest number")
+    bindWithDoc(scope, "max", MaxFunction, "max <list of numbers> - returns the largest number")
+    bindWithDoc(scope, "abs", AbsFunction, "abs <number> - returns the absolute of the number")
     // @Formatter:on
 }
