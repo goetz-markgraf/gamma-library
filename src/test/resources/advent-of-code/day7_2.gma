@@ -20,16 +20,14 @@ let sum fuel-list =
 
 
 let produce-result input =
-    let crab-list = input ▷ at 0 ▷ split-by "," ▷ map [it → it + 0]
+    let crab-list = input ▷ at 0 ▷ split-by ","
     let min-crab = min crab-list
     let max-crab = max crab-list
 
-    pipeline res {
-        min-crab .. max-crab
-        res ▷ map [target → target → (crab-list ▷ calculate-fuel target ▷ sum)]
-        res ▷ fold res.first [acc fuel → acc.last > fuel.last ? fuel : acc]
-        res.last
-    }
+    min-crab .. max-crab
+    ▷ map [target → target → (crab-list ▷ calculate-fuel target ▷ sum)]
+    ▷ reduce [acc fuel → acc.last > fuel.last ? fuel : acc]
+    ▷ at "last"
 
 
 test-input
