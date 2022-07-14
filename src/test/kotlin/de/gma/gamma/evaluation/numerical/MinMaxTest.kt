@@ -26,6 +26,13 @@ class MinMaxTest : BaseEvaluationTest() {
         assertThat(result.doubleValue).isEqualTo(8.0)
     }
 
+
+    @Test
+    fun `return the highest of all negative numbers`() {
+        val result = execute("max -1.0 \"-4\" -2.0 -8 -6.0") as FloatValue
+        assertThat(result.doubleValue).isEqualTo(-1.0)
+    }
+
     @Test
     fun `return the smallest integer number`() {
         val result = execute("min 1 \"4\" -2 8 6") as IntegerValue
@@ -42,5 +49,11 @@ class MinMaxTest : BaseEvaluationTest() {
     fun `return the smallest mixed number`() {
         val result = execute("min 1.0 \"4\" -2.0 8 6.0") as FloatValue
         assertThat(result.doubleValue).isEqualTo(-2.0)
+    }
+
+    @Test
+    fun `return the smallest of all positive numbers`() {
+        val result = execute("min 1.0 \"4\" 2.0 8 6.0") as FloatValue
+        assertThat(result.doubleValue).isEqualTo(1.0)
     }
 }

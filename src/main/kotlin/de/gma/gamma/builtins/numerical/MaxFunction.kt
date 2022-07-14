@@ -14,13 +14,13 @@ object MaxFunction : BuiltinFunction(listOf("list")) {
         val numList = list.allItems().map { extractNumber(it) }
         val float = numList.any { it is FloatValue }
         if (float) {
-            val max = numList.fold(0.0) { acc, value ->
+            val max = numList.fold(Double.NEGATIVE_INFINITY) { acc, value ->
                 val doubleValue = value.toFloat().doubleValue
                 if (doubleValue > acc) doubleValue else acc
             }
             return FloatValue.build(max)
         } else {
-            val max = numList.fold(0L) { acc, value ->
+            val max = numList.fold(Long.MIN_VALUE) { acc, value ->
                 val longValue = value.toInteger().longValue
                 if (longValue > acc) longValue else acc
             }

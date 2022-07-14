@@ -14,13 +14,13 @@ object MinFunction : BuiltinFunction(listOf("list")) {
         val numList = list.allItems().map { extractNumber(it) }
         val float = numList.any { it is FloatValue }
         if (float) {
-            val min = numList.fold(0.0) { acc, value ->
+            val min = numList.fold(Double.POSITIVE_INFINITY) { acc, value ->
                 val doubleValue = value.toFloat().doubleValue
                 if (doubleValue < acc) doubleValue else acc
             }
             return FloatValue.build(min)
         } else {
-            val min = numList.fold(0L) { acc, value ->
+            val min = numList.fold(Long.MAX_VALUE) { acc, value ->
                 val longValue = value.toInteger().longValue
                 if (longValue < acc) longValue else acc
             }
