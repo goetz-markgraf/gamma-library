@@ -1,0 +1,41 @@
+let test-input = {
+    "16,1,2,0,4,2,7,1,2,14"
+    ""
+}
+
+
+
+
+let calculate-fuel target crab-list =
+    crab-list ▷ map [crab → abs (crab - target)]
+
+
+
+let sum fuel-list =
+    fuel-list ▷ fold 0 (+)
+
+
+
+let produce-result input =
+    let crab-list = input ▷ at 0 ▷ split-by "," ▷ map [it → it + 0]
+    let min-crab = min crab-list
+    let max-crab = max crab-list
+
+    let all-fuel =
+        min-crab .. max-crab
+        ▷ map [target → target → (crab-list ▷ calculate-fuel target ▷ sum)]
+
+    all-fuel
+    ▷ fold all-fuel.first [acc fuel → acc.last > fuel.last ? fuel : acc]
+    ▷ at "last"
+
+
+
+test-input
+▷ produce-result
+▷ print
+
+
+
+read-lines "src/test/resources/advent-of-code/day7.input"
+▷ produce-result
