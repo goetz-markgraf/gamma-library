@@ -14,8 +14,7 @@ let calculate-fuel target crab-list =
 
 
 
-let sum fuel-list =
-    fuel-list ▷ fold 0 (+)
+let sum = reduce (+)
 
 
 
