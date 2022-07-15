@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test
 class FunctionTest : BaseParserTest() {
     @Test
     fun `parse an empty function`() {
-        val expression = getExpression("[ () -> ]")
+        val expression = getExpression("[ () : ]")
 
         assertThat(expression).isInstanceOf(LambdaFunction::class.java)
         val func = expression as LambdaFunction
@@ -18,12 +18,12 @@ class FunctionTest : BaseParserTest() {
 
         assertThat(func.expressions).isEmpty()
 
-        assertThat(expression.prettyPrint()).isEqualTo("[() -> ]")
+        assertThat(expression.prettyPrint()).isEqualTo("[() : ]")
     }
 
     @Test
     fun `parse a function with two parameters`() {
-        val expression = getExpression("[ a b -> a + b ]")
+        val expression = getExpression("[ a b : a + b ]")
 
         assertThat(expression).isInstanceOf(LambdaFunction::class.java)
         val func = expression as LambdaFunction
@@ -33,7 +33,7 @@ class FunctionTest : BaseParserTest() {
         assertThat(func.expressions).hasSize(1)
             .first().isInstanceOf(Expression::class.java)
 
-        assertThat(expression.prettyPrint()).isEqualTo("[a b -> a + b]")
+        assertThat(expression.prettyPrint()).isEqualTo("[a b : a + b]")
     }
 
     @Test

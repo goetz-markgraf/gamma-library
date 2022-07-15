@@ -27,7 +27,7 @@ class PipelineTest : BaseEvaluationTest() {
             """
             pipeline "res"
                 {1, 2, 3}
-                (map [it → it * 2] res)
+                (map [it : it * 2] res)
                 (fold 0 (+) res)
         """.trimIndent()
         ) as IntegerValue

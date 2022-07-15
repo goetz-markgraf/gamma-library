@@ -75,7 +75,7 @@ class PrettyPrintTest : BaseParserTest() {
                 "do (1 + 2)",
                 "do (1 ? 2 : 3) \"Hallo\"",
                 "do (one, two)",
-                "do [a -> a]",
+                "do [a : a]",
                 "(+) 1 2",
                 "map {1, 2, 3} (+)"
             ]
@@ -122,9 +122,9 @@ class PrettyPrintTest : BaseParserTest() {
         @ParameterizedTest
         @CsvSource(
             value = [
-                "'map [i -> i * 2] {1, 2, 3}','{2, 4, 6}'",
-                "'map [i -> i * 2] {1}','{2}'",
-                "'map [i -> i * 2] { }','{ }'"
+                "'map [i : i * 2] {1, 2, 3}','{2, 4, 6}'",
+                "'map [i : i * 2] {1}','{2}'",
+                "'map [i : i * 2] { }','{ }'"
             ]
         )
         fun `maps can also be printed`(code: String, expected: String) {

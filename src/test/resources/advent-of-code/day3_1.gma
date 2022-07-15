@@ -17,7 +17,7 @@ let test-input = {
 
 
 let make-initial-list first-line =
-    list-generator (size first-line) [i -> 0]
+    list-generator (size first-line) [i : 0]
 
 
 
@@ -26,10 +26,10 @@ let find-common-bits list =
     
     let apply line current =
         let additions =
-            line |> map [char -> char = "1" ? 1 : -1]
+            line |> map [char : char = "1" ? 1 : -1]
 
         zip current additions
-        |> map [ pair ->
+        |> map [ pair :
             first pair + last pair ]
 
     let inner-rec current list =
@@ -47,7 +47,7 @@ let find-common-bits list =
 
 let make-binary-from-list positiv number-list =
     number-list
-    |> map [ number ->
+    |> map [ number :
         positiv
         ? number > 0 ? 1 : 0
         : number > 0 ? 0 : 1 ]
@@ -55,7 +55,7 @@ let make-binary-from-list positiv number-list =
 
 let make-number-from-binary list =
     list
-    |> fold 0 [ acc i ->
+    |> fold 0 [ acc i :
         acc * 2 + i
     ]
 

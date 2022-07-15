@@ -226,7 +226,7 @@ class Parser(
             }
         }
 
-        assertTypeWithContent(col, OP, "->", "→")
+        assertTypeWithContent(col, TENERY, ":")
         nextToken()
 
         val expressions = parseIndentedExpressions(col)

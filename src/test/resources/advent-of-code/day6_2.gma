@@ -31,7 +31,7 @@ assert
 
 
 let add-fishes-to-swarm fish-list swarm =
-    fish-list ▷ fold swarm [swarm fish → add-fish-to-swarm fish swarm]
+    fish-list ▷ fold swarm [swarm fish : add-fish-to-swarm fish swarm]
 
 assert
     "add-fishes-to-swarm"
@@ -74,7 +74,7 @@ assert
 
 let count-fish swarm =
     get-properties swarm
-    ▷ map [prop →
+    ▷ map [prop :
         swarm ▷ get-amount prop
     ]
     ▷ fold 0 (+)
@@ -92,7 +92,7 @@ assert
 let produce-result input =
     let fish-list = input ▷ at 0 ▷ split-by ","
     let initial-swarm = r* {} ▷ add-fishes-to-swarm fish-list
-    let final-swarm = repeat 256 ▷ fold initial-swarm [swarm i → process-day swarm]
+    let final-swarm = repeat 256 ▷ fold initial-swarm [swarm i : process-day swarm]
     count-fish final-swarm
 
 test-input

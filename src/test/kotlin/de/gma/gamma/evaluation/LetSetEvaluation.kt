@@ -39,7 +39,7 @@ class LetSetEvaluation : BaseEvaluationTest() {
     @Test
     fun `create and call a function`() {
         val code = """
-            let add = [ a b -> a + b ]
+            let add = [ a b : a + b ]
             
             add 10 20
         """.trimIndent()
@@ -54,7 +54,7 @@ class LetSetEvaluation : BaseEvaluationTest() {
     @Test
     fun `create and call a curried function`() {
         val code = """
-            let add = [ a b -> a + b ]
+            let add = [ a b : a + b ]
             
             let addTen = add 10
             
@@ -72,7 +72,7 @@ class LetSetEvaluation : BaseEvaluationTest() {
     @Test
     fun `bind a function`() {
         val code = """
-            let add = [a b ->
+            let add = [a b :
                 a + b ]
         """.trimIndent()
 

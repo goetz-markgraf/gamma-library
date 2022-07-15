@@ -129,7 +129,7 @@ class LetAndSetTest : BaseParserTest() {
 
     @Test
     fun `set expression with function`() {
-        val result = getExpression("set a! = [ () -> print 10 ]") as SetExpression
+        val result = getExpression("set a! = [ () : print 10 ]") as SetExpression
 
         assertThat(result.identifier.name).isEqualTo("a!")
         assertThat(result.boundValue).isInstanceOf(FunctionValue::class.java)

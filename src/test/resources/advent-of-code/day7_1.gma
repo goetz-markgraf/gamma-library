@@ -11,7 +11,7 @@ let sum = reduce (+)
 
 
 let calculate-fuel target crab-list =
-    crab-list ▷ map [crab → abs (crab - target)] ▷ sum
+    crab-list ▷ map [crab : abs (crab - target)] ▷ sum
 
 
 
@@ -24,8 +24,8 @@ let produce-result input =
     let max-crab = max crab-list
 
     min-crab .. max-crab
-    ▷ map [target → { target, calculate-fuel target crab-list }]
-    ▷ reduce [pair-1 pair-2 → pair-1.last < pair-2.last ? pair-1 : pair-2 ]
+    ▷ map [target : target → calculate-fuel target crab-list ]
+    ▷ reduce [pair-1 pair-2 : pair-1.last < pair-2.last ? pair-1 : pair-2 ]
     ▷ at "last"
 
 

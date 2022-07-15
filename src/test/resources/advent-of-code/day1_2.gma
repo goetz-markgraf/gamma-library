@@ -17,8 +17,8 @@ let count-increase-window list =
 
     let count-rec last list =
         when {
-            size list < 3 -> 0
-            size list >=3 ->
+            size list < 3 → 0
+            size list >=3 →
                 (
                     let depth = calc-depth list
                     (depth > last ? 1 : 0) + count-rec depth (tail list)

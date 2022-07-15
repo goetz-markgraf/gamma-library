@@ -24,14 +24,14 @@ let determine-winning-bit select-most-bits? count-0 count-1 =
 
 let bits-in-position position input =
     input
-    |> map [line -> at position line]
+    |> map [line : at position line]
 
 
 
 let determine-bit position select-most-bits? input =
 
-    let count-0 = bits-in-position position input |> filter [bit -> bit = "0"] |> size
-    let count-1 = bits-in-position position input |> filter [bit -> bit = "1"] |> size
+    let count-0 = bits-in-position position input |> filter [bit : bit = "0"] |> size
+    let count-1 = bits-in-position position input |> filter [bit : bit = "1"] |> size
 
     determine-winning-bit select-most-bits? count-0 count-1
 
@@ -44,7 +44,7 @@ let find-common-bits position select-most-bits? input =
 
     let bit = determine-bit position select-most-bits? input
 
-    let matching-lines = input |> filter [line -> (at position line) = bit]
+    let matching-lines = input |> filter [line : (at position line) = bit]
 
     when {
         matching-lines.size = 1 ∨ position = matching-lines.first.size
@@ -64,13 +64,13 @@ let find-least-common-bits = find-common-bits 0 false
 
 let make-binary-from-list number-list =
     number-list
-    |> map [ number ->
+    |> map [ number :
         number > 0 ? 1 : 0 ]
 
 
 let make-number-from-binary list =
     list
-    |> fold 0 [ acc i ->
+    |> fold 0 [ acc i :
         acc * 2 + i
     ]
 

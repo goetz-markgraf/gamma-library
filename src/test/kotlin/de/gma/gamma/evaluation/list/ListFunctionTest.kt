@@ -32,7 +32,7 @@ class ListFunctionTest : BaseEvaluationTest() {
     @Test
     fun `use a simple map lambda`() {
         val code = """
-            {1, 2, 3} |> map [i -> i * 2]
+            {1, 2, 3} |> map [i : i * 2]
         """.trimIndent()
 
         val result = execute(code) as ListValue
@@ -57,7 +57,7 @@ class ListFunctionTest : BaseEvaluationTest() {
 
     @Test
     fun `use a map-star function that uses the index value`() {
-        val code = "{1, 2, 3} |> map* [item pos -> item * 2 + pos]"
+        val code = "{1, 2, 3} |> map* [item pos : item * 2 + pos]"
 
         val result = execute(code) as ListValue
 
@@ -70,7 +70,7 @@ class ListFunctionTest : BaseEvaluationTest() {
         val code = """
             let sum! = 0
             
-            {1, 2, 3} ▷ for-each [item → set sum! = sum! + item]
+            {1, 2, 3} ▷ for-each [item : set sum! = sum! + item]
             
             sum!
         """.trimIndent()
@@ -83,8 +83,8 @@ class ListFunctionTest : BaseEvaluationTest() {
     @ParameterizedTest
     @ValueSource(
         strings = [
-            "{1, 2, 3} |> fold 0 [acc i -> acc + i]",
-            "{1, 2, 3} ▷ fold 0 [acc i → acc + i]",
+            "{1, 2, 3} |> fold 0 [acc i : acc + i]",
+            "{1, 2, 3} ▷ fold 0 [acc i : acc + i]",
             "{1, 2, 3} ▷ reduce (+)",
             "repeat 4 |> reduce (+)",
             "1 .. 3 |> reduce (+)"
@@ -122,7 +122,7 @@ class ListFunctionTest : BaseEvaluationTest() {
 
     @Test
     fun `filters the list for items above 2`() {
-        val result = execute("{1, 2, 3, 4} |> filter [ item -> item > 2 ]") as ListValue
+        val result = execute("{1, 2, 3, 4} |> filter [ item : item > 2 ]") as ListValue
 
         assertThat(result.size()).isEqualTo(2)
         assertThat(result.first().prettyPrint()).isEqualTo("3")

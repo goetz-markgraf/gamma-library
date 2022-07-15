@@ -55,15 +55,15 @@ assert
 
 let make-line coord =
     let make-horizontal-line coord =
-        coord.first.first .. coord.last.first ▷ map [it → {it, coord.first.last}]
+        coord.first.first .. coord.last.first ▷ map [it : {it, coord.first.last}]
 
     let make-vertical-line coord =
-        coord.first.last .. coord.last.last ▷ map [it → {coord.first.first, it}]
+        coord.first.last .. coord.last.last ▷ map [it : {coord.first.first, it}]
 
     let make-diagonal-line coord =
         let y-delta = coord.first.last < coord.last.last ? 1 : -1
 
-        coord.first.first .. coord.last.first ▷ map* [x-pos i →
+        coord.first.first .. coord.last.first ▷ map* [x-pos i :
             x-pos → coord.first.last + i * y-delta
         ]
 
@@ -110,7 +110,7 @@ assert
 
 let fill-line field line =
     let rec-map =
-        line ▷ map [coord →
+        line ▷ map [coord :
             let key = make-key coord
             let current = field ▷ get-value key
             key → current + 1
@@ -150,9 +150,9 @@ assert
 let count-fields-over-1 field =
     let properties = field ▷ get-properties
     properties
-    ▷ map [prop → field ▷ at prop]
-    ▷ filter [val → val > 1]
-    ▷ map [val → 1]
+    ▷ map [prop : field ▷ at prop]
+    ▷ filter [val : val > 1]
+    ▷ map [val : 1]
     ▷ fold 0 (+)
 
 assert
@@ -173,7 +173,7 @@ let produce-result input =
 
     let field = r* { }
 
-    let final-field = lines ▷ fold field [acc line → set-positions-from-line acc line]
+    let final-field = lines ▷ fold field [acc line : set-positions-from-line acc line]
 
     final-field ▷ count-fields-over-1
 

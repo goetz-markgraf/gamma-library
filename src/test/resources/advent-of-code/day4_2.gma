@@ -38,7 +38,7 @@ let create-boards board-list input-list =
         input-list |> slice 6 (size input-list - 6)
 
     let create-board input-list =
-        input-list |> map [ line -> line |> split ]
+        input-list |> map [ line : line |> split ]
 
     size input-list ≥ 6
     ? create-boards
@@ -51,8 +51,8 @@ let create-boards board-list input-list =
 let calculate-score number board =
     number *
     (board
-        |> fold 0 [ acc line ->
-            acc + (line |> fold 0 [ acc num -> acc + (num ≠ () ? num : 0) ])
+        |> fold 0 [ acc line :
+            acc + (line |> fold 0 [ acc num : acc + (num ≠ () ? num : 0) ])
         ]
     )
 
@@ -62,21 +62,21 @@ let play-game boards numbers =
 
     let play-round number boards =
         let play-round-internal number board =
-            board ▷ map [ line -> line ▷ map [num -> num = number ? () : num ] ]
+            board ▷ map [ line : line ▷ map [num : num = number ? () : num ] ]
         boards ▷ map (play-round-internal number)
 
 
     let has-won? board =
         let line-won? board =
             board
-            |> filter [ line ->
-                line |> filter [ num -> num ≠ ()] |> is-empty?
+            |> filter [ line :
+                line |> filter [ num : num ≠ ()] |> is-empty?
             ] |> is-not-empty?
         let col-won? board =
             let board-won! = false
-            0 .. 4 |> for-each [ col ->
+            0 .. 4 |> for-each [ col :
                 let row-won! = true
-                0 .. 4 |> for-each [ row ->
+                0 .. 4 |> for-each [ row :
                     (board |> at row |> at col) ≠ ()
                     ? set row-won! = false
                     : () ]
@@ -89,7 +89,7 @@ let play-game boards numbers =
 
     let new-boards =
         play-round played-number boards
-        |> filter [ board -> has-won? board ? (set winning-score! = calculate-score played-number board; false) : true ]
+        |> filter [ board : has-won? board ? (set winning-score! = calculate-score played-number board; false) : true ]
 
     (size numbers) ≤ 1
     ? ()

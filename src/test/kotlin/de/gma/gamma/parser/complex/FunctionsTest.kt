@@ -10,7 +10,7 @@ class FunctionsTest : BaseParserTest() {
     @Test
     fun `parse a complex example with two functions and a call`() {
         val source = """
-            let add = [a b -> a + b]
+            let add = [a b : a + b]
             
             add 10 20
         """.trimIndent()
@@ -19,7 +19,7 @@ class FunctionsTest : BaseParserTest() {
 
         assertThat(expressions).hasSize(2)
 
-        assertThat(expressions.first().prettyPrint()).isEqualTo("let add = [a b -> a + b]")
+        assertThat(expressions.first().prettyPrint()).isEqualTo("let add = [a b : a + b]")
 
         assertThat(expressions[1].prettyPrint()).isEqualTo("add 10 20")
     }
@@ -27,7 +27,7 @@ class FunctionsTest : BaseParserTest() {
     @Test
     fun `parse a function with a block`() {
         val source = """
-            let add = [ a b ->
+            let add = [ a b :
                    (
                        print "Hello"
                        a + b

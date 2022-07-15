@@ -15,7 +15,7 @@ let input = {
 let count-increase list =
     let current! = 10000
 
-    list |> fold 0 [ acc i ->
+    list |> fold 0 [ acc i :
         let increase = i > current!
         set current! = i
         acc + (increase ? 1 : 0) ]

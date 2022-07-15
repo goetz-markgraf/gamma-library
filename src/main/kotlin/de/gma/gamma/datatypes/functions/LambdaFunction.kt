@@ -25,12 +25,12 @@ class LambdaFunction(
         }
 
         if (expressions.size == 0) {
-            append(" -> ")
+            append(" : ")
         } else if (expressions.size == 1) {
-            append(" -> ")
+            append(" : ")
             append(expressions.first().prettyPrint())
         } else {
-            append(" ->").append(CH_NEWLINE)
+            append(" :").append(CH_NEWLINE)
             expressions.forEach {
                 append("    ${it.prettyPrint()}").append(CH_NEWLINE)
             }

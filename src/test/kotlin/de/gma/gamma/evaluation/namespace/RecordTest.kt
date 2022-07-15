@@ -48,7 +48,7 @@ class RecordTest : BaseEvaluationTest() {
     fun `create a record with a dynamic created list`() {
         val result = execute(
             """
-                let rec-map = 1 .. 2 ▷ map [pos → join pos "-" 1 → pos]
+                let rec-map = 1 .. 2 ▷ map [pos : join pos "-" 1 → pos]
                 record rec-map
             """.trimIndent()
         ) as RecordValue

@@ -36,7 +36,7 @@ let create-boards board-list input-list =
         input-list |> slice 6 (input-list.size - 6)
 
     let create-board input-list =
-        input-list |> map [ line -> line |> split ]
+        input-list |> map [ line : line |> split ]
 
     size input-list ≥ 6
     ? create-boards
@@ -51,8 +51,8 @@ let find-winning-num-board-pair boards numbers =
     let play-round number boards =
         let play-round number board =
             board
-            |> map [ line ->
-                line |> map [num ->
+            |> map [ line :
+                line |> map [num :
                     num = number ? () : num
                 ]
             ]
@@ -65,22 +65,22 @@ let find-winning-num-board-pair boards numbers =
 
         let line-won? board =
             board
-            |> filter [ line ->
-                line |> filter [ num -> num ≠ ()] |> is-empty?
+            |> filter [ line :
+                line |> filter [ num : num ≠ ()] |> is-empty?
             ] |> is-not-empty?
 
         let col-won? board =
             let board-won! = false
-            0 .. 4 |> for-each [ col ->
+            0 .. 4 |> for-each [ col :
                 let row-won! = true
-                0 .. 4 |> for-each [ row ->
+                0 .. 4 |> for-each [ row :
                     (board |> at row |> at col) ≠ ()
                     ? set row-won! = false
                     : () ]
                 row-won! ? (set board-won! = true) : () ]
             board-won!
 
-        boards |> for-each [ board -> (line-won? board | col-won? board) ? set winning-board! = board : () ]
+        boards |> for-each [ board : (line-won? board | col-won? board) ? set winning-board! = board : () ]
         winning-board!
 
     let new-boards = play-round (first numbers) boards
@@ -95,8 +95,8 @@ let find-winning-num-board-pair boards numbers =
 let calculate-score num-board-pair =
     first num-board-pair *
     (last num-board-pair
-        |> fold 0 [ acc line ->
-            acc + (line |> fold 0 [ acc num -> acc + (num ≠ () ? num : 0) ])
+        |> fold 0 [ acc line :
+            acc + (line |> fold 0 [ acc num : acc + (num ≠ () ? num : 0) ])
         ])
 
 

@@ -12,7 +12,7 @@ class LazyExpressionTest : BaseEvaluationTest() {
         val source = """
             let a = 10
             
-            let f = [ x ->
+            let f = [ x :
                 x ]
                 
             f a

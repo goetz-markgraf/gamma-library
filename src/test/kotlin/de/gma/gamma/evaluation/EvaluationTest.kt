@@ -30,7 +30,7 @@ class EvaluationTest : BaseEvaluationTest() {
         val code = """
             let createAccount start =
                 let balance! = start
-                [ deposit ->
+                [ deposit :
                     set balance! = (balance! + deposit)
                     balance! ]
                 
@@ -57,7 +57,7 @@ class EvaluationTest : BaseEvaluationTest() {
     @Test
     fun `define and call a function with no parameter`() {
         val code = """
-            let greet = [ () ->
+            let greet = [ () :
                 print "Hello"
             ]
             
