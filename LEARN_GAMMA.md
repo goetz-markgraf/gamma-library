@@ -76,6 +76,7 @@ Additionally there are two ways of constructing a list of values:
 ```
     # a pair is a list of two values
     10 -> 20
+    10 → 20
   
     # a list is values between { and }
     {
@@ -231,7 +232,7 @@ operator. That is why in _gamma_ the parameter indicating the value to work on c
 ## lambda functions
 
 As said before, functions are also values that can be assigned. Function can easily be
-created "on the fly" (aka lambda function) using `[` and `]` and a `->` to seperate parameters from the code. Actually,
+created "on the fly" (aka lambda function) using `[` and `]` and a `:` to seperate parameters from the code. Actually,
 the
 declaration of functions described above is only a shorthand way of assigning a lambda function
 to a value
@@ -241,7 +242,7 @@ to a value
   
   # is the same as
   
-  let add = [a b -> a + b]
+  let add = [a b : a + b]
 ```
 
 You can use lambdas for example in combination with the map function to work over the items of a list
@@ -252,7 +253,7 @@ You can use lambdas for example in combination with the map function to work ove
   # add 10 to every item in the list
   # produces a new list {11, 12, 13}
   
-  let result = list |> map [item -> item + 10]
+  let result = list |> map [item : item + 10]
 ```
 
 ## record types
