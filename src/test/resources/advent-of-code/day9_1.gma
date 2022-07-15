@@ -7,15 +7,58 @@ let test-input = {
 }
 
 
+let make-2d-field input =
+    input ▷ map [line : line ▷ map [ch : ch]]
 
+
+
+let get-value x y field =
+    field ▷ at* y ▷ at* x
+
+assert
+    "get-value"
+    (get-value 0 0 {{0,1,2},{3,4,5}} → 0)
+    (get-value 10 0 {{0,1,2},{3,4,5}} → () )
+    (get-value 2 1 {{0,1,2},{3,4,5}} → 5)
+
+
+
+let is-low? x y field =
+    let current = field ▷ get-value x y
+    let x-max = field.first.size - 1
+    let y-max = field.size - 1
+
+    (x ≤ 0 ∨ (field ▷ get-value (x - 1) y) > current)
+    ∧
+    (y ≤ 0 ∨ (field ▷ get-value x (y - 1)) > current)
+    ∧
+    (x ≥ x-max ∨ (field ▷ get-value (x + 1) y) > current)
+    ∧
+    (y ≥ y-max ∨ (field ▷ get-value x (y + 1)) > current)
 
 
 
 let produce-result input =
-    input ▷ map [line → line ▷ map [ch → ch]]
+    let field = make-2d-field input
+    let number! = 0
+    let x-max = field.first.size - 1
+    let y-max = field.size - 1
 
+    0 .. x-max
+    ▷ map [col :
+        0 .. y-max
+        ▷ map [row :
+            is-low? col row field
+            ? (print "(" col row ")", set number! = number! + (get-value col row field) + 1)
+            : () ] ]
+
+    number!
 
 
 test-input
 ▷ produce-result
 ▷ print
+
+
+read-lines "src/test/resources/advent-of-code/day9.input"
+▷ produce-result
