@@ -7,7 +7,7 @@ class PrintDocumentation {
 
     @Test
     fun `print all documentation strings`() {
-        val scope = ModuleScope().parent as ModuleScope
+        val scope = ModuleScope("test").parent as ModuleScope
 
         scope.getAllNames().forEach {
             println(scope.getRemark(it))

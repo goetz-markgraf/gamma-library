@@ -10,7 +10,7 @@ class CompoundIdentifier(
     beginPos: Position,
     endPos: Position,
     val names: List<String>
-) : Value(sourceName, beginPos, endPos) {
+) : AbstractValue(sourceName, beginPos, endPos) {
 
     override fun prettyPrint() =
         names.joinToString(".")

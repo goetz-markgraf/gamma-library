@@ -1,6 +1,6 @@
 package de.gma.gamma.datatypes.values
 
-import de.gma.gamma.datatypes.Value
+import de.gma.gamma.datatypes.AbstractValue
 import de.gma.gamma.datatypes.scope.Scope
 import de.gma.gamma.parser.Position
 
@@ -9,7 +9,7 @@ class PropertyValue(
     beginPos: Position,
     endPos: Position,
     val identifier: String
-) : Value(sourceName, beginPos, endPos) {
+) : AbstractValue(sourceName, beginPos, endPos) {
 
     override fun prettyPrint() = ":$identifier"
 

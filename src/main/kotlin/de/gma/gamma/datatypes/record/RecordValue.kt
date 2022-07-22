@@ -3,6 +3,7 @@ package de.gma.gamma.datatypes.record
 import de.gma.gamma.builtins.builtInSource
 import de.gma.gamma.builtins.createMapFromListOfPair
 import de.gma.gamma.builtins.nullPos
+import de.gma.gamma.datatypes.AbstractValue
 import de.gma.gamma.datatypes.Value
 import de.gma.gamma.datatypes.list.ListValue
 import de.gma.gamma.datatypes.scope.Namespace
@@ -16,7 +17,7 @@ class RecordValue(
     beginPos: Position,
     endPos: Position,
     private val internalMap: Map<String, Value>
-) : Value(sourceName, beginPos, endPos), Namespace {
+) : AbstractValue(sourceName, beginPos, endPos), Namespace {
 
     override fun prettyPrint(): String =
         "record {${internalMap.toList().joinToString(", ") { (a, b) -> ":$a -> $b" }}}"

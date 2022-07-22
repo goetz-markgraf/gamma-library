@@ -1,18 +1,24 @@
 package de.gma.gamma.datatypes.scope
 
 import de.gma.gamma.builtins.GammaBaseScope
+import de.gma.gamma.builtins.nullPos
+import de.gma.gamma.datatypes.AbstractValue
 import de.gma.gamma.datatypes.Remark
 import de.gma.gamma.datatypes.Value
 import de.gma.gamma.datatypes.values.EmptyValue
 import de.gma.gamma.parser.EvaluationException
 
-open class ModuleScope(override val parent: Scope? = GammaBaseScope) : Scope {
+open class ModuleScope(sourceName: String, override val parent: Scope? = GammaBaseScope) : Scope,
+    AbstractValue(sourceName, nullPos, nullPos) {
     private val content: MutableMap<String, Value> = mutableMapOf()
     private val remarks: MutableMap<String, Remark> = mutableMapOf()
 
     override fun toString(): String {
-        return content.keys.toList().toString()
+        return sourceName + ": " + content.keys.toList().toString()
     }
+
+    override fun prettyPrint() =
+        toString()
 
     fun getAllNames() =
         content.keys.toList()

@@ -8,7 +8,7 @@ import de.gma.gamma.builtins.numerical.populateOperator
 import de.gma.gamma.builtins.predicate.populateComparison
 import de.gma.gamma.datatypes.scope.ModuleScope
 
-object GammaBaseScope : ModuleScope(null) {
+object GammaBaseScope : ModuleScope("global", null) {
     init {
         populateIO(this)
         populateOperator(this)

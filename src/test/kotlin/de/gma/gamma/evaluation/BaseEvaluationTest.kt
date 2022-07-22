@@ -8,11 +8,11 @@ import org.junit.jupiter.api.BeforeEach
 
 open class BaseEvaluationTest {
     private val baseScope = GammaBaseScope
-    protected var scope = ModuleScope(baseScope)
+    protected lateinit var scope: ModuleScope
 
     @BeforeEach
     fun setUp() {
-        scope = ModuleScope(baseScope)
+        scope = ModuleScope("test", baseScope)
     }
 
 

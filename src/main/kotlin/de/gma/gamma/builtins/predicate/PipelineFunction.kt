@@ -23,7 +23,7 @@ object PipelineFunction : BuiltinFunction(listOf("id", "expressions")) {
             else if (identifier is StringValue) identifier.strValue
             else throw EvaluationException("$identifier is not an identifier")
 
-        val pipelineScope = ModuleScope(scope)
+        val pipelineScope = ModuleScope(sourceName, scope)
         var result: Value = EmptyValue.build()
 
         expressions.allItems().forEach { expr ->

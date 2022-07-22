@@ -1,5 +1,6 @@
 package de.gma.gamma.datatypes.functions
 
+import de.gma.gamma.datatypes.AbstractValue
 import de.gma.gamma.datatypes.Value
 import de.gma.gamma.datatypes.list.ListLiteral
 import de.gma.gamma.datatypes.list.ListValue
@@ -12,7 +13,7 @@ abstract class FunctionValue(
     beginPos: Position,
     endPos: Position,
     val paramNames: List<String>
-) : Value(sourceName, beginPos, endPos) {
+) : AbstractValue(sourceName, beginPos, endPos) {
 
     open fun call(scope: Scope, callParams: List<Value>): Value {
         val missing = checkMissingParameters(callParams)

@@ -12,7 +12,7 @@ class Remark(
     endPos: Position,
     val strValue: String,
     private val documentation: Boolean = false
-) : Value(sourceName, beginPos, endPos) {
+) : AbstractValue(sourceName, beginPos, endPos) {
 
     override fun prettyPrint() = if (!documentation) "# $strValue" else "'${strValue.replace("'", "\\'")}'"
 

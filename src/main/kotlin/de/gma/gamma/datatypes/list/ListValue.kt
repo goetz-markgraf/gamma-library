@@ -2,6 +2,7 @@ package de.gma.gamma.datatypes.list
 
 import de.gma.gamma.builtins.builtInSource
 import de.gma.gamma.builtins.nullPos
+import de.gma.gamma.datatypes.AbstractValue
 import de.gma.gamma.datatypes.Value
 import de.gma.gamma.datatypes.prettyPrintList
 import de.gma.gamma.datatypes.scope.Namespace
@@ -14,7 +15,7 @@ abstract class ListValue(
     sourceName: String,
     beginPos: Position,
     endPos: Position,
-) : Value(sourceName, beginPos, endPos), Namespace {
+) : AbstractValue(sourceName, beginPos, endPos), Namespace {
 
     override fun prettyPrint() = prettyPrintList(allItems())
 

@@ -17,7 +17,7 @@ class ListGenerator(
     private val generatorFunction: FunctionValue
 ) : ListValue(sourceName, beginPos, endPos) {
 
-    private val internalScope = ModuleScope()
+    private val internalScope = ModuleScope(sourceName)
 
     private val storage = Array<Value?>(size) { null }
 

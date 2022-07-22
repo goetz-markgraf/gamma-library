@@ -10,7 +10,7 @@ class Identifier(
     endPos: Position,
     val name: String,
     val identifierType: GIdentifierType
-) : Value(sourceName, beginPos, endPos) {
+) : AbstractValue(sourceName, beginPos, endPos) {
 
     override fun prettyPrint() =
         when (identifierType) {

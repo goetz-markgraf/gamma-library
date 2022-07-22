@@ -25,7 +25,7 @@ open class BaseParserTest {
 
     protected fun execute(source: String): Value? {
         parser = Parser(source)
-        val scope = ModuleScope()
+        val scope = ModuleScope("test")
 
         var expr = parser.nextExpression()
         var result: Value? = null

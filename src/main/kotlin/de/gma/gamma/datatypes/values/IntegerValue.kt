@@ -2,7 +2,7 @@ package de.gma.gamma.datatypes.values
 
 import de.gma.gamma.builtins.builtInSource
 import de.gma.gamma.builtins.nullPos
-import de.gma.gamma.datatypes.Value
+import de.gma.gamma.datatypes.AbstractValue
 import de.gma.gamma.datatypes.scope.Scope
 import de.gma.gamma.parser.Position
 
@@ -11,7 +11,7 @@ class IntegerValue(
     beginPos: Position,
     endPos: Position,
     val longValue: Long
-) : Value(sourceName, beginPos, endPos) {
+) : AbstractValue(sourceName, beginPos, endPos) {
 
     override fun prettyPrint() = "$longValue"
 
