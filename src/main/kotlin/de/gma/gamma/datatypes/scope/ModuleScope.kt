@@ -8,10 +8,19 @@ import de.gma.gamma.datatypes.Value
 import de.gma.gamma.datatypes.values.EmptyValue
 import de.gma.gamma.parser.EvaluationException
 
-open class ModuleScope(sourceName: String, override val parent: Scope? = GammaBaseScope) : Scope,
-    AbstractValue(sourceName, nullPos, nullPos) {
+open class ModuleScope(
+    sourceName: String,
+    final override val parent: Scope? = GammaBaseScope
+) : Scope, AbstractValue(sourceName, nullPos, nullPos) {
+
     private val content: MutableMap<String, Value> = mutableMapOf()
     private val remarks: MutableMap<String, Remark> = mutableMapOf()
+
+    init {
+        content["this"] = this
+        if (parent != null && parent is ModuleScope)
+            content["super"] = parent
+    }
 
     override fun toString(): String {
         return sourceName + ": " + content.keys.toList().toString()
@@ -29,13 +38,11 @@ open class ModuleScope(sourceName: String, override val parent: Scope? = GammaBa
     override fun getValue(id: String, strict: Boolean): Value {
 
         return content[id]
-            ?: if (parent != null)
-                parent!!.getValue(id, strict)
-            else
-                if (strict)
+            ?: (parent?.getValue(id, strict)
+                ?: if (strict)
                     throw EvaluationException("id $id is undefined.")
                 else
-                    EmptyValue.build()
+                    EmptyValue.build())
     }
 
     override fun containsLocally(id: String) =

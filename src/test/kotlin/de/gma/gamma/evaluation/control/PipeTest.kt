@@ -1,4 +1,4 @@
-package de.gma.gamma.evaluation.numerical
+package de.gma.gamma.evaluation.control
 
 import de.gma.gamma.datatypes.values.IntegerValue
 import de.gma.gamma.evaluation.BaseEvaluationTest
