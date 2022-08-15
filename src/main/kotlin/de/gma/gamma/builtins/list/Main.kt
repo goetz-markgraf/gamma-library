@@ -15,6 +15,9 @@ fun populateList(scope: Scope) {
     bindWithDoc(scope, "slice", SliceFunction, "slice <from> <length> <list> – returns a sublist")
     bindWithDoc(scope, "size", SizeFunction, "size <list> – returns the number of elements in this list")
     bindWithDoc(scope, "append", AppendFunction, "append <item> <list> – appends an item to the end of the list")
+    bindWithDoc(scope, "distinct", DistinctFunction, "distinct <list> – creates a new list without duplicates")
+    bindWithDoc(scope, "sort", SortFunction, "sort <list> – creates a new list that is sorted numerically. Strings are converted to numbers, lists are sorted according to their length.")
+    bindWithDoc(scope, "sort-desc", SortDescendingFunction, "sort <list> – creates a new list that is sorted numerically. Strings are converted to numbers, lists are sorted according to their length.")
     bindWithDoc(scope, "appendAll", AppendAllFunction, "appendAll <new-list> <list> – appends all items of <new-list> the end of <list>")
     bindWithDoc(scope, "::", InsertFirstFunction, "<item> :: <list> – prepends a list with an as the new first element")
     bindWithDoc(scope, "@", ConcatFunction, "<list-1> @ <list-2> – concats <list-1> and <list-2>")
@@ -31,6 +34,7 @@ fun populateList(scope: Scope) {
     bindWithDoc(scope, "zip", ZipFunction, "zip <list-1> <list-2> – Creates a new list consisting of pairs of the curresponding elements from <list-1> and <list-2>")
 
     bindWithDoc(scope, "contains?", ContainsPredicate, "contains? <item> <list> – tests if <item> is in <list>. This also includes strings.")
+    bindWithDoc(scope, "does-not-contain?", DoesNotContainPredicate, "does-not-contain? <item> <list> – tests if <item> is not in <list>. This also includes strings.")
     bindWithDoc(scope, "is-list?", ListPredicate, "is-list? <value> – tests if <value> is a list. This also includes strings")
     bindWithDoc(scope, "is-string?", StringPredicate, "is-string? <value> – tests if <value> is a string")
     bindWithDoc(scope, "is-pair?", PairPredicate, "is-pair? <value> – tests if <value> is a pair, i. e. a list with two elements")
