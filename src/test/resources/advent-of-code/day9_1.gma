@@ -49,7 +49,7 @@ let produce-result input =
         0 .. y-max
         ▷ map [row :
             is-low? col row field
-            ? (print "(" col row ")", set number! = number! + (get-value col row field) + 1)
+            ? set number! = number! + (get-value col row field) + 1
             : () ] ]
 
     number!
