@@ -85,16 +85,13 @@ let get-low-points-around point basin field =
             else → new-pos
         }
 
-    let new-points =
-        {
-            surround-point point "left"
-            surround-point point "up"
-            surround-point point "right"
-            surround-point point "down"
-        }
-        ▷ filter is-not-empty?
-
-    new-points
+    {
+        surround-point point "left"
+        surround-point point "up"
+        surround-point point "right"
+        surround-point point "down"
+    }
+    ▷ filter is-not-empty?
     ▷ filter [ point :
             get-value point.first point.last field < 9
             ∧ does-not-contain? point basin ]
