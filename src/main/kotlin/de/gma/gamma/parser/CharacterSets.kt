@@ -22,8 +22,8 @@ const val CH_BANG = '!'
 const val CH_QUESTION_MARK = '?'
 
 
-fun isStartOfProperty(char: Char, peekChar: Char, peekPeekChar: Char) =
-    char == CH_COLON && isStartOfIdentifier(peekChar, peekPeekChar)
+fun isStartOfProperty(char: Char, peekChar: Char) =
+    char == CH_COLON && isStartOfIdentifier(peekChar)
 
 fun isStartOfDocumentation(char: Char) =
     char == CH_APOSTR
@@ -53,8 +53,8 @@ fun isStartOfNumber(char: Char, peekChar: Char) =
             || (char == CH_DOT && isNumberChar(peekChar))
 
 
-fun isStartOfIdentifier(char: Char, peekChar: Char) =
-    Character.isLetter(char) || char == CH_UNDERSCORE && Character.isLetter(peekChar)
+fun isStartOfIdentifier(char: Char) =
+    Character.isLetter(char) || char == CH_UNDERSCORE
 
 fun isIdentifierChar(char: Char) =
     Character.isLetter(char) || Character.isDigit(char) || isValidSpecialIdentifierChar(char) || isEndOfIdentifier(char)

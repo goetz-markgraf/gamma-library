@@ -52,9 +52,9 @@ class Lexer(
 
             isStartOfNumber(char, peekChar) -> parseNumber()
 
-            isStartOfProperty(char, peekChar, peekPeekChar) -> parseProperty()
+            isStartOfProperty(char, peekChar) -> parseProperty()
 
-            isStartOfIdentifier(char, peekChar) -> parseIdentifier()
+            isStartOfIdentifier(char) -> parseIdentifier()
 
             isOperatorChar(char) -> parseOperator()
 
@@ -156,10 +156,10 @@ class Lexer(
     }
 
     private fun parseOperatorAsIdentifier(): Token {
-        next() // Wir brauchen den Tick nicht
+        next() // Überlesen der öffenenden Klammer
         val ret = parseOperator()
         return if (char == CH_RPARENS) {
-            next()
+            next() // Überlesen der schließenden Klammer
             ret.copy(type = TokenType.OP_AS_ID)
         } else {
             ret.copy(type = TokenType.ERROR)
