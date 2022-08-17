@@ -70,24 +70,20 @@ let find-low-points field =
 
 let get-low-points-around point basin field =
     let surround-point point direction =
-        let x =
+        let delta-point =
             when {
-                direction = "left" → point.first - 1
-                direction = "right" → point.first + 1
-                else → point.first
+                direction = "up" → {0, -1}
+                direction = "down" → {0, 1}
+                direction = "left" → {-1, 0}
+                direction = "right" → {1, 0}
             }
-        let y =
-            when {
-                direction = "up" → point.last - 1
-                direction = "down" → point.last + 1
-                else → point.last
-            }
-        let new-pos =
-            when {
-                x < 0 ∨ x ≥ field.first.size → ()
-                y < 0 ∨ y ≥ field.size → ()
-                else → {x, y}
-            }
+        let new-pos = {point.first + delta-point.first, point.last + delta-point.last}
+
+        when {
+            new-pos.first < 0 ∨ new-pos.first ≥ field.first.size → ()
+            new-pos.last < 0 ∨ new-pos.last ≥ field.size → ()
+            else → new-pos
+        }
 
     let new-points =
         {
