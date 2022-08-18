@@ -1,5 +1,7 @@
 package de.gma.gamma.parser
 
+import java.lang.Character.isDigit
+import java.lang.Character.isLetter
 import java.lang.Character.MIN_VALUE as nullChar
 
 
@@ -44,7 +46,7 @@ fun isWhitespace(char: Char) =
     Character.isWhitespace(char)
 
 
-fun isNumberChar(char: Char) = Character.isDigit(char)
+fun isNumberChar(char: Char) = isDigit(char)
 
 
 fun isStartOfNumber(char: Char, peekChar: Char) =
@@ -54,10 +56,10 @@ fun isStartOfNumber(char: Char, peekChar: Char) =
 
 
 fun isStartOfIdentifier(char: Char) =
-    Character.isLetter(char) || char == CH_UNDERSCORE
+    isLetter(char) || char == CH_UNDERSCORE
 
 fun isIdentifierChar(char: Char) =
-    Character.isLetter(char) || Character.isDigit(char) || isValidSpecialIdentifierChar(char) || isEndOfIdentifier(char)
+    isLetter(char) || isDigit(char) || isValidSpecialIdentifierChar(char) || isEndOfIdentifier(char)
 
 fun isValidSpecialIdentifierChar(char: Char) =
     char == CH_MUL
@@ -75,7 +77,8 @@ fun isColon(char: Char) =
     char == CH_COLON
 
 fun isOperatorChar(char: Char) =
-    ".<>-+*^/:%$|=!&@«»×∧∨÷≠≤≥∑∫◊≈∆▷◁→←\\".contains(char)
+    !(char == nullChar || isWhitespace(char) || isLetter(char) || isDigit(char) || "()[]{}_".contains(char))
+//    ".<>-+*^/:%$|=!&@«»×∧∨÷≠≤≥∑∫◊≈∆▷◁→←\\".contains(char)
 
 fun isStartOfFunctionOperator(char: Char, peekChar: Char, peekPeekChar: Char) =
     char == CH_LPARENS && isOperatorChar(peekChar) && isOperatorChar(peekPeekChar) ||

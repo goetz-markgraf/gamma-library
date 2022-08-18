@@ -28,7 +28,8 @@ class IdentifierTest : BaseParserTest() {
             "a123!",
             "a--1++__!",
             "a1!",
-            "a1?"
+            "a1?",
+            "π"
         ]
     )
     fun `parse valid identifiers`(id: String) {

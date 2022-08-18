@@ -127,7 +127,9 @@ class LexerSimpleTest {
     @ParameterizedTest
     @ValueSource(
         strings = [
-            "<", ">", "-", "+", "^", "/", "*", "%", "\\", "$", "|", "=", "!", "&"
+            "<", ">", "-", "+", "^", "/", "*", "%", "\\", "$", "|", "=", "!", "&",
+            "≥", "~", "«", "‰", "¶", "☞", "⊖", "⇉", "¦", "♡",
+            "∑"
         ]
     )
     fun `parse a valid operator character`(input: String) {
@@ -144,7 +146,8 @@ class LexerSimpleTest {
     @ParameterizedTest
     @ValueSource(
         strings = [
-            "<=", ">>", "!-", "++", "!^", "/>", ":>", "%>", "\\-", "$$", "|>", "!=", "!!", "!&"
+            "<=", ">>", "!-", "++", "!^", "/>", ":>", "%>", "\\-", "$$", "|>", "!=", "!!", "!&",
+            "😀"
         ]
     )
     fun `parse 2 character operator`(source: String) {
@@ -285,7 +288,10 @@ class LexerSimpleTest {
             "a-",
             "a+",
             "a++",
-            "a_-+"
+            "a_-+",
+            "π",
+            "µ",
+            "ƒ"
         ]
     )
     fun `parse correct identifier names`(source: String) {

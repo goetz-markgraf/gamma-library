@@ -46,11 +46,21 @@ class Lexer(
         skipWhitespace()
 
         return when {
+            isEof(char) -> eof()
+
+            isExpressionEndingChar(char) -> parseExpressionEnding()
+
+            isStartOfString(char) -> parseString()
+
             isStartOfDocumentation(char) -> parseDocumentation()
 
             isStartOfRemark(char) -> parseRemark()
 
             isStartOfNumber(char, peekChar) -> parseNumber()
+
+            isEmpty(char, peekChar) -> parseEmpty()
+
+            isTeneryCharacter(char) -> parseTeneryCharacter()
 
             isStartOfProperty(char, peekChar) -> parseProperty()
 
@@ -60,17 +70,7 @@ class Lexer(
 
             isStartOfFunctionOperator(char, peekChar, peekPeekChar) -> parseOperatorAsIdentifier()
 
-            isEmpty(char, peekChar) -> parseEmpty()
-
             isParens(char) -> parseParens()
-
-            isStartOfString(char) -> parseString()
-
-            isExpressionEndingChar(char) -> parseExpressionEnding()
-
-            isTeneryCharacter(char) -> parseTeneryCharacter()
-
-            isEof(char) -> eof()
 
             else -> {
                 val ret = errorToken()
