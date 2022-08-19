@@ -7,5 +7,6 @@ fun populateControl(scope: Scope) {
     // @Formatter:off
     bindWithDoc(scope, "|>", PipeFunction, "<value> |> <function> - calls <function> with <value> as parameter")
     bindWithDoc(scope, "▷", PipeFunction, "<value> ▷ <function> - calls <function> with <value> as parameter")
+    bindWithDoc(scope, "\u22b3", PipeFunction, "<value> \u22b3 <function> - calls <function> with <value> as parameter")
     // @Formatter:on
 }
