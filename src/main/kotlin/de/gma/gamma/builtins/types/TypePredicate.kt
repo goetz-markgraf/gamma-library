@@ -1,15 +1,17 @@
-package de.gma.gamma.builtins.predicates
+package de.gma.gamma.builtins.types
 
 import de.gma.gamma.builtins.BuiltinFunction
+import de.gma.gamma.datatypes.DataType
 import de.gma.gamma.datatypes.Value
-import de.gma.gamma.datatypes.list.ListValue
 import de.gma.gamma.datatypes.scope.Scope
 import de.gma.gamma.datatypes.values.BooleanValue
 
-object ListPredicate : BuiltinFunction(listOf("list")) {
+class TypePredicate(private val type: DataType) : BuiltinFunction(listOf("obj")) {
     override fun callInternal(scope: Scope, callParams: List<Value>): Value {
         val l = callParams[0].evaluate(scope)
 
-        return BooleanValue.build(l is ListValue)
+        val valueClass = type.valueClass
+
+        return BooleanValue.build(valueClass.isAssignableFrom(l.javaClass))
     }
 }

@@ -3,10 +3,25 @@ package de.gma.gamma.datatypes
 import de.gma.gamma.datatypes.functions.FunctionValue
 import de.gma.gamma.datatypes.list.ListValue
 import de.gma.gamma.datatypes.record.RecordValue
+import de.gma.gamma.datatypes.scope.ModuleScope
 import de.gma.gamma.datatypes.scope.Scope
-import de.gma.gamma.datatypes.values.BooleanValue
-import de.gma.gamma.datatypes.values.FloatValue
-import de.gma.gamma.datatypes.values.IntegerValue
+import de.gma.gamma.datatypes.values.*
+
+/**
+ * These are the data types that are the result of an <code>evaluate()</code> call
+ */
+enum class DataType(val valueClass: Class<out Value>) {
+    BOOLEAN(BooleanValue::class.java),
+    LIST(ListValue::class.java),
+    FLOAT(FloatValue::class.java),
+    INTEGER(IntegerValue::class.java),
+    STRING(StringValue::class.java),
+    FUNCTION(FunctionValue::class.java),
+    RECORD(RecordValue::class.java),
+    PROPERTY(PropertyValue::class.java),
+    EMPTYVALUE(EmptyValue::class.java),
+    MODULE(ModuleScope::class.java),
+}
 
 interface Value {
     fun prettyPrint(): String
@@ -21,9 +36,9 @@ interface Value {
 
     fun toFloat(): FloatValue
 
-    fun toStringValue(): StringValue
-
     fun toInteger(): IntegerValue
+
+    fun toStringValue(): StringValue
 
     fun toFunction(): FunctionValue
 

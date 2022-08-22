@@ -10,7 +10,7 @@ import de.gma.gamma.datatypes.scope.Scope
 import de.gma.gamma.datatypes.values.EmptyValue
 import de.gma.gamma.parser.EvaluationException
 
-object PipelineFunction : BuiltinFunction(listOf("id", "expressions")) {
+object PipelineFunction : BuiltinFunction(listOf("id", "list-of-expressions")) {
     override fun callInternal(scope: Scope, callParams: List<Value>): Value {
         val identifier = callParams[0]
         val expressions = callParams[1]

@@ -5,8 +5,10 @@ import de.gma.gamma.builtins.nullPos
 import de.gma.gamma.datatypes.AbstractValue
 import de.gma.gamma.datatypes.Remark
 import de.gma.gamma.datatypes.Value
+import de.gma.gamma.datatypes.functions.FunctionValue
 import de.gma.gamma.datatypes.values.EmptyValue
 import de.gma.gamma.parser.EvaluationException
+import de.gma.gamma.parser.isStartOfIdentifier
 
 open class ModuleScope(
     sourceName: String,
@@ -32,8 +34,19 @@ open class ModuleScope(
     fun getAllNames() =
         content.keys.toList()
 
-    fun getRemark(name: String) =
-        remarks[name]
+    fun getRemark(name: String): String {
+        val rem = remarks[name]?.strValue?.trim() ?: return ""
+        val value = content[name]
+
+        if (value is FunctionValue) {
+            if (isStartOfIdentifier(name.first()) || value.paramNames.size != 2)
+                return "$name ${value.paramNames.joinToString(" ")} – $rem"
+            else
+                return "${value.paramNames.first()} $name ${value.paramNames.last()} – $rem"
+        }
+
+        return rem
+    }
 
     override fun getValueForName(id: String, strict: Boolean): Value {
 
