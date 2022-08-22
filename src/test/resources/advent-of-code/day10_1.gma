@@ -1,0 +1,156 @@
+let test-input = {
+    "[({(<(())[]>[[{[]{<()<>>"
+    "[(()[<>])]({[<{<<[]>>("
+    "{([(<{}[<>[]}>{[]{[(<()>"
+    "(((({<>}<{<{<>}{[]{[]{}"
+    "[[<[([]))<([[{}[[()]]]"
+    "[{[{({}]{}}([{[{{{}}([]"
+    "{<[[]]>}<{[{[{[]{()[[[]"
+    "[<(<(<(<{}))><([]([]()"
+    "<{([([[(<>()){}]>(<<{{"
+    "<{([{{}}[<[[[<>{}]]]>[]]"
+}
+
+
+let create-stack () =
+    let content! = {}
+    let push item =
+        set content! = item :: content!
+    let pop () =
+        let tmp = content!.first
+        set content! = content!.tail
+        tmp
+    let peek () =
+        content!.first
+
+    r* {
+        :push → push
+        :pop → pop
+        :peek → peek
+    }
+
+let test-stack = (
+    let tmp = create-stack ()
+    tmp.push "a"
+    tmp.push "b"
+    tmp.push "c"
+    tmp)
+
+assert
+    "create-stack"
+    (test-stack.peek () → "c")
+    (test-stack.pop () → "c")
+    (test-stack.pop () → "b")
+    (test-stack.pop () → "a")
+    (test-stack.pop () → ())
+
+
+let is-open? char =
+    ("([{<" ▷ contains? char) ∧ char ≠ ""
+
+assert
+    "is-open? open"
+    (is-open? "(" → true)
+    (is-open? "[" → true)
+    (is-open? "{" → true)
+    (is-open? "<" → true)
+    "is-open? close"
+    (is-open? ")" → false)
+    (is-open? "]" → false)
+    (is-open? "}" → false)
+    (is-open? ">" → false)
+    "is-open? empty"
+    (is-open? "" → false)
+
+
+
+
+
+let matches? open close =
+    (open = "(" & close = ")")
+    ∨
+    (open = "[" & close = "]")
+    ∨
+    (open = "{" & close = "}")
+    ∨
+    (open = "<" & close = ">")
+
+assert
+    "matches?"
+    (matches? "(" ")" → true)
+    (matches? "[" "]" → true)
+    (matches? "{" "}" → true)
+    (matches? "<" ">" → true)
+    (matches? "(" "(" → false)
+    (matches? "[" ")" → false)
+    (matches? "{" "<" → false)
+    (matches? "<" "}" → false)
+    (matches? "<" "" → false)
+    (matches? "<" () → false)
+
+
+let build-until-wrong-char line =
+    let stack = create-stack ()
+
+    let rec-build line =
+        let f = line.first
+        when {
+            is-empty? line → ()
+            is-open? f → (
+                stack.push f
+                rec-build line.tail
+            )
+            else → (
+                break
+                let next = stack.pop ()
+                break
+                matches? next f ? rec-build line.tail : f
+            )
+        }
+
+    rec-build line
+
+assert
+    "build-until-wrong-char"
+    (build-until-wrong-char "(<><>)" → ())
+    (build-until-wrong-char "()" → ())
+    (build-until-wrong-char "(()" → ())
+    (build-until-wrong-char "(]" → "]")
+    (build-until-wrong-char "((([]<" → ())
+    (build-until-wrong-char "((([]<}" → "}")
+    (build-until-wrong-char "((([]<)>" → ")")
+    (build-until-wrong-char "[({(<(())[]>[[{[]{<()<>>" → ())
+
+
+
+
+let calculate-score char =
+    when {
+        char = ")" → 3
+        char = "]" → 57
+        char = "}" → 1197
+        char = ">" → 25137
+        else → -1000000
+    }
+
+
+
+
+let produce-result input =
+    input
+    ▷ map build-until-wrong-char
+    ▷ filter is-not-empty?
+    ▷ map calculate-score
+    ▷ reduce (+)
+
+
+
+
+test-input
+▷ produce-result
+▷ print
+
+
+
+read-lines "src/test/resources/advent-of-code/day10.input"
+▷ produce-result
