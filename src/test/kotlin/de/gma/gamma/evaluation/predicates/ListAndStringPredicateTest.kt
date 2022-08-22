@@ -1,4 +1,4 @@
-package de.gma.gamma.evaluation.list
+package de.gma.gamma.evaluation.predicates
 
 import de.gma.gamma.datatypes.values.BooleanValue
 import de.gma.gamma.evaluation.BaseEvaluationTest
@@ -6,7 +6,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
 
-class ListPredicateTest : BaseEvaluationTest() {
+class ListAndStringPredicateTest : BaseEvaluationTest() {
 
     @ParameterizedTest
     @ValueSource(

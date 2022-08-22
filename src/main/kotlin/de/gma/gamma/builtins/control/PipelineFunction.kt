@@ -1,4 +1,4 @@
-package de.gma.gamma.builtins.predicate
+package de.gma.gamma.builtins.control
 
 import de.gma.gamma.builtins.BuiltinFunction
 import de.gma.gamma.datatypes.Identifier

@@ -1,6 +1,7 @@
-package de.gma.gamma.builtins.predicate
+package de.gma.gamma.builtins.comparison
 
 import de.gma.gamma.builtins.bindWithDoc
+import de.gma.gamma.builtins.control.PipelineFunction
 import de.gma.gamma.datatypes.Remark
 import de.gma.gamma.datatypes.scope.Scope
 import de.gma.gamma.datatypes.values.BooleanValue

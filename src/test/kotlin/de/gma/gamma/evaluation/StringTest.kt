@@ -1,7 +1,6 @@
-package de.gma.gamma.evaluation.list
+package de.gma.gamma.evaluation
 
 import de.gma.gamma.datatypes.StringValue
-import de.gma.gamma.evaluation.BaseEvaluationTest
 import de.gma.gamma.parser.EvaluationException
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
@@ -9,7 +8,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
 
-class BasicStringTest : BaseEvaluationTest() {
+class StringTest : BaseEvaluationTest() {
 
     @Test
     fun `access first element of string`() {

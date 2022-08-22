@@ -1,10 +1,10 @@
 package de.gma.gamma.builtins.list
 
 import de.gma.gamma.builtins.bindWithDoc
-import de.gma.gamma.builtins.list.predicates.EmptyPredicate
-import de.gma.gamma.builtins.list.predicates.ListPredicate
-import de.gma.gamma.builtins.list.predicates.NotEmptyPredicate
-import de.gma.gamma.builtins.list.predicates.StringPredicate
+import de.gma.gamma.builtins.predicates.EmptyPredicate
+import de.gma.gamma.builtins.predicates.ListPredicate
+import de.gma.gamma.builtins.predicates.NotEmptyPredicate
+import de.gma.gamma.builtins.predicates.StringPredicate
 import de.gma.gamma.datatypes.scope.Scope
 
 fun populateList(scope: Scope) {

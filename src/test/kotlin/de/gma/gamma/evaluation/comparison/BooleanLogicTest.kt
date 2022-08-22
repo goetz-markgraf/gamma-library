@@ -1,4 +1,4 @@
-package de.gma.gamma.evaluation.predicate
+package de.gma.gamma.evaluation.comparison
 
 import de.gma.gamma.datatypes.values.BooleanValue
 import de.gma.gamma.evaluation.BaseEvaluationTest
