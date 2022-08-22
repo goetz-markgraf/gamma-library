@@ -292,74 +292,104 @@ copy with the `copy-with`-function:
 
 These are the functions currenty built in into _gamma_:
 
-* 'print &lt;value&gt; - prints a value to standard out'
-* 'print* &lt;value&gt; - prints a value to standard out without a newline at the end'
-* 'read-lines &lt;filename&gt; - reads the content of &lt;filename&gt; as a list of strings'
-* 'split &lt;string&gt; - splits a string separated by blank into a list of strings'
-* 'split-by &lt;separator&gt; &lt;string&gt; - splits a string separated by &lt;separator&gt; into a list of strings'
-* 'join &lt;list&gt; - joins all elements of &lt;list&gt; together as one string, seperated by a blank'
-* 'join-by &lt;string&gt; &lt;list&gt; - joins all elements of &lt;list&gt; together as one string, seperated by &lt;string&gt;'
-* '&lt;a&gt; + &lt;b&gt; - adds two number values'
-* '&lt;a&gt; - &lt;b&gt; - subtract &lt;b&gt; from &lt;a&gt;'
-* '&lt;a&gt; * &lt;b&gt; - multiplies two number values'
-* '&lt;a&gt; × &lt;b&gt; - multiplies two number values'
-* '&lt;a&gt; / &lt;b&gt; - divides &lt;a&gt; by &lt;b&gt;'
-* '&lt;a&gt; ÷ &lt;b&gt; - divides &lt;a&gt; by &lt;b&gt;'
-* '&lt;a&gt; ^ &lt;b&gt; - raise &lt;a&gt; to the &lt;b&gt;th power'
-* 'neg &lt;a&gt; - return the negative of a number'
-* '&lt;value&gt; |&gt; &lt;function&gt; - calls &lt;function&gt; with &lt;value&gt; as parameter'
-* '&lt;value&gt; ▷ &lt;function&gt; - calls &lt;function&gt; with &lt;value&gt; as parameter'
-* 'min &lt;list of numbers&gt; - returns the smallest number'
-* 'max &lt;list of numbers&gt; - returns the largest number'
-* 'abs &lt;number&gt; - returns the absolute of the number'
-* 'first &lt;list&gt; – returns the first element or () if empty list'
-* 'second &lt;list&gt; – returns the second element or () if there is none'
-* 'head &lt;list&gt; – returns the first element or () if empty list'
-* 'tail &lt;list&gt; – returns all but the fist element or empty list if empty list'
-* 'last &lt;list&gt; – returns the last element or () if empty list'
-* 'drop-last &lt;list&gt; – returns all but the last element or empty list if empty list'
-* 'slice &lt;from&gt; &lt;length&gt; &lt;list&gt; – returns a sublist'
-* 'size &lt;list&gt; – returns the number of elements in this list'
-* 'append &lt;item&gt; &lt;list&gt; – appends an item to the end of the list'
-* 'appendAll &lt;new-list&gt; &lt;list&gt; – appends all items of &lt;new-list&gt; the end of &lt;list&gt;'
-* '&lt;item&gt; :: &lt;list&gt; – prepends a list with an as the new first element'
-* '&lt;list-1&gt; @ &lt;list-2&gt; – concats &lt;list-1&gt; and &lt;list-2&gt;'
-* 'list-generator &lt;size&gt; &lt;function&gt; – creates a list of size &lt;size&gt; that uses &lt;function&gt; to generate the values'
-* 'repeat &lt;num&gt; - create a list from 0 to &lt;repeate&gt; - 1'
-* '&lt;start&gt; .. &lt;end&gt; - create a list from start&gt; to &lt;end&gt; inclusive'
-* 'map &lt;function&gt; &lt;list&gt; – creates a new list with every item of &lt;list&gt; run through &lt;function&gt;'
-* 'map* &lt;function&gt; &lt;list&gt; – creates a new list with every item of &lt;list&gt; run through &lt;function&gt; with &lt;index&gt; value'
-* 'for-each &lt;function&gt; &lt;list&gt; – calls &lt;function&gt; for every item of &lt;list&gt;'
-* 'fold &lt;inital&gt; &lt;function&gt; &lt;list&gt; – folds the &lt;list&gt; with &lt;function&gt; and &lt;initial&gt; acc'
-* 'reduce &lt;function&gt; &lt;list&gt; – reduces the &lt;list&gt; with &lt;function&gt;'
-* 'filter &lt;predicate&gt; &lt;list&gt; – filters the &lt;list&gt; such that it contains only elements the match the &lt;predicate&gt;'
-* 'zip &lt;list-1&gt; &lt;list-2&gt; – Creates a new list consisting of pairs of the curresponding elements from &lt;list-1&gt; and &lt;list-2&gt;'
-* 'contains? &lt;item&gt; &lt;list&gt; – tests if &lt;item&gt; is in &lt;list&gt;. This also includes strings.'
-* 'is-list? &lt;value&gt; – tests if &lt;value&gt; is a list. This also includes strings'
-* 'is-string? &lt;value&gt; – tests if &lt;value&gt; is a string'
-* 'is-pair? &lt;value&gt; – tests if &lt;value&gt; is a pair, i. e. a list with two elements'
-* 'is-empty? &lt;list or string&gt; – tests if &lt;list or string&gt; is empty, i. e. does not contain elements or characters'
-* 'is-not-empty? &lt;list or string&gt; – tests if &lt;list or string&gt; contains at least one element or character'
-* 'when &lt;list of predicate/expression lists&gt; - checks each predicate to evaluate to first expression with a true predicate'
-* '&lt;a&gt; = &lt;b&gt; - checks if &lt;a&gt; is equal to &lt;b&gt;'
-* '&lt;a&gt; != &lt;b&gt; - checks if &lt;a&gt; is not equal to &lt;b&gt;'
-* '&lt;a&gt; ≠ &lt;b&gt; - checks if &lt;a&gt; is not equal to &lt;b&gt;'
-* '&lt;a&gt; &gt; &lt;b&gt; - checks if the first value is greater than the second'
-* '&lt;a&gt; &gt;= &lt;b&gt; - checks if the first value is greater than or equal to the second'
-* '&lt;a&gt; ≥ &lt;b&gt; - checks if the first value is greater than or equal to the second'
-* '&lt;a&gt; &lt; &lt;b&gt; - checks if the first value is less than the second'
-* '&lt;a&gt; &lt;= &lt;b&gt; - checks if the first value is less than or equal to the second'
-* '&lt;a&gt; ≤ &lt;b&gt; - checks if the first value is less than or equal to the second'
-* '&lt;a&gt; & &lt;b&gt; - returns true if &lt;a&gt; and &lt;b&gt; are both true'
-* '&lt;a&gt; ⋀ &lt;b&gt; - returns true if &lt;a&gt; and &lt;b&gt; are both true'
-* '&lt;a&gt; | &lt;b&gt; - returns true if either &lt;a&gt; or &lt;b&gt; or both are true'
-* '&lt;a&gt; ⋁ &lt;b&gt; - returns true if either &lt;a&gt; or &lt;b&gt; or both are true'
-* 'not &lt;a&gt; - returns true if &lt;a&gt; is false and false if &lt;a&gt; is true'
-* 'else - equal to true, can be used in when expressions'
-* 'at &lt;pos&gt; &lt;list&gt; – returns the &lt;pos&gt;th element of this list'
-* 'at &lt;pos&gt; &lt;list&gt; – returns the &lt;pos&gt;th element of this list or () if not existing'
-* 'record &lt;list of pair&gt; – creates a record from a list of pairs'
-* 'r* &lt;list of pair&gt; – creates a record from a list of pairs'
-* 'copy-with &lt;list of pair&gt; &lt;record&gt; – creates a new record based on &lt;record&gt; with changes from a list of pairs'
-* 'get-properties &lt;record&gt; – returns all keys in this record as a list of strings'
-* 'assert &lt;list-of-pairs&gt; – tests every assertion in the list of pairs, return false if any assertion fails'
+* is-boolean? obj – checks if &lt;obj&gt; is of type boolean
+* is-list? obj – checks if &lt;obj&gt; is of type list
+* is-float? obj – checks if &lt;obj&gt; is of type float
+* is-integer? obj – checks if &lt;obj&gt; is of type integer
+* is-string? obj – checks if &lt;obj&gt; is of type string
+* is-function? obj – checks if &lt;obj&gt; is of type function
+* is-record? obj – checks if &lt;obj&gt; is of type record
+* is-property? obj – checks if &lt;obj&gt; is of type property
+* is-void? obj – checks if &lt;obj&gt; is of type void
+* is-module? obj – checks if &lt;obj&gt; is of type module
+* can-be-used-as-boolean? obj – checks if &lt;obj&gt; can be used as a type boolean
+* can-be-used-as-list? obj – checks if &lt;obj&gt; can be used as a type list
+* can-be-used-as-float? obj – checks if &lt;obj&gt; can be used as a type float
+* can-be-used-as-integer? obj – checks if &lt;obj&gt; can be used as a type integer
+* can-be-used-as-string? obj – checks if &lt;obj&gt; can be used as a type string
+* can-be-used-as-function? obj – checks if &lt;obj&gt; can be used as a type function
+* can-be-used-as-record? obj – checks if &lt;obj&gt; can be used as a type record
+* can-be-used-as-property? obj – checks if &lt;obj&gt; can be used as a type property
+* can-be-used-as-emptyvalue? obj – checks if &lt;obj&gt; can be used as a type emptyvalue
+* can-be-used-as-module? obj – checks if &lt;obj&gt; can be used as a type module
+* v |&gt; f – calls &lt;function&gt; with &lt;value&gt; as parameter
+* v ▷ f – calls &lt;function&gt; with &lt;value&gt; as parameter
+* v ⊳ f – calls &lt;function&gt; with &lt;value&gt; as parameter
+* debug - evaluates the DebugValue for debug purposes
+* break - evaluates the DebugValue for debug purposes
+* print value – prints a value to standard out
+* print* value – prints a value to standard out without a newline at the end
+* read-lines filename – reads the content of &lt;filename&gt; as a list of strings
+* split string – splits a string separated by blank into a list of strings
+* split-by separator string – splits a string separated by &lt;separator&gt; into a list of strings
+* join list – joins all elements of &lt;list&gt; together as one string, seperated by a blank
+* join-by string list – joins all elements of &lt;list&gt; together as one string, seperated by &lt;string&gt;
+* a + b – adds two number values
+* a - b – subtract &lt;b&gt; from &lt;a&gt;
+* a * b – multiplies two number values
+* a × b – multiplies two number values
+* a / b – divides &lt;a&gt; by &lt;b&gt;
+* a ÷ b – divides &lt;a&gt; by &lt;b&gt;
+* a ^ b – raise &lt;a&gt; to the &lt;b&gt;th power
+* neg a – return the negative of a number
+* min list – returns the smallest number
+* max list – returns the largest number
+* abs value – returns the absolute of the number
+* first list – returns the first element or () if empty list
+* second list – returns the second element or () if there is none
+* head list – returns the first element or () if empty list
+* tail list – returns all but the fist element or empty list if empty list
+* last list – returns the last element or () if empty list
+* drop-last list – returns all but the last element or empty list if empty list
+* slice from length list – returns a sublist
+* size list – returns the number of elements in this list
+* append item list – appends an item to the end of the list
+* distinct list-1 – creates a new list without duplicates
+* sort list – creates a new list that is sorted numerically. Strings are converted to numbers, lists are sorted
+  according to their length.
+* sort-desc list – creates a new list that is sorted numerically. Strings are converted to numbers, lists are sorted
+  according to their length.
+* appendAll item list – appends all items of &lt;new-list&gt; the end of &lt;list&gt;
+* item :: list – prepends a list with an as the new first element
+* list-1 @ list-2 – concats &lt;list-1&gt; and &lt;list-2&gt;
+* list-generator size function – creates a list of size &lt;size&gt; that uses &lt;function&gt; to generate the values
+* repeat size – create a list from 0 to &lt;repeate&gt; - 1
+* from .. to – create a list from &lt;from&gt; to &lt;to&gt; inclusive
+* map function list – creates a new list with every item of &lt;list&gt; run through &lt;function&gt;
+* map* function list – creates a new list with every item of &lt;list&gt; run through &lt;function&gt; with
+  &lt;index&gt; value
+* for-each function list – calls &lt;function&gt; for every item of &lt;list&gt;
+* fold initial function list – folds the &lt;list&gt; with &lt;function&gt; and &lt;initial&gt; acc
+* reduce function list – reduces the &lt;list&gt; with &lt;function&gt;
+* filter predicate list – filters the &lt;list&gt; such that it contains only elements the match the &lt;predicate&gt;
+* zip list-1 list-2 – Creates a new list consisting of pairs of the curresponding elements from &lt;list-1&gt; and
+  &lt;list-2&gt;
+* contains? predicate list – tests if &lt;item&gt; is in &lt;list&gt;. This also includes strings.
+* does-not-contain? predicate list – tests if &lt;item&gt; is not in &lt;list&gt;. This also includes strings.
+* is-empty? list – tests if &lt;list or string&gt; is empty, i. e. does not contain elements or characters
+* is-not-empty? list – tests if &lt;list or string&gt; contains at least one element or character
+* when cases – checks each predicate to evaluate to first expression with a true predicate
+* a = b – checks if &lt;a&gt; is equal to &lt;b&gt;
+* a != b – checks if &lt;a&gt; is not equal to &lt;b&gt;
+* a ≠ b – checks if &lt;a&gt; is not equal to &lt;b&gt;
+* a &gt; b – checks if the first value is greater than the second
+* a &gt;= b – checks if the first value is greater than or equal to the second
+* a ≥ b – checks if the first value is greater than or equal to the second
+* a &lt; b – checks if the first value is less than the second
+* a &lt;= b – checks if the first value is less than or equal to the second
+* a ≤ b – checks if the first value is less than or equal to the second
+* a & b – returns true if &lt;a&gt; and &lt;b&gt; are both true
+* a ∧ b – returns true if &lt;a&gt; and &lt;b&gt; are both true
+* a | b – returns true if either &lt;a&gt; or &lt;b&gt; or both are true
+* a ∨ b – returns true if either &lt;a&gt; or &lt;b&gt; or both are true
+* not a – returns true if &lt;a&gt; is false and false if &lt;a&gt; is true
+* pipeline id list-of-expressions – executes each &lt;expression&gt;, always using &lt;id&gt; for the result of the
+  previous one
+* else - equal to true, can be used in when expressions
+* at pos list – returns the &lt;pos&gt;th element of this list
+* at* pos list – returns the &lt;pos&gt;th element of this list or () if not existing
+* record property-list – creates a record from a list of pairs
+* r* property-list – creates a record from a list of pairs
+* copy-with property-list record – creates a new record based on &lt;record&gt; with changes from a list of pairs
+* get-properties record – returns all keys in this record as a list of strings
+* assert list-of-assertions – tests every assertion in the list of pairs, return false if any assertion fails
