@@ -62,7 +62,6 @@ abstract class AbstractValue(
     override fun toInteger(): IntegerValue =
         when (this) {
             is IntegerValue -> this
-            is FloatValue -> IntegerValue.build(this.doubleValue.toLong())
             is StringValue -> {
                 val v = this.strValue.toLongOrNull()
                 if (v == null) throw createException("$this is not an integer value")
