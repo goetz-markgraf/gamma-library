@@ -42,20 +42,20 @@ class SubList(
 
     override fun append(v: Value): ListValue =
         build(buildList {
-            addAll(origin.allItems())
+            addAll(allItems())
             add(v)
         })
 
     override fun insertFirst(v: Value): ListValue =
         build(buildList {
             add(v)
-            addAll(origin.allItems())
+            addAll(allItems())
         })
 
     override fun appendAll(v: ListValue): ListValue =
         build(buildList {
             addAll(v.allItems())
-            addAll(origin.allItems())
+            addAll(allItems())
         })
 
 
