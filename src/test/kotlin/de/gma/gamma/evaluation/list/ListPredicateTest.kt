@@ -13,9 +13,7 @@ class ListPredicateTest : BaseEvaluationTest() {
         strings = [
             "is-list? {:id}",
             "is-empty? {}",
-            "is-not-empty? {:id}",
-            "is-pair? {1, 2}",
-            "is-pair? \"ab\""
+            "is-not-empty? {:id}"
         ]
     )
     fun `check that result is true`(code: String) {
@@ -32,11 +30,7 @@ class ListPredicateTest : BaseEvaluationTest() {
             "is-list? \"a\"",
             "is-list? 1",
             "is-empty? {:id}",
-            "is-not-empty? {}",
-            "is-pair? {1, 2, 3}",
-            "is-pair? {1}",
-            "is-pair? {}",
-            "is-pair? :id"
+            "is-not-empty? {}"
         ]
     )
     fun `check that result is false`(code: String) {

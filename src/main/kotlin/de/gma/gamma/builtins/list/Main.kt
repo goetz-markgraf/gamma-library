@@ -1,7 +1,10 @@
 package de.gma.gamma.builtins.list
 
 import de.gma.gamma.builtins.bindWithDoc
-import de.gma.gamma.builtins.list.predicates.*
+import de.gma.gamma.builtins.list.predicates.EmptyPredicate
+import de.gma.gamma.builtins.list.predicates.ListPredicate
+import de.gma.gamma.builtins.list.predicates.NotEmptyPredicate
+import de.gma.gamma.builtins.list.predicates.StringPredicate
 import de.gma.gamma.datatypes.scope.Scope
 
 fun populateList(scope: Scope) {
@@ -37,7 +40,6 @@ fun populateList(scope: Scope) {
     bindWithDoc(scope, "does-not-contain?", DoesNotContainPredicate, "does-not-contain? <item> <list> – tests if <item> is not in <list>. This also includes strings.")
     bindWithDoc(scope, "is-list?", ListPredicate, "is-list? <value> – tests if <value> is a list. This also includes strings")
     bindWithDoc(scope, "is-string?", StringPredicate, "is-string? <value> – tests if <value> is a string")
-    bindWithDoc(scope, "is-pair?", PairPredicate, "is-pair? <value> – tests if <value> is a pair, i. e. a list with two elements")
     bindWithDoc(scope, "is-empty?", EmptyPredicate, "is-empty? <list or string> – tests if <list or string> is empty, i. e. does not contain elements or characters")
     bindWithDoc(scope, "is-not-empty?", NotEmptyPredicate, "is-not-empty? <list or string> – tests if <list or string> contains at least one element or character")
     // @Formatter:on
