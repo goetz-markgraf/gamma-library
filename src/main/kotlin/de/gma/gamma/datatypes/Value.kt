@@ -19,7 +19,7 @@ enum class DataType(val valueClass: Class<out Value>) {
     FUNCTION(FunctionValue::class.java),
     RECORD(RecordValue::class.java),
     PROPERTY(PropertyValue::class.java),
-    EMPTYVALUE(EmptyValue::class.java),
+    VOID(VoidValue::class.java),
     MODULE(ModuleScope::class.java),
 }
 

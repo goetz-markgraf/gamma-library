@@ -1,7 +1,7 @@
 package de.gma.gamma.documentation
 
-import de.gma.gamma.datatypes.values.EmptyValue
 import de.gma.gamma.datatypes.values.IntegerValue
+import de.gma.gamma.datatypes.values.VoidValue
 import de.gma.gamma.evaluation.BaseEvaluationTest
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -10,17 +10,17 @@ class RemarkTest : BaseEvaluationTest() {
 
     @Test
     fun `a remark evaluates to empty`() {
-        execute("#remark") as EmptyValue
+        execute("#remark") as VoidValue
     }
 
     @Test
     fun `a remark can stay behind an expression`() {
-        execute("10 + 20 # computes a sum") as EmptyValue
+        execute("10 + 20 # computes a sum") as VoidValue
     }
 
     @Test
     fun `a documentation string can stay behind an expression`() {
-        execute("10 + 20 'computes a sum'") as EmptyValue
+        execute("10 + 20 'computes a sum'") as VoidValue
     }
 
     @Test
@@ -45,6 +45,6 @@ class RemarkTest : BaseEvaluationTest() {
                 
             add 10 20
         """.trimIndent()
-        ) as EmptyValue
+        ) as VoidValue
     }
 }

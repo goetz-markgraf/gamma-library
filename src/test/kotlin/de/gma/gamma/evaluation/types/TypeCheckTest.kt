@@ -192,7 +192,7 @@ class TypeCheckTest : BaseEvaluationTest() {
         ]
     )
     fun `check if object is an emptyvalue`(code: String, expected: Boolean) {
-        val result = execute("is-emptyvalue? $code") as BooleanValue
+        val result = execute("is-void? $code") as BooleanValue
 
         assertThat(result.boolValue).isEqualTo(expected)
     }

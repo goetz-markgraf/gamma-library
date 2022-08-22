@@ -28,7 +28,7 @@ enum class TokenType {
     OP_AS_ID,
     ID,
     ID_AS_OP,
-    EMPTY,
+    VOID,
     EXEND,
     LET,
     SET,

@@ -5,7 +5,7 @@ import de.gma.gamma.builtins.checkForListOfPairs
 import de.gma.gamma.datatypes.Value
 import de.gma.gamma.datatypes.list.ListValue
 import de.gma.gamma.datatypes.scope.Scope
-import de.gma.gamma.datatypes.values.EmptyValue
+import de.gma.gamma.datatypes.values.VoidValue
 
 object WhenFunction : BuiltinFunction(listOf("cases")) {
     override fun callInternal(scope: Scope, callParams: List<Value>): Value {
@@ -16,7 +16,7 @@ object WhenFunction : BuiltinFunction(listOf("cases")) {
 
         val cases = checkForListOfPairs(list)
 
-        var result: Value = EmptyValue.build()
+        var result: Value = VoidValue.build()
 
         cases.find {
             val item = it

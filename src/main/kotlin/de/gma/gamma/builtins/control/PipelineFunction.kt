@@ -7,7 +7,7 @@ import de.gma.gamma.datatypes.Value
 import de.gma.gamma.datatypes.list.ListValue
 import de.gma.gamma.datatypes.scope.ModuleScope
 import de.gma.gamma.datatypes.scope.Scope
-import de.gma.gamma.datatypes.values.EmptyValue
+import de.gma.gamma.datatypes.values.VoidValue
 import de.gma.gamma.parser.EvaluationException
 
 object PipelineFunction : BuiltinFunction(listOf("id", "list-of-expressions")) {
@@ -24,7 +24,7 @@ object PipelineFunction : BuiltinFunction(listOf("id", "list-of-expressions")) {
             else throw EvaluationException("$identifier is not an identifier")
 
         val pipelineScope = ModuleScope(sourceName, scope)
-        var result: Value = EmptyValue.build()
+        var result: Value = VoidValue.build()
 
         expressions.allItems().forEach { expr ->
             pipelineScope.setValue(idStr, result, strict = false)

@@ -195,13 +195,13 @@ class LexerSimpleTest {
     }
 
     @Test
-    fun `parse the empty () token`() {
+    fun `parse the void () token`() {
         val source = "()"
         val token = getTokenFromInput(source)
 
         assertToken(
             token,
-            type = EMPTY,
+            type = VOID,
             content = "()",
             end = 1
         )

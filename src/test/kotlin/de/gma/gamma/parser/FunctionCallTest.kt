@@ -2,7 +2,7 @@ package de.gma.gamma.parser
 
 import de.gma.gamma.datatypes.Identifier
 import de.gma.gamma.datatypes.expressions.FunctionCall
-import de.gma.gamma.datatypes.values.EmptyValue
+import de.gma.gamma.datatypes.values.VoidValue
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
@@ -30,7 +30,7 @@ class FunctionCallTest : BaseParserTest() {
         val call = expression as FunctionCall
         assertThat(call.function.prettyPrint()).isEqualTo("print")
         assertThat(call.params).hasSize(1)
-            .first().isInstanceOf(EmptyValue::class.java)
+            .first().isInstanceOf(VoidValue::class.java)
 
         assertThat(call.prettyPrint()).isEqualTo("print ()")
     }

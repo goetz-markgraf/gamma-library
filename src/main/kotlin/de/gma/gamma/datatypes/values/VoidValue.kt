@@ -6,7 +6,7 @@ import de.gma.gamma.datatypes.AbstractValue
 import de.gma.gamma.datatypes.scope.Scope
 import de.gma.gamma.parser.Position
 
-class EmptyValue(
+class VoidValue(
     sourceName: String,
     beginPos: Position,
     endPos: Position
@@ -17,12 +17,12 @@ class EmptyValue(
     override fun evaluate(scope: Scope) = this
 
     companion object {
-        private val singleton = EmptyValue(builtInSource, nullPos, nullPos)
+        private val singleton = VoidValue(builtInSource, nullPos, nullPos)
         fun build() = singleton
     }
 
     override fun equals(other: Any?) =
-        other is EmptyValue
+        other is VoidValue
 
     override fun hashCode() = Unit.hashCode()
 

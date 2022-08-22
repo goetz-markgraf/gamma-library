@@ -28,14 +28,14 @@ abstract class AbstractValue(
             is IntegerValue -> BooleanValue.build(this.longValue != 0L)
             is FloatValue -> BooleanValue.build(this.doubleValue != 0.0)
             is StringValue -> BooleanValue.build(this.strValue.isNotEmpty())
-            is EmptyValue -> BooleanValue.build(false)
+            is VoidValue -> BooleanValue.build(false)
             else -> BooleanValue.build(true)
         }
 
     override fun toList(): ListValue =
         when (this) {
             is ListValue -> this
-            is EmptyValue -> ListValue.build(emptyList())
+            is VoidValue -> ListValue.build(emptyList())
             is StringValue -> ListValue.build(this.allItems())
             else -> ListValue.build(listOf(this))
         }

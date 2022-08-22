@@ -5,7 +5,7 @@ import de.gma.gamma.datatypes.Value
 import de.gma.gamma.datatypes.list.ListLiteral
 import de.gma.gamma.datatypes.list.ListValue
 import de.gma.gamma.datatypes.scope.Scope
-import de.gma.gamma.datatypes.values.EmptyValue
+import de.gma.gamma.datatypes.values.VoidValue
 import de.gma.gamma.parser.Position
 
 abstract class FunctionValue(
@@ -67,7 +67,7 @@ abstract class FunctionValue(
     }
 
     private fun isEmptyCall(callParams: List<Value>) =
-        paramNames.isEmpty() && callParams.size == 1 && callParams.first() is EmptyValue
+        paramNames.isEmpty() && callParams.size == 1 && callParams.first() is VoidValue
 
 
     abstract fun callInternal(scope: Scope, callParams: List<Value>): Value

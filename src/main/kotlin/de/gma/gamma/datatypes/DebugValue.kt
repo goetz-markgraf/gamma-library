@@ -3,7 +3,7 @@ package de.gma.gamma.datatypes
 import de.gma.gamma.builtins.builtInSource
 import de.gma.gamma.builtins.nullPos
 import de.gma.gamma.datatypes.scope.Scope
-import de.gma.gamma.datatypes.values.EmptyValue
+import de.gma.gamma.datatypes.values.VoidValue
 import de.gma.gamma.parser.Parser
 import de.gma.gamma.parser.Position
 
@@ -22,7 +22,7 @@ class DebugValue(
             _scope = scope
 
             // set breakpoint in next line to debug
-            return EmptyValue.build()
+            return VoidValue.build()
         } finally {
             _scope = null
         }

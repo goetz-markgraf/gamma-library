@@ -58,7 +58,7 @@ class Lexer(
 
             isStartOfNumber(char, peekChar) -> parseNumber()
 
-            isEmpty(char, peekChar) -> parseEmpty()
+            isVoid(char, peekChar) -> parseVoid()
 
             isTeneryCharacter(char) -> parseTeneryCharacter()
 
@@ -141,14 +141,14 @@ class Lexer(
     }
 
 
-    private fun parseEmpty(): Token {
+    private fun parseVoid(): Token {
         val start = position()
         next()
         val end = position()
         next()
         return Token(
-            type = TokenType.EMPTY,
-            content = "$CH_EMPTY1$CH_EMPTY2",
+            type = TokenType.VOID,
+            content = "$CH_VOID1$CH_VOID2",
             sourceName = sourceName,
             start = start,
             end = end

@@ -196,7 +196,7 @@ class TypeConversionTest : BaseEvaluationTest() {
         ]
     )
     fun `check if object can be used as an emptyvalue`(code: String, expected: Boolean) {
-        val result = execute("can-be-used-as-emptyvalue? $code") as BooleanValue
+        val result = execute("can-be-used-as-void? $code") as BooleanValue
 
         assertThat(result.boolValue).isEqualTo(expected)
     }

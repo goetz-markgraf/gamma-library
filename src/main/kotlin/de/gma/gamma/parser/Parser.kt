@@ -184,7 +184,7 @@ class Parser(
 
             STRING -> parseString(col)
 
-            EMPTY -> parseEmpty(col)
+            VOID -> parseVoid(col)
 
             PROPERTY -> parseProperty(col)
 
@@ -213,10 +213,10 @@ class Parser(
         val start = currStart
         nextToken()
 
-        if (currType != EMPTY && currType != ID)
+        if (currType != VOID && currType != ID)
             throw createEmptyParamsException()
 
-        val params: List<String> = if (currType == EMPTY) {
+        val params: List<String> = if (currType == VOID) {
             nextToken()
             emptyList()
         } else buildList {
@@ -260,8 +260,9 @@ class Parser(
         nextToken()
 
         return when {
-            expressions.isEmpty() -> EmptyValue(sourceName, start, currEnd)
+            expressions.isEmpty() -> VoidValue(sourceName, start, currEnd)
 
+            // TODO kann das raus?
             expressions.size == 1 -> expressions.first()
 
             else -> Block(sourceName, start, currEnd, expressions)
@@ -276,9 +277,9 @@ class Parser(
         return ret
     }
 
-    private fun parseEmpty(col: Int): EmptyValue {
-        assertType(col, EMPTY)
-        val ret = EmptyValue(sourceName, currStart, currEnd)
+    private fun parseVoid(col: Int): VoidValue {
+        assertType(col, VOID)
+        val ret = VoidValue(sourceName, currStart, currEnd)
         nextToken()
         return ret
     }
@@ -362,7 +363,7 @@ class Parser(
 
         return if (currType == OP && currToken.content == "=") {
             parseSimpleLetExpression(col, start, id, documentation)
-        } else if (currType == ID || currType == EMPTY) {
+        } else if (currType == ID || currType == VOID) {
             parseFunctionLetExpression(col, start, id, documentation)
         } else {
             throw createIllegalTokenException("=")
@@ -375,7 +376,7 @@ class Parser(
         id: Identifier,
         documentation: Remark?
     ): LetExpression {
-        val identifiers = if (currType == EMPTY) {
+        val identifiers = if (currType == VOID) {
             nextToken()
             emptyList()
         } else

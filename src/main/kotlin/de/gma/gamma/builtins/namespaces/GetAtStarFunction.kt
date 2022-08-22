@@ -5,7 +5,7 @@ import de.gma.gamma.datatypes.StringValue
 import de.gma.gamma.datatypes.Value
 import de.gma.gamma.datatypes.scope.Namespace
 import de.gma.gamma.datatypes.scope.Scope
-import de.gma.gamma.datatypes.values.EmptyValue
+import de.gma.gamma.datatypes.values.VoidValue
 
 object GetAtStarFunction : BuiltinFunction(listOf("pos", "list")) {
     override fun callInternal(scope: Scope, callParams: List<Value>): Value {
@@ -25,7 +25,7 @@ object GetAtStarFunction : BuiltinFunction(listOf("pos", "list")) {
         return if (posInt >= 0 && posInt < list.size())
             list.getAt(posInt)
         else
-            EmptyValue.build()
+            VoidValue.build()
 
     }
 }

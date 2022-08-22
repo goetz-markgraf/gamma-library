@@ -12,8 +12,8 @@ const val CH_DOT = '.'
 const val CH_ESC = '\\'
 const val CH_QUOTE = '\"'
 const val CH_NEWLINE = '\n'
-const val CH_EMPTY1 = '('
-const val CH_EMPTY2 = ')'
+const val CH_VOID1 = '('
+const val CH_VOID2 = ')'
 const val CH_APOSTR = '\''
 const val CH_HASH = '#'
 const val CH_LPARENS = '('
@@ -39,8 +39,8 @@ fun isEof(char: Char) =
 fun isParens(char: Char) =
     "()[]{}".contains(char)
 
-fun isEmpty(char: Char, peekChar: Char) =
-    char == CH_EMPTY1 && peekChar == CH_EMPTY2
+fun isVoid(char: Char, peekChar: Char) =
+    char == CH_VOID1 && peekChar == CH_VOID2
 
 fun isWhitespace(char: Char) =
     Character.isWhitespace(char)

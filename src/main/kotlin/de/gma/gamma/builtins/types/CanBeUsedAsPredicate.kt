@@ -8,8 +8,8 @@ import de.gma.gamma.datatypes.record.RecordValue
 import de.gma.gamma.datatypes.scope.ModuleScope
 import de.gma.gamma.datatypes.scope.Scope
 import de.gma.gamma.datatypes.values.BooleanValue
-import de.gma.gamma.datatypes.values.EmptyValue
 import de.gma.gamma.datatypes.values.PropertyValue
+import de.gma.gamma.datatypes.values.VoidValue
 
 class CanBeUsedAsPredicate(private val type: DataType) : BuiltinFunction(listOf("obj")) {
     override fun callInternal(scope: Scope, callParams: List<Value>): Value {
@@ -24,7 +24,7 @@ class CanBeUsedAsPredicate(private val type: DataType) : BuiltinFunction(listOf(
             DataType.FUNCTION -> l is FunctionValue || l is PropertyValue
             DataType.RECORD -> l is RecordValue
             DataType.PROPERTY -> l is PropertyValue
-            DataType.EMPTYVALUE -> l is EmptyValue
+            DataType.VOID -> l is VoidValue
             DataType.MODULE -> l is ModuleScope
         }
 

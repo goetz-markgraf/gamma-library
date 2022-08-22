@@ -8,7 +8,7 @@ import de.gma.gamma.datatypes.Value
 import de.gma.gamma.datatypes.list.ListValue
 import de.gma.gamma.datatypes.scope.Namespace
 import de.gma.gamma.datatypes.scope.Scope
-import de.gma.gamma.datatypes.values.EmptyValue
+import de.gma.gamma.datatypes.values.VoidValue
 import de.gma.gamma.parser.EvaluationException
 import de.gma.gamma.parser.Position
 
@@ -24,7 +24,7 @@ class RecordValue(
 
     override fun getValueForName(id: String, strict: Boolean) =
         internalMap[id]
-            ?: if (strict) throw EvaluationException("Property $id not found in $this") else EmptyValue.build()
+            ?: if (strict) throw EvaluationException("Property $id not found in $this") else VoidValue.build()
 
     override fun containsNameLocally(id: String) =
         internalMap.containsKey(id)

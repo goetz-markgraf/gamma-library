@@ -6,7 +6,7 @@ import de.gma.gamma.datatypes.AbstractValue
 import de.gma.gamma.datatypes.Remark
 import de.gma.gamma.datatypes.Value
 import de.gma.gamma.datatypes.functions.FunctionValue
-import de.gma.gamma.datatypes.values.EmptyValue
+import de.gma.gamma.datatypes.values.VoidValue
 import de.gma.gamma.parser.EvaluationException
 import de.gma.gamma.parser.isStartOfIdentifier
 
@@ -55,7 +55,7 @@ open class ModuleScope(
                 ?: if (strict)
                     throw EvaluationException("id $id is undefined.")
                 else
-                    EmptyValue.build())
+                    VoidValue.build())
     }
 
     override fun containsNameLocally(id: String) =

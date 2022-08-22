@@ -3,8 +3,8 @@ package de.gma.gamma.evaluation
 import de.gma.gamma.datatypes.StringValue
 import de.gma.gamma.datatypes.list.ListValue
 import de.gma.gamma.datatypes.list.PairValue
-import de.gma.gamma.datatypes.values.EmptyValue
 import de.gma.gamma.datatypes.values.IntegerValue
+import de.gma.gamma.datatypes.values.VoidValue
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -51,7 +51,7 @@ class EvaluationTest : BaseEvaluationTest() {
 
         val result = execute(code)
 
-        assertThat(result).isInstanceOf(EmptyValue::class.java)
+        assertThat(result).isInstanceOf(VoidValue::class.java)
     }
 
     @Test

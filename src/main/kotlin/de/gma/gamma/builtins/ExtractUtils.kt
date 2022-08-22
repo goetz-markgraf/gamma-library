@@ -4,10 +4,10 @@ import de.gma.gamma.datatypes.StringValue
 import de.gma.gamma.datatypes.Value
 import de.gma.gamma.datatypes.list.ListValue
 import de.gma.gamma.datatypes.scope.Scope
-import de.gma.gamma.datatypes.values.EmptyValue
 import de.gma.gamma.datatypes.values.FloatValue
 import de.gma.gamma.datatypes.values.IntegerValue
 import de.gma.gamma.datatypes.values.PropertyValue
+import de.gma.gamma.datatypes.values.VoidValue
 import de.gma.gamma.parser.EvaluationException
 
 fun extractNumber(value: Value) =
@@ -15,7 +15,7 @@ fun extractNumber(value: Value) =
     else
         if (value is StringValue)
             extractNumberFromString(value)
-        else EmptyValue.build()
+        else VoidValue.build()
 
 private fun extractNumberFromString(value: StringValue): Value {
     try {
@@ -28,7 +28,7 @@ private fun extractNumberFromString(value: StringValue): Value {
     } catch (e: EvaluationException) {
         // do nothing
     }
-    return EmptyValue.build()
+    return VoidValue.build()
 }
 
 fun checkForListOfPairs(
