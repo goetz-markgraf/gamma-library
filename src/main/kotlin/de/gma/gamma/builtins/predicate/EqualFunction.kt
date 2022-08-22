@@ -10,6 +10,6 @@ object EqualFunction : BuiltinFunction(listOf("a", "b")) {
         val a = callParams[0].evaluate(scope)
         val b = callParams[1].evaluate(scope)
 
-        return BooleanValue.build(a.equals(b))
+        return BooleanValue.build(a == b)
     }
 }

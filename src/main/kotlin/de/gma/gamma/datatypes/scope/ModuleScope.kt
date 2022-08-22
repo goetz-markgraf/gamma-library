@@ -35,17 +35,17 @@ open class ModuleScope(
     fun getRemark(name: String) =
         remarks[name]
 
-    override fun getValue(id: String, strict: Boolean): Value {
+    override fun getValueForName(id: String, strict: Boolean): Value {
 
         return content[id]
-            ?: (parent?.getValue(id, strict)
+            ?: (parent?.getValueForName(id, strict)
                 ?: if (strict)
                     throw EvaluationException("id $id is undefined.")
                 else
                     EmptyValue.build())
     }
 
-    override fun containsLocally(id: String) =
+    override fun containsNameLocally(id: String) =
         content.containsKey(id)
 
     override fun bindValue(name: String, value: Value, documentation: Remark?) {

@@ -1,7 +1,7 @@
 package de.gma.gamma.parser
 
 import de.gma.gamma.datatypes.Identifier
-import de.gma.gamma.datatypes.list.StringValue
+import de.gma.gamma.datatypes.StringValue
 import de.gma.gamma.datatypes.values.BooleanValue
 import de.gma.gamma.datatypes.values.FloatValue
 import de.gma.gamma.datatypes.values.IntegerValue

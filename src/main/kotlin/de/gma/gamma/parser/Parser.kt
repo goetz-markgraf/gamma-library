@@ -5,7 +5,6 @@ import de.gma.gamma.datatypes.expressions.*
 import de.gma.gamma.datatypes.functions.LambdaFunction
 import de.gma.gamma.datatypes.list.ListLiteral
 import de.gma.gamma.datatypes.list.ListValue
-import de.gma.gamma.datatypes.list.StringValue
 import de.gma.gamma.datatypes.values.*
 import de.gma.gamma.parser.TokenType.*
 

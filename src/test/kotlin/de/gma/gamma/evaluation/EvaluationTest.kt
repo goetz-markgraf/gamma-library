@@ -1,8 +1,8 @@
 package de.gma.gamma.evaluation
 
+import de.gma.gamma.datatypes.StringValue
 import de.gma.gamma.datatypes.list.ListValue
 import de.gma.gamma.datatypes.list.PairValue
-import de.gma.gamma.datatypes.list.StringValue
 import de.gma.gamma.datatypes.values.EmptyValue
 import de.gma.gamma.datatypes.values.IntegerValue
 import org.assertj.core.api.Assertions.assertThat

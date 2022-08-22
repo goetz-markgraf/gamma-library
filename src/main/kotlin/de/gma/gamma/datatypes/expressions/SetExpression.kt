@@ -35,7 +35,7 @@ class SetExpression(
 
         var currentScope: Scope? = scope
 
-        while (currentScope != null && !currentScope.containsLocally(identifier.name))
+        while (currentScope != null && !currentScope.containsNameLocally(identifier.name))
             currentScope = currentScope.parent
 
         if (currentScope != null) {

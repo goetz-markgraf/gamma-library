@@ -1,7 +1,7 @@
 package de.gma.gamma.parser
 
+import de.gma.gamma.datatypes.StringValue
 import de.gma.gamma.datatypes.expressions.LetExpression
-import de.gma.gamma.datatypes.list.StringValue
 import de.gma.gamma.datatypes.values.IntegerValue
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Nested

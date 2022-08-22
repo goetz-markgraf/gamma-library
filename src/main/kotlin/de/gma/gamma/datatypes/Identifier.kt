@@ -21,7 +21,7 @@ class Identifier(
         }
 
     override fun evaluate(scope: Scope) =
-        scope.getValue(name, strict = true).evaluate(scope)
+        scope.getValueForName(name, strict = true).evaluate(scope)
 
     override fun prepare(scope: Scope) =
         ScopedValue(sourceName, beginPos, endPos, this, scope)

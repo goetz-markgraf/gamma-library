@@ -3,7 +3,6 @@ package de.gma.gamma.datatypes
 import de.gma.gamma.builtins.namespaces.special.PropertyFunction
 import de.gma.gamma.datatypes.functions.FunctionValue
 import de.gma.gamma.datatypes.list.ListValue
-import de.gma.gamma.datatypes.list.StringValue
 import de.gma.gamma.datatypes.record.RecordValue
 import de.gma.gamma.datatypes.scope.Scope
 import de.gma.gamma.datatypes.values.*
@@ -37,6 +36,7 @@ abstract class AbstractValue(
         when (this) {
             is ListValue -> this
             is EmptyValue -> ListValue.build(emptyList())
+            is StringValue -> ListValue.build(this.allItems())
             else -> ListValue.build(listOf(this))
         }
 

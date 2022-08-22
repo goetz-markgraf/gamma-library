@@ -22,11 +22,11 @@ class RecordValue(
     override fun prettyPrint(): String =
         "record {${internalMap.toList().joinToString(", ") { (a, b) -> ":$a -> $b" }}}"
 
-    override fun getValue(id: String, strict: Boolean) =
+    override fun getValueForName(id: String, strict: Boolean) =
         internalMap[id]
             ?: if (strict) throw EvaluationException("Property $id not found in $this") else EmptyValue.build()
 
-    override fun containsLocally(id: String) =
+    override fun containsNameLocally(id: String) =
         internalMap.containsKey(id)
 
     fun copyWith(changedContent: List<ListValue>, scope: Scope) =

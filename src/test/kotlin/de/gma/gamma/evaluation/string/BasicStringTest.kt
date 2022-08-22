@@ -1,6 +1,6 @@
 package de.gma.gamma.evaluation.string
 
-import de.gma.gamma.datatypes.list.StringValue
+import de.gma.gamma.datatypes.StringValue
 import de.gma.gamma.evaluation.BaseEvaluationTest
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test

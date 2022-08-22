@@ -1,8 +1,8 @@
 package de.gma.gamma.builtins.namespaces
 
 import de.gma.gamma.builtins.BuiltinFunction
+import de.gma.gamma.datatypes.StringValue
 import de.gma.gamma.datatypes.Value
-import de.gma.gamma.datatypes.list.StringValue
 import de.gma.gamma.datatypes.scope.Namespace
 import de.gma.gamma.datatypes.scope.Scope
 
@@ -15,10 +15,13 @@ object GetAtFunction : BuiltinFunction(listOf("pos", "list")) {
             val posStr = pos.toStringValue()
             val namespace = obj as Namespace
 
-            return namespace.getValue(posStr.strValue, strict = true)
+            return namespace.getValueForName(posStr.strValue, strict = true)
         }
 
         val posInt = pos.toInteger()
+
+        if (obj is StringValue) return obj.getAt(posInt.longValue.toInt())
+
         val list = obj.toList()
 
         return list.getAt(posInt.longValue.toInt())

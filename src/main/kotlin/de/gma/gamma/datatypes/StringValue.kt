@@ -1,35 +1,37 @@
-package de.gma.gamma.datatypes.list
+package de.gma.gamma.datatypes
 
 import de.gma.gamma.builtins.builtInSource
 import de.gma.gamma.builtins.nullPos
-import de.gma.gamma.datatypes.Value
+import de.gma.gamma.datatypes.scope.Namespace
 import de.gma.gamma.datatypes.scope.Scope
+import de.gma.gamma.datatypes.values.EmptyValue
+import de.gma.gamma.datatypes.values.IntegerValue
+import de.gma.gamma.parser.EvaluationException
 import de.gma.gamma.parser.Position
-
-private const val ERROR_STRING_ONLY_WITH_STRING = "string can only be joined with a string"
 
 class StringValue(
     sourceName: String,
     beginPos: Position,
     endPos: Position,
     val strValue: String
-) : ListValue(sourceName, beginPos, endPos) {
-    override fun allItems(): List<Value> =
+) : AbstractValue(sourceName, beginPos, endPos), Namespace {
+
+    fun allItems(): List<StringValue> =
         strValue.toList().map { build(it.toString()) }
 
-    override fun first(): Value =
+    fun first() =
         if (strValue.isEmpty())
             this
         else
             build(strValue.first().toString())
 
-    override fun last(): Value =
+    fun last() =
         if (strValue.isEmpty())
             this
         else
             build(strValue.last().toString())
 
-    override fun getAt(pos: Int): Value =
+    fun getAt(pos: Int) =
         if (pos >= 0 && pos < size())
             build(strValue[pos].toString())
         else
@@ -38,23 +40,21 @@ class StringValue(
             else
                 throw createException("Index out of bounds: $pos outside empty string")
 
-    override fun size(): Int =
+    fun size(): Int =
         strValue.length
 
-    override fun tail(): ListValue =
-        if (strValue.isEmpty())
-            this
-        else
-            build(strValue.drop(1))
+    fun tail() =
+        if (strValue.isEmpty()) this
+        else build(strValue.drop(1))
 
 
-    override fun dropLast(): ListValue =
+    fun dropLast() =
         if (strValue.isEmpty())
             this
         else
             build(strValue.dropLast(1))
 
-    override fun slice(from: Int, length: Int): ListValue {
+    fun slice(from: Int, length: Int): StringValue {
         val size = strValue.length
         if (from > size || from < 0)
             return build("")
@@ -67,42 +67,37 @@ class StringValue(
 
     }
 
-
-    override fun append(v: Value): ListValue =
-        if (v is StringValue)
-            build(strValue + v.strValue)
-        else
-            throw createException(ERROR_STRING_ONLY_WITH_STRING)
-
-    override fun insertFirst(v: Value): ListValue =
-        if (v is StringValue)
-            build(v.strValue + strValue)
-        else
-            throw createException(ERROR_STRING_ONLY_WITH_STRING)
-
-
-    override fun appendAll(v: ListValue): ListValue =
-        if (v is StringValue)
-            build(strValue + v.strValue)
-        else
-            throw createException(ERROR_STRING_ONLY_WITH_STRING)
-
-
     override fun prettyPrint() = "\"$strValue\""
 
     override fun evaluate(scope: Scope) = this
 
     override fun prepare(scope: Scope) = this
 
-    override fun contains(item: Value) =
-        if (item is StringValue)
-            strValue.contains(item.strValue)
-        else
-            super.contains(item)
+    fun contains(item: Value) =
+        item is StringValue && strValue.contains(item.strValue)
+
+    override fun getValueForName(id: String, strict: Boolean): Value =
+        when (id) {
+            "first" -> first()
+            "head" -> first()
+            "last" -> last()
+            "tail" -> tail()
+            "size" -> IntegerValue.build(size().toLong())
+            else -> if (strict) throw EvaluationException("property $id not found in $this") else EmptyValue.build()
+        }
+
+    override fun containsNameLocally(id: String) =
+        listOf(
+            "first",
+            "head",
+            "last",
+            "tail",
+            "size"
+        ).contains(id)
+
 
     override fun equals(other: Any?) =
-        if (other !is StringValue) false
-        else other.strValue == strValue
+        other is StringValue && other.strValue == strValue
 
     override fun hashCode() = strValue.hashCode()
 

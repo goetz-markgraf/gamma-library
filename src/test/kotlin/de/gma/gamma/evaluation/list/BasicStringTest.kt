@@ -1,6 +1,6 @@
 package de.gma.gamma.evaluation.list
 
-import de.gma.gamma.datatypes.list.StringValue
+import de.gma.gamma.datatypes.StringValue
 import de.gma.gamma.evaluation.BaseEvaluationTest
 import de.gma.gamma.parser.EvaluationException
 import org.assertj.core.api.Assertions.assertThat
@@ -72,7 +72,7 @@ class BasicStringTest : BaseEvaluationTest() {
         val expr = execute("slice 1 1 \"123\"") as StringValue
 
         assertThat(expr.size()).isEqualTo(1)
-        assertThat((expr.first() as StringValue).strValue).isEqualTo("2")
+        assertThat(expr.first().strValue).isEqualTo("2")
     }
 
     @Test
@@ -80,8 +80,8 @@ class BasicStringTest : BaseEvaluationTest() {
         val expr = execute("slice 1 3 \"123\"") as StringValue
 
         assertThat(expr.size()).isEqualTo(2)
-        assertThat((expr.first() as StringValue).strValue).isEqualTo("2")
-        assertThat((expr.last() as StringValue).strValue).isEqualTo("3")
+        assertThat(expr.first().strValue).isEqualTo("2")
+        assertThat(expr.last().strValue).isEqualTo("3")
     }
 
     @ParameterizedTest

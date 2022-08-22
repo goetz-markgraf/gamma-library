@@ -1,8 +1,8 @@
 package de.gma.gamma.builtins
 
+import de.gma.gamma.datatypes.StringValue
 import de.gma.gamma.datatypes.Value
 import de.gma.gamma.datatypes.list.ListValue
-import de.gma.gamma.datatypes.list.StringValue
 import de.gma.gamma.datatypes.scope.Scope
 import de.gma.gamma.datatypes.values.EmptyValue
 import de.gma.gamma.datatypes.values.FloatValue

@@ -12,10 +12,10 @@ class ListPredicateTest : BaseEvaluationTest() {
     @ValueSource(
         strings = [
             "is-list? {:id}",
-            "is-list? \"a\"",
             "is-empty? {}",
             "is-not-empty? {:id}",
-            "is-pair? {1, 2}"
+            "is-pair? {1, 2}",
+            "is-pair? \"ab\""
         ]
     )
     fun `check that result is true`(code: String) {
@@ -29,13 +29,14 @@ class ListPredicateTest : BaseEvaluationTest() {
     @ValueSource(
         strings = [
             "is-list? :id",
+            "is-list? \"a\"",
+            "is-list? 1",
             "is-empty? {:id}",
             "is-not-empty? {}",
             "is-pair? {1, 2, 3}",
             "is-pair? {1}",
             "is-pair? {}",
-            "is-pair? :id",
-            "is-pair? \"ab\""
+            "is-pair? :id"
         ]
     )
     fun `check that result is false`(code: String) {

@@ -1,6 +1,6 @@
 package de.gma.gamma.evaluation.comparison
 
-import de.gma.gamma.datatypes.list.StringValue
+import de.gma.gamma.datatypes.StringValue
 import de.gma.gamma.evaluation.BaseEvaluationTest
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.params.ParameterizedTest

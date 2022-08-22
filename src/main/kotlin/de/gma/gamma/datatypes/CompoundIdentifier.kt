@@ -17,7 +17,7 @@ class CompoundIdentifier(
 
     override fun evaluate(scope: Scope) =
         names.fold(scope as Any) { namespace, item ->
-            (namespace as Namespace).getValue(item, strict = true).evaluate(scope)
+            (namespace as Namespace).getValueForName(item, strict = true).evaluate(scope)
         } as Value
 
     override fun prepare(scope: Scope) =

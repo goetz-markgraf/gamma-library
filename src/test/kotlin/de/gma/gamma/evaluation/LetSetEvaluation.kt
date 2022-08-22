@@ -19,7 +19,7 @@ class LetSetEvaluation : BaseEvaluationTest() {
         val result = execute(code)
 
         assertThat(result).isInstanceOf(IntegerValue::class.java)
-        assertThat(scope.getValue("expr")).isInstanceOf(IntegerValue::class.java)
+        assertThat(scope.getValueForName("expr")).isInstanceOf(IntegerValue::class.java)
         assertThat((result as IntegerValue).longValue).isEqualTo(30)
     }
 
@@ -33,7 +33,7 @@ class LetSetEvaluation : BaseEvaluationTest() {
         val result = execute(code)
 
         assertThat(result).isInstanceOf(IntegerValue::class.java)
-        assertThat(scope.getValue("id")).isInstanceOf(IntegerValue::class.java)
+        assertThat(scope.getValueForName("id")).isInstanceOf(IntegerValue::class.java)
     }
 
     @Test
@@ -79,7 +79,7 @@ class LetSetEvaluation : BaseEvaluationTest() {
         val result = execute(code)
 
         assertThat(result).isInstanceOf(ScopedFunction::class.java)
-        assertThat(scope.getValue("add")).isInstanceOf(ScopedFunction::class.java)
+        assertThat(scope.getValueForName("add")).isInstanceOf(ScopedFunction::class.java)
     }
 
     @Test
@@ -92,7 +92,7 @@ class LetSetEvaluation : BaseEvaluationTest() {
         val result = execute(code)
 
         assertThat(result).isInstanceOf(ScopedFunction::class.java)
-        assertThat(scope.getValue("add")).isInstanceOf(ScopedFunction::class.java)
+        assertThat(scope.getValueForName("add")).isInstanceOf(ScopedFunction::class.java)
     }
 
     @Test
@@ -105,7 +105,7 @@ class LetSetEvaluation : BaseEvaluationTest() {
         val result = execute(code)
 
         assertThat(result).isInstanceOf(ScopedFunction::class.java)
-        assertThat(scope.getValue("doIt")).isInstanceOf(ScopedFunction::class.java)
+        assertThat(scope.getValueForName("doIt")).isInstanceOf(ScopedFunction::class.java)
     }
 
 
@@ -121,7 +121,7 @@ class LetSetEvaluation : BaseEvaluationTest() {
 
         val result = execute(code)
         assertThat(result!!.prettyPrint()).isEqualTo("20")
-        assertThat(scope.getValue("a!").prettyPrint()).isEqualTo("20")
+        assertThat(scope.getValueForName("a!").prettyPrint()).isEqualTo("20")
     }
 
     @Test

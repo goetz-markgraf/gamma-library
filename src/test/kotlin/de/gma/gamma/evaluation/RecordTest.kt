@@ -1,7 +1,7 @@
 package de.gma.gamma.evaluation
 
+import de.gma.gamma.datatypes.StringValue
 import de.gma.gamma.datatypes.list.ListValue
-import de.gma.gamma.datatypes.list.StringValue
 import de.gma.gamma.datatypes.values.PropertyValue
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test

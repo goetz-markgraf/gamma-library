@@ -1,7 +1,7 @@
 package de.gma.gamma.evaluation.namespace
 
+import de.gma.gamma.datatypes.StringValue
 import de.gma.gamma.datatypes.list.ListValue
-import de.gma.gamma.datatypes.list.StringValue
 import de.gma.gamma.datatypes.record.RecordValue
 import de.gma.gamma.datatypes.values.IntegerValue
 import de.gma.gamma.evaluation.BaseEvaluationTest
@@ -18,16 +18,16 @@ class RecordTest : BaseEvaluationTest() {
     fun `create a record`() {
         val result = execute("record {:a -> 1, :b -> 2}") as RecordValue
 
-        assertThat(result.getValue("a").toInteger().longValue).isEqualTo(1L)
-        assertThat(result.getValue("b").toInteger().longValue).isEqualTo(2L)
+        assertThat(result.getValueForName("a").toInteger().longValue).isEqualTo(1L)
+        assertThat(result.getValueForName("b").toInteger().longValue).isEqualTo(2L)
     }
 
     @Test
     fun `create a record with string properties`() {
         val result = execute("record {\"a\" -> 1, \"b\" -> 2}") as RecordValue
 
-        assertThat(result.getValue("a").toInteger().longValue).isEqualTo(1L)
-        assertThat(result.getValue("b").toInteger().longValue).isEqualTo(2L)
+        assertThat(result.getValueForName("a").toInteger().longValue).isEqualTo(1L)
+        assertThat(result.getValueForName("b").toInteger().longValue).isEqualTo(2L)
     }
 
     @Test
@@ -40,8 +40,8 @@ class RecordTest : BaseEvaluationTest() {
         """.trimIndent()
         ) as RecordValue
 
-        assertThat(result.getValue("a").toInteger().longValue).isEqualTo(1L)
-        assertThat(result.getValue("b").toInteger().longValue).isEqualTo(2L)
+        assertThat(result.getValueForName("a").toInteger().longValue).isEqualTo(1L)
+        assertThat(result.getValueForName("b").toInteger().longValue).isEqualTo(2L)
     }
 
     @Test
@@ -53,8 +53,8 @@ class RecordTest : BaseEvaluationTest() {
             """.trimIndent()
         ) as RecordValue
 
-        assertThat(result.getValue("1 - 1").toInteger().longValue).isEqualTo(1L)
-        assertThat(result.getValue("2 - 1").toInteger().longValue).isEqualTo(2L)
+        assertThat(result.getValueForName("1 - 1").toInteger().longValue).isEqualTo(1L)
+        assertThat(result.getValueForName("2 - 1").toInteger().longValue).isEqualTo(2L)
     }
 
     @ParameterizedTest
@@ -128,13 +128,13 @@ class RecordTest : BaseEvaluationTest() {
         assertThat(orig.size()).isEqualTo(2)
         assertThat(changed.size()).isEqualTo(3)
 
-        assertThat(orig.getValue("b").toInteger().longValue).isEqualTo(2L)
-        assertThat(changed.getValue("b").toInteger().longValue).isEqualTo(3L)
+        assertThat(orig.getValueForName("b").toInteger().longValue).isEqualTo(2L)
+        assertThat(changed.getValueForName("b").toInteger().longValue).isEqualTo(3L)
         assertThatThrownBy {
-            orig.getValue("c")
+            orig.getValueForName("c")
         }.isInstanceOf(EvaluationException::class.java)
             .hasMessage("Property c not found in record {:a -> 1, :b -> 2}")
-        assertThat(changed.getValue("c").toInteger().longValue).isEqualTo(4L)
+        assertThat(changed.getValueForName("c").toInteger().longValue).isEqualTo(4L)
     }
 
     @Test
@@ -154,13 +154,13 @@ class RecordTest : BaseEvaluationTest() {
         assertThat(orig.size()).isEqualTo(2)
         assertThat(changed.size()).isEqualTo(3)
 
-        assertThat(orig.getValue("b").toInteger().longValue).isEqualTo(2L)
-        assertThat(changed.getValue("b").toInteger().longValue).isEqualTo(3L)
+        assertThat(orig.getValueForName("b").toInteger().longValue).isEqualTo(2L)
+        assertThat(changed.getValueForName("b").toInteger().longValue).isEqualTo(3L)
         assertThatThrownBy {
-            orig.getValue("c")
+            orig.getValueForName("c")
         }.isInstanceOf(EvaluationException::class.java)
             .hasMessage("Property c not found in record {:a -> 1, :b -> 2}")
-        assertThat(changed.getValue("c").toInteger().longValue).isEqualTo(4L)
+        assertThat(changed.getValueForName("c").toInteger().longValue).isEqualTo(4L)
     }
 
     @Test
