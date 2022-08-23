@@ -18,10 +18,11 @@ object PipelineFunction : BuiltinFunction(listOf("id", "list-of-expressions")) {
         if (expressions !is ListValue)
             throw EvaluationException("$expressions is not a list of expressions")
 
-        val idStr =
-            if (identifier is Identifier) identifier.name
-            else if (identifier is StringValue) identifier.strValue
-            else throw EvaluationException("$identifier is not an identifier")
+        val idStr = when (identifier) {
+            is Identifier -> identifier.name
+            is StringValue -> identifier.strValue
+            else -> throw EvaluationException("$identifier is not an identifier")
+        }
 
         val pipelineScope = ModuleScope(sourceName, scope)
         var result: Value = VoidValue.build()
