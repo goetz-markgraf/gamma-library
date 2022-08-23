@@ -16,10 +16,10 @@ let calculate-position start list =
         let amount = cmd-list.last
 
         when {
-            cmd = "forward" -> r* { :forward -> amount, :depth -> start.aim * amount, :aim -> 0}
-            cmd = "up" -> r* {:forward -> 0, :depth -> 0, :aim -> neg amount}
-            cmd = "down" -> r* { :forward -> 0, :depth -> 0, :aim -> amount}
-            else -> r* { :forward -> 0, :depth -> 0, :aim -> 0}
+            cmd = "forward" -> { :forward -> amount, :depth -> start.aim * amount, :aim -> 0}
+            cmd = "up" -> {:forward -> 0, :depth -> 0, :aim -> neg amount}
+            cmd = "down" -> { :forward -> 0, :depth -> 0, :aim -> amount}
+            else -> { :forward -> 0, :depth -> 0, :aim -> 0}
         }
 
     when {
@@ -27,7 +27,7 @@ let calculate-position start list =
         else -> (
             let delta-movement = calc-movement list.head
             let new-position =
-                r* {
+                {
                     :forward -> start.forward  + delta-movement.forward
                     :depth -> start.depth + delta-movement.depth
                     :aim -> start.aim + delta-movement.aim
@@ -38,7 +38,7 @@ let calculate-position start list =
 
 
 
-let test-result = calculate-position (r* {:forward -> 0, :depth -> 0, :aim -> 0}) test-input
+let test-result = calculate-position {:forward -> 0, :depth -> 0, :aim -> 0} test-input
 
 print (test-result.depth * test-result.forward)
 
@@ -46,6 +46,6 @@ print (test-result.depth * test-result.forward)
 
 let result =
     read-lines "src/test/resources/advent-of-code/day2.input"
-    |> calculate-position (r* {:forward -> 0, :depth -> 0, :aim -> 0})
+    |> calculate-position {:forward -> 0, :depth -> 0, :aim -> 0}
 
 result.depth * result.forward

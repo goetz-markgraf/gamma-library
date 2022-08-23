@@ -78,8 +78,9 @@ abstract class AbstractValue(
         }
 
     override fun toRecord(): RecordValue =
-        when (this) {
-            is RecordValue -> this
+        when {
+            this is RecordValue -> this
+            this is ListValue && this.size() == 0 -> RecordValue.buildEmpty()
             else -> throw createException("$this is not a record")
         }
 

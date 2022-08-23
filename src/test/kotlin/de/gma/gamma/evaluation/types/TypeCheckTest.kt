@@ -17,7 +17,7 @@ class TypeCheckTest : BaseEvaluationTest() {
             "10,false",
             "\"a\",false",
             "[a : a],false",
-            "(r* {:a -> 10}),false",
+            "{:a -> 10},false",
             ":hallo,false",
             "(),false",
             "this,false"
@@ -38,7 +38,7 @@ class TypeCheckTest : BaseEvaluationTest() {
             "10,false",
             "\"a\",false",
             "[a : a],false",
-            "(r* {:a -> 10}),false",
+            "{:a -> 10},false",
             ":hallo,false",
             "(),false",
             "this,false"
@@ -59,7 +59,7 @@ class TypeCheckTest : BaseEvaluationTest() {
             "10,false",
             "\"a\",false",
             "[a : a],false",
-            "(r* {:a -> 10}),false",
+            "{:a -> 10},false",
             ":hallo,false",
             "(),false",
             "this,false"
@@ -80,7 +80,7 @@ class TypeCheckTest : BaseEvaluationTest() {
             "10,true",
             "\"a\",false",
             "[a : a],false",
-            "(r* {:a -> 10}),false",
+            "{:a -> 10},false",
             ":hallo,false",
             "(),false",
             "this,false"
@@ -101,7 +101,7 @@ class TypeCheckTest : BaseEvaluationTest() {
             "10,false",
             "\"a\",true",
             "[a : a],false",
-            "(r* {:a -> 10}),false",
+            "{:a -> 10},false",
             ":hallo,false",
             "(),false",
             "this,false"
@@ -122,7 +122,7 @@ class TypeCheckTest : BaseEvaluationTest() {
             "10,false",
             "\"a\",false",
             "[a : a],true",
-            "(r* {:a -> 10}),false",
+            "{:a -> 10},false",
             ":hallo,false",
             "(),false",
             "this,false"
@@ -143,7 +143,7 @@ class TypeCheckTest : BaseEvaluationTest() {
             "10,false",
             "\"a\",false",
             "[a : a],false",
-            "(r* {:a -> 10}),true",
+            "{:a -> 10},true",
             ":hallo,false",
             "(),false",
             "this,false"
@@ -164,7 +164,7 @@ class TypeCheckTest : BaseEvaluationTest() {
             "10,false",
             "\"a\",false",
             "[a : a],false",
-            "(r* {:a -> 10}),false",
+            "{:a -> 10},false",
             ":hallo,true",
             "(),false",
             "this,false"
@@ -185,7 +185,7 @@ class TypeCheckTest : BaseEvaluationTest() {
             "10,false",
             "\"a\",false",
             "[a : a],false",
-            "(r* {:a -> 10}),false",
+            "{:a -> 10},false",
             ":hallo,false",
             "(),true",
             "this,false"
@@ -206,7 +206,7 @@ class TypeCheckTest : BaseEvaluationTest() {
             "10,false",
             "\"a\",false",
             "[a : a],false",
-            "(r* {:a -> 10}),false",
+            "{:a -> 10},false",
             ":hallo,false",
             "(),false",
             "this,true"

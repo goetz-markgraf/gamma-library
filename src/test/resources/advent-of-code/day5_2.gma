@@ -100,8 +100,8 @@ let get-value key field =
 
 assert
     "get-value"
-    (r* {"1-2" → 1} ▷ get-value "1-2" → 1)
-    (r* {"1-2" → 1} ▷ get-value "1-3" → 0)
+    ({"1-2" → 1} ▷ get-value "1-2" → 1)
+    ({"1-2" → 1} ▷ get-value "1-3" → 0)
 
 
 
@@ -120,8 +120,8 @@ let fill-line field line =
 
 assert
     "fill-line"
-    ({{1,1},{1,2}} ▷ fill-line (r* {}) → r* {"1-1" → 1, "1-2" → 1})
-    ({{1,1},{1,2}} ▷ fill-line (r* {"1-1" → 1}) → r* {"1-1" → 2, "1-2" → 1})
+    ({{1,1},{1,2}} ▷ fill-line ({}) → {"1-1" → 1, "1-2" → 1})
+    ({{1,1},{1,2}} ▷ fill-line ({"1-1" → 1}) → {"1-1" → 2, "1-2" → 1})
 
 
 
@@ -135,12 +135,12 @@ let set-positions-from-line field line =
 
 assert
     "set-positions-from-line"
-    ({{0,0},{0,2}} ▷ set-positions-from-line (r* {}) →
-                r* {"0-0" → 1, "0-1" → 1, "0-2" → 1})
-    ({{0,0},{0,2}} ▷ set-positions-from-line (r* {"0-0" → 1, "4-4" → 1}) →
-                r* {"0-0" → 2, "0-1" → 1, "0-2" → 1, "4-4" → 1})
-    ({} ▷ set-positions-from-line (r* {"0-0" → 1, "4-4" → 1}) →
-                r* {"0-0" → 1, "4-4" → 1})
+    ({{0,0},{0,2}} ▷ set-positions-from-line ({}) →
+                {"0-0" → 1, "0-1" → 1, "0-2" → 1})
+    ({{0,0},{0,2}} ▷ set-positions-from-line ({"0-0" → 1, "4-4" → 1}) →
+                {"0-0" → 2, "0-1" → 1, "0-2" → 1, "4-4" → 1})
+    ({} ▷ set-positions-from-line ({"0-0" → 1, "4-4" → 1}) →
+                {"0-0" → 1, "4-4" → 1})
 
 
 
@@ -157,8 +157,8 @@ let count-fields-over-1 field =
 
 assert
     "count-fields-over-1"
-    (r* {"1-1" → 1, "1-2" → 2} ▷ count-fields-over-1 → 1 )
-    (r* {"1-1" → 3, "1-2" → 2} ▷ count-fields-over-1 → 2 )
+    ({"1-1" → 1, "1-2" → 2} ▷ count-fields-over-1 → 1 )
+    ({"1-1" → 3, "1-2" → 2} ▷ count-fields-over-1 → 2 )
 
 
 
@@ -171,7 +171,7 @@ let produce-result input =
         ▷ map split-line-into-coordinates
         ▷ map make-line
 
-    let field = r* { }
+    let field = { }
 
     let final-field = lines ▷ fold field [acc line : set-positions-from-line acc line]
 

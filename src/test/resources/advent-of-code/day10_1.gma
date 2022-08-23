@@ -23,7 +23,7 @@ let create-stack () =
     let peek () =
         content!.first
 
-    r* {
+    {
         :push → push
         :pop → pop
         :peek → peek

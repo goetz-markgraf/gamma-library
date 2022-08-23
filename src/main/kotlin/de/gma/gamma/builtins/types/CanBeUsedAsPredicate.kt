@@ -4,7 +4,6 @@ import de.gma.gamma.builtins.BuiltinFunction
 import de.gma.gamma.datatypes.DataType
 import de.gma.gamma.datatypes.Value
 import de.gma.gamma.datatypes.functions.FunctionValue
-import de.gma.gamma.datatypes.record.RecordValue
 import de.gma.gamma.datatypes.scope.ModuleScope
 import de.gma.gamma.datatypes.scope.Scope
 import de.gma.gamma.datatypes.values.BooleanValue
@@ -22,7 +21,7 @@ class CanBeUsedAsPredicate(private val type: DataType) : BuiltinFunction(listOf(
             DataType.INTEGER -> checkConvert { l.toInteger() }
             DataType.STRING -> true
             DataType.FUNCTION -> l is FunctionValue || l is PropertyValue
-            DataType.RECORD -> l is RecordValue
+            DataType.RECORD -> checkConvert { l.toRecord() }
             DataType.PROPERTY -> l is PropertyValue
             DataType.VOID -> l is VoidValue
             DataType.MODULE -> l is ModuleScope

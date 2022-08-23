@@ -1,5 +1,6 @@
 package de.gma.gamma.builtins
 
+import de.gma.gamma.datatypes.Identifier
 import de.gma.gamma.datatypes.StringValue
 import de.gma.gamma.datatypes.Value
 import de.gma.gamma.datatypes.list.ListValue
@@ -39,6 +40,11 @@ fun checkForListOfPairs(
     else
         throw EvaluationException("Wrong Parameter, not list of pairs")
 }
+
+fun isRecordDefinition(list: List<Value>) =
+    list.isNotEmpty() && list.all { item ->
+        item is ListValue && item.size() == 2 && (item.first() is PropertyValue || item.first() is StringValue || item.first() is Identifier)
+    }
 
 fun createMapFromListOfPair(content: List<ListValue>, scope: Scope) = buildMap<String, Value> {
     content.forEach {

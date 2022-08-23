@@ -261,22 +261,22 @@ You can use lambdas for example in combination with the map function to work ove
 Apart from lists _gamma_ can create `record`-Types that match a value to a property name.
 
 ```
-  # create a record with the 'record'-function
-  let a =
-    record {
-      :name -> "Mueller"
-      :first-name -> "Willi"
-      :birthdate -> "01.01.1980"
-    }
+  # create a record as a list of pairs with propertys
+  let a = {
+    :name -> "Mueller"
+    :first-name -> "Willi"
+    :birthdate -> "01.01.1980"
+  }
 ```
-
-_Alternatively you can also use the `r*`-function that is a shortcut for `record`._
 
 Accessing the record is possible via the property names that work like getter functions:
 
 ```
   # getting the name value of the record 'a'
   print (:name a)
+  
+  # alternate access with dot notation
+  print (a.name)
 ```
 
 Like all other data structures in _gamma_ a `record`-Type is immutable. You can create a modified
@@ -388,8 +388,6 @@ These are the functions currenty built in into _gamma_:
 * else - equal to true, can be used in when expressions
 * at pos list – returns the &lt;pos&gt;th element of this list
 * at* pos list – returns the &lt;pos&gt;th element of this list or () if not existing
-* record property-list – creates a record from a list of pairs
-* r* property-list – creates a record from a list of pairs
 * copy-with property-list record – creates a new record based on &lt;record&gt; with changes from a list of pairs
 * get-properties record – returns all keys in this record as a list of strings
 * assert list-of-assertions – tests every assertion in the list of pairs, return false if any assertion fails

@@ -1,8 +1,11 @@
 package de.gma.gamma.datatypes.list
 
 import de.gma.gamma.builtins.builtInSource
+import de.gma.gamma.builtins.createMapFromListOfPair
+import de.gma.gamma.builtins.isRecordDefinition
 import de.gma.gamma.builtins.nullPos
 import de.gma.gamma.datatypes.Value
+import de.gma.gamma.datatypes.record.RecordValue
 import de.gma.gamma.datatypes.scope.Scope
 import de.gma.gamma.datatypes.scoped.ScopedValue
 import de.gma.gamma.parser.EvaluationException
@@ -24,10 +27,15 @@ class ListLiteral(
         val items = internalItems.map {
             it.evaluate(scope)
         }
-        if (items.size == 2)
-            return PairValue(sourceName, beginPos, endPos, items[0], items[1])
-        else
-            return SimpleList(sourceName, beginPos, endPos, items)
+        return when {
+            isRecordDefinition(items) -> RecordValue(
+                this.sourceName, this.beginPos, this.endPos, createMapFromListOfPair(
+                    items as List<ListValue>, scope
+                )
+            )
+            items.size == 2 -> PairValue(sourceName, beginPos, endPos, items[0], items[1])
+            else -> SimpleList(sourceName, beginPos, endPos, items)
+        }
     }
 
     override fun prepare(scope: Scope) =
@@ -67,8 +75,7 @@ class ListLiteral(
 
 
     override fun equals(other: Any?) =
-        if (other !is ListValue) false
-        else other.allItems() == allItems()
+        other is ListValue && other.allItems() == allItems()
 
     override fun hashCode() = internalItems.hashCode()
 

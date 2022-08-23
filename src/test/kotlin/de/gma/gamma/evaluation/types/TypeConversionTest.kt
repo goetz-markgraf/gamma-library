@@ -17,7 +17,7 @@ class TypeConversionTest : BaseEvaluationTest() {
             "10,true",
             "\"a\",true",
             "[a : a],true",
-            "(r* {:a -> 10}),true",
+            "{:a -> 10},true",
             ":hallo,true",
             "(),true",
             "this,true"
@@ -34,11 +34,12 @@ class TypeConversionTest : BaseEvaluationTest() {
         value = [
             "false,true",
             "{1;2;3},true",
+            "{},true",
             "10.4,true",
             "10,true",
             "\"a\",true",
             "[a : a],true",
-            "(r* {:a -> 10}),true",
+            "{:a -> 10},true",
             ":hallo,true",
             "(),true",
             "this,true"
@@ -61,7 +62,7 @@ class TypeConversionTest : BaseEvaluationTest() {
             "\"10\",true",
             "\"10.5\",true",
             "[a : a],false",
-            "(r* {:a -> 10}),false",
+            "{:a -> 10},false",
             ":hallo,false",
             "(),false",
             "this,false"
@@ -84,7 +85,7 @@ class TypeConversionTest : BaseEvaluationTest() {
             "\"10\",true",
             "\"10.5\",false",
             "[a : a],false",
-            "(r* {:a -> 10}),false",
+            "{:a -> 10},false",
             ":hallo,false",
             "(),false",
             "this,false"
@@ -105,7 +106,7 @@ class TypeConversionTest : BaseEvaluationTest() {
             "10,true",
             "\"a\",true",
             "[a : a],true",
-            "(r* {:a -> 10}),true",
+            "{:a -> 10},true",
             ":hallo,true",
             "(),true",
             "this,true"
@@ -126,7 +127,7 @@ class TypeConversionTest : BaseEvaluationTest() {
             "10,false",
             "\"a\",false",
             "[a : a],true",
-            "(r* {:a -> 10}),false",
+            "{:a -> 10},false",
             ":hallo,true",
             "(),false",
             "this,false"
@@ -143,11 +144,12 @@ class TypeConversionTest : BaseEvaluationTest() {
         value = [
             "false,false",
             "{1;2;3},false",
+            "{},true",
             "10.4,false",
             "10,false",
             "\"a\",false",
             "[a : a],false",
-            "(r* {:a -> 10}),true",
+            "{:a -> 10},true",
             ":hallo,false",
             "(),false",
             "this,false"
@@ -168,7 +170,7 @@ class TypeConversionTest : BaseEvaluationTest() {
             "10,false",
             "\"a\",false",
             "[a : a],false",
-            "(r* {:a -> 10}),false",
+            "{:a -> 10},false",
             ":hallo,true",
             "(),false",
             "this,false"
@@ -189,7 +191,7 @@ class TypeConversionTest : BaseEvaluationTest() {
             "10,false",
             "\"a\",false",
             "[a : a],false",
-            "(r* {:a -> 10}),false",
+            "{:a -> 10},false",
             ":hallo,false",
             "(),true",
             "this,false"
@@ -210,7 +212,7 @@ class TypeConversionTest : BaseEvaluationTest() {
             "10,false",
             "\"a\",false",
             "[a : a],false",
-            "(r* {:a -> 10}),false",
+            "{:a -> 10},false",
             ":hallo,false",
             "(),false",
             "this,true"
