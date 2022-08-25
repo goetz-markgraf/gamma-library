@@ -21,8 +21,8 @@ class CanBeUsedAsPredicate(private val type: DataType) : BuiltinFunction(listOf(
             DataType.INTEGER -> checkConvert { l.toInteger() }
             DataType.STRING -> true
             DataType.FUNCTION -> l is FunctionValue || l is PropertyValue
-            DataType.RECORD -> checkConvert { l.toRecord() }
-            DataType.PROPERTY -> l is PropertyValue
+            DataType.RECORD -> checkConvert { l.toRecord(scope) }
+            DataType.PROPERTY -> true
             DataType.VOID -> l is VoidValue
             DataType.MODULE -> l is ModuleScope
         }

@@ -310,7 +310,7 @@ These are the functions currenty built in into _gamma_:
 * can-be-used-as-function? obj – checks if &lt;obj&gt; can be used as a type function
 * can-be-used-as-record? obj – checks if &lt;obj&gt; can be used as a type record
 * can-be-used-as-property? obj – checks if &lt;obj&gt; can be used as a type property
-* can-be-used-as-emptyvalue? obj – checks if &lt;obj&gt; can be used as a type emptyvalue
+* can-be-used-as-void? obj – checks if &lt;obj&gt; can be used as a type void
 * can-be-used-as-module? obj – checks if &lt;obj&gt; can be used as a type module
 * v |&gt; f – calls &lt;function&gt; with &lt;value&gt; as parameter
 * v ▷ f – calls &lt;function&gt; with &lt;value&gt; as parameter

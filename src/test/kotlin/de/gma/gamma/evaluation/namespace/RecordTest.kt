@@ -122,8 +122,8 @@ class RecordTest : BaseEvaluationTest() {
 
         val result = execute(code) as ListValue
 
-        val orig = result.first().evaluate(this.scope).toRecord()
-        val changed = result.last().evaluate(this.scope).toRecord()
+        val orig = result.first().evaluate(this.scope).toRecord(scope)
+        val changed = result.last().evaluate(this.scope).toRecord(scope)
 
         assertThat(orig.size()).isEqualTo(2)
         assertThat(changed.size()).isEqualTo(3)

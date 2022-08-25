@@ -1,5 +1,7 @@
 package de.gma.gamma.datatypes
 
+import de.gma.gamma.builtins.checkForListOfPairs
+import de.gma.gamma.builtins.createMapFromListOfPair
 import de.gma.gamma.builtins.namespaces.special.PropertyFunction
 import de.gma.gamma.datatypes.functions.FunctionValue
 import de.gma.gamma.datatypes.list.ListValue
@@ -37,6 +39,7 @@ abstract class AbstractValue(
             is ListValue -> this
             is VoidValue -> ListValue.build(emptyList())
             is StringValue -> ListValue.build(this.allItems())
+            is RecordValue -> this.convertToList()
             else -> ListValue.build(listOf(this))
         }
 
@@ -70,6 +73,13 @@ abstract class AbstractValue(
             else -> throw createException("$this is not an integer value")
         }
 
+    override fun toProperty(): PropertyValue =
+        when (this) {
+            is PropertyValue -> this
+            is StringValue -> PropertyValue.build(this.strValue)
+            else -> PropertyValue.build(this.toStringValue().strValue)
+        }
+
     override fun toFunction(): FunctionValue =
         when (this) {
             is FunctionValue -> this
@@ -77,10 +87,14 @@ abstract class AbstractValue(
             else -> throw createException("$this is not a function")
         }
 
-    override fun toRecord(): RecordValue =
+    override fun toRecord(scope: Scope): RecordValue =
         when {
             this is RecordValue -> this
             this is ListValue && this.size() == 0 -> RecordValue.buildEmpty()
+            this is ListValue -> {
+                val checkedValue = checkForListOfPairs(this)
+                RecordValue.build(createMapFromListOfPair(checkedValue, scope))
+            }
             else -> throw createException("$this is not a record")
         }
 

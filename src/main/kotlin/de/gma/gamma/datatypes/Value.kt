@@ -40,7 +40,9 @@ interface Value {
 
     fun toStringValue(): StringValue
 
+    fun toProperty(): PropertyValue
+
     fun toFunction(): FunctionValue
 
-    fun toRecord(): RecordValue
+    fun toRecord(scope: Scope): RecordValue
 }

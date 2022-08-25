@@ -10,11 +10,11 @@ import de.gma.gamma.datatypes.scope.Scope
 object CopyWithFunction : BuiltinFunction(listOf("property-list", "record")) {
     override fun callInternal(scope: Scope, callParams: List<Value>): Value {
         val changedValues = callParams[0].evaluate(scope)
-        val record = callParams[1].evaluate(scope).toRecord()
+        val record = callParams[1].evaluate(scope).toRecord(scope)
 
         val newValues =
             if (changedValues is RecordValue)
-                changedValues.toRecord()
+                changedValues.toRecord(scope)
             else {
                 val checkedValue = checkForListOfPairs(changedValues.toList())
                 RecordValue.build(createMapFromListOfPair(checkedValue, scope))

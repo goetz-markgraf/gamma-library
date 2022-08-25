@@ -21,4 +21,12 @@ fun populateTypes(scope: Scope) {
             "checks if <obj> can be used as a type ${type.name.lowercase()}"
         )
     }
+    DataType.values().forEach { type ->
+        bindWithDoc(
+            scope,
+            "to-${type.name.lowercase()}",
+            ToTypeFunction(type),
+            "converts <obj> to type ${type.name.lowercase()}"
+        )
+    }
 }

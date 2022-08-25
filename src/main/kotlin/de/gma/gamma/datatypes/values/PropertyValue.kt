@@ -1,5 +1,7 @@
 package de.gma.gamma.datatypes.values
 
+import de.gma.gamma.builtins.builtInSource
+import de.gma.gamma.builtins.nullPos
 import de.gma.gamma.datatypes.AbstractValue
 import de.gma.gamma.datatypes.scope.Scope
 import de.gma.gamma.parser.Position
@@ -16,9 +18,11 @@ class PropertyValue(
     override fun evaluate(scope: Scope) = this
 
     override fun equals(other: Any?) =
-        if (other !is PropertyValue) false
-        else other.identifier == identifier
+        other is PropertyValue && other.identifier == identifier
 
     override fun hashCode() = identifier.hashCode()
 
+    companion object {
+        fun build(value: String) = PropertyValue(builtInSource, nullPos, nullPos, value)
+    }
 }
