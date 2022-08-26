@@ -4,13 +4,15 @@ import de.gma.gamma.builtins.BuiltinFunction
 import de.gma.gamma.datatypes.StringValue
 import de.gma.gamma.datatypes.Value
 import de.gma.gamma.datatypes.list.ListValue
+import de.gma.gamma.datatypes.scope.ModuleScope
 import de.gma.gamma.datatypes.scope.Scope
 import de.gma.gamma.datatypes.values.BooleanValue
 import de.gma.gamma.parser.EvaluationException
 
 object AssertFunction : BuiltinFunction(listOf("list-of-assertions")) {
     override fun callInternal(scope: Scope, callParams: List<Value>): Value {
-        val items = callParams[0].evaluate(scope).toList()
+        val tempScope = ModuleScope(sourceName, scope)
+        val items = callParams[0].evaluate(tempScope).toList()
 
         var message = ""
         var ret = true
@@ -19,8 +21,8 @@ object AssertFunction : BuiltinFunction(listOf("list-of-assertions")) {
             if (it is StringValue)
                 message = it.strValue
             else if (it is ListValue && it.size() == 2) {
-                val actual = it.first().evaluate(scope)
-                val expected = it.last().evaluate(scope)
+                val actual = it.first().evaluate(tempScope)
+                val expected = it.last().evaluate(tempScope)
                 if (actual != expected) {
                     println("Assertion Failure $message: Value $actual is not equal to $expected")
                     ret = false
