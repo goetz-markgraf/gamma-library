@@ -11,25 +11,6 @@ let test-input = {
     "5283751526"
 }
 
-'This creates a mutable store for one integer'
-let iStore init =
-    let content! = init
-
-    let inc amount = set content! = content! + amount
-    let reset () = set content! = 0
-    let value () = content!
-    {
-        :inc → inc
-        :reset → reset
-        :v → value
-    }
-
-assert
-    "iStore"
-    (let i1 = iStore 0; i1.v() → 0)
-    (let i2 = iStore 1; i2.inc 1 → 2)
-    (let i3 = iStore 9; i2.reset() → 0)
-
 
 
 
@@ -37,16 +18,15 @@ assert
 let to-matrix input =
     input ▷ map [line :
         line ▷ map [ch :
-            iStore ch
+            ch + 0
         ]
     ]
 
-let to-output matrix =
-    matrix ▷ map [ line :
-        line ▷ map [ item :
-            item.v()
-        ]
-    ]
+assert
+    "to-matrix"
+    ({"123","456"} ▷ to-matrix → {{1, 2, 3}, {4, 5, 6}})
+
+
 
 let max-x matrix =
     matrix.first.size - 1
@@ -54,100 +34,174 @@ let max-x matrix =
 let max-y matrix =
     matrix.size - 1
 
+
+
+let to-output matrix =
+    matrix
+
 assert
     "Matrix Konvertierung"
-    ({"123"} ▷ to-matrix ▷ to-output → {{"1","2", "3"}})
+    ({"123"} ▷ to-matrix → {{1, 2, 3}})
+
+
 
 
 
 let inc-at x y matrix =
-    (matrix ▷ at y ▷ at x ▷ :inc) 1
-    matrix
+    matrix ▷ map* [line y-pos :
+        y-pos ≠ y ? line : line ▷ map* [ i x-pos :
+            x-pos ≠ x ? i : i + 1
+        ]
+    ]
 
 assert
     "inc-at"
-    ({"123"} ▷ to-matrix ▷ inc-at 0 0 ▷ to-output → {{2, "2", "3"}} )
-    ({"123"} ▷ to-matrix ▷ inc-at 1 0 ▷ to-output → {{"1", 3, "3"}} )
+    ({"123"} ▷ to-matrix ▷ inc-at 0 0 → {{2, 2, 3}} )
+    ({"123"} ▷ to-matrix ▷ inc-at 1 0 → {{1, 3, 3}} )
+    ({"012","345"} ▷ to-matrix ▷ inc-at 1 0 → {{0, 2, 2}, {3, 4, 5}})
 
 
-let v-at x y matrix =
-    (matrix ▷ at y ▷ at x ▷ :v) ()
+
+
+
+let matrix-at x y matrix =
+    matrix ▷ at* y ▷ at* x
+
+assert
+    "matrix-at"
+    ({{1,2,3},{4,5,6}} ▷ matrix-at 0 0 → 1)
+    ({{1,2,3},{4,5,6}} ▷ matrix-at 0 4 → ())
+    ({{1,2,3},{4,5,6}} ▷ matrix-at 4 0 → ())
+    ({{1,2,3},{4,5,6}} ▷ matrix-at 1 0 → 2)
+    ({{1,2,3},{4,5,6}} ▷ matrix-at 0 1 → 4)
+
+
+
 
 let reset-at x y matrix =
-    (matrix ▷ at y ▷ at x ▷ :reset) ()
+    matrix ▷ map* [line y-pos :
+        y-pos ≠ y ? line : line ▷ map* [ i x-pos :
+            x-pos ≠ x ? i : 0
+        ]
+    ]
+
+assert
+    "reset-at"
+    ({"123"} ▷ to-matrix ▷ reset-at 0 0 → {{0, 2, 3}} )
+    ({"123"} ▷ to-matrix ▷ reset-at 1 0 → {{1, 0, 3}} )
+
+
+
+
 
 
 let process-charging matrix =
-    0 .. (max-y matrix) ▷ for-each [y :
-        0 .. (max-x matrix) ▷ for-each [x :
-            inc-at x y matrix
+    matrix ▷ map [line :
+        line ▷ map [ i :
+            i + 1
         ]
     ]
-    matrix
 
 assert
     "process-charging"
-    ({"012","345"} ▷ to-matrix ▷ process-charging ▷ to-output → {{1,2,3},{4,5,6}})
-    ({"0123","3456","0000"} ▷ to-matrix ▷ process-charging ▷ to-output → {{1,2,3,4},{4,5,6,7},{1,1,1,1}})
+    ({"012","345"} ▷ to-matrix ▷ process-charging → {{1,2,3},{4,5,6}})
+    ({"0123","3456","0000"} ▷ to-matrix ▷ process-charging → {{1,2,3,4},{4,5,6,7},{1,1,1,1}})
 
 
 
 
 
-let charge-if-exists x y matrix =
-    (
-        (x ≥ 0 ∧ x ≤ (max-x matrix))
-        & (y ≥ 0 ∧ y ≤ (max-y matrix))
-        & v-at x y matrix > 0
-    )
-    ? matrix ▷ inc-at x y
-    : ()
-    matrix
+
+
+let charge-around x y matrix =
+    matrix ▷ map* [ line y-pos :
+        (y-pos < y - 1) ∨ (y-pos > y + 1)
+        ? line
+        : line ▷ map*  [ i x-pos :
+            when
+                (x-pos < x - 1 ∨ x-pos > x + 1 → i)
+                (x = x-pos ∧ y = y-pos → 0)
+                (i = 0 → 0)
+                (else → i + 1)
+        ]
+    ]
 
 assert
-    "charge-if-exists"
-    ({"012","345"} ▷ to-matrix ▷ charge-if-exists 0 0 ▷ to-output → {{"0", "1", "2"}, {"3", "4", "5"}})
-    ({"012","345"} ▷ to-matrix ▷ charge-if-exists 1 0 ▷ to-output → {{"0", 2, "2"}, {"3", "4", "5"}})
-    ({"012","345"} ▷ to-matrix ▷ charge-if-exists 10 0 ▷ to-output → {{"0", "1", "2"}, {"3", "4", "5"}})
-    ({"012","345"} ▷ to-matrix ▷ charge-if-exists 0 10 ▷ to-output → {{"0", "1", "2"}, {"3", "4", "5"}})
+    "charge-around"
+    ({{1,1,1},{1,1,1},{1,1,1}} ▷ charge-around 1 1 → {{2,2,2},{2,0,2},{2,2,2}})
+    ({{0,1,1},{1,1,1},{1,1,1}} ▷ charge-around 1 1 → {{0,2,2},{2,0,2},{2,2,2}})
+    ({{1,1,1},{1,1,1},{1,1,1}} ▷ charge-around 0 0 → {{0,2,1},{2,2,1},{1,1,1}})
+    ({{1,1,1},{1,1,1},{1,1,1}} ▷ charge-around 2 2 → {{1,1,1},{1,2,2},{1,2,0}})
+
+
+
+
+
+
+let find-flashing matrix =
+    matrix
+    ▷ flat-map* [line y-pos :
+        line ▷ flat-map* [i x-pos :
+            i > 9 ? {{x-pos, y-pos}} : {}
+        ]
+    ]
+
+assert
+    "find-flashing"
+    ({{1,1,10}} ▷ find-flashing → {{2,0}})
+    ({{1,10,10}} ▷ find-flashing → {{1,0},{2,0}})
+    ({{1,1,10},{10,1,1}} ▷ find-flashing → {{2,0},{0,1}})
+    ({{1,1,1},{1,1,9}} ▷ find-flashing → {})
+    ({{1,1,1},{1,1,1}} ▷ find-flashing ▷ is-empty? → true)
+
+
+
+
+
+let do-all-flashing flashing matrix =
+    flashing ▷ fold matrix [ m pos : break, m ▷ charge-around pos.first pos.last ]
+
+assert
+    "do-all-flashing"
+    (do-all-flashing {{2,0}} {{1,2,10},{3,4,8}} → {{1, 3, 0}, {3, 5, 9}})
+    (do-all-flashing {{2,0}, {2,1}} {{1,2,10},{3,4,10}} → {{1, 4, 0}, {3, 6, 0}})
+    (do-all-flashing {{2,0}} {{1,2,10},{3,4,9}} → {{1, 3, 0}, {3, 5, 10}})
+
 
 
 
 
 let process-flashing matrix =
-    let rec-process-flashing matrix =
-        let repeat! = false
-        0 .. (max-x matrix) ▷ for-each [x :
-            0 .. (max-y matrix) ▷ for-each [y :
-                v-at x y matrix > 9
-                ? (
-                    set repeat! = true
-                    reset-at x y matrix
-                    charge-if-exists (x - 1) (y - 1) matrix
-                    charge-if-exists (x)      (y - 1) matrix
-                    charge-if-exists (x + 1) (y - 1) matrix
-                    charge-if-exists (x - 1) (y) matrix
-                    charge-if-exists (x)      (y) matrix
-                    charge-if-exists (x + 1) (y) matrix
-                    charge-if-exists (x - 1) (y + 1) matrix
-                    charge-if-exists (x)      (y + 1) matrix
-                    charge-if-exists (x + 1) (y + 1) matrix
-                  )
-                : ()
-            ]
-        ]
-        repeat! ? rec-process-flashing matrix : ()
+    let flashing = find-flashing matrix
+    is-empty? flashing
+    ? matrix
+    : matrix ▷ do-all-flashing flashing ▷ process-flashing
 
-    rec-process-flashing matrix
+assert
+    "process-flashing"
+    ({{1,2,2},{3,4,8}} ▷ process-flashing → {{1,2,2},{3,4,8}})
+    ({{1,2,2},{3,4,10}} ▷ process-flashing → {{1,3,3},{3,5,0}})
+    ({{1,2,10},{3,4,9}} ▷ process-flashing → {{1,4,0},{3,6,0}})
 
+
+
+let count-flashed matrix =
     let ret! = 0
     0 .. (max-x matrix) ▷ for-each [x :
         0 .. (max-y matrix) ▷ for-each [y :
-            v-at x y matrix = 0 ? set ret! = ret! + 1 : ()
+            matrix-at x y matrix = 0 ? set ret! = ret! + 1 : ()
         ]
     ]
 
     ret!
+
+assert
+    "count-flashed"
+    ({{1,2,2},{3,4,8}} ▷ count-flashed → 0)
+    ({{1,3,3},{3,5,0}} ▷ count-flashed → 1)
+    ({{1,4,0},{3,6,0}} ▷ count-flashed → 2)
+
+
 
 
 
@@ -155,8 +209,12 @@ let process-flashing matrix =
 let produce-result input =
     let matrix = input ▷ to-matrix
     0 .. 99
-    ▷ map [i : matrix ▷ process-charging ▷ process-flashing ]
-    ▷ reduce (+)
+    ▷ fold {matrix, 0} [ acc i :
+        let new-matrix = acc.first ▷ process-charging ▷ process-flashing
+        let count = new-matrix ▷ count-flashed
+        {new-matrix, acc.last + count}
+    ]
+    ▷ :last
 
 
 
