@@ -26,6 +26,8 @@ fun populateList(scope: Scope) {
     bindWithDoc(scope, "..", RangeFunction, "create a list from <from> to <to> inclusive")
     bindWithDoc(scope, "map", MapFunction, "creates a new list with every item of <list> run through <function>")
     bindWithDoc(scope, "map*", MapStarFunction, "creates a new list with every item of <list> run through <function> with <index> value")
+    bindWithDoc(scope, "flat-map", FlatMapFunction, "creates a new list with every item of <list> run through <function> flattened out")
+    bindWithDoc(scope, "flat-map*", FlatMapStarFunction, "creates a new list with every item of <list> run through <function> flattened out")
     bindWithDoc(scope, "for-each", ForEachFunction, "calls <function> for every item of <list>")
     bindWithDoc(scope, "fold", FoldFunction, "folds the <list> with <function> and <initial> acc")
     bindWithDoc(scope, "reduce", ReduceFunction, "reduces the <list> with <function>")
