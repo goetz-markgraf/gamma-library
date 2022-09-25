@@ -373,12 +373,14 @@ These are the functions currently built in into _gamma_:
 * fold initial function list – folds the [list] with [function] and [initial] acc
 * reduce function list – reduces the [list] with [function]
 * filter predicate list – filters the [list] such that it contains only elements the match the [predicate]
+* find predicate list – find the first element in [list] where the [predicate] is true
 * zip list-1 list-2 – Creates a new list consisting of pairs of the curresponding elements from [list-1] and [list-2]
 * contains? predicate list – tests if [item] is in [list]. This also includes strings.
 * does-not-contain? predicate list – tests if [item] is not in [list]. This also includes strings.
 * is-empty? list – tests if [list or string] is empty, i. e. does not contain elements or characters
 * is-not-empty? list – tests if [list or string] contains at least one element or character
 * when cases – checks each predicate to evaluate to first expression with a true predicate
+* when* value cases – checks each [predicate] called with [value] to evaluate to first expression with a true predicate
 * a = b – checks if [a] is equal to [b]
 * a != b – checks if [a] is not equal to [a]
 * a ≠ b – checks if [a] is not equal to [a]
