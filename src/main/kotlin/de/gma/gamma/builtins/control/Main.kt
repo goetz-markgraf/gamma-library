@@ -5,7 +5,7 @@ import de.gma.gamma.datatypes.DebugValue
 import de.gma.gamma.datatypes.Remark
 import de.gma.gamma.datatypes.scope.Scope
 
-private const val CALLS_FUNCTION_WITH_VALUE_AS_PARAMETER = "calls <function> with <value> as parameter"
+private const val CALLS_FUNCTION_WITH_VALUE_AS_PARAMETER = "calls [function] with [value] as parameter"
 
 fun populateControl(scope: Scope) {
     // @Formatter:off

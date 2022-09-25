@@ -10,7 +10,7 @@ fun populateTypes(scope: Scope) {
             scope,
             "is-${type.name.lowercase()}?",
             TypePredicate(type),
-            "checks if <obj> is of type ${type.name.lowercase()}"
+            "checks if [obj] is of type ${type.name.lowercase()}"
         )
     }
     DataType.values().forEach { type ->
@@ -18,7 +18,7 @@ fun populateTypes(scope: Scope) {
             scope,
             "can-be-used-as-${type.name.lowercase()}?",
             CanBeUsedAsPredicate(type),
-            "checks if <obj> can be used as a type ${type.name.lowercase()}"
+            "checks if [obj] can be used as a type ${type.name.lowercase()}"
         )
     }
     DataType.values().forEach { type ->
@@ -26,7 +26,7 @@ fun populateTypes(scope: Scope) {
             scope,
             "to-${type.name.lowercase()}",
             ToTypeFunction(type),
-            "converts <obj> to type ${type.name.lowercase()}"
+            "converts [obj] to type ${type.name.lowercase()}"
         )
     }
 }

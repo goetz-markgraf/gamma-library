@@ -5,7 +5,7 @@ import de.gma.gamma.datatypes.functions.FunctionValue
 import de.gma.gamma.datatypes.scope.Scope
 import de.gma.gamma.parser.Position
 
-const val builtInSource = "<builtin>"
+const val builtInSource = "[builtin]"
 
 val nullPos = Position(0, 0, 0)
 

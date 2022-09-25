@@ -290,47 +290,57 @@ copy with the `copy-with`-function:
 
 # Built-in functions
 
-These are the functions currenty built in into _gamma_:
+These are the functions currently built in into _gamma_:
 
-* is-boolean? obj – checks if &lt;obj&gt; is of type boolean
-* is-list? obj – checks if &lt;obj&gt; is of type list
-* is-float? obj – checks if &lt;obj&gt; is of type float
-* is-integer? obj – checks if &lt;obj&gt; is of type integer
-* is-string? obj – checks if &lt;obj&gt; is of type string
-* is-function? obj – checks if &lt;obj&gt; is of type function
-* is-record? obj – checks if &lt;obj&gt; is of type record
-* is-property? obj – checks if &lt;obj&gt; is of type property
-* is-void? obj – checks if &lt;obj&gt; is of type void
-* is-module? obj – checks if &lt;obj&gt; is of type module
-* can-be-used-as-boolean? obj – checks if &lt;obj&gt; can be used as a type boolean
-* can-be-used-as-list? obj – checks if &lt;obj&gt; can be used as a type list
-* can-be-used-as-float? obj – checks if &lt;obj&gt; can be used as a type float
-* can-be-used-as-integer? obj – checks if &lt;obj&gt; can be used as a type integer
-* can-be-used-as-string? obj – checks if &lt;obj&gt; can be used as a type string
-* can-be-used-as-function? obj – checks if &lt;obj&gt; can be used as a type function
-* can-be-used-as-record? obj – checks if &lt;obj&gt; can be used as a type record
-* can-be-used-as-property? obj – checks if &lt;obj&gt; can be used as a type property
-* can-be-used-as-void? obj – checks if &lt;obj&gt; can be used as a type void
-* can-be-used-as-module? obj – checks if &lt;obj&gt; can be used as a type module
-* v |&gt; f – calls &lt;function&gt; with &lt;value&gt; as parameter
-* v ▷ f – calls &lt;function&gt; with &lt;value&gt; as parameter
-* v ⊳ f – calls &lt;function&gt; with &lt;value&gt; as parameter
+* is-boolean? obj – checks if [obj] is of type boolean
+* is-list? obj – checks if [obj] is of type list
+* is-float? obj – checks if [obj] is of type float
+* is-integer? obj – checks if [obj] is of type integer
+* is-string? obj – checks if [obj] is of type string
+* is-function? obj – checks if [obj] is of type function
+* is-record? obj – checks if [obj] is of type record
+* is-property? obj – checks if [obj] is of type property
+* is-void? obj – checks if [obj] is of type void
+* is-module? obj – checks if [obj] is of type module
+* can-be-used-as-boolean? obj – checks if [obj] can be used as a type boolean
+* can-be-used-as-list? obj – checks if [obj] can be used as a type list
+* can-be-used-as-float? obj – checks if [obj] can be used as a type float
+* can-be-used-as-integer? obj – checks if [obj] can be used as a type integer
+* can-be-used-as-string? obj – checks if [obj] can be used as a type string
+* can-be-used-as-function? obj – checks if [obj] can be used as a type function
+* can-be-used-as-record? obj – checks if [obj] can be used as a type record
+* can-be-used-as-property? obj – checks if [obj] can be used as a type property
+* can-be-used-as-void? obj – checks if [obj] can be used as a type void
+* can-be-used-as-module? obj – checks if [obj] can be used as a type module
+* to-boolean obj – converts [obj] to type boolean
+* to-list obj – converts [obj] to type list
+* to-float obj – converts [obj] to type float
+* to-integer obj – converts [obj] to type integer
+* to-string obj – converts [obj] to type string
+* to-function obj – converts [obj] to type function
+* to-record obj – converts [obj] to type record
+* to-property obj – converts [obj] to type property
+* to-void obj – converts [obj] to type void
+* to-module obj – converts [obj] to type module
+* v |> f – calls [function] with [value] as parameter
+* v ▷ f – calls [function] with [value] as parameter
+* v ⊳ f – calls [function] with [value] as parameter
 * debug - evaluates the DebugValue for debug purposes
 * break - evaluates the DebugValue for debug purposes
 * print value – prints a value to standard out
 * print* value – prints a value to standard out without a newline at the end
-* read-lines filename – reads the content of &lt;filename&gt; as a list of strings
-* split string – splits a string separated by blank into a list of strings
-* split-by separator string – splits a string separated by &lt;separator&gt; into a list of strings
-* join list – joins all elements of &lt;list&gt; together as one string, seperated by a blank
-* join-by string list – joins all elements of &lt;list&gt; together as one string, seperated by &lt;string&gt;
+* read-lines filename – reads the content of [filename] as a list of strings
+* split string – splits a [string] separated by blank into a list of strings
+* split-by separator string – splits a [string] separated by [separator] into a list of strings
+* join list – joins all elements of [list] together as one string, seperated by a blank
+* join-by string list – joins all elements of [list] together as one string, seperated by [string]
 * a + b – adds two number values
-* a - b – subtract &lt;b&gt; from &lt;a&gt;
+* a - b – subtract [a] from [a]
 * a * b – multiplies two number values
 * a × b – multiplies two number values
-* a / b – divides &lt;a&gt; by &lt;b&gt;
-* a ÷ b – divides &lt;a&gt; by &lt;b&gt;
-* a ^ b – raise &lt;a&gt; to the &lt;b&gt;th power
+* a / b – divides [a] by [a]
+* a ÷ b – divides [a] by [a]
+* a ^ b – raise [a] to the [a]th power
 * neg a – return the negative of a number
 * min list – returns the smallest number
 * max list – returns the largest number
@@ -349,45 +359,45 @@ These are the functions currenty built in into _gamma_:
   according to their length.
 * sort-desc list – creates a new list that is sorted numerically. Strings are converted to numbers, lists are sorted
   according to their length.
-* appendAll item list – appends all items of &lt;new-list&gt; the end of &lt;list&gt;
+* appendAll item list – appends all items of [new-list] the end of [list]
 * item :: list – prepends a list with an as the new first element
-* list-1 @ list-2 – concats &lt;list-1&gt; and &lt;list-2&gt;
-* list-generator size function – creates a list of size &lt;size&gt; that uses &lt;function&gt; to generate the values
-* repeat size – create a list from 0 to &lt;repeate&gt; - 1
-* from .. to – create a list from &lt;from&gt; to &lt;to&gt; inclusive
-* map function list – creates a new list with every item of &lt;list&gt; run through &lt;function&gt;
-* map* function list – creates a new list with every item of &lt;list&gt; run through &lt;function&gt; with
-  &lt;index&gt; value
-* for-each function list – calls &lt;function&gt; for every item of &lt;list&gt;
-* fold initial function list – folds the &lt;list&gt; with &lt;function&gt; and &lt;initial&gt; acc
-* reduce function list – reduces the &lt;list&gt; with &lt;function&gt;
-* filter predicate list – filters the &lt;list&gt; such that it contains only elements the match the &lt;predicate&gt;
-* zip list-1 list-2 – Creates a new list consisting of pairs of the curresponding elements from &lt;list-1&gt; and
-  &lt;list-2&gt;
-* contains? predicate list – tests if &lt;item&gt; is in &lt;list&gt;. This also includes strings.
-* does-not-contain? predicate list – tests if &lt;item&gt; is not in &lt;list&gt;. This also includes strings.
-* is-empty? list – tests if &lt;list or string&gt; is empty, i. e. does not contain elements or characters
-* is-not-empty? list – tests if &lt;list or string&gt; contains at least one element or character
+* list-1 @ list-2 – concats [list-1] and [list-2]
+* list-generator size function – creates a list of size [size] that uses [function] to generate the values
+* repeat size – create a list from 0 to [size] - 1
+* from .. to – create a list from [from] to [to] inclusive
+* map function list – creates a new list with every item of [list] run through [function]
+* map* function list – creates a new list with every item of [list] run through [function] with [index] value
+* flat-map function list – creates a new list with every item of [list] run through [function] flattened out
+* flat-map* function list – creates a new list with every item of [list] run through [function] flattened out
+* for-each function list – calls [function] for every item of [list]
+* fold initial function list – folds the [list] with [function] and [initial] acc
+* reduce function list – reduces the [list] with [function]
+* filter predicate list – filters the [list] such that it contains only elements the match the [predicate]
+* zip list-1 list-2 – Creates a new list consisting of pairs of the curresponding elements from [list-1] and [list-2]
+* contains? predicate list – tests if [item] is in [list]. This also includes strings.
+* does-not-contain? predicate list – tests if [item] is not in [list]. This also includes strings.
+* is-empty? list – tests if [list or string] is empty, i. e. does not contain elements or characters
+* is-not-empty? list – tests if [list or string] contains at least one element or character
 * when cases – checks each predicate to evaluate to first expression with a true predicate
-* a = b – checks if &lt;a&gt; is equal to &lt;b&gt;
-* a != b – checks if &lt;a&gt; is not equal to &lt;b&gt;
-* a ≠ b – checks if &lt;a&gt; is not equal to &lt;b&gt;
-* a &gt; b – checks if the first value is greater than the second
-* a &gt;= b – checks if the first value is greater than or equal to the second
+* a = b – checks if [a] is equal to [b]
+* a != b – checks if [a] is not equal to [a]
+* a ≠ b – checks if [a] is not equal to [a]
+* a > b – checks if the first value is greater than the second
+* a >= b – checks if the first value is greater than or equal to the second
 * a ≥ b – checks if the first value is greater than or equal to the second
-* a &lt; b – checks if the first value is less than the second
-* a &lt;= b – checks if the first value is less than or equal to the second
+* a < b – checks if the first value is less than the second
+* a <= b – checks if the first value is less than or equal to the second
 * a ≤ b – checks if the first value is less than or equal to the second
-* a & b – returns true if &lt;a&gt; and &lt;b&gt; are both true
-* a ∧ b – returns true if &lt;a&gt; and &lt;b&gt; are both true
-* a | b – returns true if either &lt;a&gt; or &lt;b&gt; or both are true
-* a ∨ b – returns true if either &lt;a&gt; or &lt;b&gt; or both are true
-* not a – returns true if &lt;a&gt; is false and false if &lt;a&gt; is true
-* pipeline id list-of-expressions – executes each &lt;expression&gt;, always using &lt;id&gt; for the result of the
-  previous one
+* a & b – returns true if [a] and [a] are both true
+* a ∧ b – returns true if [a] and [a] are both true
+* a | b – returns true if either [a] or [a] or both are true
+* a ∨ b – returns true if either [a] or [a] or both are true
+* not a – returns true if [a] is false and false if [a] is true
+* pipeline id list-of-expressions – executes each [expression], always using [id] for the result of the previous one
 * else - equal to true, can be used in when expressions
-* at pos list – returns the &lt;pos&gt;th element of this list
-* at* pos list – returns the &lt;pos&gt;th element of this list or () if not existing
-* copy-with property-list record – creates a new record based on &lt;record&gt; with changes from a list of pairs
+* at pos list – returns the [pos]th element of this list
+* at* pos list – returns the [pos]th element of this list or () if not existing
+* copy-with property-list record – creates a new record based on [record] with changes from a list of pairs
 * get-properties record – returns all keys in this record as a list of strings
 * assert list-of-assertions – tests every assertion in the list of pairs, return false if any assertion fails
+* sh cmd – executes the given command in the current working directory and returns the output
