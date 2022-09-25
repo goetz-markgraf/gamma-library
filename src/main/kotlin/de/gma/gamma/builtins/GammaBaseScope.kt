@@ -7,6 +7,7 @@ import de.gma.gamma.builtins.io.populateIO
 import de.gma.gamma.builtins.list.populateList
 import de.gma.gamma.builtins.namespaces.populateNamespace
 import de.gma.gamma.builtins.numerical.populateNumerical
+import de.gma.gamma.builtins.shell.populateShell
 import de.gma.gamma.builtins.types.populateTypes
 import de.gma.gamma.datatypes.scope.ModuleScope
 
@@ -20,5 +21,6 @@ object GammaBaseScope : ModuleScope("global", null) {
         populateComparison(this)
         populateNamespace(this)
         populateAssertion(this)
+        populateShell(this)
     }
 }
