@@ -9,6 +9,7 @@ import de.gma.gamma.datatypes.values.BooleanValue
 fun populateComparison(scope: Scope) {
     // @Formatter:off
     bindWithDoc(scope, "when", WhenFunction, "checks each predicate to evaluate to first expression with a true predicate")
+    bindWithDoc(scope, "when*", WhenStarFunction, "checks each [predicate] called with [value] to evaluate to first expression with a true predicate")
     bindWithDoc(scope, "=", EqualFunction, "checks if [a] is equal to [b]")
     bindWithDoc(scope, "!=", NotEqualFunction, "checks if [a] is not equal to [a]")
     bindWithDoc(scope, "≠", NotEqualFunction, "checks if [a] is not equal to [a]")

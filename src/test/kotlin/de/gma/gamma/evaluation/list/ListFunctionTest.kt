@@ -130,6 +130,13 @@ class ListFunctionTest : BaseEvaluationTest() {
     }
 
     @Test
+    fun `finds the first element greater that 10`() {
+        val result = execute("{1, 2, 3, 10, 11, 12} ▷ find [ i : i > 10]") as IntegerValue
+
+        assertThat(result.longValue).isEqualTo(11)
+    }
+
+    @Test
     fun `zips two lists together`() {
         val result = execute("zip {1, 2, 3} {3, 2, 1}") as ListValue
 

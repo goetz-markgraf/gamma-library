@@ -53,4 +53,36 @@ class WhenFunctionTest : BaseEvaluationTest() {
 
         assertThat(result.strValue).isEqualTo(expected)
     }
+
+    @ParameterizedTest
+    @CsvSource(
+        value = [
+            "\"a\",String",
+            "10,Integer",
+            "10.4,Float",
+            "{1},List",
+            "{1;2},Pair",
+            "{1;2;3},List",
+            "{},Empty",
+            "(),Empty",
+            "[a : a],Don't know",
+        ]
+    )
+    fun `check a when-star function with a list of inputs`(input: String, expected: String) {
+        val result = execute(
+            """            
+            when* ($input) {
+                is-string? → "String"
+                is-integer? → "Integer"
+                is-float? → "Float"
+                is-empty? → "Empty"
+                [v : is-list? v ∧ size v = 2] → "Pair"
+                is-list? → "List"
+                else → "Don't know"
+            }
+        """.trimIndent()
+        ) as StringValue
+
+        assertThat(result.strValue).isEqualTo(expected)
+    }
 }

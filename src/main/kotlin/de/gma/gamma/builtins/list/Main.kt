@@ -32,6 +32,7 @@ fun populateList(scope: Scope) {
     bindWithDoc(scope, "fold", FoldFunction, "folds the [list] with [function] and [initial] acc")
     bindWithDoc(scope, "reduce", ReduceFunction, "reduces the [list] with [function]")
     bindWithDoc(scope, "filter", FilterFunction, "filters the [list] such that it contains only elements the match the [predicate]")
+    bindWithDoc(scope, "find", FindFunction, "find the first element in [list] where the [predicate] is true")
     bindWithDoc(scope, "zip", ZipFunction, "Creates a new list consisting of pairs of the curresponding elements from [list-1] and [list-2]")
 
     bindWithDoc(scope, "contains?", ContainsPredicate, "tests if [item] is in [list]. This also includes strings.")
