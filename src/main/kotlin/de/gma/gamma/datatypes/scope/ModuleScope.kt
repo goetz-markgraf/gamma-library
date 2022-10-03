@@ -61,13 +61,15 @@ open class ModuleScope(
     override fun containsNameLocally(id: String) =
         content.containsKey(id)
 
-    override fun bindValue(name: String, value: Value, documentation: Remark?) {
-        if (content.contains(name))
+    override fun bindValue(name: String, value: Value, documentation: Remark?, strict: Boolean) {
+        if (strict && content.contains(name))
             throw ScopeException("Id $name is already defined.")
 
         content[name] = value
         if (documentation != null)
             remarks[name] = documentation
+        else
+            remarks.remove(name)
     }
 
     override fun setValue(name: String, value: Value, documentation: Remark?, strict: Boolean) {
