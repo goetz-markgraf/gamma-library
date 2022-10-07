@@ -25,7 +25,7 @@ object ShellFunction : BuiltinFunction(listOf("cmd")) {
             proc.waitFor(60, TimeUnit.SECONDS)
             val ret = proc.inputStream.bufferedReader().readText()
 
-            ListValue.build(ret.split("\n").map { StringValue.build(it) })
+            ListValue.build(ret.split("\n").filter { it.trim().isNotEmpty() }.map { StringValue.build(it) })
         } catch (e: IOException) {
             e.printStackTrace()
             VoidValue.build()
