@@ -121,7 +121,7 @@ class Parser(
             else
                 parseOperation(col, level - 1)
 
-        while (op1 != null && checkType(col, OP, ID_AS_OP) && isOperatorInLevel(currToken.content, level)) {
+        while (op1 != null && checkType(col, OP) && isOperatorInLevel(currToken.content, level)) {
             val op = parseOperator(col)
 
             val op2 =
@@ -173,7 +173,7 @@ class Parser(
             return null
 
         val endTokens =
-            listOf(EOF, EXEND, CLOSE_PARENS, OP, ID_AS_OP, ERROR, LET, SET, TYPE, MODULE, TENERY, REMARK, DOCUMENTATION)
+            listOf(EOF, EXEND, CLOSE_PARENS, OP, ERROR, LET, SET, TYPE, MODULE, TENERY, REMARK, DOCUMENTATION)
         if (endTokens.indexOf(currType) >= 0)
             return null
 
@@ -346,7 +346,7 @@ class Parser(
     }
 
     private fun parseOperator(col: Int): Identifier {
-        assertType(col, OP, ID_AS_OP)
+        assertType(col, OP)
         val name = currToken.content
         val type = if (currType == OP) GIdentifierType.OP else GIdentifierType.ID_AS_OP
 

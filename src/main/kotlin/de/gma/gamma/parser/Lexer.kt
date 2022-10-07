@@ -220,7 +220,7 @@ class Lexer(
                 break
         }
 
-        var id = when (contentBuffer.toString()) {
+        val id = when (contentBuffer.toString()) {
             "let" -> TokenType.LET
             "set" -> TokenType.SET
             "type" -> TokenType.TYPE
@@ -230,12 +230,6 @@ class Lexer(
             "match" -> TokenType.MATCH
             "with" -> TokenType.WITH
             else -> TokenType.ID
-        }
-
-        if (isColon(char)) {
-            end = position()
-            next()
-            id = TokenType.ID_AS_OP
         }
 
         return Token(
@@ -296,12 +290,15 @@ class Lexer(
                     'n' -> {
                         content.append("\n")
                     }
+
                     't' -> {
                         content.append("\t")
                     }
+
                     CH_NEWLINE -> {
                         // do nothing
                     }
+
                     else -> {
                         content.append(char)
                     }

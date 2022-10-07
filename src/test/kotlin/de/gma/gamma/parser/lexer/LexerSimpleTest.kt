@@ -346,31 +346,6 @@ class LexerSimpleTest {
     }
 
 
-    @ParameterizedTest
-    @ValueSource(
-        strings = [
-            "a6a:",
-            "a:",
-            "a!:",
-            "a6a:",
-            "a:",
-            "a6a:",
-            "a:",
-            "a!:"
-        ]
-    )
-    fun `parse identifier in operator position`(source: String) {
-        val token = getTokenFromInput(source)
-
-        assertToken(
-            token,
-            type = ID_AS_OP,
-            content = source.dropLast(1),
-            start = 0,
-            end = source.length - 1
-        )
-    }
-
     // ============== Numbers ==============
 
     @ParameterizedTest

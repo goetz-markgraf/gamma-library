@@ -10,21 +10,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 class OperationTest : BaseParserTest() {
-
-    @Test
-    fun `parse a function in operation position`() {
-        val source = "a to: b"
-        val expression = getExpression(source)
-
-        assertThat(expression).isInstanceOf(FunctionCall::class.java)
-        val op = expression as OperaterCall
-        assertThat(op.function).isInstanceOf(Identifier::class.java)
-        assertThat(op.params).hasSize(2)
-        assertThat(op.op1).isInstanceOf(Identifier::class.java)
-        assertThat(op.op2).isInstanceOf(Identifier::class.java)
-
-        assertThat(expression.prettyPrint()).isEqualTo("a to: b")
-    }
+    
 
     @Test
     fun `parse an operation`() {
