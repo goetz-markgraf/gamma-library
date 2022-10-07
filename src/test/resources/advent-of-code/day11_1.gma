@@ -17,7 +17,7 @@ let test-input = {
 
 let to-matrix input =
     input ▷ map [line :
-        line ▷ map [ch :
+        line ▷ to-char-list ▷ map [ch :
             ch + 0
         ]
     ]

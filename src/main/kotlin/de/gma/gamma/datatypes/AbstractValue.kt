@@ -38,7 +38,7 @@ abstract class AbstractValue(
         when (this) {
             is ListValue -> this
             is VoidValue -> ListValue.build(emptyList())
-            is StringValue -> ListValue.build(this.allItems())
+            is StringValue -> if (this.size() == 0) ListValue.buildEmpty() else ListValue.build(listOf(this))
             is RecordValue -> this.convertToList()
             else -> ListValue.build(listOf(this))
         }
@@ -70,6 +70,7 @@ abstract class AbstractValue(
                 if (v == null) throw createException("$this is not an integer value")
                 else IntegerValue.build(v)
             }
+
             else -> throw createException("$this is not an integer value")
         }
 
@@ -95,6 +96,7 @@ abstract class AbstractValue(
                 val checkedValue = checkForListOfPairs(this)
                 RecordValue.build(createMapFromListOfPair(checkedValue, scope))
             }
+
             else -> throw createException("$this is not a record")
         }
 

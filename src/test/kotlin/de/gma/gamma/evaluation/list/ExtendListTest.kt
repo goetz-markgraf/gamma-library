@@ -43,4 +43,12 @@ class ExtendListTest : BaseEvaluationTest() {
         assertThat(l.last().prettyPrint()).isEqualTo("6")
     }
 
+    @Test
+    fun `a string can be converted to a list of characters`() {
+        val expr = execute("\"Test\" ▷ to-char-list") as ListValue
+
+        assertThat(expr.allItems()).hasSize(4)
+        assertThat(expr.first().toStringValue().strValue).isEqualTo("T")
+        assertThat(expr.last().toStringValue().strValue).isEqualTo("t")
+    }
 }

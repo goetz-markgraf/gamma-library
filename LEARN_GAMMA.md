@@ -288,6 +288,26 @@ copy with the `copy-with`-function:
     a |> copy-with { :first-name -> "Sarah" } 
 ```
 
+## type conversion
+
+_gamma_ is a good choice to create small scripts. And with a lot of scripting languages, the typing
+of objects is dynamic and not static. To support scripting, a lot of types are also converted
+on the fly if needed
+
+The following table shows the automatic type conversions. Some of these conversions are
+happening implicitely. Every conversion can be forced with the `to-xxx`-functions.
+
+| target type | conversion                                                                                                           |
+|-------------|----------------------------------------------------------------------------------------------------------------------|
+| string      | Any type will be converted to string if needed                                                                       |
+| boolean     | Any type will be converted to a boolean. 0, 0.0, (), {}, "" are considered false, everything else is true            |
+| list        | Any type will be converted to a list. () and "" will be an empty list, everything else will be one element in a list | 
+| float       | An integer will be converted to a float. A string will be converted, if it contains a float written as a string      | 
+| integer     | A string will be converted, if it contains an integer written as a string                                            |
+| property    | a string will be converted to a property with the same "name"                                                        |
+| function    | a property will be converted to a getter-function for a record                                                       |
+| record      | any list that contains only pairs will be converted to a record                                                      |
+
 # Built-in functions
 
 These are the functions currently built in into _gamma_:
@@ -375,6 +395,7 @@ These are the functions currently built in into _gamma_:
 * filter predicate list – filters the [list] such that it contains only elements the match the [predicate]
 * find predicate list – find the first element in [list] where the [predicate] is true
 * zip list-1 list-2 – Creates a new list consisting of pairs of the curresponding elements from [list-1] and [list-2]
+* to-char-list string – creates a list of characters from the [string]
 * contains? predicate list – tests if [item] is in [list]. This also includes strings.
 * does-not-contain? predicate list – tests if [item] is not in [list]. This also includes strings.
 * is-empty? list – tests if [list or string] is empty, i. e. does not contain elements or characters

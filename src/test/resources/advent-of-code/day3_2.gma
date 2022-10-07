@@ -26,6 +26,12 @@ let bits-in-position position input =
     input
     |> map [line : at position line]
 
+assert
+    "bits-in-position"
+    (bits-in-position 0 test-input → {"0", "1", "1", "1", "1", "0", "0", "1", "1", "1", "0", "0"})
+    (bits-in-position 4 test-input → {"0", "0", "0", "1", "1", "1", "1", "0", "0", "1", "0", "0"})
+
+
 
 
 let determine-bit position select-most-bits? input =
@@ -35,7 +41,12 @@ let determine-bit position select-most-bits? input =
 
     determine-winning-bit select-most-bits? count-0 count-1
 
-
+assert
+    "determine-bit"
+    (determine-bit 0 true test-input → "1")
+    (determine-bit 0 false test-input → "0")
+    (determine-bit 4 true test-input → "0")
+    (determine-bit 4 false test-input → "1")
 
 
 
@@ -64,6 +75,7 @@ let find-least-common-bits = find-common-bits 0 false
 
 let make-binary-from-list number-list =
     number-list
+    |> to-char-list
     |> map [ number :
         number > 0 ? 1 : 0 ]
 

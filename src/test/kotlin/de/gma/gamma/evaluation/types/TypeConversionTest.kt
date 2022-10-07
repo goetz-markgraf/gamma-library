@@ -253,9 +253,8 @@ class TypeConversionTest : BaseEvaluationTest() {
         fun `a string is converted to a list of all characters`() {
             val result = execute("\"Test\" ▷ to-list") as ListValue
 
-            assertThat(result.allItems()).hasSize(4)
-            assertThat(result.allItems()).first().hasFieldOrPropertyWithValue("strValue", "T")
-            assertThat(result.allItems()).last().hasFieldOrPropertyWithValue("strValue", "t")
+            assertThat(result.allItems()).hasSize(1)
+            assertThat(result.allItems()).first().hasFieldOrPropertyWithValue("strValue", "Test")
         }
 
         @Test

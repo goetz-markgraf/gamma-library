@@ -36,7 +36,7 @@ assert
 
 let to-matrix input =
     input ▷ map [line :
-        line ▷ map [ch :
+        line ▷ to-char-list ▷ map [ch :
             iStore ch
         ]
     ]

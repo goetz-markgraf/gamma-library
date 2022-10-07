@@ -8,7 +8,7 @@ let test-input = {
 
 
 let make-2d-field input =
-    input ▷ map [line : line ▷ map [ch : ch]]
+    input ▷ map [line : line ▷ to-char-list ▷ map [ch : ch]]
 
 
 
