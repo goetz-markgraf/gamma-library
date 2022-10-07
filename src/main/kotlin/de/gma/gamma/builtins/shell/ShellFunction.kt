@@ -9,7 +9,7 @@ import de.gma.gamma.datatypes.values.VoidValue
 import java.io.IOException
 import java.util.concurrent.TimeUnit
 
-object ExecuteFunction : BuiltinFunction(listOf("cmd")) {
+object ShellFunction : BuiltinFunction(listOf("cmd")) {
     override fun callInternal(scope: Scope, callParams: List<Value>): Value {
 
         val list = when (val p = callParams[0].evaluate(scope)) {
@@ -25,7 +25,7 @@ object ExecuteFunction : BuiltinFunction(listOf("cmd")) {
             proc.waitFor(60, TimeUnit.SECONDS)
             val ret = proc.inputStream.bufferedReader().readText()
 
-            StringValue.build(ret)
+            ListValue.build(ret.split("\n").map { StringValue.build(it) })
         } catch (e: IOException) {
             e.printStackTrace()
             VoidValue.build()
