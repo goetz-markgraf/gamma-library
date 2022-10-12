@@ -32,4 +32,17 @@ class StringInterpolationTest : BaseEvaluationTest() {
 
         assertThat(expr.strValue).isEqualTo("Hallo, du da und du da!")
     }
+
+    @Test
+    fun `add a list of values to a string as single values`() {
+        val expr = execute(
+            """
+            let a = {1, 2, 3}
+            
+            "Hallo, $(a ▷ join)!"
+        """.trimIndent()
+        ) as StringValue
+
+        assertThat(expr.strValue).isEqualTo("Hallo, 1 2 3!")
+    }
 }
