@@ -24,6 +24,7 @@ enum class TokenType {
     OPEN_PARENS,
     CLOSE_PARENS,
     STRING,
+    STRING_INTERPOLATION,
     OP,
     OP_AS_ID,
     ID,

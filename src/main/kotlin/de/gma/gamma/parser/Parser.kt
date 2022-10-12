@@ -1,5 +1,6 @@
 package de.gma.gamma.parser
 
+import de.gma.gamma.builtins.io.JoinByFunction
 import de.gma.gamma.datatypes.*
 import de.gma.gamma.datatypes.expressions.*
 import de.gma.gamma.datatypes.functions.LambdaFunction
@@ -184,6 +185,8 @@ class Parser(
 
             STRING -> parseString(col)
 
+            STRING_INTERPOLATION -> parseStringInterpolation(col)
+
             VOID -> parseVoid(col)
 
             PROPERTY -> parseProperty(col)
@@ -249,7 +252,7 @@ class Parser(
         return ListLiteral(sourceName, start, currEnd, expressions)
     }
 
-    private fun parseBlock(col: Int): Value {
+    private fun parseBlock(col: Int, withinString: Boolean = false): Value {
         assertTypeWithContent(col, OPEN_PARENS, "(")
         val start = currStart
         nextToken()
@@ -257,7 +260,7 @@ class Parser(
         val expressions = parseIndentedExpressions(col)
 
         assertTypeWithContent(col, CLOSE_PARENS, ")")
-        nextToken()
+        nextToken(withinString)
 
         return when {
             expressions.isEmpty() -> VoidValue(sourceName, start, currEnd)
@@ -289,6 +292,34 @@ class Parser(
         val content = currToken.content
 
         val ret = StringValue(sourceName, currStart, currEnd, content)
+        nextToken()
+        return ret
+    }
+
+    private fun parseStringInterpolation(col: Int): Value {
+        assertType(col, STRING_INTERPOLATION)
+        val start = currStart
+        val content = buildList {
+            add(StringValue(sourceName, currStart, currEnd, currToken.content))
+            nextToken()
+            var addExpr = true
+            while (addExpr) {
+                add(parseBlock(col, true))
+                assertType(col, STRING, STRING_INTERPOLATION)
+                if (currType == STRING)
+                    addExpr = false
+                add(StringValue(sourceName, currStart, currEnd, currToken.content))
+                nextToken()
+            }
+        }
+
+        val ret = FunctionCall(
+            sourceName,
+            start,
+            currEnd,
+            JoinByFunction,
+            listOf<Value>(StringValue.build(""), ListValue.build(content))
+        )
         nextToken()
         return ret
     }
@@ -530,8 +561,11 @@ class Parser(
     }
 
 
-    private fun nextToken() {
-        currToken = lexer.nextToken()
+    private fun nextToken(withinString: Boolean = false) {
+        currToken = if (withinString)
+            lexer.parseString(false)
+        else
+            lexer.nextToken()
         currType = currToken.type
         currStart = currToken.start
         currEnd = currToken.end

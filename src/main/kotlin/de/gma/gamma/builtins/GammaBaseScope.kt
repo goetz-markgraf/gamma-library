@@ -26,7 +26,7 @@ object GammaBaseScope : ModuleScope("global", null) {
         populateAssertion(this)
         populateShell(this)
 
-        read("/builtin/function_composition.gma")
+        read("/builtin/functional.gma")
     }
 
     fun read(resourceName: String) {

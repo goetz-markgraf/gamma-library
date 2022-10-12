@@ -274,34 +274,27 @@ class Lexer(
     }
 
 
-    private fun parseString(): Token {
+    fun parseString(startWithQuote: Boolean = true): Token {
         val start = position()
         val content = StringBuilder()
 
-        // consume the "
-        next()
+        // consume the " if needed
+        if (startWithQuote)
+            next()
 
-        fun isStillInString() = char != CH_QUOTE && char != CH_NEWLINE && char != nullChar
+        fun isStillInString() =
+            char != CH_QUOTE && char != CH_NEWLINE && char != nullChar && !(char == CH_DOLLAR && peekChar == '(')
 
         while (isStillInString()) {
             if (char == CH_ESC) {
                 next() // for ESC char
                 when (char) {
-                    'n' -> {
-                        content.append("\n")
+                    'n' -> content.append("\n")
+                    't' -> content.append("\t")
+                    CH_NEWLINE -> { /* do nothing */
                     }
 
-                    't' -> {
-                        content.append("\t")
-                    }
-
-                    CH_NEWLINE -> {
-                        // do nothing
-                    }
-
-                    else -> {
-                        content.append(char)
-                    }
+                    else -> content.append(char)
                 }
             } else {
                 content.append(char)
@@ -309,10 +302,15 @@ class Lexer(
             next()
         }
 
-        val type = if (char != CH_QUOTE) TokenType.ERROR else TokenType.STRING
+        val type = when (char) {
+            CH_QUOTE -> TokenType.STRING
+            CH_DOLLAR -> TokenType.STRING_INTERPOLATION
+            else -> TokenType.ERROR
+        }
         val end = position()
 
         next()
+
         return Token(
             type = type,
             content = content.toString(),
