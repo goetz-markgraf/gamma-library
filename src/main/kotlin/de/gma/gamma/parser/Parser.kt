@@ -46,7 +46,7 @@ class Parser(
 
             SET -> parseSetExpression(minCol)
 
-            else -> parseTenery(minCol)
+            else -> parseTernary(minCol)
         }
         if (ret != null)
             return ret
@@ -90,17 +90,17 @@ class Parser(
         }
     }
 
-    private fun parseTenery(col: Int): Value? {
+    private fun parseTernary(col: Int): Value? {
         val start = currStart
 
         val predicate = parseOperation(col, MAX_OPERATOR_LEVEL)
-        if (predicate != null && checkType(col, TENERY) && currToken.content == "?") {
+        if (predicate != null && checkType(col, TERNARY) && currToken.content == "?") {
             nextToken()
 
             val thenExpr = nextExpression(col)
             assertNotNull(thenExpr)
 
-            assertTypeWithContent(col, TENERY, ":")
+            assertTypeWithContent(col, TERNARY, ":")
             nextToken()
 
             val elseExpr = nextExpression(col)
@@ -173,7 +173,7 @@ class Parser(
             return null
 
         val endTokens =
-            listOf(EOF, EXEND, CLOSE_PARENS, OP, ERROR, LET, SET, TYPE, MODULE, TENERY, REMARK, DOCUMENTATION)
+            listOf(EOF, EXEND, CLOSE_PARENS, OP, ERROR, LET, SET, TYPE, MODULE, TERNARY, REMARK, DOCUMENTATION)
         if (endTokens.indexOf(currType) >= 0)
             return null
 
@@ -225,7 +225,7 @@ class Parser(
             }
         }
 
-        assertTypeWithContent(col, TENERY, ":")
+        assertTypeWithContent(col, TERNARY, ":")
         nextToken()
 
         val expressions = parseIndentedExpressions(col)

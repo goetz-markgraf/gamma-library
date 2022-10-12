@@ -27,7 +27,7 @@ There are only a few special expressions:
     # with a "!" can be mutated
     set mutable! = 20
   
-    # is is an "if" expression that evaluate the second or third expression, depending
+    # this is an "if" expression that evaluate the second or third expression, depending
     # on the result of the first expression (predicate)
     a > 2 ? "a is bigger that 2" : "a is smaller or equal to 2" 
 ```

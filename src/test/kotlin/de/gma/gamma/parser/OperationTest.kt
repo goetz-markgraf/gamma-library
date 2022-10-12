@@ -10,7 +10,6 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 class OperationTest : BaseParserTest() {
-    
 
     @Test
     fun `parse an operation`() {
@@ -110,6 +109,7 @@ class OperationTest : BaseParserTest() {
     fun `check order sum and op`() {
         val op = getExpression("10 + 20 |> 30 + 40") as OperaterCall
 
+        assertThat(op.operator.name).isEqualTo("|>")
         assertThat(op.op1).isInstanceOf(FunctionCall::class.java)
         assertThat(op.op2).isInstanceOf(FunctionCall::class.java)
     }

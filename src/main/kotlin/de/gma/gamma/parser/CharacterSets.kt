@@ -22,6 +22,7 @@ const val CH_COLON = ':'
 const val CH_UNDERSCORE = '_'
 const val CH_BANG = '!'
 const val CH_QUESTION_MARK = '?'
+const val CH_DOLLAR = '$'
 
 
 fun isStartOfProperty(char: Char, peekChar: Char) =
@@ -56,7 +57,7 @@ fun isStartOfNumber(char: Char, peekChar: Char) =
 
 
 fun isStartOfIdentifier(char: Char) =
-    isLetter(char) || char == CH_UNDERSCORE
+    isLetter(char) || char == CH_UNDERSCORE || char == CH_DOLLAR
 
 fun isIdentifierChar(char: Char) =
     isLetter(char) || isDigit(char) || isValidSpecialIdentifierChar(char) || isEndOfIdentifier(char)
@@ -66,6 +67,7 @@ fun isValidSpecialIdentifierChar(char: Char) =
             || char == CH_MINUS
             || char == CH_PLUS
             || char == CH_UNDERSCORE
+            || char == CH_DOLLAR
 
 fun isEndOfIdentifier(char: Char) =
     char == CH_BANG || char == CH_QUESTION_MARK
@@ -73,11 +75,8 @@ fun isEndOfIdentifier(char: Char) =
 fun isStartOfString(char: Char) =
     char == CH_QUOTE
 
-fun isColon(char: Char) =
-    char == CH_COLON
-
 fun isOperatorChar(char: Char) =
-    !(char == nullChar || isWhitespace(char) || isLetter(char) || isDigit(char) || "()[]{}_".contains(char))
+    !(char == nullChar || isWhitespace(char) || isLetter(char) || isDigit(char) || "()[]{}_$".contains(char))
 //    ".<>-+*^/:%$|=!&@«»×∧∨÷≠≤≥∑∫◊≈∆▷◁→←\\".contains(char)
 
 fun isStartOfFunctionOperator(char: Char, peekChar: Char, peekPeekChar: Char) =
@@ -87,5 +86,5 @@ fun isStartOfFunctionOperator(char: Char, peekChar: Char, peekPeekChar: Char) =
 fun isExpressionEndingChar(char: Char) =
     ",;".contains(char)
 
-fun isTeneryCharacter(char: Char) =
+fun isTernaryCharacter(char: Char) =
     char == CH_QUESTION_MARK

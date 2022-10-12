@@ -10,6 +10,9 @@ import de.gma.gamma.builtins.numerical.populateNumerical
 import de.gma.gamma.builtins.shell.populateShell
 import de.gma.gamma.builtins.types.populateTypes
 import de.gma.gamma.datatypes.scope.ModuleScope
+import de.gma.gamma.parser.Parser
+import java.io.BufferedReader
+import java.io.InputStreamReader
 
 object GammaBaseScope : ModuleScope("global", null) {
     init {
@@ -22,5 +25,19 @@ object GammaBaseScope : ModuleScope("global", null) {
         populateNamespace(this)
         populateAssertion(this)
         populateShell(this)
+
+        read("/builtin/function_composition.gma")
+    }
+
+    fun read(resourceName: String) {
+        val inStream = this::class.java.getResourceAsStream(resourceName) ?: return
+        val text = BufferedReader(InputStreamReader(inStream)).readText()
+
+        val parser = Parser(text, resourceName)
+        var expression = parser.nextExpression()
+        while (expression != null) {
+            expression.evaluate(this)
+            expression = parser.nextExpression()
+        }
     }
 }

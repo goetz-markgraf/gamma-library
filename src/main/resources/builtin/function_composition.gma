@@ -1,0 +1,3 @@
+'combines two functions to a new one that applies both functions after another'
+let (**) f g =
+    [ v : v ▷ f ▷ g]

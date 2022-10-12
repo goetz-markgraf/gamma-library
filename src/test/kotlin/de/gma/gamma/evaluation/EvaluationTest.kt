@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test
 class EvaluationTest : BaseEvaluationTest() {
 
     @Test
-    fun `simple test with assignments and tenery operator`() {
+    fun `simple test with assignments and ternary operator`() {
         val code = """
             let a = 1 + 2 * 3
             let b = -1

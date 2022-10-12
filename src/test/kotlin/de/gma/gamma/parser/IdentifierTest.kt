@@ -29,7 +29,10 @@ class IdentifierTest : BaseParserTest() {
             "a--1++__!",
             "a1!",
             "a1?",
-            "π"
+            "π",
+            "$",
+            "$$",
+            "\$hallo",
         ]
     )
     fun `parse valid identifiers`(id: String) {
@@ -39,5 +42,4 @@ class IdentifierTest : BaseParserTest() {
 
         assertThat(expression.prettyPrint()).isEqualTo(id)
     }
-
 }

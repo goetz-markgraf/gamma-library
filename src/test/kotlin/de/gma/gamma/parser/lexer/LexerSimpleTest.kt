@@ -113,12 +113,12 @@ class LexerSimpleTest {
 
 
     @Test
-    fun `single colon is tenery character`() {
+    fun `single colon is ternary character`() {
         val token = getTokenFromInput(":")
 
         assertToken(
             token,
-            type = TENERY,
+            type = TERNARY,
             content = ":",
             end = 0
         )
@@ -127,7 +127,7 @@ class LexerSimpleTest {
     @ParameterizedTest
     @ValueSource(
         strings = [
-            "<", ">", "-", "+", "^", "/", "*", "%", "\\", "$", "|", "=", "!", "&",
+            "<", ">", "-", "+", "^", "/", "*", "%", "\\", "|", "=", "!", "&",
             "≥", "~", "«", "‰", "¶", "☞", "⊖", "⇉", "¦", "♡",
             "∑"
         ]
@@ -146,7 +146,7 @@ class LexerSimpleTest {
     @ParameterizedTest
     @ValueSource(
         strings = [
-            "<=", ">>", "!-", "++", "!^", "/>", ":>", "%>", "\\-", "$$", "|>", "!=", "!!", "!&",
+            "<=", ">>", "!-", "++", "!^", "/>", ":>", "%>", "\\-", "|>", "!=", "!!", "!&",
             "😀"
         ]
     )

@@ -18,4 +18,14 @@ class ExecuteTest : BaseEvaluationTest() {
             "target"
         )
     }
+
+    @Test
+    fun `run a simple list command with a dollar sign`() {
+        val result = execute("$ \"ls -l *.md\"") as ListValue
+
+        assertThat(result.allItems()).allMatch {
+            it.toStringValue().strValue.contains("LEARN_GAMMA.md")
+                    || it.toStringValue().strValue.contains("README.md")
+        }
+    }
 }

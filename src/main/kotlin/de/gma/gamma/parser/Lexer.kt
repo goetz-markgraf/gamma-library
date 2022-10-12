@@ -60,7 +60,7 @@ class Lexer(
 
             isVoid(char, peekChar) -> parseVoid()
 
-            isTeneryCharacter(char) -> parseTeneryCharacter()
+            isTernaryCharacter(char) -> parseTernaryCharacter()
 
             isStartOfProperty(char, peekChar) -> parseProperty()
 
@@ -108,9 +108,9 @@ class Lexer(
         )
     }
 
-    private fun parseTeneryCharacter(): Token {
+    private fun parseTernaryCharacter(): Token {
         val ret = Token(
-            type = TokenType.TENERY,
+            type = TokenType.TERNARY,
             content = char.toString(),
             sourceName = sourceName,
             start = position(),
@@ -180,7 +180,7 @@ class Lexer(
 
         val c = content.toString()
         return Token(
-            type = if (c == ":") TokenType.TENERY else TokenType.OP,
+            type = if (c == ":") TokenType.TERNARY else TokenType.OP,
             content = c,
             sourceName = sourceName,
             start = start,
