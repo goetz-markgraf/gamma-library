@@ -45,4 +45,41 @@ class StringInterpolationTest : BaseEvaluationTest() {
 
         assertThat(expr.strValue).isEqualTo("Hallo, 1 2 3!")
     }
+
+    @Test
+    fun `interpolate string with empty start`() {
+        val expr = execute(
+            """
+            let a = "Hello"
+            
+            "$(a)!"
+        """.trimIndent()
+        ) as StringValue
+
+        assertThat(expr.strValue).isEqualTo("Hello!")
+    }
+
+    @Test
+    fun `interpolate string with empty end`() {
+        val expr = execute(
+            """
+            let a = "!"
+            
+            "Hello$(a)"
+        """.trimIndent()
+        ) as StringValue
+
+        assertThat(expr.strValue).isEqualTo("Hello!")
+    }
+
+    @Test
+    fun `an escape suppresses the interpolation`() {
+        val expr = execute(
+            """
+            "\$()"
+        """.trimIndent()
+        ) as StringValue
+
+        assertThat(expr.strValue).isEqualTo("$()")
+    }
 }

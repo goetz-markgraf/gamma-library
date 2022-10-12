@@ -308,7 +308,8 @@ class Parser(
                 assertType(col, STRING, STRING_INTERPOLATION)
                 if (currType == STRING)
                     addExpr = false
-                add(StringValue(sourceName, currStart, currEnd, currToken.content))
+                if (currToken.content.isNotEmpty())
+                    add(StringValue(sourceName, currStart, currEnd, currToken.content))
                 nextToken()
             }
         }

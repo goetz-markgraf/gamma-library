@@ -98,6 +98,24 @@ Additionally there are two ways of constructing a list of values:
 
 A list can hold any number of values of any type.
 
+## string interpolation
+
+Within a normal string you can add _gamma_expressions, enclosed in `$(...)`:
+
+```
+  let world = "World"
+  
+  # will result in "Hello, World!"
+  "Hello, $(world)!" 
+```
+
+The interpolation can be suppressed if you write an escape "\" before the "$":
+
+```
+  # this results in a string with the content $()
+  "\$()"
+```
+
 ## calling functions
 
 There are two kinds of function call in _gamma_.
