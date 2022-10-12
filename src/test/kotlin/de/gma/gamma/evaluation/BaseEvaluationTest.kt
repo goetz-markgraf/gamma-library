@@ -12,6 +12,7 @@ open class BaseEvaluationTest {
 
     @BeforeEach
     fun setUp() {
+        baseScope.reset()
         scope = ModuleScope("test", baseScope)
     }
 

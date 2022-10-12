@@ -1,15 +1,13 @@
 package de.gma.gamma.builtins.shell
 
 import de.gma.gamma.builtins.BuiltinFunction
+import de.gma.gamma.builtins.CWD_NAME
 import de.gma.gamma.datatypes.StringValue
 import de.gma.gamma.datatypes.Value
 import de.gma.gamma.datatypes.list.ListValue
 import de.gma.gamma.datatypes.scope.Scope
 import de.gma.gamma.datatypes.values.IntegerValue
-import java.io.BufferedReader
-import java.io.InputStream
-import java.io.InputStreamReader
-import java.io.StringWriter
+import java.io.*
 import java.util.*
 import java.util.concurrent.Executors
 
@@ -35,7 +33,8 @@ object ShellFunction : BuiltinFunction(listOf("cmd")) {
         } else {
             builder.command("sh", "-c", cmd)
         }
-//        builder.directory(File(System.getProperty("user.home")))
+        val cwd = scope.getValueForName(CWD_NAME).toStringValue().strValue
+        builder.directory(File(cwd))
         val process = builder.start()
         val streamGobbler = StreamGobbler(process.inputStream)
         val future = Executors.newSingleThreadExecutor().submit(streamGobbler)

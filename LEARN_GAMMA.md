@@ -326,6 +326,32 @@ happening implicitely. Every conversion can be forced with the `to-xxx`-function
 | function    | a property will be converted to a getter-function for a record                                                       |
 | record      | any list that contains only pairs will be converted to a record                                                      |
 
+# Support for shell scripts
+
+_gamma_ can be used to create shell scripts. If the gamma executable is on the
+`$PATH` you can create a _gamma_ script with this as the first line
+
+```
+#! gamma
+```
+
+### commands for shell interaction
+
+the function `sh` which can be written shorter as `$` executes the parameter as a
+shell script and returns the content as a list of strings. This can easily be processed via
+_gamma_ functions to create powerfull shell scripts.
+
+This gives you (on unix machines) the (first) process ID of a process with `gamma` in its name, if any is running,
+or `{}`.
+
+```
+  $ "ps -ax"
+  ▷ filter (contains? "gamma")
+  ▷ first
+  ▷ split
+  ▷ first
+```
+
 # Built-in functions
 
 These are the functions currently built in into _gamma_:
@@ -419,7 +445,6 @@ These are the functions currently built in into _gamma_:
 * is-empty? list – tests if [list or string] is empty, i. e. does not contain elements or characters
 * is-not-empty? list – tests if [list or string] contains at least one element or character
 * when cases – checks each predicate to evaluate to first expression with a true predicate
-* when* value cases – checks each [predicate] called with [value] to evaluate to first expression with a true predicate
 * a = b – checks if [a] is equal to [b]
 * a != b – checks if [a] is not equal to [a]
 * a ≠ b – checks if [a] is not equal to [a]
@@ -441,4 +466,11 @@ These are the functions currently built in into _gamma_:
 * copy-with property-list record – creates a new record based on [record] with changes from a list of pairs
 * get-properties record – returns all keys in this record as a list of strings
 * assert list-of-assertions – tests every assertion in the list of pairs, return false if any assertion fails
-* sh cmd – executes the given command in the current working directory and returns the output
+* sh cmd – executes the given command in the current working directory and returns the output as a list of strings (
+  lines)
+* $ cmd – executes the given command in the current working directory and returns the output as a list of strings (
+  lines)
+* cd dir – changes the current working directory to a new directory
+* returns the current working directory
+* f ** g – combines two functions to a new one that applies both functions after another
+* when* v list – checks each [predicate] called with [value] to evaluate to first expression with a true predicate

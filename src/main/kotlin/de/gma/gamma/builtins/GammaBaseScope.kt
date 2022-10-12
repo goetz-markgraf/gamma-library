@@ -8,11 +8,14 @@ import de.gma.gamma.builtins.list.populateList
 import de.gma.gamma.builtins.namespaces.populateNamespace
 import de.gma.gamma.builtins.numerical.populateNumerical
 import de.gma.gamma.builtins.shell.populateShell
+import de.gma.gamma.builtins.shell.resetShell
 import de.gma.gamma.builtins.types.populateTypes
 import de.gma.gamma.datatypes.scope.ModuleScope
 import de.gma.gamma.parser.Parser
 import java.io.BufferedReader
 import java.io.InputStreamReader
+
+const val CWD_NAME = "CWD"
 
 object GammaBaseScope : ModuleScope("global", null) {
     init {
@@ -29,7 +32,11 @@ object GammaBaseScope : ModuleScope("global", null) {
         read("/builtin/functional.gma")
     }
 
-    fun read(resourceName: String) {
+    fun reset() {
+        resetShell(this)
+    }
+
+    private fun read(resourceName: String) {
         val inStream = this::class.java.getResourceAsStream(resourceName) ?: return
         val text = BufferedReader(InputStreamReader(inStream)).readText()
 
