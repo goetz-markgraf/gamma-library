@@ -1,3 +1,12 @@
 'combines two functions to a new one that applies both functions after another'
 let (**) f g =
     [ v : v ▷ f ▷ g]
+
+'checks each [predicate] called with [value] to evaluate to first expression with a true predicate'
+let when* v list =
+    when {
+        is-empty? list → ()
+        is-boolean? list.first.first ∧ list.first.first → list.first.last
+        list.first.first v → list.first.last
+        else → when* v list.tail
+    }

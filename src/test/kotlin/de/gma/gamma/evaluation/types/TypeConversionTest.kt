@@ -273,6 +273,7 @@ class TypeConversionTest : BaseEvaluationTest() {
             val result = execute("{1} ▷ map [it : {:a , it}] ▷ to-record") as RecordValue
 
             assertThat(result.getPropertyNames()).containsExactly("a")
+            assertThat(result.getValueForName("a").toInteger().longValue).isEqualTo(1L)
         }
 
         @Test
