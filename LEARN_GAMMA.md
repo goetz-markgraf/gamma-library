@@ -192,37 +192,6 @@ You must also place these parenthesis around the operator if you want to create 
 
 _(Of course, you don't need to do that, because `^` is already a function to raise a number to the nth power.)_
 
-## usage of function names in infix position
-
-If you have a function that takes two parameters, you can write this function in infix position. You
-simply have to place a colon `:` after the name of the function.
-
-```
-    # add function taking two number values
-    let add a b = a + b
-    
-    # these two expressions produce identical results
-    add 10 20
-    10 add: 20
-```
-
-Keep in mind that the order of parameters is not changed:
-
-```
-    let list = {1, 2, 3}
-    
-    let map-function it = it * 2
-    
-    # normal way of writing
-    map map-function list
-    
-    # function name in infix position
-    map-function map: list
-    
-    # and not:
-    # list map: map-function
-```
-
 ### pipe operator
 
 The pipe operator (`|>`) can be used to enhance the readability of the code. It is defined like this
