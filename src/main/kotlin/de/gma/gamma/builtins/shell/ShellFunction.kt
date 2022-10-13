@@ -1,7 +1,6 @@
 package de.gma.gamma.builtins.shell
 
 import de.gma.gamma.builtins.BuiltinFunction
-import de.gma.gamma.builtins.CWD_NAME
 import de.gma.gamma.datatypes.StringValue
 import de.gma.gamma.datatypes.Value
 import de.gma.gamma.datatypes.list.ListValue

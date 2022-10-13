@@ -15,8 +15,6 @@ import de.gma.gamma.parser.Parser
 import java.io.BufferedReader
 import java.io.InputStreamReader
 
-const val CWD_NAME = "CWD"
-
 object GammaBaseScope : ModuleScope("global", null) {
     init {
         populateTypes(this)
