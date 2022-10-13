@@ -6,7 +6,6 @@ import de.gma.gamma.datatypes.scope.Scope
 fun populateList(scope: Scope) {
     // @Formatter:off
     bindWithDoc(scope, "first", FirstFunction, "returns the first element or () if empty list")
-    bindWithDoc(scope, "second", SecondFunction, "returns the second element or () if there is none")
     bindWithDoc(scope, "head", FirstFunction, "returns the first element or () if empty list")
     bindWithDoc(scope, "tail", TailFunction, "returns all but the fist element or empty list if empty list")
     bindWithDoc(scope, "last", LastFunction, "returns the last element or () if empty list")
@@ -19,7 +18,7 @@ fun populateList(scope: Scope) {
     bindWithDoc(scope, "sort-desc", SortDescendingFunction, "creates a new list that is sorted numerically. Strings are converted to numbers, lists are sorted according to their length.")
     bindWithDoc(scope, "appendAll", AppendAllFunction, "appends all items of [new-list] the end of [list]")
     bindWithDoc(scope, "::", InsertFirstFunction, "prepends a list with an as the new first element")
-    bindWithDoc(scope, "@", ConcatFunction, "concats [list-1] and [list-2]")
+    bindWithDoc(scope, "@", ConcatFunction, "concatenates [list-1] and [list-2]")
 
     bindWithDoc(scope, "list-generator", ListGeneratorFunction, "creates a list of size [size] that uses [function] to generate the values")
     bindWithDoc(scope, "repeat", RepeatFunction, "create a list from 0 to [size] - 1")
@@ -33,7 +32,7 @@ fun populateList(scope: Scope) {
     bindWithDoc(scope, "reduce", ReduceFunction, "reduces the [list] with [function]")
     bindWithDoc(scope, "filter", FilterFunction, "filters the [list] such that it contains only elements the match the [predicate]")
     bindWithDoc(scope, "find", FindFunction, "find the first element in [list] where the [predicate] is true")
-    bindWithDoc(scope, "zip", ZipFunction, "Creates a new list consisting of pairs of the curresponding elements from [list-1] and [list-2]")
+    bindWithDoc(scope, "zip", ZipFunction, "Creates a new list consisting of pairs of the corresponding elements from [list-1] and [list-2]")
     bindWithDoc(scope, "to-char-list", ToCharListFunction, "creates a list of characters from the [string]")
 
     bindWithDoc(scope, "contains?", ContainsPredicate, "tests if [item] is in [list]. This also includes strings.")

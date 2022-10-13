@@ -1,6 +1,7 @@
 package de.gma.gamma.builtins.shell
 
 import de.gma.gamma.builtins.BuiltinFunction
+import de.gma.gamma.builtins.GammaBaseScope
 import de.gma.gamma.datatypes.StringValue
 import de.gma.gamma.datatypes.Value
 import de.gma.gamma.datatypes.list.ListValue
@@ -32,7 +33,7 @@ object ShellFunction : BuiltinFunction(listOf("cmd")) {
         } else {
             builder.command("sh", "-c", cmd)
         }
-        val cwd = scope.getValueForName(CWD_NAME).toStringValue().strValue
+        val cwd = GammaBaseScope.getValueForName(CWD_NAME).toStringValue().strValue
         builder.directory(File(cwd))
         val process = builder.start()
         val streamGobbler = StreamGobbler(process.inputStream)

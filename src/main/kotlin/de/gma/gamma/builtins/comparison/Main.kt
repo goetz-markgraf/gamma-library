@@ -29,6 +29,6 @@ fun populateComparison(scope: Scope) {
     scope.bindValue(
         "else",
         BooleanValue.build(true),
-        Remark.buildDoc("else - equal to true, can be used in when expressions")
+        Remark.buildDoc("equal to true, can be used in when expressions")
     )
 }

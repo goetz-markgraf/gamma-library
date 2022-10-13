@@ -39,13 +39,13 @@ open class ModuleScope(
         val value = content[name]
 
         if (value is FunctionValue) {
-            if (isStartOfIdentifier(name.first()) || value.paramNames.size != 2)
-                return "$name ${value.paramNames.joinToString(" ")} – $rem"
+            return if (isStartOfIdentifier(name.first()) || value.paramNames.size != 2)
+                "$name ${value.paramNames.joinToString(" ")} – $rem"
             else
-                return "${value.paramNames.first()} $name ${value.paramNames.last()} – $rem"
+                "${value.paramNames.first()} $name ${value.paramNames.last()} – $rem"
         }
 
-        return rem
+        return "$name – $rem"
     }
 
     override fun getValueForName(id: String, strict: Boolean): Value {

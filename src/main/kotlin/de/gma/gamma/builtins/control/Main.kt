@@ -17,12 +17,12 @@ fun populateControl(scope: Scope) {
     scope.bindValue(
         "debug",
         DebugValue.build(),
-        Remark.buildDoc("debug - evaluates the DebugValue for debug purposes")
+        Remark.buildDoc("evaluates the DebugValue for debug purposes")
     )
 
     scope.bindValue(
         "break",
         DebugValue.build(),
-        Remark.buildDoc("break - evaluates the DebugValue for debug purposes")
+        Remark.buildDoc("evaluates the DebugValue for debug purposes")
     )
 }

@@ -358,8 +358,8 @@ These are the functions currently built in into _gamma_:
 * v |> f – calls [function] with [value] as parameter
 * v ▷ f – calls [function] with [value] as parameter
 * v ⊳ f – calls [function] with [value] as parameter
-* debug - evaluates the DebugValue for debug purposes
-* break - evaluates the DebugValue for debug purposes
+* debug – evaluates the DebugValue for debug purposes
+* break – evaluates the DebugValue for debug purposes
 * print value – prints a value to standard out
 * print* value – prints a value to standard out without a newline at the end
 * read-lines filename – reads the content of [filename] as a list of strings
@@ -379,7 +379,6 @@ These are the functions currently built in into _gamma_:
 * max list – returns the largest number
 * abs value – returns the absolute of the number
 * first list – returns the first element or () if empty list
-* second list – returns the second element or () if there is none
 * head list – returns the first element or () if empty list
 * tail list – returns all but the fist element or empty list if empty list
 * last list – returns the last element or () if empty list
@@ -429,7 +428,7 @@ These are the functions currently built in into _gamma_:
 * a ∨ b – returns true if either [a] or [a] or both are true
 * not a – returns true if [a] is false and false if [a] is true
 * pipeline id list-of-expressions – executes each [expression], always using [id] for the result of the previous one
-* else - equal to true, can be used in when expressions
+* else – equal to true, can be used in when expressions
 * at pos list – returns the [pos]th element of this list
 * at* pos list – returns the [pos]th element of this list or () if not existing
 * copy-with property-list record – creates a new record based on [record] with changes from a list of pairs
@@ -440,6 +439,9 @@ These are the functions currently built in into _gamma_:
 * $ cmd – executes the given command in the current working directory and returns the output as a list of strings (
   lines)
 * cd dir – changes the current working directory to a new directory
-* returns the current working directory
+* CWD – returns the current working directory
+* env – holds all environment variables and their values as a record
+* system – holds all java system properties their values as a record (names with a '.' are replaced by '-')
 * f ** g – combines two functions to a new one that applies both functions after another
 * when* v list – checks each [predicate] called with [value] to evaluate to first expression with a true predicate
+* id a – returns the given parameter as is
