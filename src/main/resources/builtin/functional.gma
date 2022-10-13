@@ -10,3 +10,6 @@ let when* v list =
         list.first.first v → list.first.last
         else → when* v list.tail
     }
+
+'returns the given parameter as is'
+let id a = a
