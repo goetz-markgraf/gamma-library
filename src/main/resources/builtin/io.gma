@@ -1,0 +1,5 @@
+'prints the parameters and appends a newline'
+let print v =
+    let ret = print* v
+    print* "\n"
+    ret

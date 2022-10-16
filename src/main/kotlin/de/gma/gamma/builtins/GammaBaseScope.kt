@@ -28,6 +28,7 @@ object GammaBaseScope : ModuleScope("global", null) {
         populateShell(this)
 
         read("/builtin/functional.gma")
+        read("/builtin/io.gma")
     }
 
     fun reset() {
