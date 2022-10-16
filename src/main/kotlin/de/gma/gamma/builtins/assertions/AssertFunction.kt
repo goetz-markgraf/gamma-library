@@ -1,6 +1,7 @@
 package de.gma.gamma.builtins.assertions
 
 import de.gma.gamma.builtins.BuiltinFunction
+import de.gma.gamma.builtins.GammaBaseScope
 import de.gma.gamma.datatypes.StringValue
 import de.gma.gamma.datatypes.Value
 import de.gma.gamma.datatypes.list.ListValue
@@ -24,7 +25,7 @@ object AssertFunction : BuiltinFunction(listOf("list-of-assertions")) {
                 val actual = it.first().evaluate(tempScope)
                 val expected = it.last().evaluate(tempScope)
                 if (actual != expected) {
-                    println("Assertion Failure $message: Value $actual is not equal to $expected")
+                    GammaBaseScope.output.println("Assertion Failure $message: Value $actual is not equal to $expected")
                     ret = false
                 }
             } else

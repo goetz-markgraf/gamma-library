@@ -16,13 +16,13 @@ class EvaluationTest : BaseEvaluationTest() {
             let a = 1 + 2 * 3
             let b = -1
             let c = true
-            print (c ? a : b)
+            print* (c ? a : b)
         """.trimIndent()
 
-        val ret = execute(code)
+        val ret = execute(code) as IntegerValue
 
-        assertThat(ret!!).isInstanceOf(IntegerValue::class.java)
-        assertThat(ret.prettyPrint()).isEqualTo("7")
+        assertThat(ret.longValue).isEqualTo(7L)
+        assertOutput("7")
     }
 
     @Test
@@ -43,15 +43,23 @@ class EvaluationTest : BaseEvaluationTest() {
         val result = execute(code)
 
         assertThat(result!!.prettyPrint()).isEqualTo("140")
+        assertOutput(
+            """
+            20
+            40
+            140
+            
+        """.trimIndent()
+        )
     }
 
     @Test
     fun `call with Empty as parameter`() {
-        val code = "print ()"
+        val code = "print* ()"
 
-        val result = execute(code)
+        execute(code) as VoidValue
 
-        assertThat(result).isInstanceOf(VoidValue::class.java)
+        assertOutput("()")
     }
 
     @Test
@@ -64,9 +72,10 @@ class EvaluationTest : BaseEvaluationTest() {
             greet ()
         """.trimIndent()
 
-        val result = execute(code)
+        val result = execute(code) as StringValue
 
-        assertThat(result!!.prettyPrint()).isEqualTo("\"Hello\"")
+        assertThat(result.strValue).isEqualTo("Hello")
+        assertOutput("Hello\n")
     }
 
     @Test
@@ -78,9 +87,9 @@ class EvaluationTest : BaseEvaluationTest() {
             greet()
         """.trimIndent()
 
-        val result = execute(code)
-
-        assertThat(result).isInstanceOf(StringValue::class.java)
+        val result = execute(code) as StringValue
+        assertThat(result.strValue).isEqualTo("Hello, World")
+        assertOutput("Hello, World\n")
     }
 
     @Test

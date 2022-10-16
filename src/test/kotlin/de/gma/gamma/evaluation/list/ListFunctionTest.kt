@@ -27,6 +27,7 @@ class ListFunctionTest : BaseEvaluationTest() {
         val result = execute(code) as IntegerValue
 
         assertThat(result.longValue).isEqualTo(5L)
+        assertOutput("1\n2\n")
     }
 
     @Test

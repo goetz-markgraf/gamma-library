@@ -19,6 +19,7 @@ class AssertTest : BaseEvaluationTest() {
         val result = execute("assert {0 -> 1}") as BooleanValue
 
         assertThat(result.boolValue).isFalse
+        assertOutput("Assertion Failure : Value 0 is not equal to 1\n")
     }
 
     @Test
@@ -33,5 +34,6 @@ class AssertTest : BaseEvaluationTest() {
         ) as BooleanValue
 
         assertThat(result.boolValue).isFalse
+        assertOutput("Assertion Failure false: Value 1 is not equal to 0\n")
     }
 }

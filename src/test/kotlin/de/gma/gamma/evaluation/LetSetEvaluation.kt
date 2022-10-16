@@ -122,6 +122,13 @@ class LetSetEvaluation : BaseEvaluationTest() {
         val result = execute(code)
         assertThat(result!!.prettyPrint()).isEqualTo("20")
         assertThat(scope.getValueForName("a!").prettyPrint()).isEqualTo("20")
+        assertOutput(
+            """
+            10
+            20
+            
+        """.trimIndent()
+        )
     }
 
     @Test

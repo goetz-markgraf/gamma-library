@@ -14,8 +14,11 @@ import de.gma.gamma.datatypes.scope.ModuleScope
 import de.gma.gamma.parser.Parser
 import java.io.BufferedReader
 import java.io.InputStreamReader
+import java.io.PrintStream
 
 object GammaBaseScope : ModuleScope("global", null) {
+    var output: PrintStream = System.out
+
     init {
         populateTypes(this)
         populateControl(this)
@@ -33,6 +36,7 @@ object GammaBaseScope : ModuleScope("global", null) {
 
     fun reset() {
         resetShell(this)
+        output = System.out
     }
 
     private fun read(resourceName: String) {
