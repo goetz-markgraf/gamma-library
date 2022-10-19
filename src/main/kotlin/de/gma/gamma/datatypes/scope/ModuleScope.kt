@@ -15,8 +15,8 @@ open class ModuleScope(
     final override val parent: Scope? = GammaBaseScope
 ) : Scope, AbstractValue(sourceName, nullPos, nullPos) {
 
-    private val content: MutableMap<String, Value> = mutableMapOf()
-    private val remarks: MutableMap<String, Remark> = mutableMapOf()
+    protected val content: MutableMap<String, Value> = mutableMapOf()
+    protected val remarks: MutableMap<String, Remark> = mutableMapOf()
 
     init {
         content["this"] = this
