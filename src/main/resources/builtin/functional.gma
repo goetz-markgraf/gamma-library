@@ -13,3 +13,11 @@ let when* v list =
 
 'returns the given parameter as is'
 let id a = a
+
+'returns the first value that is not falsey'
+let or expression-list =
+    when {
+        is-empty? expression-list → ()
+        expression-list.first → expression-list.first
+        else → or expression-list.tail
+    }

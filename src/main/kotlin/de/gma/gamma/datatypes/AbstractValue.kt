@@ -30,6 +30,7 @@ abstract class AbstractValue(
             is IntegerValue -> BooleanValue.build(this.longValue != 0L)
             is FloatValue -> BooleanValue.build(this.doubleValue != 0.0)
             is StringValue -> BooleanValue.build(this.strValue.isNotEmpty())
+            is ListValue -> BooleanValue.build(this.size() != 0)
             is VoidValue -> BooleanValue.build(false)
             else -> BooleanValue.build(true)
         }

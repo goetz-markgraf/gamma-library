@@ -360,7 +360,6 @@ These are the functions currently built in into _gamma_:
 * v ⊳ f – calls [function] with [value] as parameter
 * debug – evaluates the DebugValue for debug purposes
 * break – evaluates the DebugValue for debug purposes
-* print value – prints a value to standard out
 * print* value – prints a value to standard out without a newline at the end
 * read-lines filename – reads the content of [filename] as a list of strings
 * split string – splits a [string] separated by blank into a list of strings
@@ -393,7 +392,7 @@ These are the functions currently built in into _gamma_:
   according to their length.
 * appendAll item list – appends all items of [new-list] the end of [list]
 * item :: list – prepends a list with an as the new first element
-* list-1 @ list-2 – concats [list-1] and [list-2]
+* list-1 @ list-2 – concatenates [list-1] and [list-2]
 * list-generator size function – creates a list of size [size] that uses [function] to generate the values
 * repeat size – create a list from 0 to [size] - 1
 * from .. to – create a list from [from] to [to] inclusive
@@ -406,7 +405,7 @@ These are the functions currently built in into _gamma_:
 * reduce function list – reduces the [list] with [function]
 * filter predicate list – filters the [list] such that it contains only elements the match the [predicate]
 * find predicate list – find the first element in [list] where the [predicate] is true
-* zip list-1 list-2 – Creates a new list consisting of pairs of the curresponding elements from [list-1] and [list-2]
+* zip list-1 list-2 – Creates a new list consisting of pairs of the corresponding elements from [list-1] and [list-2]
 * to-char-list string – creates a list of characters from the [string]
 * contains? predicate list – tests if [item] is in [list]. This also includes strings.
 * does-not-contain? predicate list – tests if [item] is not in [list]. This also includes strings.
@@ -439,9 +438,11 @@ These are the functions currently built in into _gamma_:
 * $ cmd – executes the given command in the current working directory and returns the output as a list of strings (
   lines)
 * cd dir – changes the current working directory to a new directory
-* CWD – returns the current working directory
+* CWD – resets the current working directory
 * env – holds all environment variables and their values as a record
 * system – holds all java system properties their values as a record (names with a '.' are replaced by '-')
 * f ** g – combines two functions to a new one that applies both functions after another
 * when* v list – checks each [predicate] called with [value] to evaluate to first expression with a true predicate
 * id a – returns the given parameter as is
+* or expression-list – returns the first value that is not falsey
+* print v – prints the parameters and appends a newline
