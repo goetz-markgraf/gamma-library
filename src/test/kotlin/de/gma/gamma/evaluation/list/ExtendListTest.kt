@@ -3,7 +3,9 @@ package de.gma.gamma.evaluation.list
 import de.gma.gamma.datatypes.list.ListValue
 import de.gma.gamma.datatypes.values.PairValue
 import de.gma.gamma.evaluation.BaseEvaluationTest
+import de.gma.gamma.parser.EvaluationException
 import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.Test
 
 class ExtendListTest : BaseEvaluationTest() {
@@ -59,5 +61,22 @@ class ExtendListTest : BaseEvaluationTest() {
 
         assertThat(expr.first().toInteger().longValue).isEqualTo(1L)
         assertThat(expr.last().toInteger().longValue).isEqualTo(2L)
+    }
+
+    @Test
+    fun `a list of more than 2 items cannot be converted to a pair`() {
+        assertThatThrownBy {
+            execute("make-pair {1, 2, 3}")
+        }.isInstanceOf(EvaluationException::class.java)
+            .hasMessage("{1, 2, 3} cannot be made into a pair")
+    }
+
+    @Test
+    fun `a list of fewer than 2 items cannot be converted to a pair`() {
+        assertThatThrownBy {
+            execute("make-pair {1}")
+
+        }.isInstanceOf(EvaluationException::class.java)
+            .hasMessage("{1} cannot be made into a pair")
     }
 }

@@ -71,10 +71,10 @@ _gamma_ knows the following value literals
       and are terminated with single quotes'
 ```
 
-Additionally there are two ways of constructing a list of values:
+Additionally there are two ways of constructing a collection of values:
 
 ```
-    # a pair is a list of two values
+    # a pair is a data structure holding two values
     10 -> 20
     10 → 20
   
@@ -97,6 +97,17 @@ Additionally there are two ways of constructing a list of values:
 ```
 
 A list can hold any number of values of any type.
+
+A pair is not implicitly convertable to a list and vice versa. A list with 2 item can be converted
+to a pair using the `make-pair`-function.
+
+```
+  # return 1 → 2
+  make-pair {1, 2}
+  
+  # will throw error
+  make-pair {1, 2, 3} 
+```
 
 ## string interpolation
 
