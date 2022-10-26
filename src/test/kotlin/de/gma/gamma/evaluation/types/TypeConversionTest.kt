@@ -1,8 +1,8 @@
 package de.gma.gamma.evaluation.types
 
 import de.gma.gamma.datatypes.list.ListValue
-import de.gma.gamma.datatypes.record.RecordValue
 import de.gma.gamma.datatypes.values.BooleanValue
+import de.gma.gamma.datatypes.values.RecordValue
 import de.gma.gamma.evaluation.BaseEvaluationTest
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Nested

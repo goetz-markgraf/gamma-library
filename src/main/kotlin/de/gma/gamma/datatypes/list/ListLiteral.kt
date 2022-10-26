@@ -5,9 +5,9 @@ import de.gma.gamma.builtins.createMapFromListOfPair
 import de.gma.gamma.builtins.isRecordDefinition
 import de.gma.gamma.builtins.nullPos
 import de.gma.gamma.datatypes.Value
-import de.gma.gamma.datatypes.record.RecordValue
 import de.gma.gamma.datatypes.scope.Scope
 import de.gma.gamma.datatypes.scoped.ScopedValue
+import de.gma.gamma.datatypes.values.RecordValue
 import de.gma.gamma.parser.EvaluationException
 import de.gma.gamma.parser.Position
 
@@ -33,6 +33,7 @@ class ListLiteral(
                     items as List<ListValue>, scope
                 )
             )
+
             items.size == 2 -> PairValue(sourceName, beginPos, endPos, items[0], items[1])
             else -> SimpleList(sourceName, beginPos, endPos, items)
         }

@@ -4,8 +4,8 @@ import de.gma.gamma.builtins.BuiltinFunction
 import de.gma.gamma.builtins.checkForListOfPairs
 import de.gma.gamma.builtins.createMapFromListOfPair
 import de.gma.gamma.datatypes.Value
-import de.gma.gamma.datatypes.record.RecordValue
 import de.gma.gamma.datatypes.scope.Scope
+import de.gma.gamma.datatypes.values.RecordValue
 
 object CopyWithFunction : BuiltinFunction(listOf("property-list", "record")) {
     override fun callInternal(scope: Scope, callParams: List<Value>): Value {

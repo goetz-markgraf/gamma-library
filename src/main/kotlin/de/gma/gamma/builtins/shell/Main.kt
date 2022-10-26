@@ -5,8 +5,8 @@ import de.gma.gamma.builtins.builtInSource
 import de.gma.gamma.builtins.nullPos
 import de.gma.gamma.datatypes.Remark
 import de.gma.gamma.datatypes.StringValue
-import de.gma.gamma.datatypes.record.RecordValue
 import de.gma.gamma.datatypes.scope.Scope
+import de.gma.gamma.datatypes.values.RecordValue
 
 const val CWD_NAME = "CWD"
 const val ENV_NAME = "env"

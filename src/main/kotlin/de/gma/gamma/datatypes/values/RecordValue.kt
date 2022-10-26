@@ -1,4 +1,4 @@
-package de.gma.gamma.datatypes.record
+package de.gma.gamma.datatypes.values
 
 import de.gma.gamma.builtins.builtInSource
 import de.gma.gamma.builtins.nullPos
@@ -6,8 +6,6 @@ import de.gma.gamma.datatypes.AbstractValue
 import de.gma.gamma.datatypes.Value
 import de.gma.gamma.datatypes.list.ListValue
 import de.gma.gamma.datatypes.scope.Namespace
-import de.gma.gamma.datatypes.values.PropertyValue
-import de.gma.gamma.datatypes.values.VoidValue
 import de.gma.gamma.parser.EvaluationException
 import de.gma.gamma.parser.Position
 

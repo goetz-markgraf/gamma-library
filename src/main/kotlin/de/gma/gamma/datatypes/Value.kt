@@ -2,10 +2,10 @@ package de.gma.gamma.datatypes
 
 import de.gma.gamma.datatypes.functions.FunctionValue
 import de.gma.gamma.datatypes.list.ListValue
-import de.gma.gamma.datatypes.record.RecordValue
 import de.gma.gamma.datatypes.scope.ModuleScope
 import de.gma.gamma.datatypes.scope.Scope
 import de.gma.gamma.datatypes.values.*
+import de.gma.gamma.datatypes.values.RecordValue
 
 /**
  * These are the data types that are the result of an <code>evaluate()</code> call

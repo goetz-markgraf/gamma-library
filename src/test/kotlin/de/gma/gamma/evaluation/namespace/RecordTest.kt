@@ -2,8 +2,8 @@ package de.gma.gamma.evaluation.namespace
 
 import de.gma.gamma.datatypes.StringValue
 import de.gma.gamma.datatypes.list.ListValue
-import de.gma.gamma.datatypes.record.RecordValue
 import de.gma.gamma.datatypes.values.IntegerValue
+import de.gma.gamma.datatypes.values.RecordValue
 import de.gma.gamma.evaluation.BaseEvaluationTest
 import de.gma.gamma.parser.EvaluationException
 import org.assertj.core.api.Assertions.assertThat

@@ -5,7 +5,6 @@ import de.gma.gamma.builtins.createMapFromListOfPair
 import de.gma.gamma.builtins.namespaces.special.PropertyFunction
 import de.gma.gamma.datatypes.functions.FunctionValue
 import de.gma.gamma.datatypes.list.ListValue
-import de.gma.gamma.datatypes.record.RecordValue
 import de.gma.gamma.datatypes.scope.Scope
 import de.gma.gamma.datatypes.values.*
 import de.gma.gamma.parser.EvaluationException
