@@ -12,38 +12,29 @@ class ExtendListTest : BaseEvaluationTest() {
 
     @Test
     fun `adds a new element to a list`() {
-        val expr = execute("10 :: {1, 2, 3}")
+        val expr = execute("10 :: {1, 2, 3}") as ListValue
 
-        assertThat(expr).isInstanceOf(ListValue::class.java)
-
-        val l = expr as ListValue
-        assertThat(l.size()).isEqualTo(4)
-        assertThat(l.first().prettyPrint()).isEqualTo("10")
-        assertThat(l.last().prettyPrint()).isEqualTo("3")
+        assertThat(expr.size()).isEqualTo(4)
+        assertThat(expr.first().toInteger().longValue).isEqualTo(10L)
+        assertThat(expr.last().toInteger().longValue).isEqualTo(3L)
     }
 
     @Test
     fun `appends an element to a list`() {
-        val expr = execute("append 10 {1, 2, 3}")
+        val expr = execute("append 10 {1, 2, 3}") as ListValue
 
-        assertThat(expr).isInstanceOf(ListValue::class.java)
-
-        val l = expr as ListValue
-        assertThat(l.size()).isEqualTo(4)
-        assertThat(l.first().prettyPrint()).isEqualTo("1")
-        assertThat(l.last().prettyPrint()).isEqualTo("10")
+        assertThat(expr.size()).isEqualTo(4)
+        assertThat(expr.first().toInteger().longValue).isEqualTo(1L)
+        assertThat(expr.last().toInteger().longValue).isEqualTo(10L)
     }
 
     @Test
     fun `appends a list to a list`() {
-        val expr = execute("appendAll {4, 5, 6} {1, 2, 3}")
+        val expr = execute("appendAll {4, 5, 6} {1, 2, 3}") as ListValue
 
-        assertThat(expr).isInstanceOf(ListValue::class.java)
-
-        val l = expr as ListValue
-        assertThat(l.size()).isEqualTo(6)
-        assertThat(l.first().prettyPrint()).isEqualTo("1")
-        assertThat(l.last().prettyPrint()).isEqualTo("6")
+        assertThat(expr.size()).isEqualTo(6)
+        assertThat(expr.first().toInteger().longValue).isEqualTo(1L)
+        assertThat(expr.last().toInteger().longValue).isEqualTo(6L)
     }
 
     @Test
