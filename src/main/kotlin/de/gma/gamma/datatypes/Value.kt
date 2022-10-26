@@ -13,6 +13,7 @@ import de.gma.gamma.datatypes.values.RecordValue
 enum class DataType(val valueClass: Class<out Value>) {
     BOOLEAN(BooleanValue::class.java),
     LIST(ListValue::class.java),
+    PAIR(PairValue::class.java),
     FLOAT(FloatValue::class.java),
     INTEGER(IntegerValue::class.java),
     STRING(StringValue::class.java),
@@ -33,6 +34,8 @@ interface Value {
     fun toBoolean(): BooleanValue
 
     fun toList(): ListValue
+
+    fun toPair(): PairValue
 
     fun toFloat(): FloatValue
 

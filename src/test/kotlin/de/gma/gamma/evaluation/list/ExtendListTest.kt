@@ -1,6 +1,7 @@
 package de.gma.gamma.evaluation.list
 
 import de.gma.gamma.datatypes.list.ListValue
+import de.gma.gamma.datatypes.values.PairValue
 import de.gma.gamma.evaluation.BaseEvaluationTest
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -45,10 +46,18 @@ class ExtendListTest : BaseEvaluationTest() {
 
     @Test
     fun `a string can be converted to a list of characters`() {
-        val expr = execute("\"Test\" ▷ to-char-list") as ListValue
+        val expr = execute("\"Test\" ▷ make-char-list") as ListValue
 
         assertThat(expr.allItems()).hasSize(4)
         assertThat(expr.first().toStringValue().strValue).isEqualTo("T")
         assertThat(expr.last().toStringValue().strValue).isEqualTo("t")
+    }
+
+    @Test
+    fun `convert a 2-item-list to a pair`() {
+        val expr = execute("make-pair {1, 2}") as PairValue
+
+        assertThat(expr.first().toInteger().longValue).isEqualTo(1L)
+        assertThat(expr.last().toInteger().longValue).isEqualTo(2L)
     }
 }

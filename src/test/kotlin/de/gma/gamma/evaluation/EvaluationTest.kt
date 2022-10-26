@@ -2,8 +2,8 @@ package de.gma.gamma.evaluation
 
 import de.gma.gamma.datatypes.StringValue
 import de.gma.gamma.datatypes.list.ListValue
-import de.gma.gamma.datatypes.list.PairValue
 import de.gma.gamma.datatypes.values.IntegerValue
+import de.gma.gamma.datatypes.values.PairValue
 import de.gma.gamma.datatypes.values.VoidValue
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test

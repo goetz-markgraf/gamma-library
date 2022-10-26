@@ -2,6 +2,7 @@ package de.gma.gamma.evaluation.list
 
 import de.gma.gamma.datatypes.list.ListValue
 import de.gma.gamma.datatypes.values.IntegerValue
+import de.gma.gamma.datatypes.values.PairValue
 import de.gma.gamma.evaluation.BaseEvaluationTest
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -143,13 +144,11 @@ class ListFunctionTest : BaseEvaluationTest() {
 
         assertThat(result.size()).isEqualTo(3)
 
-        val firstPair = result.first() as ListValue
-        assertThat(firstPair.size()).isEqualTo(2)
+        val firstPair = result.first() as PairValue
         assertThat((firstPair.first() as IntegerValue).longValue).isEqualTo(1L)
         assertThat((firstPair.last() as IntegerValue).longValue).isEqualTo(3L)
 
-        val lastPair = result.last() as ListValue
-        assertThat(lastPair.size()).isEqualTo(2)
+        val lastPair = result.last() as PairValue
         assertThat((lastPair.first() as IntegerValue).longValue).isEqualTo(3L)
         assertThat((lastPair.last() as IntegerValue).longValue).isEqualTo(1L)
     }
@@ -160,13 +159,11 @@ class ListFunctionTest : BaseEvaluationTest() {
 
         assertThat(result.size()).isEqualTo(3)
 
-        val firstPair = result.first() as ListValue
-        assertThat(firstPair.size()).isEqualTo(2)
+        val firstPair = result.first() as PairValue
         assertThat((firstPair.first() as IntegerValue).longValue).isEqualTo(1L)
         assertThat((firstPair.last() as IntegerValue).longValue).isEqualTo(5L)
 
-        val lastPair = result.last() as ListValue
-        assertThat(lastPair.size()).isEqualTo(2)
+        val lastPair = result.last() as PairValue
         assertThat((lastPair.first() as IntegerValue).longValue).isEqualTo(3L)
         assertThat((lastPair.last() as IntegerValue).longValue).isEqualTo(3L)
     }

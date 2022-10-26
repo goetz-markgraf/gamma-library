@@ -26,7 +26,7 @@ let find-common-bits list =
     
     let apply line current =
         let additions =
-            line ▷ to-char-list ▷ map [char : char = "1" ? 1 : -1]
+            line ▷ make-char-list ▷ map [char : char = "1" ? 1 : -1]
 
         zip current additions
         |> map [ pair :

@@ -269,8 +269,8 @@ class TypeConversionTest : BaseEvaluationTest() {
     inner class ConvertRecord {
 
         @Test
-        fun `convert a list to a record`() {
-            val result = execute("{1} ▷ map [it : {:a , it}] ▷ to-record") as RecordValue
+        fun `convert a list of pairs to a record`() {
+            val result = execute("{1} ▷ map [it : :a → it] ▷ to-record") as RecordValue
 
             assertThat(result.getPropertyNames()).containsExactly("a")
             assertThat(result.getValueForName("a").toInteger().longValue).isEqualTo(1L)

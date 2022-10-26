@@ -41,12 +41,12 @@ let split-line-into-coordinates line =
     let start-cmd = split-by "," components.first
     let end-cmd = split-by "," components.last
 
-    (start-cmd.first + 0 → start-cmd.last + 0) → (end-cmd.first + 0 → end-cmd.last + 0)
+    {(start-cmd.first + 0 → start-cmd.last + 0), (end-cmd.first + 0 → end-cmd.last + 0)}
 
 assert
     "split-line-into-coordinates"
-    (split-line-into-coordinates "0,9 → 5,9" → {{0,9},{5,9}})
-    (split-line-into-coordinates "8,0 → 0,8" → {{8,0},{0,8}})
+    (split-line-into-coordinates "0,9 -> 5,9" → {0 → 9, 5 →9})
+    (split-line-into-coordinates "8,0 -> 0,8" → {8 → 0, 0 → 8})
 
 
 

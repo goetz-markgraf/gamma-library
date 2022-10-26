@@ -14,6 +14,7 @@ class ToTypeFunction(private val type: DataType) : BuiltinFunction(listOf("obj")
         return when (type) {
             DataType.BOOLEAN -> l.toBoolean()
             DataType.LIST -> l.toList()
+            DataType.PAIR -> l.toPair()
             DataType.FLOAT -> l.toFloat()
             DataType.INTEGER -> l.toInteger()
             DataType.STRING -> l.toStringValue()

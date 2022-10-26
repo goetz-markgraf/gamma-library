@@ -42,11 +42,12 @@ class WhenFunctionTest : BaseEvaluationTest() {
     fun `check a simple when function with a list of lists`(input: String, expected: String) {
         val code = """
             let a = $input
-            when {
-                {a > 2, "groesser"}
-                {a < 2, "kleiner"}
-                {true, "gleich"}
-            }
+            when (
+                {
+                    {a > 2, "groesser"}
+                    {a < 2, "kleiner"}
+                    {true, "gleich"}
+                } ▷ make-pair-list)
         """.trimIndent()
 
         val result = execute(code) as StringValue

@@ -43,6 +43,12 @@ abstract class AbstractValue(
             else -> ListValue.build(listOf(this))
         }
 
+    override fun toPair(): PairValue =
+        when (this) {
+            is PairValue -> this
+            else -> throw createException("$this cannot be converted to a pair")
+        }
+
     override fun toFloat(): FloatValue =
         when (this) {
             is FloatValue -> this
@@ -53,7 +59,7 @@ abstract class AbstractValue(
                 else FloatValue.build(v)
             }
 
-            else -> throw createException("$this cannot be converted to float")
+            else -> throw createException("$this cannot be converted to a float")
         }
 
     override fun toStringValue(): StringValue =

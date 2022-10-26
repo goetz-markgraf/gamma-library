@@ -7,6 +7,7 @@ import de.gma.gamma.builtins.nullPos
 import de.gma.gamma.datatypes.Value
 import de.gma.gamma.datatypes.scope.Scope
 import de.gma.gamma.datatypes.scoped.ScopedValue
+import de.gma.gamma.datatypes.values.PairValue
 import de.gma.gamma.datatypes.values.RecordValue
 import de.gma.gamma.parser.EvaluationException
 import de.gma.gamma.parser.Position
@@ -27,14 +28,14 @@ class ListLiteral(
         val items = internalItems.map {
             it.evaluate(scope)
         }
+        @Suppress("UNCHECKED_CAST")
         return when {
             isRecordDefinition(items) -> RecordValue(
                 this.sourceName, this.beginPos, this.endPos, createMapFromListOfPair(
-                    items as List<ListValue>, scope
+                    items as List<PairValue>, scope
                 )
             )
 
-            items.size == 2 -> PairValue(sourceName, beginPos, endPos, items[0], items[1])
             else -> SimpleList(sourceName, beginPos, endPos, items)
         }
     }

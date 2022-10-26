@@ -3,8 +3,8 @@ package de.gma.gamma.builtins.list
 import de.gma.gamma.builtins.BuiltinFunction
 import de.gma.gamma.datatypes.Value
 import de.gma.gamma.datatypes.list.ListValue
-import de.gma.gamma.datatypes.list.PairValue
 import de.gma.gamma.datatypes.scope.Scope
+import de.gma.gamma.datatypes.values.PairValue
 
 object ZipFunction : BuiltinFunction(listOf("list-1", "list-2")) {
     override fun callInternal(scope: Scope, callParams: List<Value>): Value {

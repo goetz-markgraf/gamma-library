@@ -406,7 +406,8 @@ These are the functions currently built in into _gamma_:
 * filter predicate list – filters the [list] such that it contains only elements the match the [predicate]
 * find predicate list – find the first element in [list] where the [predicate] is true
 * zip list-1 list-2 – Creates a new list consisting of pairs of the corresponding elements from [list-1] and [list-2]
-* to-char-list string – creates a list of characters from the [string]
+* make-pair list – creates a pair from a [list] of size 2
+* make-char-list string – creates a list of characters from the [string]
 * contains? predicate list – tests if [item] is in [list]. This also includes strings.
 * does-not-contain? predicate list – tests if [item] is not in [list]. This also includes strings.
 * is-empty? list – tests if [list or string] is empty, i. e. does not contain elements or characters
@@ -445,6 +446,7 @@ These are the functions currently built in into _gamma_:
 * f <| v – pipes the [value] on the right into the [function] on the left
 * f ◁ v – pipes the [value] on the right into the [function] on the left
 * when* v list – checks each [predicate] called with [value] to evaluate to first expression with a true predicate
+* make-pair-list list – converts a list of 2-item-lists to a list of pairs
 * id a – returns the given parameter as is
 * or expression-list – returns the first value that is not falsey
 * print v – prints the parameters and appends a newline

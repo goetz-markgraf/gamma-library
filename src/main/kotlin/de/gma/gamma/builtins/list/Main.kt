@@ -33,7 +33,8 @@ fun populateList(scope: Scope) {
     bindWithDoc(scope, "filter", FilterFunction, "filters the [list] such that it contains only elements the match the [predicate]")
     bindWithDoc(scope, "find", FindFunction, "find the first element in [list] where the [predicate] is true")
     bindWithDoc(scope, "zip", ZipFunction, "Creates a new list consisting of pairs of the corresponding elements from [list-1] and [list-2]")
-    bindWithDoc(scope, "to-char-list", ToCharListFunction, "creates a list of characters from the [string]")
+    bindWithDoc(scope, "make-pair", MakePairFunction, "creates a pair from a [list] of size 2")
+    bindWithDoc(scope, "make-char-list", MakeCharListFunction, "creates a list of characters from the [string]")
 
     bindWithDoc(scope, "contains?", ContainsPredicate, "tests if [item] is in [list]. This also includes strings.")
     bindWithDoc(scope, "does-not-contain?", DoesNotContainPredicate, "tests if [item] is not in [list]. This also includes strings.")

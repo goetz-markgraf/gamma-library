@@ -4,10 +4,10 @@ import de.gma.gamma.builtins.BuiltinFunction
 import de.gma.gamma.builtins.GammaBaseScope
 import de.gma.gamma.datatypes.StringValue
 import de.gma.gamma.datatypes.Value
-import de.gma.gamma.datatypes.list.ListValue
 import de.gma.gamma.datatypes.scope.ModuleScope
 import de.gma.gamma.datatypes.scope.Scope
 import de.gma.gamma.datatypes.values.BooleanValue
+import de.gma.gamma.datatypes.values.PairValue
 import de.gma.gamma.parser.EvaluationException
 
 object AssertFunction : BuiltinFunction(listOf("list-of-assertions")) {
@@ -21,7 +21,7 @@ object AssertFunction : BuiltinFunction(listOf("list-of-assertions")) {
         items.allItems().forEach {
             if (it is StringValue)
                 message = it.strValue
-            else if (it is ListValue && it.size() == 2) {
+            else if (it is PairValue) {
                 val actual = it.first().evaluate(tempScope)
                 val expected = it.last().evaluate(tempScope)
                 if (actual != expected) {

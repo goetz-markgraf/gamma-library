@@ -75,7 +75,7 @@ let find-least-common-bits = find-common-bits 0 false
 
 let make-binary-from-list number-list =
     number-list
-    |> to-char-list
+    |> make-char-list
     |> map [ number :
         number > 0 ? 1 : 0 ]
 

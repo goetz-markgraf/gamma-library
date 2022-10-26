@@ -17,6 +17,7 @@ class CanBeUsedAsPredicate(private val type: DataType) : BuiltinFunction(listOf(
         val ret = when (type) {
             DataType.BOOLEAN -> true
             DataType.LIST -> true
+            DataType.PAIR -> checkConvert { l.toPair() }
             DataType.FLOAT -> checkConvert { l.toFloat() }
             DataType.INTEGER -> checkConvert { l.toInteger() }
             DataType.STRING -> true

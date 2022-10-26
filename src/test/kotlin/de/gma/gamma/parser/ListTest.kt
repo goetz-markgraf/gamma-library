@@ -1,7 +1,7 @@
 package de.gma.gamma.parser
 
-import de.gma.gamma.datatypes.list.ListLiteral
 import de.gma.gamma.datatypes.list.ListValue
+import de.gma.gamma.datatypes.values.PairValue
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -66,12 +66,9 @@ class ListTest : BaseParserTest() {
                 else → print "gleich"
             }
         """.trimIndent()
-        )
+        ) as ListValue
 
-        assertThat(expression).isInstanceOf(ListValue::class.java)
-
-        val list = expression as ListValue
-        assertThat(list.size()).isEqualTo(3)
-        assertThat(list.allItems()).allMatch { it is ListLiteral }
+        assertThat(expression.size()).isEqualTo(3)
+        assertThat(expression.allItems()).allMatch { it is PairValue }
     }
 }

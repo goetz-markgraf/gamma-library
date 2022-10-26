@@ -1,7 +1,7 @@
 package de.gma.gamma.parser
 
 import de.gma.gamma.datatypes.expressions.FunctionCall
-import de.gma.gamma.datatypes.list.ListValue
+import de.gma.gamma.datatypes.values.PairValue
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -23,9 +23,8 @@ class OperatorLevelTest : BaseParserTest() {
 
     @Test
     fun `pair binds weaker than pipe`() {
-        val result = getExpression("a ▷ b → a ◁ b") as ListValue
+        val result = getExpression("a ▷ b → a ◁ b") as PairValue
 
-        assertThat(result.size()).isEqualTo(2)
         assertThat((result.first() as FunctionCall).function.prettyPrint()).isEqualTo("▷")
         assertThat((result.last() as FunctionCall).function.prettyPrint()).isEqualTo("◁")
     }
