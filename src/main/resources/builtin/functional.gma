@@ -2,6 +2,13 @@
 let (**) f g =
     [ v : v ▷ f ▷ g]
 
+'pipes the [value] on the right into the [function] on the left'
+let (<|) f v =
+    f v
+
+'pipes the [value] on the right into the [function] on the left'
+let (◁) = (<|)
+
 'checks each [predicate] called with [value] to evaluate to first expression with a true predicate'
 let when* v list =
     when {

@@ -1,27 +1,22 @@
 package de.gma.gamma.parser
 
 
-const val OP_LEVEL_POWER = 0
-const val OP_LEVEL_PRODUCT = 1
-const val OP_LEVEL_SUM = 2
 const val OP_LEVEL_DEFAULT = 3
-const val OP_LEVEL_COMPARISON = 4
-const val OP_LEVEL_OR = 5
-const val OP_LEVEL_AND = 6
-const val OP_LEVEL_ARROW = 7
+const val OP_LEVEL_PAIR = 8
 
 val operatorLevels = listOf(
-    mutableListOf("^", "..", "::", "@"),
-    mutableListOf("*", "/", "×", "÷"),
-    mutableListOf("+", "-"),
-    mutableListOf(),
-    mutableListOf(">", ">=", "≥", "<", "<=", "≤", "=", "≠", "!="),
-    mutableListOf("&", "∧"),
-    mutableListOf("|", "∨"),
-    mutableListOf("->", "→", "|>", "▷")
+    /* Level 0 */    mutableListOf("^", "..", "::", "@"),
+    /* Level 1 */    mutableListOf("*", "/", "×", "÷"),
+    /* Level 2 */    mutableListOf("+", "-"),
+    /* Level 3 */    mutableListOf(),
+    /* Level 4 */    mutableListOf(">", ">=", "≥", "<", "<=", "≤", "=", "≠", "!="),
+    /* Level 5 */    mutableListOf("&", "∧"),
+    /* Level 6 */    mutableListOf("|", "∨"),
+    /* Level 7 */    mutableListOf("|>", "▷", "<|", "◁"),
+    /* Level 8 */    mutableListOf("->", "→")
 )
 
-const val MAX_OPERATOR_LEVEL = OP_LEVEL_ARROW
+const val MAX_OPERATOR_LEVEL = OP_LEVEL_PAIR
 
 fun isOperatorInLevel(op: String, level: Int): Boolean {
     if (level < 0 || level > MAX_OPERATOR_LEVEL)

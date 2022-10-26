@@ -8,15 +8,29 @@ import org.junit.jupiter.api.Test
 class PipeTest : BaseEvaluationTest() {
 
     @Test
-    fun `normal map`() {
+    fun `normal pipe`() {
         val result = execute("{0} |> size") as IntegerValue
 
         assertThat(result.longValue).isEqualTo(1L)
     }
 
     @Test
-    fun `normal map alternate form`() {
+    fun `normal pipe alternate form`() {
         val result = execute("{0} ▷ size") as IntegerValue
+
+        assertThat(result.longValue).isEqualTo(1L)
+    }
+
+    @Test
+    fun `normal pipe right`() {
+        val result = execute("size <| {0}") as IntegerValue
+
+        assertThat(result.longValue).isEqualTo(1L)
+    }
+
+    @Test
+    fun `normal pipe right alternative form`() {
+        val result = execute("size ◁ {0}") as IntegerValue
 
         assertThat(result.longValue).isEqualTo(1L)
     }

@@ -442,6 +442,8 @@ These are the functions currently built in into _gamma_:
 * env – holds all environment variables and their values as a record
 * system – holds all java system properties their values as a record (names with a '.' are replaced by '-')
 * f ** g – combines two functions to a new one that applies both functions after another
+* f <| v – pipes the [value] on the right into the [function] on the left
+* f ◁ v – pipes the [value] on the right into the [function] on the left
 * when* v list – checks each [predicate] called with [value] to evaluate to first expression with a true predicate
 * id a – returns the given parameter as is
 * or expression-list – returns the first value that is not falsey
