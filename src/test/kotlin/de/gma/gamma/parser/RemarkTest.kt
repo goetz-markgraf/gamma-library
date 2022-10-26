@@ -10,11 +10,7 @@ class RemarkTest : BaseParserTest() {
     fun `parse a simple remark`() {
         val expression = getExpression("#remark")
 
-        assertThat(expression).isInstanceOf(Remark::class.java)
-        val remark = expression as Remark
-
-        assertThat(remark.strValue).isEqualTo("remark")
-        assertThat(remark.prettyPrint()).isEqualTo("# remark")
+        assertThat(expression).isNull()
     }
 
     @Test

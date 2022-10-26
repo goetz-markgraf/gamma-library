@@ -469,8 +469,9 @@ class LexerSimpleTest {
 
         assertToken(
             token,
-            type = REMARK,
-            content = "remark",
+            type = EOF,
+            content = "",
+            start = 7,
             end = 7
         )
     }
@@ -482,8 +483,9 @@ class LexerSimpleTest {
 
         assertToken(
             token,
-            type = REMARK,
-            content = "remark",
+            type = EOF,
+            content = "",
+            start = 8,
             end = 8
         )
     }

@@ -44,6 +44,10 @@ class Lexer(
      */
     fun nextToken(): Token {
         skipWhitespace()
+        if (isStartOfLineComment(char)) {
+            skipComment()
+            skipWhitespace()
+        }
 
         return when {
             isEof(char) -> eof()
@@ -53,8 +57,6 @@ class Lexer(
             isStartOfString(char) -> parseString()
 
             isStartOfDocumentation(char) -> parseDocumentation()
-
-            isStartOfRemark(char) -> parseRemark()
 
             isStartOfNumber(char, peekChar) -> parseNumber()
 
@@ -85,28 +87,6 @@ class Lexer(
     // token is finished
     // char is than the next character behind the token
     // return the token
-
-    private fun parseRemark(): Token {
-        val start = position()
-        next()
-        // leading whitespace are ignored
-        skipWhitespace()
-
-        val content = StringBuffer()
-
-        while (char != CH_NEWLINE && char != nullChar) {
-            content.append(char)
-            next()
-        }
-
-        return Token(
-            type = TokenType.REMARK,
-            content = content.toString(),
-            sourceName = sourceName,
-            start = start,
-            end = position()
-        )
-    }
 
     private fun parseTernaryCharacter(): Token {
         val ret = Token(
@@ -384,7 +364,7 @@ class Lexer(
     private fun next() {
         pos++
 
-        // /r (part of newline on windows machines) will not be counted but silenty ignored in col/line
+        // \r (part of newline on Windows machines) will not be counted but silently ignored in col/line
         if (char != '\r') {
             if (char == CH_NEWLINE) {
                 line++
@@ -401,10 +381,10 @@ class Lexer(
         } else {
             char = peekChar
 
-            if (pos < length - 1)
-                peekChar = source[pos + 1]
+            peekChar = if (pos < length - 1)
+                source[pos + 1]
             else
-                peekChar = nullChar
+                nullChar
 
             if (pos < length - 2)
                 peekPeekChar = source[pos + 2]
@@ -416,6 +396,12 @@ class Lexer(
     private fun skipWhitespace() {
         fun isGammaWhitespace() = char != '\t' && isWhitespace(char)
         while (isGammaWhitespace()) {
+            next()
+        }
+    }
+
+    private fun skipComment() {
+        while (char != CH_NEWLINE && char != nullChar) {
             next()
         }
     }

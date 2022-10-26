@@ -31,7 +31,7 @@ fun isStartOfProperty(char: Char, peekChar: Char) =
 fun isStartOfDocumentation(char: Char) =
     char == CH_APOSTR
 
-fun isStartOfRemark(char: Char) =
+fun isStartOfLineComment(char: Char) =
     char == CH_HASH
 
 fun isEof(char: Char) =
@@ -76,7 +76,7 @@ fun isStartOfString(char: Char) =
     char == CH_QUOTE
 
 fun isOperatorChar(char: Char) =
-    !(char == nullChar || isWhitespace(char) || isLetter(char) || isDigit(char) || "()[]{}_$".contains(char))
+    !(char == nullChar || isWhitespace(char) || isLetter(char) || isDigit(char) || "()[]{}_$#".contains(char))
 //    ".<>-+*^/:%$|=!&@«»×∧∨÷≠≤≥∑∫◊≈∆▷◁→←\\".contains(char)
 
 fun isStartOfFunctionOperator(char: Char, peekChar: Char, peekPeekChar: Char) =

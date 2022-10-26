@@ -9,7 +9,7 @@ class OperatorLevelTest : BaseParserTest() {
 
     @Test
     fun `cannot retrieve negative operatorlevel`() {
-        val result = isOperatorInLevel("x", -1)
+        val result = isOperatorInLevel("$", -1)
 
         assertThat(result).isFalse
     }

@@ -39,6 +39,5 @@ enum class TokenType {
     MATCH,
     WITH,
     TERNARY,
-    REMARK,
     DOCUMENTATION
 }

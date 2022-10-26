@@ -41,8 +41,6 @@ class Parser(
 
             DOCUMENTATION -> parseDocumentation(minCol)
 
-            REMARK -> parseRemark(minCol)
-
             LET -> parseLetExpression(minCol)
 
             SET -> parseSetExpression(minCol)
@@ -65,17 +63,6 @@ class Parser(
     // ==========================================================
     // parse-Methods that extract the next expression from the source
     // ==========================================================
-
-    private fun parseRemark(col: Int): Remark {
-        assertType(col, REMARK)
-
-        val content = currToken.content
-
-        val ret = Remark(sourceName, currStart, currEnd, content)
-        nextToken()
-
-        return ret
-    }
 
     private fun parseDocumentation(col: Int): Value {
         assertType(col, DOCUMENTATION)
@@ -174,7 +161,7 @@ class Parser(
             return null
 
         val endTokens =
-            listOf(EOF, EXEND, CLOSE_PARENS, OP, ERROR, LET, SET, TYPE, MODULE, TERNARY, REMARK, DOCUMENTATION)
+            listOf(EOF, EXEND, CLOSE_PARENS, OP, ERROR, LET, SET, TYPE, MODULE, TERNARY, DOCUMENTATION)
         if (endTokens.indexOf(currType) >= 0)
             return null
 

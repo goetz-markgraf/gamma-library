@@ -10,12 +10,14 @@ class RemarkTest : BaseEvaluationTest() {
 
     @Test
     fun `a remark evaluates to empty`() {
-        execute("#remark") as VoidValue
+        assertThat(execute("#remark")).isNull()
     }
 
     @Test
     fun `a remark can stay behind an expression`() {
-        execute("10 + 20 # computes a sum") as VoidValue
+        val result = execute("10 + 20 # computes a sum") as IntegerValue
+
+        assertThat(result.longValue).isEqualTo(30L)
     }
 
     @Test
@@ -45,6 +47,6 @@ class RemarkTest : BaseEvaluationTest() {
                 
             add 10 20
         """.trimIndent()
-        ) as VoidValue
+        ) as IntegerValue
     }
 }
