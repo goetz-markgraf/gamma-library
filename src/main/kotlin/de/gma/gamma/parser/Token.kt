@@ -13,7 +13,10 @@ data class Token(
     val sourceName: String,
     val start: Position,
     val end: Position
-)
+) {
+    override fun toString() =
+        "$content ($type)"
+}
 
 
 enum class TokenType {

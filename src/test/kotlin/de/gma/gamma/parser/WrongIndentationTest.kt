@@ -3,7 +3,7 @@ package de.gma.gamma.parser
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.Test
 
-class IndentationTest : BaseParserTest() {
+class WrongIndentationTest : BaseParserTest() {
 
     @Test
     fun `error when indentation wrong in let expression`() {

@@ -515,7 +515,7 @@ class Parser(
 
     private fun createIllegalTokenException(expected: String? = null) =
         EvaluationException(
-            "Illegal Token ${currToken.content}${if (expected != null) " but was expecting $expected" else ""}",
+            "Illegal Token '$currToken'${if (expected != null) " but was expecting $expected" else ""}",
             sourceName,
             currStart.line,
             currStart.col

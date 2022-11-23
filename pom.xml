@@ -90,6 +90,44 @@
                     <target>8</target>
                 </configuration>
             </plugin>
+
+            <!--Mutation Testing-->
+            <plugin>
+                <groupId>org.pitest</groupId>
+                <artifactId>pitest-maven</artifactId>
+                <version>1.9.10</version>
+                <configuration>
+                    <outputFormats>
+                        <outputFormat>HTML</outputFormat>
+                    </outputFormats>
+                    <targetClasses>
+                        <param>de.gma.gamma.parser.*</param>
+                    </targetClasses>
+                    <targetTests>
+                        <param>de.gma.gamma.parser.*</param>
+                        <param>de.gma.gamma.evaluation.*</param>
+                        <param>de.gma.gamma.builtins.*</param>
+                        <param>de.gma.gamma.datatypes.*</param>
+                        <param>de.gma.gamma.documentation.*</param>
+                    </targetTests>
+                    <avoidCallsTo>
+                        <avoidCallsTo>java.util.logging</avoidCallsTo>
+                        <avoidCallsTo>org.apache.log4j</avoidCallsTo>
+                        <avoidCallsTo>org.slf4j</avoidCallsTo>
+                        <avoidCallsTo>org.apache.commons.logging</avoidCallsTo>
+                        <avoidCallsTo>kotlin.jvm.internal</avoidCallsTo>
+                    </avoidCallsTo>
+                    <!-- <timeoutConstant>10000</timeoutConstant>-->
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.pitest</groupId>
+                        <artifactId>pitest-junit5-plugin</artifactId>
+                        <version>1.0.0</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+
         </plugins>
     </build>
 
