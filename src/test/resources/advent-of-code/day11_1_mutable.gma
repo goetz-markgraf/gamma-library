@@ -13,7 +13,7 @@ let test-input = {
 
 'This creates a mutable store for one integer'
 let iStore init =
-    let content! = init
+    let content! = init ▷ to-integer
 
     let inc amount = set content! = content! + amount
     let reset () = set content! = 0
@@ -56,7 +56,7 @@ let max-y matrix =
 
 assert
     "Matrix Konvertierung"
-    ({"123"} ▷ to-matrix ▷ to-output → {{"1","2", "3"}})
+    ({"123"} ▷ to-matrix ▷ to-output → {{1, 2, 3}})
 
 
 
@@ -66,8 +66,8 @@ let inc-at x y matrix =
 
 assert
     "inc-at"
-    ({"123"} ▷ to-matrix ▷ inc-at 0 0 ▷ to-output → {{2, "2", "3"}} )
-    ({"123"} ▷ to-matrix ▷ inc-at 1 0 ▷ to-output → {{"1", 3, "3"}} )
+    ({"123"} ▷ to-matrix ▷ inc-at 0 0 ▷ to-output → {{2, 2, 3}} )
+    ({"123"} ▷ to-matrix ▷ inc-at 1 0 ▷ to-output → {{1, 3, 3}} )
 
 
 let v-at x y matrix =
@@ -106,10 +106,10 @@ let charge-if-exists x y matrix =
 
 assert
     "charge-if-exists"
-    ({"012","345"} ▷ to-matrix ▷ charge-if-exists 0 0 ▷ to-output → {{"0", "1", "2"}, {"3", "4", "5"}})
-    ({"012","345"} ▷ to-matrix ▷ charge-if-exists 1 0 ▷ to-output → {{"0", 2, "2"}, {"3", "4", "5"}})
-    ({"012","345"} ▷ to-matrix ▷ charge-if-exists 10 0 ▷ to-output → {{"0", "1", "2"}, {"3", "4", "5"}})
-    ({"012","345"} ▷ to-matrix ▷ charge-if-exists 0 10 ▷ to-output → {{"0", "1", "2"}, {"3", "4", "5"}})
+    ({"012","345"} ▷ to-matrix ▷ charge-if-exists 0 0 ▷ to-output → {{0, 1, 2}, {3, 4, 5}})
+    ({"012","345"} ▷ to-matrix ▷ charge-if-exists 1 0 ▷ to-output → {{0, 2, 2}, {3, 4, 5}})
+    ({"012","345"} ▷ to-matrix ▷ charge-if-exists 10 0 ▷ to-output → {{0, 1, 2}, {3, 4, 5}})
+    ({"012","345"} ▷ to-matrix ▷ charge-if-exists 0 10 ▷ to-output → {{0, 1, 2}, {3, 4, 5}})
 
 
 

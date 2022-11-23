@@ -18,7 +18,7 @@ let test-input = {
 let to-matrix input =
     input ▷ map [line :
         line ▷ make-char-list ▷ map [ch :
-            ch + 0
+            to-integer ch
         ]
     ]
 
@@ -34,14 +34,6 @@ let max-x matrix =
 let max-y matrix =
     matrix.size - 1
 
-
-
-let to-output matrix =
-    matrix
-
-assert
-    "Matrix Konvertierung"
-    ({"123"} ▷ to-matrix → {{1, 2, 3}})
 
 
 
@@ -118,11 +110,12 @@ let charge-around x y matrix =
         (y-pos < y - 1) ∨ (y-pos > y + 1)
         ? line
         : line ▷ map*  [ i x-pos :
-            when
-                (x-pos < x - 1 ∨ x-pos > x + 1 → i)
-                (x = x-pos ∧ y = y-pos → 0)
-                (i = 0 → 0)
-                (else → i + 1)
+            when {
+                x-pos < x - 1 ∨ x-pos > x + 1 → i
+                x = x-pos ∧ y = y-pos → 0
+                i = 0 → 0
+                else → i + 1
+            }
         ]
     ]
 
@@ -159,7 +152,7 @@ assert
 
 
 let do-all-flashing flashing matrix =
-    flashing ▷ fold matrix [ m pos : break, m ▷ charge-around pos.first pos.last ]
+    flashing ▷ fold matrix [ matrix pos : matrix ▷ charge-around pos.first pos.last ]
 
 assert
     "do-all-flashing"
@@ -182,6 +175,8 @@ assert
     ({{1,2,2},{3,4,8}} ▷ process-flashing → {{1,2,2},{3,4,8}})
     ({{1,2,2},{3,4,10}} ▷ process-flashing → {{1,3,3},{3,5,0}})
     ({{1,2,10},{3,4,9}} ▷ process-flashing → {{1,4,0},{3,6,0}})
+
+
 
 
 

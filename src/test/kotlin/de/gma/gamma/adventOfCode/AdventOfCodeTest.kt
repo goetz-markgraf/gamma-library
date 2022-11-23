@@ -36,13 +36,13 @@ class AdventOfCodeTest : BaseEvaluationTest() {
             "day11_2.gma,298,195",
         ]
     )
-    fun `check advent-of-code`(filename: String, expected: Long, output: String) {
+    fun `check advent-of-code`(filename: String, expected: Long, testOutput: String) {
 
         val inStream = AdventOfCodeTest::class.java.getResourceAsStream("/advent-of-code/$filename")!!
         val code = BufferedReader(InputStreamReader(inStream)).readText()
         val result = execute(code) as IntegerValue
 
+        assertOutput("$testOutput\n")
         assertThat(result.longValue).isEqualTo(expected)
-        assertOutput("$output\n")
     }
 }
