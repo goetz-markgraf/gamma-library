@@ -124,7 +124,7 @@ class LetAndSetTest : BaseParserTest() {
         assertThatThrownBy {
             getExpression("let a 10")
         }.isInstanceOf(EvaluationException::class.java)
-            .hasMessage("Illegal Token 10 but was expecting =")
+            .hasMessage("Illegal Token '10 (NUMBER)' but was expecting =")
     }
 
     @Test

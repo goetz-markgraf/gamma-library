@@ -44,7 +44,7 @@ class WrongIndentationTest : BaseParserTest() {
             getExpression(source)
         }
             .isInstanceOf(EvaluationException::class.java)
-            .hasMessage("Illegal Token 20 but was expecting [)]")
+            .hasMessage("Illegal Token '20 (NUMBER)' but was expecting [)]")
     }
 
     @Test
