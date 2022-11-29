@@ -1,6 +1,5 @@
 package de.gma.gamma.parser
 
-
 const val CH_MINUS = '-'
 const val CH_PLUS = '+'
 const val CH_MUL = '*'
@@ -74,7 +73,6 @@ fun isStartOfString(char: Char) =
 
 fun isOperatorChar(char: Char) =
     !(char == nullChar || isWhitespace(char) || char.isLetter() || char.isDigit() || "()[]{}_$#".contains(char))
-//    ".<>-+*^/:%$|=!&@«»×∧∨÷≠≤≥∑∫◊≈∆▷◁→←\\".contains(char)
 
 fun isStartOfFunctionOperator(char: Char, peekChar: Char, peekPeekChar: Char) =
     char == CH_LPARENS && isOperatorChar(peekChar) && isOperatorChar(peekPeekChar) ||

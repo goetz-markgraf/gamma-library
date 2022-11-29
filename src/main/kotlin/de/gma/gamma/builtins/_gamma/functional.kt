@@ -1,3 +1,6 @@
+package de.gma.gamma.builtins._gamma
+
+val codeFunctional = """
 'combines two functions to a new one that applies both functions after another'
 let (**) f g =
     [ v : v ▷ f ▷ g]
@@ -31,3 +34,5 @@ let or expression-list =
         expression-list.first → expression-list.first
         else → or expression-list.tail
     }
+
+""".trimIndent()

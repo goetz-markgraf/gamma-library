@@ -1,5 +1,7 @@
 package de.gma.gamma.builtins
 
+import de.gma.gamma.builtins._gamma.codeFunctional
+import de.gma.gamma.builtins._gamma.codeIo
 import de.gma.gamma.builtins.assertions.populateAssertion
 import de.gma.gamma.builtins.comparison.populateComparison
 import de.gma.gamma.builtins.control.populateControl
@@ -12,12 +14,9 @@ import de.gma.gamma.builtins.shell.resetShell
 import de.gma.gamma.builtins.types.populateTypes
 import de.gma.gamma.datatypes.scope.ModuleScope
 import de.gma.gamma.parser.Parser
-import java.io.BufferedReader
-import java.io.InputStreamReader
-import java.io.PrintStream
 
 object GammaBaseScope : ModuleScope("global", null) {
-    var output: PrintStream = System.out
+    val output = StringBuilder()
 
     init {
         populateTypes(this)
@@ -30,20 +29,22 @@ object GammaBaseScope : ModuleScope("global", null) {
         populateAssertion(this)
         populateShell(this)
 
-        read("/builtin/functional.gma")
-        read("/builtin/io.gma")
+        applyCode(codeIo, "code.gma")
+        applyCode(codeFunctional, "functional.gma")
     }
 
     fun reset() {
         resetShell(this)
-        output = System.out
+        output.clear()
     }
 
-    private fun read(resourceName: String) {
-        val inStream = this::class.java.getResourceAsStream(resourceName) ?: return
-        val text = BufferedReader(InputStreamReader(inStream)).readText()
+    fun doPrint(text: String) {
+        output.append(text)
+        print(text)
+    }
 
-        val parser = Parser(text, resourceName)
+    private fun applyCode(code: String, sourceName: String) {
+        val parser = Parser(code, sourceName)
         var expression = parser.nextExpression()
         while (expression != null) {
             expression.evaluate(this)
