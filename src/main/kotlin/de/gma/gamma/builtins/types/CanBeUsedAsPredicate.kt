@@ -35,7 +35,7 @@ class CanBeUsedAsPredicate(private val type: DataType) : BuiltinFunction(listOf(
         try {
             func()
             return true
-        } catch (e: java.lang.Exception) {
+        } catch (e: Exception) {
             return false
         }
     }
