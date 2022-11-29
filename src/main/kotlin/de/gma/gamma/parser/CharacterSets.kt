@@ -1,9 +1,5 @@
 package de.gma.gamma.parser
 
-import java.lang.Character.isDigit
-import java.lang.Character.isLetter
-import java.lang.Character.MIN_VALUE as nullChar
-
 
 const val CH_MINUS = '-'
 const val CH_PLUS = '+'
@@ -24,6 +20,7 @@ const val CH_BANG = '!'
 const val CH_QUESTION_MARK = '?'
 const val CH_DOLLAR = '$'
 
+const val nullChar = Char.MIN_VALUE
 
 fun isStartOfProperty(char: Char, peekChar: Char) =
     char == CH_COLON && isStartOfIdentifier(peekChar)
@@ -44,10 +41,10 @@ fun isVoid(char: Char, peekChar: Char) =
     char == CH_VOID1 && peekChar == CH_VOID2
 
 fun isWhitespace(char: Char) =
-    Character.isWhitespace(char)
+    char.isWhitespace()
 
 
-fun isNumberChar(char: Char) = isDigit(char)
+fun isNumberChar(char: Char) = char.isDigit()
 
 
 fun isStartOfNumber(char: Char, peekChar: Char) =
@@ -57,10 +54,10 @@ fun isStartOfNumber(char: Char, peekChar: Char) =
 
 
 fun isStartOfIdentifier(char: Char) =
-    isLetter(char) || char == CH_UNDERSCORE || char == CH_DOLLAR
+    char.isLetter() || char == CH_UNDERSCORE || char == CH_DOLLAR
 
 fun isIdentifierChar(char: Char) =
-    isLetter(char) || isDigit(char) || isValidSpecialIdentifierChar(char) || isEndOfIdentifier(char)
+    char.isLetter() || char.isDigit() || isValidSpecialIdentifierChar(char) || isEndOfIdentifier(char)
 
 fun isValidSpecialIdentifierChar(char: Char) =
     char == CH_MUL
@@ -76,7 +73,7 @@ fun isStartOfString(char: Char) =
     char == CH_QUOTE
 
 fun isOperatorChar(char: Char) =
-    !(char == nullChar || isWhitespace(char) || isLetter(char) || isDigit(char) || "()[]{}_$#".contains(char))
+    !(char == nullChar || isWhitespace(char) || char.isLetter() || char.isDigit() || "()[]{}_$#".contains(char))
 //    ".<>-+*^/:%$|=!&@«»×∧∨÷≠≤≥∑∫◊≈∆▷◁→←\\".contains(char)
 
 fun isStartOfFunctionOperator(char: Char, peekChar: Char, peekPeekChar: Char) =

@@ -1,7 +1,5 @@
 package de.gma.gamma.parser
 
-import java.lang.Character.MIN_VALUE as nullChar
-
 class Lexer(
     private val source: String,
     private val sourceName: String = "Script"
@@ -102,7 +100,7 @@ class Lexer(
 
     private fun parseExpressionEnding(): Token {
         val string = position()
-        val content = StringBuffer()
+        val content = StringBuilder()
         var end = position()
 
         while (isExpressionEndingChar(char)) {
@@ -149,7 +147,7 @@ class Lexer(
 
     private fun parseOperator(): Token {
         val start = position()
-        val content = StringBuffer()
+        val content = StringBuilder()
 
         var end = position()
         while (isOperatorChar(char)) {
@@ -226,7 +224,7 @@ class Lexer(
         val start = position()
         next()
 
-        val content = StringBuffer()
+        val content = StringBuilder()
         fun isStillInDocumentation() = char != CH_APOSTR && char != nullChar
 
         while (isStillInDocumentation()) {

@@ -5,7 +5,7 @@ import de.gma.gamma.datatypes.Value
 import de.gma.gamma.datatypes.list.ListGenerator
 import de.gma.gamma.datatypes.scope.Scope
 import de.gma.gamma.datatypes.values.IntegerValue
-import java.lang.Math.abs
+import kotlin.math.abs
 
 object RangeFunction : BuiltinFunction(listOf("from", "to")) {
     override fun callInternal(scope: Scope, callParams: List<Value>): Value {
