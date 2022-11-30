@@ -16,7 +16,12 @@ import de.gma.gamma.datatypes.scope.ModuleScope
 import de.gma.gamma.parser.Parser
 
 object GammaBaseScope : ModuleScope("global", null) {
-    val output = StringBuilder()
+
+    private val initialDoPrint = { text: String ->
+        print(text)
+    }
+
+    var doPrint = initialDoPrint
 
     init {
         populateTypes(this)
@@ -35,12 +40,7 @@ object GammaBaseScope : ModuleScope("global", null) {
 
     fun reset() {
         resetShell(this)
-        output.clear()
-    }
-
-    fun doPrint(text: String) {
-        output.append(text)
-        print(text)
+        doPrint = initialDoPrint
     }
 
     private fun applyCode(code: String, sourceName: String) {

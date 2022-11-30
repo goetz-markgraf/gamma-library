@@ -12,9 +12,12 @@ open class BaseEvaluationTest {
     private val baseScope = GammaBaseScope
     protected lateinit var scope: ModuleScope
 
+    private val output = StringBuilder()
+
     @BeforeEach
     fun setUp() {
         scope = ModuleScope("test", baseScope)
+        baseScope.doPrint = { output.append(it) }
     }
 
     @AfterEach
@@ -37,6 +40,6 @@ open class BaseEvaluationTest {
     }
 
     protected fun assertOutput(expected: String) {
-        assertThat(baseScope.output.toString()).isEqualTo(expected)
+        assertThat(output.toString()).isEqualTo(expected)
     }
 }
