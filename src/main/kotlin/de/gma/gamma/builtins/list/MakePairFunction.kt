@@ -6,7 +6,7 @@ import de.gma.gamma.datatypes.scope.Scope
 import de.gma.gamma.datatypes.values.PairValue
 import de.gma.gamma.parser.GammaException
 
-object MakePairFunction : BuiltinFunction(listOf("list")) {
+object MakePairFunction : BuiltinFunction("make-pair", listOf("list")) {
     override fun callInternal(scope: Scope, callParams: List<Value>): Value {
         val p = callParams[0].evaluate(scope).toList()
 

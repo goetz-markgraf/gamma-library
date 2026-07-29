@@ -7,7 +7,7 @@ import de.gma.gamma.datatypes.Value
 import de.gma.gamma.datatypes.scope.Scope
 import de.gma.gamma.datatypes.values.RecordValue
 
-object CopyWithFunction : BuiltinFunction(listOf("property-list", "record")) {
+object CopyWithFunction : BuiltinFunction("copy-with", listOf("property-list", "record")) {
     override fun callInternal(scope: Scope, callParams: List<Value>): Value {
         val changedValues = callParams[0].evaluate(scope)
         val record = callParams[1].evaluate(scope).toRecord(scope)

@@ -8,7 +8,7 @@ import de.gma.gamma.datatypes.scope.Scope
 import java.io.File
 
 
-object CDFunction : BuiltinFunction(listOf("dir")) {
+object CDFunction : BuiltinFunction("cd", listOf("dir")) {
     override fun callInternal(scope: Scope, callParams: List<Value>): Value {
         val path = callParams[0].toStringValue().strValue
 

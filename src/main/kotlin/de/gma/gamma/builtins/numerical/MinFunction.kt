@@ -7,7 +7,7 @@ import de.gma.gamma.datatypes.scope.Scope
 import de.gma.gamma.datatypes.values.FloatValue
 import de.gma.gamma.datatypes.values.IntegerValue
 
-object MinFunction : BuiltinFunction(listOf("list")) {
+object MinFunction : BuiltinFunction("min", listOf("list")) {
     override fun callInternal(scope: Scope, callParams: List<Value>): Value {
         val list = callParams[0].evaluate(scope).toList()
 

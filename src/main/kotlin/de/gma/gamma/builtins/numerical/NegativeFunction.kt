@@ -7,7 +7,7 @@ import de.gma.gamma.datatypes.scope.Scope
 import de.gma.gamma.datatypes.values.FloatValue
 import de.gma.gamma.datatypes.values.IntegerValue
 
-object NegativeFunction : BuiltinFunction(listOf("a")) {
+object NegativeFunction : BuiltinFunction("neg", listOf("a")) {
     override fun callInternal(scope: Scope, callParams: List<Value>): Value {
         val a = extractNumber(callParams[0].evaluate(scope))
 

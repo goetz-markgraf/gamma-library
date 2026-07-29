@@ -6,7 +6,7 @@ import de.gma.gamma.datatypes.Value
 import de.gma.gamma.datatypes.scope.Scope
 import de.gma.gamma.datatypes.values.IntegerValue
 
-object SizeFunction : BuiltinFunction(listOf("list")) {
+object SizeFunction : BuiltinFunction("size", listOf("list")) {
     override fun callInternal(scope: Scope, callParams: List<Value>): Value {
         val p = callParams[0].evaluate(scope)
 

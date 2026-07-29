@@ -6,7 +6,7 @@ import de.gma.gamma.datatypes.scope.Scope
 import de.gma.gamma.parser.GammaException
 import kotlin.math.pow
 
-object PowerToFunction : FunctionTwoNumbersToNumber() {
+object PowerToFunction : FunctionTwoNumbersToNumber("^") {
     override fun callInternal(scope: Scope, callParams: List<Value>): Value {
         val ret = operateOnTwoNumbers(
             scope,

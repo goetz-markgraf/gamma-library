@@ -6,7 +6,7 @@ import de.gma.gamma.datatypes.Value
 import de.gma.gamma.datatypes.list.ListValue
 import de.gma.gamma.datatypes.scope.Scope
 
-object SplitFunction : BuiltinFunction(listOf("string")) {
+object SplitFunction : BuiltinFunction("split", listOf("string")) {
     override fun callInternal(scope: Scope, callParams: List<Value>): Value {
         val str = callParams[0].evaluate(scope).toStringValue()
 

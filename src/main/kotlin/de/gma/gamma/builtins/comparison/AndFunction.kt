@@ -5,7 +5,7 @@ import de.gma.gamma.datatypes.Value
 import de.gma.gamma.datatypes.scope.Scope
 import de.gma.gamma.datatypes.values.BooleanValue
 
-object AndFunction : BuiltinFunction(listOf("a", "b")) {
+object AndFunction : BuiltinFunction("and", listOf("a", "b")) {
     override fun callInternal(scope: Scope, callParams: List<Value>): Value {
         val a = callParams[0].evaluate(scope).toBoolean()
 

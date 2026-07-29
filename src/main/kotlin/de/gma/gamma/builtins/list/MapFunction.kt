@@ -8,7 +8,7 @@ import de.gma.gamma.datatypes.list.ListValue
 import de.gma.gamma.datatypes.scope.Scope
 import de.gma.gamma.datatypes.values.VoidValue
 
-object MapFunction : BuiltinFunction(listOf("function", "list")) {
+object MapFunction : BuiltinFunction("map", listOf("function", "list")) {
     override fun callInternal(scope: Scope, callParams: List<Value>): Value {
         val function = callParams[0].evaluate(scope).toFunction()
         val list = callParams[1].evaluate(scope).toList()
@@ -22,7 +22,7 @@ private class InternalMapFunction(
     private val list: ListValue,
     private val function: FunctionValue
 ) : BuiltinFunction(
-    listOf("pos")
+    "map-internal", listOf("pos")
 ) {
     override fun callInternal(scope: Scope, callParams: List<Value>): Value {
         val pos = callParams[0].evaluate(scope).toInteger().longValue.toInt()

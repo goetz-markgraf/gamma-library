@@ -7,7 +7,7 @@ import de.gma.gamma.datatypes.scope.ModuleScope
 import de.gma.gamma.datatypes.scope.Scope
 import de.gma.gamma.datatypes.values.VoidValue
 
-class ToTypeFunction(private val type: DataType) : BuiltinFunction(listOf("obj")) {
+class ToTypeFunction(private val type: DataType) : BuiltinFunction("to-${type.name.lowercase()}", listOf("obj")) {
     override fun callInternal(scope: Scope, callParams: List<Value>): Value {
         val l = callParams[0].evaluate(scope)
 

@@ -7,7 +7,7 @@ import de.gma.gamma.datatypes.list.ListValue
 import de.gma.gamma.datatypes.scope.Scope
 import java.io.File
 
-object ReadLinesFunction : BuiltinFunction(listOf("filename")) {
+object ReadLinesFunction : BuiltinFunction("read-lines", listOf("filename")) {
     override fun callInternal(scope: Scope, callParams: List<Value>): Value {
         val filename = callParams[0].evaluate(scope).toStringValue()
 

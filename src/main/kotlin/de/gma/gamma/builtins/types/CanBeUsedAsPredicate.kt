@@ -10,7 +10,7 @@ import de.gma.gamma.datatypes.values.BooleanValue
 import de.gma.gamma.datatypes.values.PropertyValue
 import de.gma.gamma.datatypes.values.VoidValue
 
-class CanBeUsedAsPredicate(private val type: DataType) : BuiltinFunction(listOf("obj")) {
+class CanBeUsedAsPredicate(private val type: DataType) : BuiltinFunction("can-be-${type.name.lowercase()}?", listOf("obj")) {
     override fun callInternal(scope: Scope, callParams: List<Value>): Value {
         val l = callParams[0].evaluate(scope)
 

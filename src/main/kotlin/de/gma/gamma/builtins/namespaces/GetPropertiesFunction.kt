@@ -6,7 +6,7 @@ import de.gma.gamma.datatypes.Value
 import de.gma.gamma.datatypes.list.ListValue
 import de.gma.gamma.datatypes.scope.Scope
 
-object GetPropertiesFunction : BuiltinFunction(listOf("record")) {
+object GetPropertiesFunction : BuiltinFunction("get-properties", listOf("record")) {
     override fun callInternal(scope: Scope, callParams: List<Value>): Value {
         val namespace = callParams[0].evaluate(scope).toRecord(scope)
 

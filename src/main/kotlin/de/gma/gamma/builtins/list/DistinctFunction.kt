@@ -5,7 +5,7 @@ import de.gma.gamma.datatypes.Value
 import de.gma.gamma.datatypes.list.ListValue
 import de.gma.gamma.datatypes.scope.Scope
 
-object DistinctFunction : BuiltinFunction(listOf("list-1")) {
+object DistinctFunction : BuiltinFunction("distinct", listOf("list-1")) {
     override fun callInternal(scope: Scope, callParams: List<Value>): Value {
         val list1 = callParams[0].evaluate(scope).toList()
 

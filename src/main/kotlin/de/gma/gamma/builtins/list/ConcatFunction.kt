@@ -5,7 +5,7 @@ import de.gma.gamma.datatypes.Value
 import de.gma.gamma.datatypes.list.ListValue
 import de.gma.gamma.datatypes.scope.Scope
 
-object ConcatFunction : BuiltinFunction(listOf("list-1", "list-2")) {
+object ConcatFunction : BuiltinFunction("concat", listOf("list-1", "list-2")) {
     override fun callInternal(scope: Scope, callParams: List<Value>): Value {
         val list1 = callParams[0].evaluate(scope).toList()
         val list2 = callParams[1].evaluate(scope).toList()

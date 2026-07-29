@@ -8,7 +8,7 @@ import de.gma.gamma.datatypes.values.FloatValue
 import de.gma.gamma.datatypes.values.IntegerValue
 import kotlin.math.abs
 
-object AbsFunction : BuiltinFunction(listOf("value")) {
+object AbsFunction : BuiltinFunction("abs", listOf("value")) {
     override fun callInternal(scope: Scope, callParams: List<Value>): Value {
         val num = extractNumber(callParams[0].evaluate(scope))
 

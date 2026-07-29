@@ -6,7 +6,7 @@ import de.gma.gamma.datatypes.scope.Namespace
 import de.gma.gamma.datatypes.scope.Scope
 import de.gma.gamma.datatypes.values.PropertyValue
 
-class PropertyFunction(val name: PropertyValue) : BuiltinFunction(listOf("obj")) {
+class PropertyFunction(val name: PropertyValue) : BuiltinFunction(":${name.identifier}", listOf("obj")) {
     override fun callInternal(scope: Scope, callParams: List<Value>): Value {
         val obj = callParams[0].evaluate(scope) as Namespace
 

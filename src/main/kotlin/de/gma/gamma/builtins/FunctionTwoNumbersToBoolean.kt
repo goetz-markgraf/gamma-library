@@ -6,7 +6,7 @@ import de.gma.gamma.datatypes.values.BooleanValue
 import de.gma.gamma.datatypes.values.FloatValue
 import de.gma.gamma.datatypes.values.IntegerValue
 
-abstract class FunctionTwoNumbersToBoolean() : BuiltinFunction(listOf("a", "b")) {
+abstract class FunctionTwoNumbersToBoolean(name: String) : BuiltinFunction(name, listOf("a", "b")) {
 
     protected fun operateOnTwoNumbers(
         scope: Scope,

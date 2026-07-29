@@ -16,7 +16,7 @@ val isWindows = System.getProperty("os.name")
     .lowercase(Locale.getDefault()).startsWith("windows")
 
 
-object ShellFunction : BuiltinFunction(listOf("cmd")) {
+object ShellFunction : BuiltinFunction("shell", listOf("cmd")) {
     override fun callInternal(scope: Scope, callParams: List<Value>): Value {
 
         val list = when (val p = callParams[0].evaluate(scope)) {

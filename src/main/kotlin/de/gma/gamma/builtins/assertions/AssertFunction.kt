@@ -10,7 +10,7 @@ import de.gma.gamma.datatypes.values.BooleanValue
 import de.gma.gamma.datatypes.values.PairValue
 import de.gma.gamma.parser.GammaException
 
-object AssertFunction : BuiltinFunction(listOf("list-of-assertions")) {
+object AssertFunction : BuiltinFunction("assert", listOf("list-of-assertions")) {
     override fun callInternal(scope: Scope, callParams: List<Value>): Value {
         val tempScope = ModuleScope(sourceName, scope)
         val items = callParams[0].evaluate(tempScope).toList()

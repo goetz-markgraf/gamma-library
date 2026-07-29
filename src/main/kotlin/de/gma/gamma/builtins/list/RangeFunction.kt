@@ -7,7 +7,7 @@ import de.gma.gamma.datatypes.scope.Scope
 import de.gma.gamma.datatypes.values.IntegerValue
 import kotlin.math.abs
 
-object RangeFunction : BuiltinFunction(listOf("from", "to")) {
+object RangeFunction : BuiltinFunction("range", listOf("from", "to")) {
     override fun callInternal(scope: Scope, callParams: List<Value>): Value {
         val from = callParams[0].evaluate(scope).toInteger().longValue.toInt()
         val to = callParams[1].evaluate(scope).toInteger().longValue.toInt()
@@ -25,7 +25,7 @@ private class InternalRangeFunction(
     private val from: Int,
     private val asc: Boolean
 ) : BuiltinFunction(
-    listOf("pos")
+    "range-internal", listOf("pos")
 ) {
     override fun callInternal(scope: Scope, callParams: List<Value>): Value {
         val pos = callParams[0].evaluate(scope).toInteger().longValue.toInt()

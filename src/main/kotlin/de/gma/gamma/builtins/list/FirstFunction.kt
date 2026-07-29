@@ -6,7 +6,7 @@ import de.gma.gamma.datatypes.Value
 import de.gma.gamma.datatypes.scope.Scope
 import de.gma.gamma.datatypes.values.PairValue
 
-object FirstFunction : BuiltinFunction(listOf("list")) {
+object FirstFunction : BuiltinFunction("first", listOf("list")) {
     override fun callInternal(scope: Scope, callParams: List<Value>): Value {
         val p = callParams[0].evaluate(scope)
         if (p is StringValue) return p.first()

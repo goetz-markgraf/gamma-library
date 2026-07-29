@@ -6,7 +6,7 @@ import de.gma.gamma.datatypes.Value
 import de.gma.gamma.datatypes.list.ListValue
 import de.gma.gamma.datatypes.scope.Scope
 
-object PrintStarFunction : BuiltinFunction(listOf("value")) {
+object PrintStarFunction : BuiltinFunction("print*", listOf("value")) {
     override fun callInternal(scope: Scope, callParams: List<Value>): Value {
         val printVal = callParams[0].evaluate(scope)
 

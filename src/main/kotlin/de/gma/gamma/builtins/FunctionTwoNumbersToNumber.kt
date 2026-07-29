@@ -5,7 +5,7 @@ import de.gma.gamma.datatypes.scope.Scope
 import de.gma.gamma.datatypes.values.FloatValue
 import de.gma.gamma.datatypes.values.IntegerValue
 
-abstract class FunctionTwoNumbersToNumber() : BuiltinFunction(listOf("a", "b")) {
+abstract class FunctionTwoNumbersToNumber(name: String) : BuiltinFunction(name, listOf("a", "b")) {
 
     protected fun operateOnTwoNumbers(
         scope: Scope,

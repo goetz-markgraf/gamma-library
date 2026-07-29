@@ -9,7 +9,7 @@ import de.gma.gamma.datatypes.values.FloatValue
 import de.gma.gamma.datatypes.values.IntegerValue
 import de.gma.gamma.datatypes.values.RecordValue
 
-object SortFunction : BuiltinFunction(listOf("list")) {
+object SortFunction : BuiltinFunction("sort", listOf("list")) {
     override fun callInternal(scope: Scope, callParams: List<Value>): Value {
         val list1 = callParams[0].evaluate(scope).toList()
 
