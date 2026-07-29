@@ -1,6 +1,6 @@
 package de.gma.gamma.evaluation
 
-import de.gma.gamma.parser.EvaluationException
+import de.gma.gamma.parser.GammaException
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.Test
 
@@ -16,9 +16,9 @@ class EvaluationExceptionTest : BaseEvaluationTest() {
                 test 10
             """.trimIndent()
             )
-        }.isInstanceOf(EvaluationException::class.java)
+        }.isInstanceOf(GammaException::class.java)
             .matches {
-                (it as EvaluationException).stackTraceAsString() ==
+                (it as GammaException).stackTraceAsString() ==
                         "    at Function(1:14)(Script:1)\n" +
                         "    at Function(3:1)(Script:3)\n"
             }

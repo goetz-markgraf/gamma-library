@@ -8,7 +8,7 @@ import de.gma.gamma.datatypes.scope.ModuleScope
 import de.gma.gamma.datatypes.scope.Scope
 import de.gma.gamma.datatypes.values.BooleanValue
 import de.gma.gamma.datatypes.values.PairValue
-import de.gma.gamma.parser.EvaluationException
+import de.gma.gamma.parser.GammaException
 
 object AssertFunction : BuiltinFunction(listOf("list-of-assertions")) {
     override fun callInternal(scope: Scope, callParams: List<Value>): Value {
@@ -29,7 +29,7 @@ object AssertFunction : BuiltinFunction(listOf("list-of-assertions")) {
                     ret = false
                 }
             } else
-                throw EvaluationException("item $it is neither a string nor a pair")
+                throw GammaException("item $it is neither a string nor a pair")
         }
 
         return BooleanValue.build(ret)

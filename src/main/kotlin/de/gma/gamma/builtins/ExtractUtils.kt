@@ -6,7 +6,7 @@ import de.gma.gamma.datatypes.Value
 import de.gma.gamma.datatypes.list.ListValue
 import de.gma.gamma.datatypes.scope.Scope
 import de.gma.gamma.datatypes.values.*
-import de.gma.gamma.parser.EvaluationException
+import de.gma.gamma.parser.GammaException
 
 fun extractNumber(value: Value) =
     when {
@@ -18,12 +18,12 @@ fun extractNumber(value: Value) =
 private fun extractNumberFromString(value: StringValue): Value {
     try {
         return value.toInteger()
-    } catch (e: EvaluationException) {
+    } catch (e: GammaException) {
         // do nothing
     }
     try {
         return value.toFloat()
-    } catch (e: EvaluationException) {
+    } catch (e: GammaException) {
         // do nothing
     }
     return VoidValue.build()
@@ -35,7 +35,7 @@ fun checkForListOfPairs(
     if (it is PairValue)
         it
     else
-        throw EvaluationException("Wrong Parameter, not list of pairs")
+        throw GammaException("Wrong Parameter, not list of pairs")
 }
 
 fun isRecordDefinition(list: List<Value>) =

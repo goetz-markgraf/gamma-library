@@ -44,7 +44,7 @@ class LetAndSetTest : BaseParserTest() {
 
         assertThatThrownBy {
             getExpression(source)
-        }.isInstanceOf(EvaluationException::class.java)
+        }.isInstanceOf(GammaException::class.java)
             .hasMessage("Only ids with '!' at end of name can be mutated")
     }
 
@@ -123,7 +123,7 @@ class LetAndSetTest : BaseParserTest() {
     fun `illegal let expression`() {
         assertThatThrownBy {
             getExpression("let a 10")
-        }.isInstanceOf(EvaluationException::class.java)
+        }.isInstanceOf(GammaException::class.java)
             .hasMessage("Illegal Token '10 (NUMBER)' but was expecting =")
     }
 

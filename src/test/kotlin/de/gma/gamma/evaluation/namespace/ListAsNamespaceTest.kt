@@ -2,7 +2,7 @@ package de.gma.gamma.evaluation.namespace
 
 import de.gma.gamma.datatypes.values.IntegerValue
 import de.gma.gamma.evaluation.BaseEvaluationTest
-import de.gma.gamma.parser.EvaluationException
+import de.gma.gamma.parser.GammaException
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.Test
@@ -72,7 +72,7 @@ class ListAsNamespaceTest : BaseEvaluationTest() {
     fun `throws error if property is not found`() {
         assertThatThrownBy {
             execute("{1} |> :xxx")
-        }.isInstanceOf(EvaluationException::class.java)
+        }.isInstanceOf(GammaException::class.java)
             .hasMessage("property xxx not found in {1}")
     }
 
@@ -80,7 +80,7 @@ class ListAsNamespaceTest : BaseEvaluationTest() {
     fun `throws error if property is not found by compound identifier`() {
         assertThatThrownBy {
             execute("let l = {1}; l.xxx")
-        }.isInstanceOf(EvaluationException::class.java)
+        }.isInstanceOf(GammaException::class.java)
             .hasMessage("property xxx not found in {1}")
     }
 }

@@ -7,7 +7,7 @@ import de.gma.gamma.datatypes.functions.FunctionValue
 import de.gma.gamma.datatypes.list.ListValue
 import de.gma.gamma.datatypes.scope.Scope
 import de.gma.gamma.datatypes.values.*
-import de.gma.gamma.parser.EvaluationException
+import de.gma.gamma.parser.GammaException
 import de.gma.gamma.parser.Position
 
 abstract class AbstractValue(
@@ -107,6 +107,6 @@ abstract class AbstractValue(
         }
 
     fun createException(message: String) =
-        EvaluationException(message, sourceName, beginPos.line, beginPos.col)
+        GammaException(message, sourceName, beginPos.line, beginPos.col)
 
 }

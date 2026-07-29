@@ -3,7 +3,7 @@ package de.gma.gamma.builtins.numerical
 import de.gma.gamma.builtins.FunctionTwoNumbersToNumber
 import de.gma.gamma.datatypes.Value
 import de.gma.gamma.datatypes.scope.Scope
-import de.gma.gamma.parser.EvaluationException
+import de.gma.gamma.parser.GammaException
 import kotlin.math.pow
 
 object PowerToFunction : FunctionTwoNumbersToNumber() {
@@ -18,6 +18,6 @@ object PowerToFunction : FunctionTwoNumbersToNumber() {
         if (ret != null)
             return ret
         else
-            throw EvaluationException("* can only be called with two number values")
+            throw GammaException("* can only be called with two number values")
     }
 }

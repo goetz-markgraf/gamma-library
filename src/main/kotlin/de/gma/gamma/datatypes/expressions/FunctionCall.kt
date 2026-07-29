@@ -2,7 +2,7 @@ package de.gma.gamma.datatypes.expressions
 
 import de.gma.gamma.datatypes.Value
 import de.gma.gamma.datatypes.scope.Scope
-import de.gma.gamma.parser.EvaluationException
+import de.gma.gamma.parser.GammaException
 import de.gma.gamma.parser.Position
 
 open class FunctionCall(
@@ -23,7 +23,7 @@ open class FunctionCall(
 
         try {
             return functionToCall.call(scope, params)
-        } catch (e: EvaluationException) {
+        } catch (e: GammaException) {
             e.add(
                 StackTraceElement(
                     "gamma",

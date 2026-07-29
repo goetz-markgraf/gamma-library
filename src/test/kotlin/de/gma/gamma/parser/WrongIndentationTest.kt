@@ -15,7 +15,7 @@ class WrongIndentationTest : BaseParserTest() {
 
             getExpression(source)
         }
-            .isInstanceOf(EvaluationException::class.java)
+            .isInstanceOf(GammaException::class.java)
             .hasMessage("Illegal indentation of Token 10 must be indented to column 2")
     }
 
@@ -29,7 +29,7 @@ class WrongIndentationTest : BaseParserTest() {
 
             getExpression(source)
         }
-            .isInstanceOf(EvaluationException::class.java)
+            .isInstanceOf(GammaException::class.java)
             .hasMessage("Illegal indentation of Token 10 must be indented to column 2")
     }
 
@@ -43,7 +43,7 @@ class WrongIndentationTest : BaseParserTest() {
         assertThatThrownBy {
             getExpression(source)
         }
-            .isInstanceOf(EvaluationException::class.java)
+            .isInstanceOf(GammaException::class.java)
             .hasMessage("Illegal Token '20 (NUMBER)' but was expecting [)]")
     }
 
@@ -57,7 +57,7 @@ class WrongIndentationTest : BaseParserTest() {
         assertThatThrownBy {
             getExpression(source)
         }
-            .isInstanceOf(EvaluationException::class.java)
+            .isInstanceOf(GammaException::class.java)
             .hasMessage("Illegal indentation of Token 20 must be indented to column 1")
     }
 
@@ -71,7 +71,7 @@ class WrongIndentationTest : BaseParserTest() {
         assertThatThrownBy {
             getExpression(source)
         }
-            .isInstanceOf(EvaluationException::class.java)
+            .isInstanceOf(GammaException::class.java)
             .hasMessage("Illegal indentation of Token 10 must be indented to column 2")
     }
 }

@@ -4,7 +4,7 @@ import de.gma.gamma.datatypes.list.ListValue
 import de.gma.gamma.datatypes.values.IntegerValue
 import de.gma.gamma.datatypes.values.VoidValue
 import de.gma.gamma.evaluation.BaseEvaluationTest
-import de.gma.gamma.parser.EvaluationException
+import de.gma.gamma.parser.GammaException
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.Test
@@ -58,7 +58,7 @@ class BasicListTest : BaseEvaluationTest() {
     fun `access an element behind the list`() {
         assertThatThrownBy {
             execute("at 10 {1, 2, 3}")
-        }.isInstanceOf(EvaluationException::class.java)
+        }.isInstanceOf(GammaException::class.java)
             .hasMessage("Index out of bounds: 10 outside [0..2]")
     }
 
@@ -126,7 +126,7 @@ class BasicListTest : BaseEvaluationTest() {
     fun `throw exception while accessing nth element of empty list`() {
         assertThatThrownBy {
             execute("at 1 {}")
-        }.isInstanceOf(EvaluationException::class.java)
+        }.isInstanceOf(GammaException::class.java)
             .hasMessage("Index out of bounds: 1 outside empty list")
     }
 
@@ -134,7 +134,7 @@ class BasicListTest : BaseEvaluationTest() {
     fun `throw exception while accessing size+1 element of list`() {
         assertThatThrownBy {
             execute("at 2 {1, 2}")
-        }.isInstanceOf(EvaluationException::class.java)
+        }.isInstanceOf(GammaException::class.java)
             .hasMessage("Index out of bounds: 2 outside [0..1]")
     }
 

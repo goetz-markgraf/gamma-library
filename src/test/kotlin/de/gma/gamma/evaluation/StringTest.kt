@@ -1,7 +1,7 @@
 package de.gma.gamma.evaluation
 
 import de.gma.gamma.datatypes.StringValue
-import de.gma.gamma.parser.EvaluationException
+import de.gma.gamma.parser.GammaException
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.Test
@@ -101,7 +101,7 @@ class StringTest : BaseEvaluationTest() {
     fun `throw exception while accessing nth element of empty string`() {
         assertThatThrownBy {
             execute("at 1 \"\"")
-        }.isInstanceOf(EvaluationException::class.java)
+        }.isInstanceOf(GammaException::class.java)
             .hasMessage("Index out of bounds: 1 outside empty string")
     }
 
@@ -109,7 +109,7 @@ class StringTest : BaseEvaluationTest() {
     fun `throw exception while accessing size+1 element of string`() {
         assertThatThrownBy {
             execute("at 2 \"12\"")
-        }.isInstanceOf(EvaluationException::class.java)
+        }.isInstanceOf(GammaException::class.java)
             .hasMessage("Index out of bounds: 2 outside [0..1]")
     }
 

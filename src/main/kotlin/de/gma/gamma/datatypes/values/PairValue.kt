@@ -7,7 +7,7 @@ import de.gma.gamma.datatypes.Value
 import de.gma.gamma.datatypes.scope.Namespace
 import de.gma.gamma.datatypes.scope.Scope
 import de.gma.gamma.datatypes.scoped.ScopedValue
-import de.gma.gamma.parser.EvaluationException
+import de.gma.gamma.parser.GammaException
 import de.gma.gamma.parser.Position
 
 class PairValue(
@@ -25,7 +25,7 @@ class PairValue(
         when (id) {
             "first" -> first
             "last" -> last
-            else -> if (strict) throw EvaluationException("Property $id not found in $this") else VoidValue.build()
+            else -> if (strict) throw GammaException("Property $id not found in $this") else VoidValue.build()
         }
 
     override fun containsNameLocally(id: String) =

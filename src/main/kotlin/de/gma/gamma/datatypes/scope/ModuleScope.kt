@@ -7,7 +7,7 @@ import de.gma.gamma.datatypes.Remark
 import de.gma.gamma.datatypes.Value
 import de.gma.gamma.datatypes.functions.FunctionValue
 import de.gma.gamma.datatypes.values.VoidValue
-import de.gma.gamma.parser.EvaluationException
+import de.gma.gamma.parser.GammaException
 import de.gma.gamma.parser.isStartOfIdentifier
 
 open class ModuleScope(
@@ -53,7 +53,7 @@ open class ModuleScope(
         return content[id]
             ?: (parent?.getValueForName(id, strict)
                 ?: if (strict)
-                    throw EvaluationException("id $id is undefined.")
+                    throw GammaException("id $id is undefined.")
                 else
                     VoidValue.build())
     }

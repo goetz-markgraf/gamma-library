@@ -9,7 +9,7 @@ import de.gma.gamma.datatypes.scope.Scope
 import de.gma.gamma.datatypes.scoped.ScopedValue
 import de.gma.gamma.datatypes.values.PairValue
 import de.gma.gamma.datatypes.values.RecordValue
-import de.gma.gamma.parser.EvaluationException
+import de.gma.gamma.parser.GammaException
 import de.gma.gamma.parser.Position
 
 private const val ERROR_MESSAGE = "ListLiteral cannot be processed"
@@ -55,24 +55,24 @@ class ListLiteral(
                 throw createException("Index out of bounds: $pos outside empty list")
 
     override fun slice(from: Int, length: Int): ListValue {
-        throw EvaluationException(ERROR_MESSAGE)
+        throw GammaException(ERROR_MESSAGE)
     }
 
     override fun allItems(): List<Value> =
         internalItems
 
     override fun append(v: Value): ListValue {
-        throw EvaluationException(ERROR_MESSAGE)
+        throw GammaException(ERROR_MESSAGE)
     }
 
 
     override fun insertFirst(v: Value): ListValue {
-        throw EvaluationException(ERROR_MESSAGE)
+        throw GammaException(ERROR_MESSAGE)
     }
 
 
     override fun appendAll(v: ListValue): ListValue {
-        throw EvaluationException(ERROR_MESSAGE)
+        throw GammaException(ERROR_MESSAGE)
     }
 
 

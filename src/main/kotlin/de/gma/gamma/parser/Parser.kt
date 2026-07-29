@@ -52,7 +52,7 @@ class Parser(
         else if (col >= 0)
             return null
 
-        throw EvaluationException(
+        throw GammaException(
             "Parsing error, cannot interpret current token ${currToken.content}",
             sourceName,
             currStart.line,
@@ -438,7 +438,7 @@ class Parser(
 
         val id = parseIdentifier(col)
         if (id.name.last() != '!')
-            throw EvaluationException(
+            throw GammaException(
                 "Only ids with '!' at end of name can be mutated",
                 sourceName, start.line, start.col
             )
@@ -490,7 +490,7 @@ class Parser(
     }
 
     private fun createIllegalEndOfExpression() =
-        EvaluationException(
+        GammaException(
             "Illegal end of expression",
             sourceName,
             currStart.line,
@@ -498,7 +498,7 @@ class Parser(
         )
 
     private fun createEmptyParamsException() =
-        EvaluationException(
+        GammaException(
             "Function must have at least one parameter or ()",
             sourceName,
             currStart.line,
@@ -506,7 +506,7 @@ class Parser(
         )
 
     private fun createIllegalColumnException(col: Int) =
-        EvaluationException(
+        GammaException(
             "Illegal indentation of Token ${currToken.content} must be indented to column $col",
             sourceName,
             currStart.line,
@@ -514,7 +514,7 @@ class Parser(
         )
 
     private fun createIllegalTokenException(expected: String? = null) =
-        EvaluationException(
+        GammaException(
             "Illegal Token '$currToken'${if (expected != null) " but was expecting $expected" else ""}",
             sourceName,
             currStart.line,

@@ -6,7 +6,7 @@ import de.gma.gamma.datatypes.scope.Namespace
 import de.gma.gamma.datatypes.scope.Scope
 import de.gma.gamma.datatypes.values.IntegerValue
 import de.gma.gamma.datatypes.values.VoidValue
-import de.gma.gamma.parser.EvaluationException
+import de.gma.gamma.parser.GammaException
 import de.gma.gamma.parser.Position
 
 class StringValue(
@@ -83,7 +83,7 @@ class StringValue(
             "last" -> last()
             "tail" -> tail()
             "size" -> IntegerValue.build(size().toLong())
-            else -> if (strict) throw EvaluationException("property $id not found in $this") else VoidValue.build()
+            else -> if (strict) throw GammaException("property $id not found in $this") else VoidValue.build()
         }
 
     override fun containsNameLocally(id: String) =

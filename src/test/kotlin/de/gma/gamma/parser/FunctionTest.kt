@@ -40,7 +40,7 @@ class FunctionTest : BaseParserTest() {
     fun `a function without parameters is illegal`() {
         assertThatThrownBy {
             getExpression("[ 10 ]")
-        }.isInstanceOf(EvaluationException::class.java)
+        }.isInstanceOf(GammaException::class.java)
             .hasMessage("Function must have at least one parameter or ()")
     }
 }

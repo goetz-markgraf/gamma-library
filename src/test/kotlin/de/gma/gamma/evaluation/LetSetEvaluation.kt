@@ -3,7 +3,7 @@ package de.gma.gamma.evaluation
 import de.gma.gamma.datatypes.scope.ScopeException
 import de.gma.gamma.datatypes.scoped.ScopedFunction
 import de.gma.gamma.datatypes.values.IntegerValue
-import de.gma.gamma.parser.EvaluationException
+import de.gma.gamma.parser.GammaException
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.Test
@@ -135,7 +135,7 @@ class LetSetEvaluation : BaseEvaluationTest() {
     fun `error if an identifier is not bound`() {
         assertThatThrownBy {
             execute("a")
-        }.isInstanceOf(EvaluationException::class.java)
+        }.isInstanceOf(GammaException::class.java)
             .hasMessage("id a is undefined.")
     }
 
@@ -151,7 +151,7 @@ class LetSetEvaluation : BaseEvaluationTest() {
     fun `error if an non-existing identifier is mutated`() {
         assertThatThrownBy {
             execute("set a! = 20")
-        }.isInstanceOf(EvaluationException::class.java)
+        }.isInstanceOf(GammaException::class.java)
             .hasMessage("Cannot find id a!")
     }
 }

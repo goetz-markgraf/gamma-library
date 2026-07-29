@@ -3,7 +3,7 @@ package de.gma.gamma.builtins.comparison
 import de.gma.gamma.builtins.FunctionTwoNumbersToBoolean
 import de.gma.gamma.datatypes.Value
 import de.gma.gamma.datatypes.scope.Scope
-import de.gma.gamma.parser.EvaluationException
+import de.gma.gamma.parser.GammaException
 
 object GreaterThanFunction : FunctionTwoNumbersToBoolean() {
     override fun callInternal(scope: Scope, callParams: List<Value>): Value {
@@ -17,6 +17,6 @@ object GreaterThanFunction : FunctionTwoNumbersToBoolean() {
         if (ret != null)
             return ret
         else
-            throw EvaluationException("> can only be called with two number values")
+            throw GammaException("> can only be called with two number values")
     }
 }

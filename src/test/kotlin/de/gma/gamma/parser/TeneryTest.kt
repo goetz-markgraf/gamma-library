@@ -37,7 +37,7 @@ class TernaryTest : BaseParserTest() {
     fun `ternary error when no then expression`(source: String) {
         assertThatThrownBy {
             getExpression(source)
-        }.isInstanceOf(EvaluationException::class.java)
+        }.isInstanceOf(GammaException::class.java)
             .hasMessage("Illegal end of expression")
     }
 }
