@@ -123,7 +123,7 @@ class Parser(
             if ((op.name == "->" || op.name == "→") && op2 != null)
                 op1 = PairValue(sourceName, start, currEnd, op1, op2)
             else
-                op1 = OperaterCall(sourceName, start, currEnd, op, op1, op2!!, level)
+                op1 = OperatorCall(sourceName, start, currEnd, op, op1, op2!!, level)
         }
 
         return op1

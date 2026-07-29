@@ -1,7 +1,7 @@
 package de.gma.gamma.parser
 
 import de.gma.gamma.datatypes.expressions.LetExpression
-import de.gma.gamma.datatypes.expressions.OperaterCall
+import de.gma.gamma.datatypes.expressions.OperatorCall
 import de.gma.gamma.datatypes.expressions.SetExpression
 import de.gma.gamma.datatypes.functions.FunctionValue
 import de.gma.gamma.datatypes.functions.LambdaFunction
@@ -59,7 +59,7 @@ class LetAndSetTest : BaseParserTest() {
 
         val result = getExpressions(source)
         assertThat(result).hasSize(1)
-        assertThat((result.first() as LetExpression).boundValue).isInstanceOf(OperaterCall::class.java)
+        assertThat((result.first() as LetExpression).boundValue).isInstanceOf(OperatorCall::class.java)
     }
 
     @Test

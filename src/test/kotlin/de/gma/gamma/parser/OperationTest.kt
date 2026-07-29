@@ -3,7 +3,7 @@ package de.gma.gamma.parser
 import de.gma.gamma.datatypes.Identifier
 import de.gma.gamma.datatypes.expressions.Expression
 import de.gma.gamma.datatypes.expressions.FunctionCall
-import de.gma.gamma.datatypes.expressions.OperaterCall
+import de.gma.gamma.datatypes.expressions.OperatorCall
 import de.gma.gamma.datatypes.values.FloatValue
 import de.gma.gamma.datatypes.values.IntegerValue
 import org.assertj.core.api.Assertions.assertThat
@@ -17,7 +17,7 @@ class OperationTest : BaseParserTest() {
         val expression = getExpression(source)
 
         assertThat(expression).isInstanceOf(FunctionCall::class.java)
-        val op = expression as OperaterCall
+        val op = expression as OperatorCall
         assertThat(op.function.prettyPrint()).isEqualTo(">")
         assertThat(op.params).hasSize(2)
         assertThat(op.op1).isInstanceOf(Identifier::class.java)
@@ -29,13 +29,13 @@ class OperationTest : BaseParserTest() {
     @Test
     fun `parse a sum and a product`() {
         val source = "1 + 2 * 3 ^ 4"
-        val op = getExpression(source) as OperaterCall
+        val op = getExpression(source) as OperatorCall
 
         assertThat(op.function.prettyPrint()).isEqualTo("+")
         assertThat(op.op1).isInstanceOf(IntegerValue::class.java)
         assertThat(op.op2).isInstanceOf(Expression::class.java)
 
-        val op1 = op.op2 as OperaterCall
+        val op1 = op.op2 as OperatorCall
         assertThat(op1.function.prettyPrint()).isEqualTo("*")
         assertThat(op1.op1).isInstanceOf(IntegerValue::class.java)
         assertThat(op1.op2).isInstanceOf(FunctionCall::class.java)
@@ -49,12 +49,12 @@ class OperationTest : BaseParserTest() {
         val expression = getExpression(source)
 
         assertThat(expression).isInstanceOf(FunctionCall::class.java)
-        val op = expression as OperaterCall
+        val op = expression as OperatorCall
         assertThat(op.function.prettyPrint()).isEqualTo("+")
         assertThat(op.op1).isInstanceOf(Expression::class.java)
         assertThat(op.op2).isInstanceOf(IntegerValue::class.java)
 
-        val op1 = op.op1 as OperaterCall
+        val op1 = op.op1 as OperatorCall
         assertThat(op1.function.prettyPrint()).isEqualTo("*")
         assertThat(op1.op1).isInstanceOf(IntegerValue::class.java)
         assertThat(op1.op2).isInstanceOf(IntegerValue::class.java)
@@ -68,7 +68,7 @@ class OperationTest : BaseParserTest() {
         val expression = getExpression(source)
 
         assertThat(expression).isInstanceOf(FunctionCall::class.java)
-        val op = expression as OperaterCall
+        val op = expression as OperatorCall
         assertThat(op.function.prettyPrint()).isEqualTo("+")
         assertThat(op.op1).isInstanceOf(IntegerValue::class.java)
         assertThat(op.op2).isInstanceOf(IntegerValue::class.java)
@@ -82,7 +82,7 @@ class OperationTest : BaseParserTest() {
         val expression = getExpression(source)
 
         assertThat(expression).isInstanceOf(FunctionCall::class.java)
-        val op = expression as OperaterCall
+        val op = expression as OperatorCall
         assertThat(op.function.prettyPrint()).isEqualTo("-")
         assertThat(op.op1).isInstanceOf(IntegerValue::class.java)
         assertThat(op.op2).isInstanceOf(IntegerValue::class.java)
@@ -107,7 +107,7 @@ class OperationTest : BaseParserTest() {
 
     @Test
     fun `check order sum and op`() {
-        val op = getExpression("10 + 20 |> 30 + 40") as OperaterCall
+        val op = getExpression("10 + 20 |> 30 + 40") as OperatorCall
 
         assertThat(op.operator.name).isEqualTo("|>")
         assertThat(op.op1).isInstanceOf(FunctionCall::class.java)
@@ -116,7 +116,7 @@ class OperationTest : BaseParserTest() {
 
     @Test
     fun `parse multiple additions after another`() {
-        val expression = getExpression("1 + 2 + 3") as OperaterCall
+        val expression = getExpression("1 + 2 + 3") as OperatorCall
 
         assertThat(expression.op1).isInstanceOf(FunctionCall::class.java)
         assertThat(expression.op2).isInstanceOf(IntegerValue::class.java)
@@ -124,7 +124,7 @@ class OperationTest : BaseParserTest() {
 
     @Test
     fun `parse multiple equal operations after another`() {
-        val expression = getExpression("1 > 2 > 3") as OperaterCall
+        val expression = getExpression("1 > 2 > 3") as OperatorCall
 
         assertThat(expression.op1).isInstanceOf(FunctionCall::class.java)
         assertThat(expression.op2).isInstanceOf(IntegerValue::class.java)
