@@ -18,9 +18,8 @@ class Block(
         append(")")
     }
 
-    override fun evaluate(scope: Scope) =
-        expressions.fold(VoidValue.build() as Value) { _, expr ->
-            expr.evaluate(scope)
-        }
-
+    override fun evaluate(scope: Scope): Value {
+        expressions.dropLast(1).forEach { it.evaluate(scope) }
+        return expressions.lastOrNull()?.evaluate(scope) ?: VoidValue.build()
+    }
 }
