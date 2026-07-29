@@ -251,10 +251,7 @@ class Parser(
 
         return when {
             expressions.isEmpty() -> VoidValue(sourceName, start, currEnd)
-
-            // TODO kann das raus?
             expressions.size == 1 -> expressions.first()
-
             else -> Block(sourceName, start, currEnd, expressions)
         }
     }
