@@ -47,7 +47,7 @@ class LambdaFunction(
     override fun callInternal(scope: Scope, callParams: List<Value>): Value {
 
         val newScope: Scope = ModuleScope(sourceName, scope)
-        paramNames.zip(callParams).map { pair ->
+        paramNames.zip(callParams).forEach { pair ->
             newScope.bindValue(pair.first, pair.second)
         }
 
