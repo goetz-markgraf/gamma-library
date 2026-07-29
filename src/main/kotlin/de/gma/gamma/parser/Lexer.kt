@@ -134,10 +134,10 @@ class Lexer(
     }
 
     private fun parseOperatorAsIdentifier(): Token {
-        next() // Überlesen der öffenenden Klammer
+        next() // skip opening parens
         val ret = parseOperator()
         return if (char == CH_RPARENS) {
-            next() // Überlesen der schließenden Klammer
+            next() // skip closing parens
             ret.copy(type = TokenType.OP_AS_ID)
         } else {
             ret.copy(type = TokenType.ERROR)
