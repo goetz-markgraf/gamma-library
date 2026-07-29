@@ -126,7 +126,7 @@ class Lexer(
         next()
         return Token(
             type = TokenType.VOID,
-            content = "$CH_VOID1$CH_VOID2",
+            content = "$CH_LPARENS$CH_RPARENS",
             sourceName = sourceName,
             start = start,
             end = end
