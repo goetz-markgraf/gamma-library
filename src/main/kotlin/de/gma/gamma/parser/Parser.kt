@@ -280,24 +280,46 @@ class Parser(
         return ret
     }
 
+    /**
+     * Parses a string interpolation expression, e.g. `"Hello, $(name)!"`.
+     *
+     * Expected token sequence produced by the Lexer:
+     *   STRING_INTERPOLATION  – the literal text before the first `$(`
+     *   <block>               – the interpolated expression inside `$(...)`
+     *   STRING | STRING_INTERPOLATION – text after `)`, repeated until STRING ends the chain
+     *
+     * The result is a `joinBy("", [...])` call whose arguments are the
+     * alternating literal string segments and evaluated interpolated expressions.
+     */
     private fun parseStringInterpolation(col: Int): Value {
+        // Phase 1 – consume the leading literal segment (text before the first interpolation)
         assertType(col, STRING_INTERPOLATION)
         val start = currStart
         val content = buildList {
             add(StringValue(sourceName, currStart, currEnd, currToken.content))
             nextToken()
+
+            // Phase 2 – alternating: interpolated expression, then literal segment
+            // Continue as long as the next segment is another STRING_INTERPOLATION
+            // (meaning another `$(...)` follows); stop when we hit a plain STRING.
             var addExpr = true
             while (addExpr) {
-                add(parseBlock(col, true))
+                // Phase 2a – parse the interpolated expression inside `$(...)`
+                // the ´withinString = true´ makes sure that the lexer continues in "string mode" after finishing the block
+                add(parseBlock(col, withinString = true))
+
+                // Phase 2b – consume the literal segment that follows the closing `)`,
+                // which is either STRING (last segment) or STRING_INTERPOLATION (more to come)
                 assertType(col, STRING, STRING_INTERPOLATION)
                 if (currType == STRING)
-                    addExpr = false
+                    addExpr = false   // no more interpolations; this is the final segment
                 if (currToken.content.isNotEmpty())
                     add(StringValue(sourceName, currStart, currEnd, currToken.content))
                 nextToken()
             }
         }
 
+        // Phase 3 – build the `joinBy("", [...])` call that concatenates all segments
         val ret = FunctionCall(
             sourceName,
             start,
