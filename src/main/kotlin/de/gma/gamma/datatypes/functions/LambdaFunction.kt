@@ -24,7 +24,7 @@ class LambdaFunction(
             append(paramNames.joinToString(" "))
         }
 
-        if (expressions.size == 0) {
+        if (expressions.isEmpty()) {
             append(" : ")
         } else if (expressions.size == 1) {
             append(" : ")
