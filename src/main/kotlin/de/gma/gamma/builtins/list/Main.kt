@@ -16,7 +16,7 @@ fun populateList(scope: Scope) {
     bindWithDoc(scope, "distinct", DistinctFunction, "creates a new list without duplicates")
     bindWithDoc(scope, "sort", SortFunction, "creates a new list that is sorted numerically. Strings are converted to numbers, lists are sorted according to their length.")
     bindWithDoc(scope, "sort-desc", SortDescendingFunction, "creates a new list that is sorted numerically. Strings are converted to numbers, lists are sorted according to their length.")
-    bindWithDoc(scope, "appendAll", AppendAllFunction, "appends all items of [new-list] the end of [list]")
+    bindWithDoc(scope, "append-all", AppendAllFunction, "concats [first-list] with [second-list]")
     bindWithDoc(scope, "::", InsertFirstFunction, "prepends a list with an as the new first element")
     bindWithDoc(scope, "@", ConcatFunction, "concatenates [list-1] and [list-2]")
 

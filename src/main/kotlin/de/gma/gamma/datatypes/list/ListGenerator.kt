@@ -63,10 +63,7 @@ class ListGenerator(
         })
 
     override fun appendAll(v: ListValue): ListValue =
-        build(buildList {
-            addAll(v.allItems())
-            addAll(allItems())
-        })
+        build(allItems() + v.allItems())
 
 
     private fun fillStorage(pos: Int) {

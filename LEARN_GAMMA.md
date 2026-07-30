@@ -401,7 +401,7 @@ These are the functions currently built in into _gamma_:
   according to their length.
 * sort-desc list – creates a new list that is sorted numerically. Strings are converted to numbers, lists are sorted
   according to their length.
-* appendAll item list – appends all items of [new-list] the end of [list]
+* appendAll first-list second-list - concats [first-list] with [second-list]
 * item :: list – prepends a list with an as the new first element
 * list-1 @ list-2 – concatenates [list-1] and [list-2]
 * list-generator size function – creates a list of size [size] that uses [function] to generate the values

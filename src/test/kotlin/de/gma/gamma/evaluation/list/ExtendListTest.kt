@@ -30,11 +30,11 @@ class ExtendListTest : BaseEvaluationTest() {
 
     @Test
     fun `appends a list to a list`() {
-        val expr = execute("appendAll {4, 5, 6} {1, 2, 3}") as ListValue
+        val expr = execute("append-all {4, 5, 6} {1, 2, 3}") as ListValue
 
         assertThat(expr.size()).isEqualTo(6)
-        assertThat(expr.first().toInteger().longValue).isEqualTo(1L)
-        assertThat(expr.last().toInteger().longValue).isEqualTo(6L)
+        assertThat(expr.first().toInteger().longValue).isEqualTo(4L)
+        assertThat(expr.last().toInteger().longValue).isEqualTo(3L)
     }
 
     @Test

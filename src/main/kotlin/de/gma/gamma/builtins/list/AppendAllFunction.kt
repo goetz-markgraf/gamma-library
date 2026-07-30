@@ -4,11 +4,11 @@ import de.gma.gamma.builtins.BuiltinFunction
 import de.gma.gamma.datatypes.Value
 import de.gma.gamma.datatypes.scope.Scope
 
-object AppendAllFunction : BuiltinFunction("append-all", listOf("item", "list")) {
+object AppendAllFunction : BuiltinFunction("append-all", listOf("first-list", "second-list")) {
     override fun callInternal(scope: Scope, callParams: List<Value>): Value {
-        val items = callParams[0].evaluate(scope).toList()
-        val l = callParams[1].evaluate(scope).toList()
+        val firstList = callParams[0].evaluate(scope).toList()
+        val secondList = callParams[1].evaluate(scope).toList()
 
-        return l.appendAll(items)
+        return firstList.appendAll(secondList)
     }
 }

@@ -47,7 +47,9 @@ class SublistTest : BaseEvaluationTest() {
 
     @Test
     fun `append all to a sublist`() {
-        val expr = execute("appendAll (drop-last {1,2}) (tail {2, 3, 4})") as ListValue
+        val expr = execute("append-all (drop-last {1,2}) (tail {2, 3, 4})") as ListValue
+
+        assertThat(expr.prettyPrint()).isEqualTo("{1, 3, 4}")
 
         assertThat(expr.prettyPrint()).isEqualTo("{1, 3, 4}")
     }

@@ -53,10 +53,7 @@ class SubList(
         })
 
     override fun appendAll(v: ListValue): ListValue =
-        build(buildList {
-            addAll(v.allItems())
-            addAll(allItems())
-        })
+        build(allItems() + v.allItems())
 
 
     companion object {

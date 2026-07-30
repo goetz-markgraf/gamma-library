@@ -53,10 +53,7 @@ class SimpleList(
 
 
     override fun appendAll(v: ListValue): ListValue =
-        build(buildList {
-            addAll(internalItems)
-            addAll(v.allItems())
-        })
+        build(internalItems + v.allItems())
 
 
     override fun equals(other: Any?) =
