@@ -21,22 +21,19 @@ class ListLiteral(
     items: List<Value>
 ) : ListValue(sourceName, beginPos, endPos) {
 
-    protected var internalItems = items
+    private var internalItems = items
     private val internalSize = internalItems.size
 
     override fun evaluate(scope: Scope): Value {
-        val items = internalItems.map {
-            it.evaluate(scope)
-        }
         @Suppress("UNCHECKED_CAST")
         return when {
-            isRecordDefinition(items) -> RecordValue(
+            isRecordDefinition(internalItems) -> RecordValue(
                 this.sourceName, this.beginPos, this.endPos, createMapFromListOfPair(
-                    items as List<PairValue>, scope
+                    internalItems as List<PairValue>, scope
                 )
             )
 
-            else -> SimpleList(sourceName, beginPos, endPos, items)
+            else -> SimpleList(sourceName, beginPos, endPos, internalItems.map { it.evaluate(scope) })
         }
     }
 

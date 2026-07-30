@@ -43,11 +43,13 @@ fun isRecordDefinition(list: List<Value>) =
         item is PairValue && (item.first() is PropertyValue || item.first() is StringValue || item.first() is Identifier)
     }
 
-fun createMapFromListOfPair(content: List<PairValue>, scope: Scope) = buildMap<String, Value> {
-    content.forEach {
-        if (it.first() is PropertyValue)
-            put((it.first() as PropertyValue).identifier, it.last().evaluate(scope))
-        else
-            put(it.first().toStringValue().strValue, it.last().evaluate(scope))
+fun createMapFromListOfPair(content: List<PairValue>, scope: Scope) =
+    buildMap<String, Value> {
+        content.forEach {
+            val pair = it.evaluate(scope)
+            if (pair.first() is PropertyValue)
+                put((pair.first() as PropertyValue).identifier, pair.last())
+            else
+                put(pair.first().toStringValue().strValue, pair.last())
+        }
     }
-}
