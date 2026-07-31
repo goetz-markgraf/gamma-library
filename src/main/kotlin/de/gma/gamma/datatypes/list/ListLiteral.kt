@@ -1,9 +1,9 @@
 package de.gma.gamma.datatypes.list
 
 import de.gma.gamma.builtins.builtInSource
-import de.gma.gamma.builtins.createMapFromListOfPair
-import de.gma.gamma.builtins.isRecordDefinition
 import de.gma.gamma.builtins.nullPos
+import de.gma.gamma.datatypes.createMapFromListOfPair
+import de.gma.gamma.datatypes.isRecordDefinition
 import de.gma.gamma.datatypes.Value
 import de.gma.gamma.datatypes.scope.Scope
 import de.gma.gamma.datatypes.scoped.ScopedValue

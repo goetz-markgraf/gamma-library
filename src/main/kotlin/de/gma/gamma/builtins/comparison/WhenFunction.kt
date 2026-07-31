@@ -1,7 +1,7 @@
 package de.gma.gamma.builtins.comparison
 
 import de.gma.gamma.builtins.BuiltinFunction
-import de.gma.gamma.builtins.checkForListOfPairs
+import de.gma.gamma.datatypes.checkForListOfPairs
 import de.gma.gamma.datatypes.Value
 import de.gma.gamma.datatypes.list.ListValue
 import de.gma.gamma.datatypes.scope.Scope
