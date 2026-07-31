@@ -5,15 +5,15 @@ const val OP_LEVEL_DEFAULT = 3
 const val OP_LEVEL_PAIR = 8
 
 val operatorLevels = listOf(
-    /* Level 0 */    mutableListOf("^", "..", "::", "@"),
-    /* Level 1 */    mutableListOf("*", "/", "×", "÷"),
-    /* Level 2 */    mutableListOf("+", "-"),
-    /* Level 3 */    mutableListOf(),
-    /* Level 4 */    mutableListOf(">", ">=", "≥", "<", "<=", "≤", "=", "≠", "!="),
-    /* Level 5 */    mutableListOf("&", "∧"),
-    /* Level 6 */    mutableListOf("|", "∨"),
-    /* Level 7 */    mutableListOf("|>", "▷", "<|", "◁"),
-    /* Level 8 */    mutableListOf("->", "→")
+    /* Level 0 */    listOf("^", "..", "::", "@"),
+    /* Level 1 */    listOf("*", "/", "×", "÷"),
+    /* Level 2 */    listOf("+", "-"),
+    /* Level 3 */    listOf(), // nothing in here, because it is never used builtin
+    /* Level 4 */    listOf(">", ">=", "≥", "<", "<=", "≤", "=", "≠", "!="),
+    /* Level 5 */    listOf("&", "∧"),
+    /* Level 6 */    listOf("|", "∨"),
+    /* Level 7 */    listOf("|>", "▷", "<|", "◁"),
+    /* Level 8 */    listOf("->", "→")
 )
 
 const val MAX_OPERATOR_LEVEL = OP_LEVEL_PAIR
