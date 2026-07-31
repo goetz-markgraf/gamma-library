@@ -6,6 +6,7 @@ import de.gma.gamma.datatypes.Value
 import de.gma.gamma.datatypes.list.ListValue
 import de.gma.gamma.datatypes.scope.Scope
 import java.io.File
+import java.io.IOException
 
 object ReadLinesFunction : BuiltinFunction("read-lines", listOf("filename")) {
     override fun callInternal(scope: Scope, callParams: List<Value>): Value {
@@ -14,7 +15,11 @@ object ReadLinesFunction : BuiltinFunction("read-lines", listOf("filename")) {
         val file = File(filename.strValue)
 
         if (file.exists() && !file.isDirectory) {
-            return ListValue.build(file.readLines().map { StringValue.build(it) })
+            try {
+                return ListValue.build(file.readLines().map { StringValue.build(it) })
+            } catch (e: IOException) {
+                throw createException("Cannot read file: ${file.path}")
+            }
         } else {
             throw createException("file $filename is not readable")
         }
