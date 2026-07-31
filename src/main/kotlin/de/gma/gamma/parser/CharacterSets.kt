@@ -69,8 +69,47 @@ fun isEndOfIdentifier(char: Char) =
 fun isStartOfString(char: Char) =
     char == CH_QUOTE
 
-fun isOperatorChar(char: Char) =
-    !(char == nullChar || isWhitespace(char) || char.isLetter() || char.isDigit() || "()[]{}_$#".contains(char))
+/**
+ * Returns true if [char] may appear inside an operator token.
+ *
+ * Strategy: accept any Unicode symbol / punctuation category, then
+ * explicitly exclude characters that have dedicated lexer roles.
+ *
+ * Excluded:
+ *   - nullChar          EOF sentinel
+ *   - whitespace        token separator (including tab used for indentation)
+ *   - letters / digits  identifiers and numbers
+ *   - ( ) [ ] { }      bracket tokens
+ *   - _                 identifier char
+ *   - $                 string interpolation  $(
+ *   - #                 line comment start
+ *   - '  (U+0027)       ASCII apostrophe - documentation block delimiter
+ *   - "  (U+0022)       ASCII quote - string literal delimiter
+ *   - ,  ;              expression-ending characters
+ *
+ * Note: surrogate halves (type SURROGATE=19) are accepted so that multi-char
+ * Unicode codepoints (e.g. emoji) work when the lexer iterates char-by-char.
+ */
+private val OPERATOR_EXCLUDED = setOf(nullChar, '_', '$', '#', CH_APOSTR, CH_QUOTE, ',', ';')
+
+fun isOperatorChar(char: Char): Boolean {
+    if (char == nullChar) return false
+    if (isWhitespace(char)) return false
+    if (char.isLetter() || char.isDigit()) return false
+    if ("()[]{}".contains(char)) return false
+    if (char in OPERATOR_EXCLUDED) return false
+
+    val type = Character.getType(char)
+    return type == Character.MATH_SYMBOL.toInt()               // Sm: +, x, /, sum, <=, pipe ...
+        || type == Character.OTHER_SYMBOL.toInt()              // So: copyright, pointing hand, heart ...
+        || type == Character.MODIFIER_SYMBOL.toInt()           // Sk: ^ and modifier glyphs
+        || type == Character.DASH_PUNCTUATION.toInt()          // Pd: -, en-dash, em-dash
+        || type == Character.OTHER_PUNCTUATION.toInt()         // Po: !, %, &, *, :, ?, @, \ ...
+        || type == Character.CONNECTOR_PUNCTUATION.toInt()     // Pc: _ (already excluded above)
+        || type == Character.INITIAL_QUOTE_PUNCTUATION.toInt() // Pi: <<
+        || type == Character.FINAL_QUOTE_PUNCTUATION.toInt()   // Pf: >>
+        || type == Character.SURROGATE.toInt()                 // surrogate halves for emoji etc.
+}
 
 fun isStartOfFunctionOperator(char: Char, peekChar: Char, peekPeekChar: Char) =
     char == CH_LPARENS && isOperatorChar(peekChar) && isOperatorChar(peekPeekChar) ||
