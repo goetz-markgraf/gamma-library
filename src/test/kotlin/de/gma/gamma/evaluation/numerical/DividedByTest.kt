@@ -3,7 +3,9 @@ package de.gma.gamma.evaluation.numerical
 import de.gma.gamma.datatypes.values.FloatValue
 import de.gma.gamma.datatypes.values.IntegerValue
 import de.gma.gamma.evaluation.BaseEvaluationTest
+import de.gma.gamma.parser.GammaException
 import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.Test
 
 class DividedByTest : BaseEvaluationTest() {
@@ -55,6 +57,34 @@ class DividedByTest : BaseEvaluationTest() {
         val code = "20 ÷ 2"
         val result = execute(code)
         assertThat(result).isEqualTo(IntegerValue.build(10))
+    }
+
+    @Test
+    fun `divide by a non-number throws a GammaException`() {
+        assertThatThrownBy { execute("2 / true") }
+            .isInstanceOf(GammaException::class.java)
+            .hasMessageContaining("/ can only be called with two number values")
+    }
+
+    @Test
+    fun `divide a non-number throws a GammaException`() {
+        assertThatThrownBy { execute("true / 2") }
+            .isInstanceOf(GammaException::class.java)
+            .hasMessageContaining("/ can only be called with two number values")
+    }
+
+    @Test
+    fun `divide by zero throws a GammaException, not an ArithmeticException`() {
+        assertThatThrownBy { execute("10 / 0") }
+            .isInstanceOf(GammaException::class.java)
+            .hasMessageContaining("Division by zero")
+    }
+
+    @Test
+    fun `divide float by zero throws a GammaException`() {
+        assertThatThrownBy { execute("10.0 / 0") }
+            .isInstanceOf(GammaException::class.java)
+            .hasMessageContaining("Division by zero")
     }
 
 }

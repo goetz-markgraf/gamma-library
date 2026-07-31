@@ -10,13 +10,16 @@ object DividedByFunction : FunctionTwoNumbersToNumber("/") {
         val ret = operateOnTwoNumbers(
             scope,
             callParams,
-            { i1, i2 -> i1 / i2 },
-            { f1, f2 -> f1 / f2 }
+            { i1, i2 ->
+                if (i2 == 0L) throw createException("Division by zero")
+                i1 / i2
+            },
+            { f1, f2 ->
+                if (f2 == 0.0) throw createException("Division by zero")
+                f1 / f2
+            }
         )
 
-        if (ret != null)
-            return ret
-        else
-            throw GammaException("/ can only be called with two number values")
+        return ret ?: throw GammaException("/ can only be called with two number values")
     }
 }
