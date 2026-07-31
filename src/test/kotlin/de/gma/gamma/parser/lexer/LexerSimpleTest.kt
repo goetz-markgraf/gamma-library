@@ -287,6 +287,8 @@ class LexerSimpleTest {
             "_a?",
             "a-",
             "a+",
+            "ä",
+            "á",
             "a++",
             "a_-+",
             "π",
