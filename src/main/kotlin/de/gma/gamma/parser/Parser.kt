@@ -423,7 +423,7 @@ class Parser(
                     add(parseIdentifier(col))
             }.map { it.name }
 
-        assertTypeWithContent(col, ID, "=")
+        assertTypeWithContent(col, OP, "=")
         nextToken()
 
         val funStart = currStart
@@ -503,7 +503,7 @@ class Parser(
     private fun assertTypeWithContent(col: Int, type: TokenType, vararg content: String) {
         if (currStart.col < col)
             throw createIllegalColumnException(col)
-        if (currType != type && content.indexOf(currToken.content) < 0)
+        if (currType != type || currToken.content !in content)
             throw createIllegalTokenException(content.toList().toString())
 
     }
