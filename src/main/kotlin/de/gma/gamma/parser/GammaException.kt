@@ -11,7 +11,7 @@ class GammaException(
 
     private var added = 0
 
-    fun add(stackTraceElement: StackTraceElement?) {
+    fun add(stackTraceElement: StackTraceElement) {
         val st = stackTrace
         val newSt = arrayOfNulls<StackTraceElement>(st.size + 1)
         System.arraycopy(st, 0, newSt, 0, added)
@@ -21,17 +21,9 @@ class GammaException(
         added++
     }
 
-    fun stackTraceAsString(): String {
-        val builder = StringBuilder()
-        val trace = stackTrace
-        for (i in 0 until added) {
-            builder.append("    at ")
-            builder.append(trace[i].methodName).append("(")
-            builder.append(trace[i].fileName).append(":")
-            builder.append(trace[i].lineNumber).append(")")
-            builder.append(System.lineSeparator())
-        }
-        return builder.toString()
-    }
+    fun stackTraceAsString() =
+        stackTrace.take(added).joinToString(System.lineSeparator()) {
+            "    at ${it.methodName}(${it.fileName}:${it.lineNumber})"
+        } + System.lineSeparator()
 
 }
