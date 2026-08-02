@@ -9,21 +9,11 @@ class GammaException(
     val col: Int = 0
 ) : RuntimeException(message) {
 
-    private var added = 0
+    private val gammaFrames = mutableListOf<StackTraceElement>()
 
     fun add(stackTraceElement: StackTraceElement) {
-        val st = stackTrace
-        val newSt = arrayOfNulls<StackTraceElement>(st.size + 1)
-        System.arraycopy(st, 0, newSt, 0, added)
-        newSt[added] = stackTraceElement
-        System.arraycopy(st, added, newSt, added + 1, st.size - added)
-        stackTrace = newSt
-        added++
+        gammaFrames.add(stackTraceElement)
+        stackTrace = gammaFrames.toTypedArray()
     }
-
-    fun stackTraceAsString() =
-        stackTrace.take(added).joinToString(System.lineSeparator()) {
-            "    at ${it.methodName}(${it.fileName}:${it.lineNumber})"
-        } + System.lineSeparator()
 
 }

@@ -18,9 +18,10 @@ class EvaluationExceptionTest : BaseEvaluationTest() {
             )
         }.isInstanceOf(GammaException::class.java)
             .matches {
-                (it as GammaException).stackTraceAsString() ==
-                        "    at Function(1:14)(Script:1)\n" +
-                        "    at Function(3:1)(Script:3)\n"
+                val frames = (it as GammaException).stackTrace
+                frames.size == 2 &&
+                    frames[0].methodName == "Function(1:14)" && frames[0].fileName == "Script" &&
+                    frames[1].methodName == "Function(3:1)" && frames[1].fileName == "Script"
             }
     }
 }
