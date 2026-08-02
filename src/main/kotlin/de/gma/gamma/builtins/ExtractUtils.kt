@@ -1,27 +1,17 @@
 package de.gma.gamma.builtins
 
+import de.gma.gamma.builtins.GammaBaseScope.createException
 import de.gma.gamma.datatypes.StringValue
 import de.gma.gamma.datatypes.Value
 import de.gma.gamma.datatypes.values.*
 import de.gma.gamma.parser.GammaException
 
-fun extractNumber(value: Value) =
-    when {
-        value is IntegerValue || value is FloatValue -> value
-        value is StringValue -> extractNumberFromString(value)
+fun extractNumber(v: Value): Value =
+    when (v) {
+        is IntegerValue -> v
+        is FloatValue -> v
+        is StringValue -> v.strValue.toLongOrNull()?.let { IntegerValue.build(it) }
+            ?: v.strValue.toDoubleOrNull()?.let { FloatValue.build(it) }
+            ?: VoidValue.build()
         else -> VoidValue.build()
     }
-
-private fun extractNumberFromString(value: StringValue): Value {
-    try {
-        return value.toInteger()
-    } catch (e: GammaException) {
-        // do nothing
-    }
-    try {
-        return value.toFloat()
-    } catch (e: GammaException) {
-        // do nothing
-    }
-    return VoidValue.build()
-}

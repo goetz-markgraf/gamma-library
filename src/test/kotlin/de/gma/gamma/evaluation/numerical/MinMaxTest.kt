@@ -3,6 +3,8 @@ package de.gma.gamma.evaluation.numerical
 import de.gma.gamma.datatypes.values.FloatValue
 import de.gma.gamma.datatypes.values.IntegerValue
 import de.gma.gamma.evaluation.BaseEvaluationTest
+import de.gma.gamma.parser.GammaException
+import org.assertj.core.api.Assertions
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -55,5 +57,21 @@ class MinMaxTest : BaseEvaluationTest() {
     fun `return the smallest of all positive numbers`() {
         val result = execute("min 1.0 \"4\" 2.0 8 6.0") as FloatValue
         assertThat(result.doubleValue).isEqualTo(1.0)
+    }
+
+    @Test
+    fun `throw exception when any value is not a number on min`() {
+        Assertions.assertThatThrownBy { 
+            execute("min 4 3 6 \"a\" 8") as IntegerValue
+        }.isInstanceOf(GammaException::class.java)
+        .hasMessage("min can only be called with numbers")
+    }
+
+    @Test
+    fun `throw exception when any value is not a number on max`() {
+        Assertions.assertThatThrownBy { 
+            execute("max 4 3 6 \"a\" 8") as IntegerValue
+        }.isInstanceOf(GammaException::class.java)
+        .hasMessage("max can only be called with numbers")
     }
 }

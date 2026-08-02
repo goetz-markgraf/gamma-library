@@ -6,6 +6,7 @@ import de.gma.gamma.datatypes.Value
 import de.gma.gamma.datatypes.scope.Scope
 import de.gma.gamma.datatypes.values.FloatValue
 import de.gma.gamma.datatypes.values.IntegerValue
+import de.gma.gamma.datatypes.values.VoidValue
 
 object MaxFunction : BuiltinFunction("max", listOf("list")) {
     override fun callInternal(scope: Scope, callParams: List<Value>): Value {
@@ -13,6 +14,9 @@ object MaxFunction : BuiltinFunction("max", listOf("list")) {
 
         val numList = list.allItems().map { extractNumber(it) }
         val float = numList.any { it is FloatValue }
+        if (numList.any { it is VoidValue }) {
+            throw createException("max can only be called with numbers")
+        }
         return if (float) {
             numList.map { it.toFloat() }.reduce { v1, v2 ->
                 if (v1.doubleValue > v2.doubleValue) v1 else v2

@@ -6,12 +6,16 @@ import de.gma.gamma.datatypes.Value
 import de.gma.gamma.datatypes.scope.Scope
 import de.gma.gamma.datatypes.values.FloatValue
 import de.gma.gamma.datatypes.values.IntegerValue
+import de.gma.gamma.datatypes.values.VoidValue
 
 object MinFunction : BuiltinFunction("min", listOf("list")) {
     override fun callInternal(scope: Scope, callParams: List<Value>): Value {
         val list = callParams[0].evaluate(scope).toList()
 
         val numList = list.allItems().map { extractNumber(it) }
+        if (numList.any { it is VoidValue }) {
+            throw createException("min can only be called with numbers")
+        }
         val float = numList.any { it is FloatValue }
         return if (float) {
             numList.map { it.toFloat() }.reduce { v1, v2 ->
