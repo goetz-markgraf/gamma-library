@@ -15,6 +15,8 @@ class CurriedFunction(
 ) : FunctionValue(sourceName, beginPos, endPos, params) {
 
     override fun call(scope: Scope, callParams: List<Value>): Value {
+        // Wrap each new argument in a ScopedValue capturing the caller's scope, then combine
+        // with the already-baked-in params and forward to the original function.
         val preparedCallParams = callParams.map { it.prepare(scope) }
         return function.call(savedScope, bakedInParams + preparedCallParams)
     }

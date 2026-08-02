@@ -19,6 +19,9 @@ class ScopedFunction(
     override fun evaluate(scope: Scope) = this
 
     override fun call(scope: Scope, callParams: List<Value>): Value {
+        // Wrap each argument in a ScopedValue so it captures the caller's scope lazily.
+        // The function body then runs in closureScope (the scope from lambda definition),
+        // but each argument is evaluated on demand in the scope where the call was made.
         val preparedParams = callParams.map { it.prepare(scope) }
         return function.call(closureScope, preparedParams)
     }

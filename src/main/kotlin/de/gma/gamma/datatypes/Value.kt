@@ -25,9 +25,25 @@ enum class DataType {
 interface Value {
     fun prettyPrint(): String
 
-    fun evaluate(scope: Scope) = this
+    /**
+     * Eagerly evaluates this value in [scope] and returns the result.
+     * Literals return `this`. Expressions (e.g. [LetExpression], [FunctionCall])
+     * compute and return their result.
+     */
+    fun evaluate(scope: Scope): Value = this
 
-    fun prepare(scope: Scope) = this
+    /**
+     * Creates a lazily-evaluated wrapper that captures [scope] at this point,
+     * deferring actual evaluation until the value is accessed.
+     *
+     * Used when passing arguments to functions or storing unevaluated sub-expressions,
+     * so that each argument sees the scope at the call site, not the scope inside
+     * the callee. Implemented via [ScopedValue] / [ScopedFunction].
+     *
+     * Defaults to returning `this` for fully-evaluated values (literals, records, etc.)
+     * that carry no unevaluated sub-expressions.
+     */
+    fun prepare(scope: Scope): Value = this
 
     fun toBoolean(): BooleanValue
 

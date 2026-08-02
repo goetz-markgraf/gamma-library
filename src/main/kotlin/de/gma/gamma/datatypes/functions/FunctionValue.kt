@@ -47,7 +47,9 @@ abstract class FunctionValue(
     ): Value {
         val result = callInternal(scope, params)
 
-        // save the scope for lazy evaluation
+        // If the result is a LambdaFunction, wrap it in a ScopedFunction via prepare() so it
+        // captures the current scope at the point of return (closure creation), rather than
+        // evaluating eagerly. This is what gives lambdas their lexical scoping behaviour.
         return if (result is LambdaFunction)
             result.prepare(scope)
         else if (result is ListValue)
