@@ -9,7 +9,6 @@ import de.gma.gamma.datatypes.scope.Scope
 import de.gma.gamma.datatypes.values.IntegerValue
 import java.io.*
 import java.util.*
-import java.util.concurrent.Executors
 
 
 val isWindows = System.getProperty("os.name")
@@ -41,31 +40,21 @@ object ShellFunction : BuiltinFunction("shell", listOf("cmd")) {
         }
         val cwd = GammaBaseScope.getValueForName(CWD_NAME).toStringValue().strValue
         builder.directory(File(cwd))
-        val process = builder.start()
-        val streamGobbler = StreamGobbler(process.inputStream)
-        val future = Executors.newSingleThreadExecutor().submit(streamGobbler)
-
+        val process = builder
+            .redirectErrorStream(true)
+            .start()
+        // Read stdout (which also includes stderr via redirectErrorStream) BEFORE waitFor().
+        // The process may block on writing if the pipe buffer fills up (~64 KB), so we must
+        // drain the stream first, then wait for the process to exit.
+        val ret = process.inputStream.bufferedReader().readText()
         val exitCode = process.waitFor()
 
         return if (exitCode != 0) {
             IntegerValue.build(exitCode.toLong())
         } else {
-            future.get()
-            val ret = streamGobbler.getOutput()
             ListValue.build(ret.split("\n").filter { it.trim().isNotEmpty() }.map { StringValue.build(it) })
         }
     }
 }
 
-private class StreamGobbler(
-    private val inputStream: InputStream,
-) : Runnable {
-    private val buf = StringWriter()
-    override fun run() {
-        BufferedReader(InputStreamReader(inputStream)).lines()
-            .forEach(buf::appendLine)
-    }
 
-    fun getOutput() =
-        buf.toString()
-}
