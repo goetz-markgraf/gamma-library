@@ -13,7 +13,11 @@ object CDFunction : BuiltinFunction("cd", listOf("dir")) {
         val path = callParams[0].toStringValue().strValue
 
         val cwd = (GammaBaseScope.getValueForName(CWD_NAME) as StringValue).strValue
-        val newCwd = StringValue.build(File(cwd, path).absolutePath)
+        val newDir = File(cwd, path)
+        if (!newDir.exists() || !newDir.isDirectory) {
+            throw createException("Target directory does not exist: $path")
+        }
+        val newCwd = StringValue.build(newDir.absolutePath)
         GammaBaseScope.bindValue(CWD_NAME, newCwd, null, false)
 
         return newCwd
