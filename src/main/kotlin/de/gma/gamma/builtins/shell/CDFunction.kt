@@ -12,13 +12,14 @@ object CDFunction : BuiltinFunction("cd", listOf("dir")) {
     override fun callInternal(scope: Scope, callParams: List<Value>): Value {
         val path = callParams[0].toStringValue().strValue
 
-        val cwd = (GammaBaseScope.getValueForName(CWD_NAME) as StringValue).strValue
+        val baseScope = GammaBaseScope.from(scope)
+        val cwd = (baseScope.getValueForName(CWD_NAME) as StringValue).strValue
         val newDir = File(cwd, path)
         if (!newDir.exists() || !newDir.isDirectory) {
             throw createException("Target directory does not exist: $path")
         }
         val newCwd = StringValue.build(newDir.absolutePath)
-        GammaBaseScope.bindValue(CWD_NAME, newCwd, null, false)
+        baseScope.bindValue(CWD_NAME, newCwd, null, false)
 
         return newCwd
     }

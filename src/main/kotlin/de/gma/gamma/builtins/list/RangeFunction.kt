@@ -16,7 +16,7 @@ object RangeFunction : BuiltinFunction("range", listOf("from", "to")) {
 
         val size = abs(from - to) + 1
 
-        return ListGenerator.build(size, InternalRangeFunction(from, asc))
+        return ListGenerator.build(size, InternalRangeFunction(from, asc), scope)
     }
 
 }

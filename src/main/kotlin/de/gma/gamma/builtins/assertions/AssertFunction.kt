@@ -25,7 +25,7 @@ object AssertFunction : BuiltinFunction("assert", listOf("list-of-assertions")) 
                 val actual = it.first().evaluate(tempScope)
                 val expected = it.last().evaluate(tempScope)
                 if (actual != expected) {
-                    GammaBaseScope.doPrint("Assertion Failure $message: Value $actual is not equal to $expected\n")
+                    GammaBaseScope.from(scope).doPrint("Assertion Failure $message: Value $actual is not equal to $expected\n")
                     ret = false
                 }
             } else

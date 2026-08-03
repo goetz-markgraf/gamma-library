@@ -10,7 +10,7 @@ object RepeatFunction : BuiltinFunction("repeat", listOf("size")) {
     override fun callInternal(scope: Scope, callParams: List<Value>): Value {
         val size = callParams[0].evaluate(scope).toInteger()
 
-        return ListGenerator.build(size.longValue.toInt(), IdentityFunction())
+        return ListGenerator.build(size.longValue.toInt(), IdentityFunction(), scope)
     }
 
 }

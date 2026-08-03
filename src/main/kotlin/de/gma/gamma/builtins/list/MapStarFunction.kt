@@ -13,7 +13,7 @@ object MapStarFunction : BuiltinFunction("map*", listOf("function", "list")) {
         val function = callParams[0].evaluate(scope).toFunction()
         val list = callParams[1].evaluate(scope).toList()
 
-        return ListGenerator.build(list.size(), InternalMapStarFunction(list, function))
+        return ListGenerator.build(list.size(), InternalMapStarFunction(list, function), scope)
     }
 
 }

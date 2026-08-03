@@ -1,6 +1,5 @@
 package de.gma.gamma.datatypes.scope
 
-import de.gma.gamma.builtins.GammaBaseScope
 import de.gma.gamma.builtins.nullPos
 import de.gma.gamma.datatypes.AbstractValue
 import de.gma.gamma.datatypes.Remark
@@ -12,7 +11,7 @@ import de.gma.gamma.parser.isStartOfIdentifier
 
 open class ModuleScope(
     sourceName: String,
-    final override val parent: Scope? = GammaBaseScope
+    final override val parent: Scope?
 ) : Scope, AbstractValue(sourceName, nullPos, nullPos) {
 
     protected val content: MutableMap<String, Value> = mutableMapOf()

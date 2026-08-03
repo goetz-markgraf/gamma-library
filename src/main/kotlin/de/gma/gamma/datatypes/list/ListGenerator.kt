@@ -5,6 +5,7 @@ import de.gma.gamma.builtins.nullPos
 import de.gma.gamma.datatypes.Value
 import de.gma.gamma.datatypes.functions.FunctionValue
 import de.gma.gamma.datatypes.scope.ModuleScope
+import de.gma.gamma.datatypes.scope.Scope
 import de.gma.gamma.datatypes.values.IntegerValue
 import de.gma.gamma.datatypes.values.VoidValue
 import de.gma.gamma.parser.Position
@@ -14,10 +15,11 @@ class ListGenerator(
     beginPos: Position,
     endPos: Position,
     private val size: Int,
-    private val generatorFunction: FunctionValue
+    private val generatorFunction: FunctionValue,
+    scope: Scope
 ) : ListValue(sourceName, beginPos, endPos) {
 
-    private val internalScope = ModuleScope(sourceName)
+    private val internalScope = ModuleScope(sourceName, scope)
 
     private val storage = Array<Value?>(size) { null }
 
@@ -79,6 +81,6 @@ class ListGenerator(
         build(allItems())
 
     companion object {
-        fun build(size: Int, function: FunctionValue) = ListGenerator(builtInSource, nullPos, nullPos, size, function)
+        fun build(size: Int, function: FunctionValue, scope: Scope) = ListGenerator(builtInSource, nullPos, nullPos, size, function, scope)
     }
 }

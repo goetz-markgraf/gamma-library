@@ -38,7 +38,7 @@ object ShellFunction : BuiltinFunction("shell", listOf("cmd")) {
         } else {
             builder.command("sh", "-c", cmd)
         }
-        val cwd = GammaBaseScope.getValueForName(CWD_NAME).toStringValue().strValue
+        val cwd = GammaBaseScope.from(scope).getValueForName(CWD_NAME).toStringValue().strValue
         builder.directory(File(cwd))
         val process = builder
             .redirectErrorStream(true)

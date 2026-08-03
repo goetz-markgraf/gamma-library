@@ -15,7 +15,7 @@ object PrintStarFunction : BuiltinFunction("print*", listOf("value")) {
         } else {
             printVal.toStringValue().strValue
         }
-        GammaBaseScope.doPrint(printString)
+        GammaBaseScope.from(scope).doPrint(printString)
 
         return printVal
     }

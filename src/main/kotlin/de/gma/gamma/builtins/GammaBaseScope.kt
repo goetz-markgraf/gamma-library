@@ -10,18 +10,16 @@ import de.gma.gamma.builtins.list.populateList
 import de.gma.gamma.builtins.namespaces.populateNamespace
 import de.gma.gamma.builtins.numerical.populateNumerical
 import de.gma.gamma.builtins.shell.populateShell
-import de.gma.gamma.builtins.shell.resetShell
 import de.gma.gamma.builtins.types.populateTypes
 import de.gma.gamma.datatypes.scope.ModuleScope
+import de.gma.gamma.datatypes.scope.Scope
 import de.gma.gamma.parser.Parser
 
-object GammaBaseScope : ModuleScope("global", null) {
+class GammaBaseScope(
+    printFunction: ((String) -> Unit)? = null
+) : ModuleScope("global", null) {
 
-    private val initialDoPrint = { text: String ->
-        print(text)
-    }
-
-    var doPrint = initialDoPrint
+    var doPrint: (String) -> Unit = printFunction ?: { text: String -> print(text) }
 
     init {
         populateTypes(this)
@@ -38,17 +36,27 @@ object GammaBaseScope : ModuleScope("global", null) {
         applyCode(codeFunctional, "functional.gma")
     }
 
-    fun reset() {
-        resetShell(this)
-        doPrint = initialDoPrint
-    }
-
     private fun applyCode(code: String, sourceName: String) {
         val parser = Parser(code, sourceName)
         var expression = parser.nextExpression()
         while (expression != null) {
             expression.evaluate(this)
             expression = parser.nextExpression()
+        }
+    }
+
+    companion object {
+        /**
+         * Walks up the scope chain to find the nearest [GammaBaseScope] instance.
+         * Every scope chain must be rooted at a [GammaBaseScope]; throws if not found.
+         */
+        fun from(scope: Scope): GammaBaseScope {
+            var s: Scope? = scope
+            while (s != null) {
+                if (s is GammaBaseScope) return s
+                s = s.parent
+            }
+            throw IllegalStateException("No GammaBaseScope found in scope chain")
         }
     }
 }

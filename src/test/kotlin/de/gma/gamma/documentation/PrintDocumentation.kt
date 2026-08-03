@@ -7,7 +7,7 @@ class PrintDocumentation {
 
     @Test
     fun `print all documentation strings`() {
-        val scope = GammaBaseScope
+        val scope = GammaBaseScope()
 
         scope.getAllNames().forEach {
             println(scope.getRemark(it))

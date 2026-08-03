@@ -9,20 +9,15 @@ import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 
 open class BaseEvaluationTest {
-    private val baseScope = GammaBaseScope
     protected lateinit var scope: ModuleScope
 
     private val output = StringBuilder()
 
     @BeforeEach
     fun setUp() {
+        output.clear()
+        val baseScope = GammaBaseScope { output.append(it) }
         scope = ModuleScope("test", baseScope)
-        baseScope.doPrint = { output.append(it) }
-    }
-
-    @AfterEach
-    fun cleanUp() {
-        baseScope.reset()
     }
 
     protected fun execute(code: String): Value? {
