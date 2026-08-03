@@ -80,7 +80,7 @@
                 <version>2.22.2</version>
                 <configuration>
                     <argLine>
-                        -ea -Xss8m
+                        -ea -Xss64m
                     </argLine>
                 </configuration>
             </plugin>

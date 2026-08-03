@@ -15,7 +15,32 @@ abstract class FunctionValue(
     val paramNames: List<String>
 ) : AbstractValue(sourceName, beginPos, endPos) {
 
+    companion object {
+        private val callDepth = ThreadLocal.withInitial { 0 }
+        const val MAX_CALL_DEPTH = 8000
+    }
+
+    protected fun checkCallDepth() {
+        if (callDepth.get() >= MAX_CALL_DEPTH)
+            throw createException("Stack overflow: maximum call depth ($MAX_CALL_DEPTH) exceeded")
+    }
+
+    protected fun incrementCallDepth() = callDepth.set(callDepth.get() + 1)
+    protected fun decrementCallDepth() = callDepth.set(callDepth.get() - 1)
+
     open fun call(scope: Scope, callParams: List<Value>): Value {
+        checkCallDepth()
+        incrementCallDepth()
+        try {
+            return callWithDepthTracked(scope, callParams)
+        } catch (e: StackOverflowError) {
+            throw createException("Stack overflow: maximum call depth exceeded (consider using iteration instead of recursion)")
+        } finally {
+            decrementCallDepth()
+        }
+    }
+
+    private fun callWithDepthTracked(scope: Scope, callParams: List<Value>): Value {
         val missing = checkMissingParameters(callParams)
 
         return when {
