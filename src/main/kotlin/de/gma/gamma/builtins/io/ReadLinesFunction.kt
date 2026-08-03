@@ -14,7 +14,7 @@ object ReadLinesFunction : BuiltinFunction("read-lines", listOf("filename")) {
 
         val file = File(filename.strValue)
 
-        if (file.exists() && !file.isDirectory) {
+        if (file.exists() && !file.isDirectory && file.canRead()) {
             try {
                 return ListValue.build(file.readLines().map { StringValue.build(it) })
             } catch (e: IOException) {
