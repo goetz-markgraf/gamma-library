@@ -49,13 +49,17 @@ open class ModuleScope(
     }
 
     override fun getValueForName(id: String, strict: Boolean): Value {
-
-        return content[id]
-            ?: (parent?.getValueForName(id, strict)
-                ?: if (strict)
-                    throw GammaException("id $id is undefined.")
-                else
-                    VoidValue.build())
+        // Iterative traversal of the ModuleScope chain to avoid stack overflow
+        // for deeply nested scopes (many nested lambda calls).
+        var scope: ModuleScope? = this
+        while (scope != null) {
+            scope.content[id]?.let { return it }
+            scope = scope.parent as? ModuleScope
+        }
+        // Fell off the ModuleScope chain — delegate to the root non-ModuleScope parent (e.g. GammaBaseScope)
+        return parent?.getValueForName(id, strict)
+            ?: if (strict) throw GammaException("id $id is undefined.")
+            else VoidValue.build()
     }
 
     override fun containsNameLocally(id: String) =
