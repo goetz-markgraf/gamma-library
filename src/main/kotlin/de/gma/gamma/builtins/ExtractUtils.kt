@@ -1,6 +1,5 @@
 package de.gma.gamma.builtins
 
-import de.gma.gamma.builtins.GammaBaseScope.createException
 import de.gma.gamma.datatypes.StringValue
 import de.gma.gamma.datatypes.Value
 import de.gma.gamma.datatypes.values.*
