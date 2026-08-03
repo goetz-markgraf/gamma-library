@@ -16,6 +16,12 @@ val isWindows = System.getProperty("os.name")
     .lowercase(Locale.getDefault()).startsWith("windows")
 
 
+// SECURITY: The command string is passed directly to the shell interpreter (sh -c on Unix,
+// cmd.exe /c on Windows). Any Gamma argument value becomes a shell command fragment with full
+// access to the host system. This is intentional for scripting use, but means that untrusted
+// Gamma code can execute arbitrary shell commands, read/write files, and exfiltrate data.
+// Do not embed this interpreter in untrusted or multi-tenant contexts without disabling or
+// sandboxing the `shell` builtin.
 object ShellFunction : BuiltinFunction("shell", listOf("cmd")) {
     override fun callInternal(scope: Scope, callParams: List<Value>): Value {
 
