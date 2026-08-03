@@ -13,15 +13,25 @@ object SortFunction : BuiltinFunction("sort", listOf("list")) {
     override fun callInternal(scope: Scope, callParams: List<Value>): Value {
         val list1 = callParams[0].evaluate(scope).toList()
 
-        return ListValue.build(list1.allItems().sortedBy { item ->
-            when (item) {
-                is IntegerValue -> item.longValue.toDouble()
-                is FloatValue -> item.doubleValue
-                is StringValue -> item.toFloat().doubleValue
-                is ListValue -> item.size().toDouble()
-                is RecordValue -> item.size().toDouble()
-                else -> 0.0
+        return ListValue.build(list1.allItems().sortedWith(Comparator { a, b ->
+            val keyA = sortKey(a)
+            val keyB = sortKey(b)
+            when {
+                keyA is Double && keyB is Double -> keyA.compareTo(keyB)
+                keyA is Double -> -1  // numbers before strings
+                keyB is Double -> 1
+                else -> (keyA as String).compareTo(keyB as String)
             }
-        })
+        }))
     }
+
+    private fun sortKey(item: Value): Any =
+        when (item) {
+            is IntegerValue -> item.longValue.toDouble()
+            is FloatValue -> item.doubleValue
+            is StringValue -> item.strValue.toDoubleOrNull() ?: item.strValue
+            is ListValue -> item.size().toDouble()
+            is RecordValue -> item.size().toDouble()
+            else -> 0.0
+        }
 }
